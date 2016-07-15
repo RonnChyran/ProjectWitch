@@ -10,7 +10,7 @@ public class Game : MonoBehaviour
 
     //プレイヤーのデータ
     //ユニットデータ
-    public Dictionary<int, UnitDataFormat> UnitData { get; set; }
+    public List<UnitDataFormat> UnitData { get; set; }
     //スキルデータ
     public List<SkillDataFormat> SkillData { get; set; }
     //所持マナ
@@ -88,10 +88,13 @@ public class Game : MonoBehaviour
     public void FirstLoad()
     {
         //ユニットデータの読み出し
-
+        UnitData = DataLoader.LoadUnitData("Assets\\Resources\\Data\\unit_data.csv");
 
         //スキルデータの読み出し
-        //
+        //地点データの読み出し
+        AreaData = DataLoader.LoadAreaData("Assets\\Resources\\Data\\area_data.csv");
+
+
     }
 
 }
