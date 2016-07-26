@@ -28,8 +28,9 @@ public class AreaButton : MonoBehaviour {
     public void ButtonPush()
     {
         //メニュー開いていたら何もしない
-        if (mFieldController.OpeningMenu)
-            return;
+        if (mFieldController.OpeningMenu) return;
+        //ダイアログが開いていたら何もしない
+        if (Game.GetInstance().IsDialogShowd) return;
 
         if (isPlayer)
             SceneManager.LoadScene(mPlayerAreaMenuScene, LoadSceneMode.Additive);

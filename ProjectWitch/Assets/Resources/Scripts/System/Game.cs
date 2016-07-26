@@ -7,7 +7,9 @@ using GameData;
 
 public class Game : MonoBehaviour
 {
-
+    //----------------------------------
+    //データ関連
+    //----------------------------------
     //プレイヤーのデータ
     //ユニットデータ
     public List<UnitDataFormat> UnitData { get; set; }
@@ -37,6 +39,15 @@ public class Game : MonoBehaviour
     public List<EquipmentDataFormat> EquipmentData { get; set; }
     //カードデータ
     public List<SkillDataFormat> CardData { get; set; }
+    //イベントデータ
+    public List<EventDataFormat> FieldEventData { get; set; }
+    public List<EventDataFormat> TownEventData { get; set; }
+    public List<EventDataFormat> ArmyEventData { get; set; }
+
+    //---------------------
+    //内部変数
+    //---------------------
+    public bool IsDialogShowd { get; set; }
 
     //Singleton
     private static Game mInst;
@@ -67,9 +78,45 @@ public class Game : MonoBehaviour
     //初期化処理
     void Setup()
     {
+        //ダイアログ非表示
+        IsDialogShowd = false;
+
+        //データ系の初期化
+        CurrentTime = -1; //朝から
+
         //システム変数の初期化
         Memory = new VirtualMemory();
+        Memory.SetValue(0, 0);
         //あとセーブデータ読み込みなど
+
+#if DEBUG
+        FirstLoad();
+#endif
+    }
+
+    //ダイアログを表示
+    public void ShowDialog(string caption, string message)
+    {
+        if (IsDialogShowd) return;
+
+        GameObject prefab = (GameObject)Resources.Load("Prefabs/UI/dialog");
+        if (!prefab)
+            Debug.Log("ダイアログのプレハブが見つかりません");
+
+        //インスタンス化
+        var inst = Instantiate(prefab);
+        inst.GetComponent<DialogWindow>().Caption = caption;
+        inst.GetComponent<DialogWindow>().Text = message;
+
+        //ダイアログ表示
+        IsDialogShowd = true;
+
+    }
+
+    //スクリプトの開始
+    public void ExecuteScript(string filePath)
+    {
+        ShowDialog("ExecuteScript", filePath + "を実行します");
     }
 
     //現在の状態をセーブする
@@ -91,10 +138,28 @@ public class Game : MonoBehaviour
         UnitData = DataLoader.LoadUnitData("Assets\\Resources\\Data\\unit_data.csv");
 
         //スキルデータの読み出し
+        
         //地点データの読み出し
         AreaData = DataLoader.LoadAreaData("Assets\\Resources\\Data\\area_data.csv");
 
+        //領地データの読み出し
+        TerritoryData = DataLoader.LoadTerritoryData("Assets\\Resources\\Data\\territory_data.csv");
 
+        //所持地点リスト（地点リストから算出
+        foreach (TerritoryDataFormat terData in TerritoryData)
+        {
+            terData.AreaList = new List<int>();
+            for (int j = 1; j < AreaData.Count; j++)
+            {
+                if (AreaData[j].Owner == terData.AreaList.Count)
+                {
+                    terData.AreaList.Add(AreaData[j].ID);
+                }
+            }
+        }
+
+        //イベントデータの読み出し
+        FieldEventData = DataLoader.LoadEventData("Assets\\Resources\\Data\\event_data_field.csv");
     }
 
 }

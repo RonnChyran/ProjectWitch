@@ -20,6 +20,8 @@ public class MenuButton : MonoBehaviour {
     {
         //メニューが開いている場合は何もしない
         if (mFieldController.OpeningMenu) return;
+        //ダイアログが開いていたら何もしない
+        if (Game.GetInstance().IsDialogShowd) return;
 
         SceneManager.LoadScene(mSceneName, LoadSceneMode.Additive);
 

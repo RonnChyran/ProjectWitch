@@ -132,6 +132,9 @@ namespace GameData
     //地点データ
     public class AreaDataFormat
     {
+        //地点番号
+        public int ID { get; set; }
+
         //地点名
         public string Name { get; set; }
 
@@ -163,7 +166,7 @@ namespace GameData
         public string OwnerName { get; set; }
 
         //旗画像パス
-        public string FlagTexPath { get; set; }
+        public GameObject FlagPrefab { get; set; }
 
         //所有地点リスト
         public List<int> AreaList { get; set; }
@@ -235,21 +238,74 @@ namespace GameData
     //仮想メモリ
     public class VirtualMemory
     {
-        private Dictionary<string, object> mMemory;
-        public void setValue(object value, string name)
+        private Dictionary<int, object> mMemory = new Dictionary<int, object>();
+
+        public void SetValue(int id, object value)
         {
-            mMemory.Add(name, value);
+            mMemory.Add(id, value);
         }
-        public object getValue(string name, object defaultValue)
+        public object GetValue(int id, object defaultValue)
         {
             object value;
-            bool succeed = mMemory.TryGetValue(name, out value);
+            bool succeed = mMemory.TryGetValue(id, out value);
             if (succeed)
                 return value;
             else
                 return defaultValue;
         }
     }
+
+    //イベントデータ
+    public class EventDataFormat
+    {
+        //スクリプトファイル名
+        public string FileName { get; set; }
+
+        //タイミング
+        public enum TimingType
+        {
+            PlayerTurnBegin=0,
+            EnemyTurnBegin,
+            PlayerBattle,
+            EnemyBattle
+        }
+        public TimingType Timing { get; set; }
+
+        //場所
+        public int Area { get; set; }
+
+        //登場人物味方
+        public List<int> ActorA { get; set; }
+
+        //登場人物敵
+        public List<int> ActorB { get; set; }
+
+        //条件式に使う変数番号
+        public int If_Val { get; set; }
+
+        //条件式に使う演算子
+        public enum OperationType : int
+        {
+            Equal=0,
+            Bigger,
+            Smaller,
+            BiggerEqual,
+            SmallerEqual,
+            NotEqual
+        }
+        public OperationType If_Ope { get; set; }
+
+        //条件式に使う即値
+        public int If_Imm { get; set; }
+
+        //次のスクリプトA
+        public int NextA { get; set; }
+
+        //次のスクリプトB
+        public int NextB { get; set; }
+        
+    }
+
 
     public class DataLoader
     {
@@ -275,33 +331,35 @@ namespace GameData
                 var unit = new UnitDataFormat();
                 var data = rowData[i];
 
+                if (data[0] == "") continue;
+
                 try
                 {
                     unit.Name = data[1];
-                    unit.Level = Int32.Parse(data[2]);
-                    unit.MaxLevel = Int32.Parse(data[3]);
-                    unit.HP = Int32.Parse(data[4]);
+                    unit.Level = int.Parse(data[2]);
+                    unit.MaxLevel = int.Parse(data[3]);
+                    unit.HP = int.Parse(data[4]);
                     unit.MaxHP = unit.HP;
-                    unit.LeaderPAtk = Int32.Parse(data[5]);
-                    unit.LeaderMAtk = Int32.Parse(data[6]);
-                    unit.LeaderPDef = Int32.Parse(data[7]);
-                    unit.LeaderMDef = Int32.Parse(data[8]);
-                    unit.GroupPAtk = Int32.Parse(data[9]);
-                    unit.GroupMAtk = Int32.Parse(data[10]);
-                    unit.GroupPDef = Int32.Parse(data[11]);
-                    unit.GroupMDef = Int32.Parse(data[12]);
-                    unit.LeaderPAtkRate = Int32.Parse(data[13]);
-                    unit.LeaderMAtkRate = Int32.Parse(data[14]);
-                    unit.LeaderPDefRate = Int32.Parse(data[15]);
-                    unit.LeaderMDefRate = Int32.Parse(data[16]);
-                    unit.GroupPAtkRate = Int32.Parse(data[17]);
-                    unit.GroupMAtkRate = Int32.Parse(data[18]);
-                    unit.GroupPDefRate = Int32.Parse(data[19]);
-                    unit.GroupMDefRate = Int32.Parse(data[20]);
-                    unit.Leadership = Int32.Parse(data[21]);
-                    unit.Agility = Int32.Parse(data[22]);
-                    unit.Curative = Int32.Parse(data[23]);
-                    unit.SoldierNum = Int32.Parse(data[24]);
+                    unit.LeaderPAtk = int.Parse(data[5]);
+                    unit.LeaderMAtk = int.Parse(data[6]);
+                    unit.LeaderPDef = int.Parse(data[7]);
+                    unit.LeaderMDef = int.Parse(data[8]);
+                    unit.GroupPAtk = int.Parse(data[9]);
+                    unit.GroupMAtk = int.Parse(data[10]);
+                    unit.GroupPDef = int.Parse(data[11]);
+                    unit.GroupMDef = int.Parse(data[12]);
+                    unit.LeaderPAtkRate = int.Parse(data[13]);
+                    unit.LeaderMAtkRate = int.Parse(data[14]);
+                    unit.LeaderPDefRate = int.Parse(data[15]);
+                    unit.LeaderMDefRate = int.Parse(data[16]);
+                    unit.GroupPAtkRate = int.Parse(data[17]);
+                    unit.GroupMAtkRate = int.Parse(data[18]);
+                    unit.GroupPDefRate = int.Parse(data[19]);
+                    unit.GroupMDefRate = int.Parse(data[20]);
+                    unit.Leadership = int.Parse(data[21]);
+                    unit.Agility = int.Parse(data[22]);
+                    unit.Curative = int.Parse(data[23]);
+                    unit.SoldierNum = int.Parse(data[24]);
                     unit.MaxSoldierNum = unit.SoldierNum;
                     unit.StandImagePath = data[25];
                     unit.FaceIamgePath = data[26];
@@ -312,7 +370,7 @@ namespace GameData
                     unit.BattleLeaderImagePath.Add(data[29]);
                     unit.BattleGroupImagePath.Add(data[30]);
                     unit.BattleGroupImagePath.Add(data[31]);
-                    unit.AIID = Int32.Parse(data[32]);
+                    unit.AIID = int.Parse(data[32]);
                 }
                 catch(ArgumentNullException e)
                 {
@@ -340,6 +398,7 @@ namespace GameData
         public static List<AreaDataFormat> LoadAreaData(string filePath)
         {
             var outData = new List<AreaDataFormat>();
+            outData.Add(new AreaDataFormat()); //初めから一つ入れておく
 
             //ファイルからテキストデータを抽出
             var rowData = CSVReader(filePath);
@@ -357,31 +416,33 @@ namespace GameData
 
                 try
                 {
+                    area.ID = int.Parse(data[0]);
                     area.Name = data[1];
-                    area.Position = new Vector2(Int32.Parse(data[2]), Int32.Parse(data[3]));
-                    area.Owner = Int32.Parse(data[4]);
-                    area.Level = Int32.Parse(data[5]);
-                    area.Mana = Int32.Parse(data[6]);
+                    area.Position = new Vector2(float.Parse(data[2]), float.Parse(data[3]));
+                    area.Owner = int.Parse(data[4]);
+                    area.Level = int.Parse(data[5]);
+                    area.Mana = int.Parse(data[6]);
                     area.NextArea = new List<int>();
 
                     for(int j=7; j<data.Count; j++)
                     {
-                        area.NextArea.Add(Int32.Parse(data[i]));
+                        if (data[j] == "") continue;
+                        area.NextArea.Add(int.Parse(data[j]));
                     }
                 }
                 catch (ArgumentNullException e)
                 {
-                    Debug.Log("ユニットデータの読み取りに失敗：データが空です");
+                    Debug.Log("エリアデータの読み取りに失敗：データが空です");
                     Debug.Log(e.Message);
                 }
                 catch (FormatException e)
                 {
-                    Debug.Log("ユニットデータの読み取りに失敗：データの形式が違います");
+                    Debug.Log("エリアデータの読み取りに失敗：データの形式が違います");
                     Debug.Log(e.Message);
                 }
                 catch (OverflowException e)
                 {
-                    Debug.Log("ユニットデータの読み取りに失敗：データがオーバーフローしました");
+                    Debug.Log("エリアデータの読み取りに失敗：データがオーバーフローしました");
                     Debug.Log(e.Message);
                 }
 
@@ -389,6 +450,160 @@ namespace GameData
             }
 
 
+
+            return outData;
+        }
+
+        public static List<EventDataFormat> LoadEventData(string filePath)
+        {
+            var outData = new List<EventDataFormat>();
+
+            //生データの読み出し
+            var rowData = CSVReader(filePath);
+
+            //データの代入
+            for(int i=1; i<rowData.Count; i++)
+            {
+                if (rowData[i].Count != 10) continue;
+
+                var data = rowData[i];
+                var eventData = new EventDataFormat();
+
+                if (data[0] == "") continue;
+
+                try
+                {
+                    //ファイル名
+                    eventData.FileName = data[0];
+
+                    //タイミング
+                    eventData.Timing = 
+                        (EventDataFormat.TimingType)Enum.ToObject(typeof(EventDataFormat.TimingType),
+                        int.Parse(data[1]));
+
+                    //地点ＩＤ
+                    eventData.Area = int.Parse(data[2]);
+
+                    //味方登場人物
+                    eventData.ActorA = new List<int>();
+                    var parts = data[3].Split(' ');
+                    foreach( string part in parts )
+                    {
+                        if (part == "") continue;
+                        eventData.ActorA.Add(int.Parse(part));
+                    }
+
+                    //敵登場人物
+                    eventData.ActorB = new List<int>();
+                    parts = data[4].Split(' ');
+                    foreach( string part in parts)
+                    {
+                        if (part == "") continue;
+                        eventData.ActorB.Add(int.Parse(part));
+                    }
+
+                    //条件読み出し
+                    if (data[5] != "")
+                    {
+                        eventData.If_Val = int.Parse(data[5]);
+                        eventData.If_Ope =
+                            (EventDataFormat.OperationType)Enum.ToObject(typeof(EventDataFormat.OperationType),
+                            int.Parse(data[6]));
+                        eventData.If_Imm = int.Parse(data[7]);
+                    }
+                    else
+                    {
+                        eventData.If_Val = -1;
+                    }
+
+                    //次のスクリプト
+                    if(data[8] != "")eventData.NextA = int.Parse(data[8]);
+                    if(data[9] != "")eventData.NextB = int.Parse(data[9]);
+                }
+                catch (ArgumentNullException e)
+                {
+                    Debug.Log("イベントデータの読み取りに失敗：データが空です");
+                    Debug.Log(e.Message);
+                }
+                catch (FormatException e)
+                {
+                    Debug.Log("イベントデータの読み取りに失敗：データの形式が違います");
+                    Debug.Log(e.Message);
+                }
+                catch (OverflowException e)
+                {
+                    Debug.Log("イベントデータの読み取りに失敗：データがオーバーフローしました");
+                    Debug.Log(e.Message);
+                }
+
+                outData.Add(eventData);
+            }
+
+
+            return outData;
+        }
+
+        public static List<TerritoryDataFormat>LoadTerritoryData(string filePath)
+        {
+            var outData = new List<TerritoryDataFormat>();
+
+            //生データの読み出し
+            var rowData = CSVReader(filePath);
+
+            //データの代入
+            for (int i = 1; i < rowData.Count; i++)
+            {
+                if (rowData[i].Count != 4) continue;
+
+                var data = rowData[i];
+                var terData = new TerritoryDataFormat();
+
+                if (data[0] == "") continue;
+
+                try
+                {
+                    //領主名
+                    terData.OwnerName = data[0];
+
+                    //プレハブのロード
+                    terData.FlagPrefab = (GameObject)Resources.Load("Prefabs/Field/Flag/" + data[1]);
+
+                    //所持ユニットリスト
+                    terData.UnitList = new List<int>();
+                    var parts = data[2].Split(' ');
+                    foreach (string part in parts)
+                    {
+                        if (part == "") continue;
+                        terData.UnitList.Add(int.Parse(part));
+                    }
+
+                    //所持ユニットリスト
+                    terData.CardList = new List<int>();
+                    parts = data[3].Split(' ');
+                    foreach (string part in parts)
+                    {
+                        if (part == "") continue;
+                        terData.CardList.Add(int.Parse(part));
+                    }
+                }
+                catch (ArgumentNullException e)
+                {
+                    Debug.Log("領地データの読み取りに失敗：データが空です");
+                    Debug.Log(e.Message);
+                }
+                catch (FormatException e)
+                {
+                    Debug.Log("領地データの読み取りに失敗：データの形式が違います");
+                    Debug.Log(e.Message);
+                }
+                catch (OverflowException e)
+                {
+                    Debug.Log("領地データの読み取りに失敗：データがオーバーフローしました");
+                    Debug.Log(e.Message);
+                }
+
+                outData.Add(terData);
+            }
 
             return outData;
         }
