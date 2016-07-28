@@ -43,11 +43,11 @@ class FieldController : MonoBehaviour
 
         //フィールドのイベントデータを取得
         var fieldEventData = game.FieldEventData;
+        var eventlist = fieldEventData.Where(p => p.Timing == EventDataFormat.TimingType.PlayerTurnBegin).ToList();
 
         for (game.CurrentTime = 3; game.CurrentTime > 0; game.CurrentTime--)
         {
             //ターンはじめイベントを実行
-            var eventlist = fieldEventData.Where(p => p.Timing == EventDataFormat.TimingType.PlayerTurnBegin).ToList();
             yield return EventExecute(eventlist);
 
             //操作可能
@@ -68,6 +68,7 @@ class FieldController : MonoBehaviour
 
         //敵ターン開始
         //敵ターンはじめイベント
+        eventlist = fieldEventData.Where(p => p.Timing == EventDataFormat.TimingType.EnemyTurnBegin).ToList();
         for (int i = 1; i < game.TerritoryData.Count; i++)
         {
             //領地がない場合はスルー
@@ -75,6 +76,8 @@ class FieldController : MonoBehaviour
 
             game.ShowDialog("敵ターン", game.TerritoryData[i].OwnerName + "領" + '\n' + "ターンはじめイベント開始");
             while (game.IsDialogShowd) yield return null;
+
+
 
             game.ShowDialog("敵ターン", "ターンはじめイベント終了");
             while (game.IsDialogShowd) yield return null;
@@ -136,7 +139,7 @@ class FieldController : MonoBehaviour
             //条件判定
             if (eventlist[i].If_Val != -1)  //条件なしの時If_Val == -1
             {
-                int src = (int)game.Memory.GetValue(eventlist[i].If_Val, 0);
+                int src = (int)game.SystemMemory.Memory[eventlist[i].If_Val];
                 var imm = eventlist[i].If_Imm;
 
                 //演算結果用

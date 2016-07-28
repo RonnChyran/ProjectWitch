@@ -3,6 +3,7 @@ using System.IO;
 using System.Text;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq; //iOSで動かないかも
 
 using UnityEngine;
 
@@ -78,6 +79,9 @@ namespace GameData
     //スキルデータ
     public class SkillDataFormat
     {
+        //名前
+        public string Name { get; set; }
+
         //威力
         public int Power { get; set; }
 
@@ -85,9 +89,11 @@ namespace GameData
         public enum SkillType
         {
             Damage,         //ダメ―ジ
-            Heal,               //回復
+            Heal,           //回復
             StatusUp,       //ステ上昇
-            StatusDown  //ステ下降
+            StatusDown,     //ステ下降
+            Summon,         //召喚
+            Random
         };
         public SkillType Type { get; set; }
 
@@ -96,8 +102,11 @@ namespace GameData
         public List<bool> Status { get; set; }
 
         //特殊（拡張可能性あり）
-        //[0]毒付与、[1]ガード、[2]ダメージ還元、[3]順番下げ、[4]ダメ無効、[5]対ホムンクルス
+        //[0]毒付与、[1]ガード、[2]ダメージ還元、[3]順番下げ、[4]ダメ無効、[5]対ホムンクルス, [6]対ゾンビ, [7]時間消費, [8]ステータス補正取り消し
         public List<bool> OtherState { get; set; }
+
+        //召喚用ユニット番号
+        public int SummonUnit { get; set; }
 
         //範囲
         public enum SkillRange
@@ -111,11 +120,45 @@ namespace GameData
         //[0]敵集団、[1]味方集団、[2]自分、[3]敵リーダー、[4]味方リーダー
         public List<bool> Target { get; set; }
 
-        //効果時間(ターン数）
-        public int Duration { get; set; }
-
         //視覚エフェクト
         public string EffectPath { get; set; }
+    }
+
+    //カードデータ
+    public class CardDataFormat
+    {
+        //名前
+        public string Name { get; set; }
+
+        //タイミング
+        public enum CardTiming
+        {
+            BattleBegin=0,      //戦闘開始
+            BattleEnd,          //戦闘終了
+            UserState_S10,      //カード使用側のどれかのユニットの兵士数10%以下
+            UserState_S50,      //兵士数50%以下
+            UserState_HP10,     //HP10%以下
+            UserState_HP50,     //HP50%以下
+            UserState_Poison,   //毒にかかった
+            UserState_Death,    //死亡した
+            EnemyState_S10,     //カード使用側では内容のユニットの兵士数10%以下
+            EnemyState_S50,     //50%以下
+            EnemyState_HP10,    //HP10%以下
+            EnemyState_HP50,    //HP50%以下
+            EnemyState_Poison,  //毒にかかった
+            EnemyState_Death,   //死亡した
+            Rand80,             //80%で発動
+            Rand50,             //50%で発動
+            Rand20,             //20%で発動
+        }
+        public CardTiming Timing { get; set; }
+
+        //持続回数 (-1は無限)
+        public int Duration { get; set; }
+
+        //効果(スキル名
+        public string SkillName { get; set; }
+
     }
 
     //地形補正データ(倍率指定)
@@ -159,6 +202,7 @@ namespace GameData
         //背景プレハブパス
         public string BackgroundPath { get; set; }
     }
+
     //領地データ
     public class TerritoryDataFormat
     {
@@ -238,20 +282,11 @@ namespace GameData
     //仮想メモリ
     public class VirtualMemory
     {
-        private Dictionary<int, object> mMemory = new Dictionary<int, object>();
+        public List<object> Memory{ get; set; }
 
-        public void SetValue(int id, object value)
+        public VirtualMemory()
         {
-            mMemory.Add(id, value);
-        }
-        public object GetValue(int id, object defaultValue)
-        {
-            object value;
-            bool succeed = mMemory.TryGetValue(id, out value);
-            if (succeed)
-                return value;
-            else
-                return defaultValue;
+            Memory = Enumerable.Repeat<object>(-1, 70000).ToList();
         }
     }
 
@@ -469,7 +504,7 @@ namespace GameData
                 var data = rowData[i];
                 var eventData = new EventDataFormat();
 
-                if (data[0] == "") continue;
+                if (data[0] == "" || data[1] == "") continue;
 
                 try
                 {
@@ -517,8 +552,10 @@ namespace GameData
                     }
 
                     //次のスクリプト
-                    if(data[8] != "")eventData.NextA = int.Parse(data[8]);
-                    if(data[9] != "")eventData.NextB = int.Parse(data[9]);
+                    if (data[8] != "") eventData.NextA = int.Parse(data[8]);
+                    else eventData.NextA = -1;
+                    if (data[9] != "") eventData.NextB = int.Parse(data[9]);
+                    else eventData.NextB = -1;
                 }
                 catch (ArgumentNullException e)
                 {

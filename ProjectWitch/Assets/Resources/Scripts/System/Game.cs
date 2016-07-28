@@ -30,7 +30,7 @@ public class Game : MonoBehaviour
 
     //その他データ
     //システム変数
-    public VirtualMemory Memory { get; set; }
+    public VirtualMemory SystemMemory { get; set; }
     //コンフィグ
     public ConfigDataFormat Config { get; set; }
     //AIデータ
@@ -38,7 +38,7 @@ public class Game : MonoBehaviour
     //装備データ
     public List<EquipmentDataFormat> EquipmentData { get; set; }
     //カードデータ
-    public List<SkillDataFormat> CardData { get; set; }
+    public List<CardDataFormat> CardData { get; set; }
     //イベントデータ
     public List<EventDataFormat> FieldEventData { get; set; }
     public List<EventDataFormat> TownEventData { get; set; }
@@ -85,8 +85,8 @@ public class Game : MonoBehaviour
         CurrentTime = -1; //朝から
 
         //システム変数の初期化
-        Memory = new VirtualMemory();
-        Memory.SetValue(0, 0);
+        SystemMemory = new VirtualMemory();
+        SystemMemory.Memory[0] = 0;
         //あとセーブデータ読み込みなど
 
 #if DEBUG
