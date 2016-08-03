@@ -19,8 +19,6 @@ namespace GameData
         //コンストラクタ
         public UnitDataFormat()
         {
-            BattleLeaderImagePath = new List<string>();
-            BattleGroupImagePath = new List<string>();
             Love = 0;
         }
 
@@ -100,16 +98,22 @@ namespace GameData
         public string StandImagePath { get; set; }
         //顔アイコン画像名
         public string FaceIamgePath { get; set; }
-        //戦闘リーダー画像名
-        public List<string> BattleLeaderImagePath { get; set; }
-        //戦闘兵士画像名
-        public List<string> BattleGroupImagePath { get; set; }
+        //戦闘リーダープレハブ名
+        public string BattleLeaderPrefabPath { get; set; }
+        //戦闘兵士プレハブ名
+        public string BattleGroupPrefabPath { get; set; }
 
     }
 
     //スキルデータ
     public class SkillDataFormat
     {
+        public SkillDataFormat()
+        {
+            Status = Enumerable.Repeat<bool>(false, 7).ToList();
+            OtherState = Enumerable.Repeat<bool>(false, 9).ToList();
+        }
+
         //名前
         public string Name { get; set; }
 
@@ -119,12 +123,12 @@ namespace GameData
         //種類
         public enum SkillType
         {
-            Damage,         //ダメ―ジ
-            Heal,           //回復
-            StatusUp,       //ステ上昇
-            StatusDown,     //ステ下降
-            Summon,         //召喚
-            Random
+            Damage=0,       //0:ダメ―ジ
+            Heal,           //1:回復
+            StatusUp,       //2:ステ上昇
+            StatusDown,     //3:ステ下降
+            Summon,         //4:召喚
+            Random          //5:ランダム
         };
         public SkillType Type { get; set; }
 
@@ -142,14 +146,23 @@ namespace GameData
         //範囲
         public enum SkillRange
         {
-            All,
-            Single
+            All=0,      //0:全員
+            Single      //1:単体
         }
         public SkillRange Range { get; set; }
 
         //対象
+        public enum SkillTarget
+        {
+            Enemy=0,        //0:敵
+            Player,         //1:味方
+            Own,            //2:自分
+            EnemyLeader,    //3:敵リーダー
+            PlayerLeader,   //4:味方リーダー
+            EnemyAndPlayer, //5:敵味方両方
+        }
         //[0]敵集団、[1]味方集団、[2]自分、[3]敵リーダー、[4]味方リーダー
-        public List<bool> Target { get; set; }
+        public SkillTarget Target { get; set; }
 
         //視覚エフェクト
         public string EffectPath { get; set; }
@@ -187,8 +200,17 @@ namespace GameData
         //持続回数 (-1は無限)
         public int Duration { get; set; }
 
-        //効果(スキル名
-        public string SkillName { get; set; }
+        //スキルID
+        public int SkillID { get; set; }
+
+        //画像表
+        public string ImageFront { get; set; }
+
+        //画像裏
+        public string ImageBack { get; set; }
+
+        //効果説明
+        public string Description { get; set; }
 
     }
 
@@ -273,6 +295,9 @@ namespace GameData
     //装備データ
     public class EquipmentDataFormat
     {
+        //名前
+        public string Name { get; set; }
+
         //最大HP
         public int MaxHP { get; set; }
 
@@ -294,6 +319,9 @@ namespace GameData
         public int Agility { get; set; }
         //回復力
         public int Curative { get; set; }
+
+        //説明
+        public string Description { get; set; }
     }
 
     //コンフィグ
@@ -449,10 +477,14 @@ namespace GameData
                 //[18]成GATK    [19]成GMAT    [20]成GDEF     [21]成GMDE     [22]指揮力　[23]機動力
                 //[24]成指揮    [25]成機動
                 //[26]回復力　  [27]回復力成長率
-                //[28]兵士数　  
-                //[29]立ち絵画像名    [30]顔アイコン画像    
-                //[31-33]戦闘リーダー画像
-                //[34-35]戦闘兵士画像         [36]AI番号
+                //[28]兵士数    [29]死ぬか撤退か　[30]好感度 
+                //[31]リーダー攻撃スキル
+                //[32]リーダー防御スキル
+                //[33]兵士攻撃スキル   [34]兵士サイズ
+                //[35]装備             [36]AI番号
+                //[37]立ち絵画像名     [38]顔アイコン画像    
+                //[39]戦闘リーダープレハブ名
+                //[40]戦闘兵士プレハブ名
                 var unit = new UnitDataFormat();
                 var data = rowData[i];
 
@@ -490,14 +522,19 @@ namespace GameData
                     unit.CurativeRate = int.Parse(data[27]);
                     unit.SoldierNum = int.Parse(data[28]);
                     unit.MaxSoldierNum = unit.SoldierNum;
-                    unit.StandImagePath = data[29];
-                    unit.FaceIamgePath = data[30];
-                    unit.BattleLeaderImagePath.Add(data[31]);
-                    unit.BattleLeaderImagePath.Add(data[32]);
-                    unit.BattleLeaderImagePath.Add(data[33]);
-                    unit.BattleGroupImagePath.Add(data[34]);
-                    unit.BattleGroupImagePath.Add(data[35]);
+                    unit.Deathable = (data[29] == "0") ? false : true;
+                    unit.Love = int.Parse(data[30]);
+                    unit.LAtkSkill = int.Parse(data[31]);
+                    unit.LDefSkill = int.Parse(data[32]);
+                    unit.GAtkSkill = int.Parse(data[33]);
+                    unit.GUnitSize = int.Parse(data[34]);
+                    unit.Equipment = int.Parse(data[35]);
                     unit.AIID = int.Parse(data[36]);
+
+                    unit.StandImagePath = data[37];
+                    unit.FaceIamgePath = data[38];
+                    unit.BattleLeaderPrefabPath = data[39];
+                    unit.BattleGroupPrefabPath = data[40];
                 }
                 catch(ArgumentNullException e)
                 {
@@ -537,8 +574,8 @@ namespace GameData
 
                 //データの順番
                 //[0]ID         [1]地点名     [2]x     [3]y    [4]所有者
-                //[5]レベル       [6]所有マナ       
-                //[7-12]地形補正    [13]背景プレハブ名 [14-]隣接地点 
+                //[5]レベル       [6]所有マナ  [7]戦闘時間     
+                //[8-13]地形補正    [14]背景プレハブ名 [15-]隣接地点 
                 var area = new AreaDataFormat();
                 var data = rowData[i];
 
@@ -745,6 +782,240 @@ namespace GameData
                 }
 
                 outData.Add(terData);
+            }
+
+            return outData;
+        }
+
+        public static List<EquipmentDataFormat>LoadEquipmentData(string filePath)
+        {
+            var outData = new List<EquipmentDataFormat>();
+
+            //生データの読み出し
+            var rowData = CSVReader(filePath);
+
+            //データの代入
+            for(int i=1; i<rowData.Count; i++)
+            {
+                if (rowData[i].Count != 15) continue;
+
+
+                //データの順番
+                //[0]ID     [1]名前       [2]HP
+                //[3]PAtk   [4]MAtk       [5]PDef
+                //[6]MDef   [7]GPAtk      [8]GMAtk
+                //[9]GPDef  [10]GMDef     [11]Lead
+                //[12]Agi   [13]回復力    [14]説明
+                var data = rowData[i];
+                var equipData = new EquipmentDataFormat();
+
+                //無名アイテムがあったら読み飛ばす
+                if (data[1] == "") continue;
+
+                try
+                {
+                    equipData.Name = data[1];
+                    equipData.MaxHP = int.Parse(data[2]);
+                    equipData.LeaderPAtk = int.Parse(data[3]);
+                    equipData.LeaderMAtk = int.Parse(data[4]);
+                    equipData.LeaderPDef = int.Parse(data[5]);
+                    equipData.LeaderMDef = int.Parse(data[6]);
+                    equipData.GroupPAtk = int.Parse(data[7]);
+                    equipData.GroupMAtk = int.Parse(data[8]);
+                    equipData.GroupPDef = int.Parse(data[9]);
+                    equipData.GroupMDef = int.Parse(data[10]);
+                    equipData.Leadership = int.Parse(data[11]);
+                    equipData.Agility = int.Parse(data[12]);
+                    equipData.Curative = int.Parse(data[13]);
+                    equipData.Description = data[14];
+                }
+                catch (ArgumentNullException e)
+                {
+                    Debug.Log("装備データの読み取りに失敗：データが空です");
+                    Debug.Log(e.Message);
+                }
+                catch (FormatException e)
+                {
+                    Debug.Log("装備データの読み取りに失敗：データの形式が違います");
+                    Debug.Log(e.Message);
+                }
+                catch (OverflowException e)
+                {
+                    Debug.Log("装備データの読み取りに失敗：データがオーバーフローしました");
+                    Debug.Log(e.Message);
+                }
+
+                outData.Add(equipData);
+            }
+
+            return outData;
+        }
+
+        public static List<AIDataFormat>LoadAIData(string filePath)
+        {
+            var outData = new List<AIDataFormat>();
+
+            //生データの読み出し
+            var rowData = CSVReader(filePath);
+
+            //データの代入
+            for (int i = 1; i < rowData.Count; i++)
+            {
+                if (rowData[i].Count != 2) continue;
+
+
+                //データの順番
+                //[0]ID     [1]攻撃率
+                var data = rowData[i];
+                var AIData = new AIDataFormat();
+
+                //無名アイテムがあったら読み飛ばす
+                if (data[1] == "") continue;
+
+                try
+                {
+                    AIData.AttackRate = float.Parse(data[1]);
+                }
+                catch (ArgumentNullException e)
+                {
+                    Debug.Log("AIデータの読み取りに失敗：データが空です");
+                    Debug.Log(e.Message);
+                }
+                catch (FormatException e)
+                {
+                    Debug.Log("AIデータの読み取りに失敗：データの形式が違います");
+                    Debug.Log(e.Message);
+                }
+                catch (OverflowException e)
+                {
+                    Debug.Log("AIデータの読み取りに失敗：データがオーバーフローしました");
+                    Debug.Log(e.Message);
+                }
+
+                outData.Add(AIData);
+            }
+
+            return outData;
+        }
+
+        public static List<SkillDataFormat>LoadSkillData(string filePath)
+        {
+            var outData = new List<SkillDataFormat>();
+
+            //生データの読み出し
+            var rowData = CSVReader(filePath);
+
+            //データの代入
+            for (int i = 1; i < rowData.Count; i++)
+            {
+                if (rowData[i].Count != 24) continue;
+
+
+                //データの順番
+                //[0]ID     [1]名前       [2]HP
+                //[3]PAtk   [4]MAtk       [5]PDef
+                //[6]MDef   [7]GPAtk      [8]GMAtk
+                //[9]GPDef  [10]GMDef     [11]Lead
+                //[12]Agi   [13]回復力    [14]説明
+                var data = rowData[i];
+                var skill = new SkillDataFormat();
+
+                //無名アイテムがあったら読み飛ばす
+                if (data[1] == "") continue;
+
+                try
+                {
+                    skill.Name = data[1];
+                    skill.Power = int.Parse(data[2]);
+                    skill.Type = (SkillDataFormat.SkillType)Enum.ToObject(
+                        typeof(SkillDataFormat.SkillType), int.Parse(data[3]));
+
+                    //ステータス
+                    for (int j = 0, index = 4; j < 7; j++, index++)
+                        skill.Status[j] = (data[index] == "0") ? false : true;
+
+                    //特殊ステータス
+                    for (int j = 0, index = 11; j < 9; j++, index++)
+                        skill.OtherState[j] = (data[index] == "0") ? false : true;
+
+                    skill.SummonUnit = int.Parse(data[20]);
+                    skill.Range = (SkillDataFormat.SkillRange)Enum.ToObject(
+                        typeof(SkillDataFormat.SkillRange), int.Parse(data[21]));
+                    skill.Target = (SkillDataFormat.SkillTarget)Enum.ToObject(
+                        typeof(SkillDataFormat.SkillTarget), int.Parse(data[22]));
+                    skill.EffectPath = data[23];
+                }
+                catch (ArgumentNullException e)
+                {
+                    Debug.Log("スキルデータの読み取りに失敗：データが空です");
+                    Debug.Log(e.Message);
+                }
+                catch (FormatException e)
+                {
+                    Debug.Log("スキルデータの読み取りに失敗：データの形式が違います");
+                    Debug.Log(e.Message);
+                }
+                catch (OverflowException e)
+                {
+                    Debug.Log("スキルデータの読み取りに失敗：データがオーバーフローしました");
+                    Debug.Log(e.Message);
+                }
+
+                outData.Add(skill);
+            }
+            
+            return outData;
+        }
+
+        public static List<CardDataFormat>LoadCardData(string filePath)
+        {
+            var outData = new List<CardDataFormat>();
+
+            //生データの読み出し
+            var rowData = CSVReader(filePath);
+
+            //データの代入
+            for (int i = 1; i < rowData.Count; i++)
+            {
+                if (rowData[i].Count != 7) continue;
+
+
+                //データの順番
+                var data = rowData[i];
+                var card = new CardDataFormat();
+
+                //無名アイテムがあったら読み飛ばす
+                if (data[0] == "") continue;
+
+                try
+                {
+                    card.Name = data[0];
+                    card.Timing = (CardDataFormat.CardTiming)Enum.ToObject(
+                        typeof(CardDataFormat.CardTiming), int.Parse(data[1]));
+                    card.Duration = int.Parse(data[2]);
+                    card.SkillID = int.Parse(data[3]);
+                    card.ImageFront = data[4];
+                    card.ImageBack = data[5];
+                    card.Description = data[6];
+
+                }
+                catch (ArgumentNullException e)
+                {
+                    Debug.Log("カードデータの読み取りに失敗：データが空です");
+                    Debug.Log(e.Message);
+                }
+                catch (FormatException e)
+                {
+                    Debug.Log("カードデータの読み取りに失敗：データの形式が違います");
+                    Debug.Log(e.Message);
+                }
+                catch (OverflowException e)
+                {
+                    Debug.Log("カードデータの読み取りに失敗：データがオーバーフローしました");
+                    Debug.Log(e.Message);
+                }
+
+                outData.Add(card);
             }
 
             return outData;

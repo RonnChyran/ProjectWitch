@@ -26,9 +26,6 @@ public class BattleDebugger : MonoBehaviour {
         var game = Game.GetInstance();
         var sceneName = game.SceneName_Battle;
 
-        //シーンのアンロード
-        SceneManager.UnloadScene(sceneName);
-
         //フィールドの再ロード
         Game.GetInstance().CallField();
     }

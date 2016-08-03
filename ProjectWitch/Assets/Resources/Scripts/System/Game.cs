@@ -220,7 +220,8 @@ public class Game : MonoBehaviour
         UnitData = DataLoader.LoadUnitData("Assets\\Resources\\Data\\unit_data.csv");
 
         //スキルデータの読み出し
-        
+        SkillData = DataLoader.LoadSkillData("Assets\\Resources\\Data\\skill_data.csv");
+
         //地点データの読み出し
         AreaData = DataLoader.LoadAreaData("Assets\\Resources\\Data\\area_data.csv");
 
@@ -240,8 +241,20 @@ public class Game : MonoBehaviour
             }
         }
 
+        //AI
+        AIData = DataLoader.LoadAIData("Assets\\Resources\\Data\\ai_data.csv");
+
+        //装備
+        EquipmentData = DataLoader.LoadEquipmentData("Assets\\Resources\\Data\\equipment_data.csv");
+
+        //カード
+        CardData = DataLoader.LoadCardData("Assets\\Resources\\Data\\card_data.csv");
+
         //イベントデータの読み出し
-        FieldEventData = DataLoader.LoadEventData("Assets\\Resources\\Data\\event_data_field.csv");
+        ArmyEventData =     DataLoader.LoadEventData("Assets\\Resources\\Data\\event_data_army.csv");
+        FieldEventData =    DataLoader.LoadEventData("Assets\\Resources\\Data\\event_data_field.csv");
+        TownEventData =     DataLoader.LoadEventData("Assets\\Resources\\Data\\event_data_town.csv");
+
     }
 
 }
