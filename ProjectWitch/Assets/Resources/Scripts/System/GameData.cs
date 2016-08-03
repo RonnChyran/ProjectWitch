@@ -10,9 +10,20 @@ using UnityEngine;
 namespace GameData
 {
     //各種データ構造
+
+    #region ゲームデータ系
+
     //ユニットデータ
     public class UnitDataFormat
     {
+        //コンストラクタ
+        public UnitDataFormat()
+        {
+            BattleLeaderImagePath = new List<string>();
+            BattleGroupImagePath = new List<string>();
+            Love = 0;
+        }
+
         //ユニット名
         public string Name { get; set; }
 
@@ -22,23 +33,11 @@ namespace GameData
         //レベル成長限界
         public int MaxLevel { get; set; }
 
-        //立ち絵画像名
-        public string StandImagePath { get; set; }
-        //顔アイコン画像名
-        public string FaceIamgePath { get; set; }
-        //戦闘リーダー画像名
-        public List<string> BattleLeaderImagePath { get; set; }
-        //戦闘兵士画像名
-        public List<string> BattleGroupImagePath { get; set; }
-
-        //AI番号
-        public int AIID { get; set; }
-
-
         //HP
         public int HP { get; set; }
         //最大HP
         public int MaxHP { get; set; }
+        public int HPRate { get; set; }     //HP成長率
 
         //リーダー(Leader)
         public int LeaderPAtk { get; set; } //物理攻撃
@@ -63,17 +62,49 @@ namespace GameData
 
         //指揮力
         public int Leadership { get; set; }
+        public int LeadershipRate { get; set; } //指揮力成長率
         //機動力
         public int Agility { get; set; }
+        public int AgilityRate { get; set; }    //機動力成長率
         //回復力
         public int Curative { get; set; }
+        public int CurativeRate { get; set; }   //回復力成長率
         //兵士数
         public int SoldierNum { get; set; }
         //最大兵士数
         public int MaxSoldierNum { get; set; }
 
+        //撤退するか死ぬか ture:死ぬ　false：撤退する（捕獲コマンドが無効
+        public bool Deathable { get; set; }
+
+        //好感度
+        public int Love { get; set; }
+
+        //リーダースキル
+        public int LAtkSkill { get; set; }
+        public int LDefSkill { get; set; }
+
+        //部下スキル
+        public int GAtkSkill { get; set; }
+
+        //部下の大きさ（小:0 中:1 大:2 特大:3
+        public int GUnitSize { get; set; }
+
         //装備ID
         public int Equipment { get; set; }
+
+        //AI番号
+        public int AIID { get; set; }
+
+        //立ち絵画像名
+        public string StandImagePath { get; set; }
+        //顔アイコン画像名
+        public string FaceIamgePath { get; set; }
+        //戦闘リーダー画像名
+        public List<string> BattleLeaderImagePath { get; set; }
+        //戦闘兵士画像名
+        public List<string> BattleGroupImagePath { get; set; }
+
     }
 
     //スキルデータ
@@ -168,13 +199,21 @@ namespace GameData
         public float MAtk { get; set; }         //魔法攻撃力
         public float PDef { get; set; }         //物理防御力
         public float MDef { get; set; }         //魔法防御力
-        public float Readership { get; set; }   //指揮力
+        public float Leadership { get; set; }   //指揮力
         public float Agility { get; set; }      //機動力
     }
 
     //地点データ
     public class AreaDataFormat
     {
+        //コンストラクタ
+        public AreaDataFormat()
+        {
+            Position = new Vector2();
+            BattleFactor = new AreaBattleFactor();
+            NextArea = new List<int>();
+        }
+
         //地点番号
         public int ID { get; set; }
 
@@ -193,6 +232,9 @@ namespace GameData
         //所有マナ
         public int Mana { get; set; }
 
+        //戦闘時間
+        public int Time { get; set; }
+
         //地形補正
         public AreaBattleFactor BattleFactor { get; set; }
 
@@ -200,7 +242,7 @@ namespace GameData
         public List<int> NextArea { get; set; }
 
         //背景プレハブパス
-        public string BackgroundPath { get; set; }
+        public string BackgroundName { get; set; }
     }
 
     //領地データ
@@ -239,10 +281,11 @@ namespace GameData
         public int LeaderMAtk { get; set; } //魔法攻撃
         public int LeaderPDef { get; set; } //物理防御
         public int LeaderMDef { get; set; } //魔法防御
-                                            //集団(Group)
-        public int GroupPAtk { get; set; }      //物理攻撃
+        
+        //集団(Group)
+        public int GroupPAtk { get; set; }  //物理攻撃
         public int GroupMAtk { get; set; }  //魔法攻撃
-        public int GroupPDef { get; set; }      //物理防御
+        public int GroupPDef { get; set; }  //物理防御
         public int GroupMDef { get; set; }  //魔法防御
 
         //指揮力
@@ -341,6 +384,48 @@ namespace GameData
         
     }
 
+    #endregion
+
+    #region 戦闘系
+
+    public class BattleDataIn
+    {
+        public BattleDataIn()
+        {
+            PlayerUnits = new List<int>();
+            EnemyUnits = new List<int>();
+            PlayerCards = new List<int>();
+            EnemyCards = new List<int>();
+        }
+
+        //ユニットデータ
+        public List<int> PlayerUnits { get; set; }
+        public List<int> EnemyUnits { get; set; }
+
+        //カードデータ
+        public List<int> PlayerCards { get; set; }
+        public List<int> EnemyCards { get; set; }
+
+        //地点情報
+        public int AreaID { get; set; }
+
+        //時間帯
+        public int TimeOfDay { get; set; }
+
+        //侵攻戦か防衛戦か
+        public bool IsInvasion { get; set; }
+
+        //自動戦闘か否か
+        public bool IsAuto { get; set; }
+    }
+
+    public class BattleDataOut
+    {
+        public bool IsWin { get; set; }
+    }
+
+
+    #endregion
 
     public class DataLoader
     {
@@ -354,15 +439,20 @@ namespace GameData
             //ユニットデータに格納（0番目はキャプションなので読み飛ばす
             for(int i=1; i<rowData.Count; i++)
             {
-                if (rowData[i].Count != 33) continue;
+                if (rowData[i].Count != 37) continue;
 
                 //データの順番
                 //[0]ID         [1]名前       [2]レベル      [3]レベル成長限界          [4]HP
-                //[5]LATK       [6]LMAT       [7]LDEF        [8]LMDE        [9]GATK     [10]GMAT
-                //[11]GDEF      [12]GMDE      [13]成LATK     [14]成LMAT     [15]成LDEF  [16]成LMDE
-                //[17]成GATK    [18]成GMAT    [19]成GDEF     [20]成GMDE     [21]指揮力　[22]機動力
-                //[23]回復力　  [24]兵士数　  [25]立ち絵画像名    [26]顔アイコン画像    [27-29]戦闘リーダー画像
-                //[30-31]戦闘兵士画像         [32]AI番号
+                //[5]HP成長率
+                //[6]LATK       [7]LMAT       [8]LDEF        [9]LMDE        [10]GATK    [11]GMAT
+                //[12]GDEF      [13]GMDE      [14]成LATK     [15]成LMAT     [16]成LDEF  [17]成LMDE
+                //[18]成GATK    [19]成GMAT    [20]成GDEF     [21]成GMDE     [22]指揮力　[23]機動力
+                //[24]成指揮    [25]成機動
+                //[26]回復力　  [27]回復力成長率
+                //[28]兵士数　  
+                //[29]立ち絵画像名    [30]顔アイコン画像    
+                //[31-33]戦闘リーダー画像
+                //[34-35]戦闘兵士画像         [36]AI番号
                 var unit = new UnitDataFormat();
                 var data = rowData[i];
 
@@ -375,37 +465,39 @@ namespace GameData
                     unit.MaxLevel = int.Parse(data[3]);
                     unit.HP = int.Parse(data[4]);
                     unit.MaxHP = unit.HP;
-                    unit.LeaderPAtk = int.Parse(data[5]);
-                    unit.LeaderMAtk = int.Parse(data[6]);
-                    unit.LeaderPDef = int.Parse(data[7]);
-                    unit.LeaderMDef = int.Parse(data[8]);
-                    unit.GroupPAtk = int.Parse(data[9]);
-                    unit.GroupMAtk = int.Parse(data[10]);
-                    unit.GroupPDef = int.Parse(data[11]);
-                    unit.GroupMDef = int.Parse(data[12]);
-                    unit.LeaderPAtkRate = int.Parse(data[13]);
-                    unit.LeaderMAtkRate = int.Parse(data[14]);
-                    unit.LeaderPDefRate = int.Parse(data[15]);
-                    unit.LeaderMDefRate = int.Parse(data[16]);
-                    unit.GroupPAtkRate = int.Parse(data[17]);
-                    unit.GroupMAtkRate = int.Parse(data[18]);
-                    unit.GroupPDefRate = int.Parse(data[19]);
-                    unit.GroupMDefRate = int.Parse(data[20]);
-                    unit.Leadership = int.Parse(data[21]);
-                    unit.Agility = int.Parse(data[22]);
-                    unit.Curative = int.Parse(data[23]);
-                    unit.SoldierNum = int.Parse(data[24]);
+                    unit.HPRate = int.Parse(data[5]);
+                    unit.LeaderPAtk = int.Parse(data[6]);
+                    unit.LeaderMAtk = int.Parse(data[7]);
+                    unit.LeaderPDef = int.Parse(data[8]);
+                    unit.LeaderMDef = int.Parse(data[9]);
+                    unit.GroupPAtk = int.Parse(data[10]);
+                    unit.GroupMAtk = int.Parse(data[11]);
+                    unit.GroupPDef = int.Parse(data[12]);
+                    unit.GroupMDef = int.Parse(data[13]);
+                    unit.LeaderPAtkRate = int.Parse(data[14]);
+                    unit.LeaderMAtkRate = int.Parse(data[15]);
+                    unit.LeaderPDefRate = int.Parse(data[16]);
+                    unit.LeaderMDefRate = int.Parse(data[17]);
+                    unit.GroupPAtkRate = int.Parse(data[18]);
+                    unit.GroupMAtkRate = int.Parse(data[19]);
+                    unit.GroupPDefRate = int.Parse(data[20]);
+                    unit.GroupMDefRate = int.Parse(data[21]);
+                    unit.Leadership = int.Parse(data[22]);
+                    unit.Agility = int.Parse(data[23]);
+                    unit.LeadershipRate = int.Parse(data[24]);
+                    unit.AgilityRate = int.Parse(data[25]);
+                    unit.Curative = int.Parse(data[26]);
+                    unit.CurativeRate = int.Parse(data[27]);
+                    unit.SoldierNum = int.Parse(data[28]);
                     unit.MaxSoldierNum = unit.SoldierNum;
-                    unit.StandImagePath = data[25];
-                    unit.FaceIamgePath = data[26];
-                    unit.BattleLeaderImagePath = new List<string>();
-                    unit.BattleGroupImagePath = new List<string>();
-                    unit.BattleLeaderImagePath.Add(data[27]);
-                    unit.BattleLeaderImagePath.Add(data[28]);
-                    unit.BattleLeaderImagePath.Add(data[29]);
-                    unit.BattleGroupImagePath.Add(data[30]);
-                    unit.BattleGroupImagePath.Add(data[31]);
-                    unit.AIID = int.Parse(data[32]);
+                    unit.StandImagePath = data[29];
+                    unit.FaceIamgePath = data[30];
+                    unit.BattleLeaderImagePath.Add(data[31]);
+                    unit.BattleLeaderImagePath.Add(data[32]);
+                    unit.BattleLeaderImagePath.Add(data[33]);
+                    unit.BattleGroupImagePath.Add(data[34]);
+                    unit.BattleGroupImagePath.Add(data[35]);
+                    unit.AIID = int.Parse(data[36]);
                 }
                 catch(ArgumentNullException e)
                 {
@@ -433,7 +525,7 @@ namespace GameData
         public static List<AreaDataFormat> LoadAreaData(string filePath)
         {
             var outData = new List<AreaDataFormat>();
-            outData.Add(new AreaDataFormat()); //初めから一つ入れておく
+            outData.Add(new AreaDataFormat()); //初めから一つ入れておく(デフォルト地点
 
             //ファイルからテキストデータを抽出
             var rowData = CSVReader(filePath);
@@ -441,11 +533,12 @@ namespace GameData
             //地点データに格納（0番目はキャプションなので読み飛ばす
             for (int i = 1; i < rowData.Count; i++)
             {
-                if (rowData[i].Count < 8) continue;
+                if (rowData[i].Count < 15) continue;
 
                 //データの順番
                 //[0]ID         [1]地点名     [2]x     [3]y    [4]所有者
-                //[5]レベル       [6]所有マナ       [7-]隣接地点 
+                //[5]レベル       [6]所有マナ       
+                //[7-12]地形補正    [13]背景プレハブ名 [14-]隣接地点 
                 var area = new AreaDataFormat();
                 var data = rowData[i];
 
@@ -457,9 +550,21 @@ namespace GameData
                     area.Owner = int.Parse(data[4]);
                     area.Level = int.Parse(data[5]);
                     area.Mana = int.Parse(data[6]);
-                    area.NextArea = new List<int>();
+                    area.Time = int.Parse(data[7]);
 
-                    for(int j=7; j<data.Count; j++)
+                    //地形補正
+                    area.BattleFactor.PAtk = int.Parse(data[8]);
+                    area.BattleFactor.MAtk = int.Parse(data[9]);
+                    area.BattleFactor.PDef = int.Parse(data[10]);
+                    area.BattleFactor.MDef = int.Parse(data[11]);
+                    area.BattleFactor.Leadership = int.Parse(data[12]);
+                    area.BattleFactor.Agility = int.Parse(data[13]);
+
+                    //背景プレハブ名
+                    area.BackgroundName = data[14];
+
+                    //隣接地点
+                    for (int j=15; j<data.Count; j++)
                     {
                         if (data[j] == "") continue;
                         area.NextArea.Add(int.Parse(data[j]));

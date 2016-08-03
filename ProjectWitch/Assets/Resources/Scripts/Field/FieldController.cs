@@ -20,6 +20,10 @@ class FieldController : MonoBehaviour
     //メニューが開いているかどうか
     public bool OpeningMenu{ get; set; }
 
+    //内部変数
+    //コルーチンが動いているかどうか
+    private bool mIsCoroutineExec = false;
+
     void Start()
     {
         //拠点設置
@@ -32,49 +36,78 @@ class FieldController : MonoBehaviour
 
     void Update()
     {
-        if(Game.GetInstance().CurrentTime < 0)
-            StartCoroutine("_Update");
+        var game = Game.GetInstance();
+
+        //コルーチンが動いていたら何もしない
+        if (mIsCoroutineExec) return;
+
+        //コルーチンを起動
+        if(game.CurrentTime <= 2)
+        {
+            //現在の時間が0~2のとき
+            //プレイヤーのターン
+            StartCoroutine(PlayerTurn());
+        }
+        else
+        {
+            //現在の時間が3~のとき
+            //敵のターン
+            var territory = game.CurrentTime - 2;   //領地ＩＤを求める
+            if (territory < game.TerritoryData.Count)
+                StartCoroutine(EnemyTurn(territory));
+            else
+            {
+                //敵ターンが終了したので次のターンへ移行
+                game.CurrentTurn++;
+                game.CurrentTime = 0;
+
+                //オートセーブ
+                game.AutoSave();
+            }
+        }
     }
 
-    //メインの動作部分（コルーチン
-    private IEnumerator _Update()
+    //味方ターンの動作
+    private IEnumerator PlayerTurn()
     {
         var game = Game.GetInstance();
+        var currentTime = game.CurrentTime;
+
+        //コルーチンの開始
+        mIsCoroutineExec = true;
 
         //フィールドのイベントデータを取得
         var fieldEventData = game.FieldEventData;
         var eventlist = fieldEventData.Where(p => p.Timing == EventDataFormat.TimingType.PlayerTurnBegin).ToList();
 
-        for (game.CurrentTime = 3; game.CurrentTime > 0; game.CurrentTime--)
+        //ターンはじめイベントを実行
+        yield return EventExecute(eventlist);
+
+        //時間が変化するまで待機
+        while (currentTime == game.CurrentTime) yield return null;
+
+        //コルーチン終了
+        mIsCoroutineExec = false;
+        yield return null;
+    }
+
+    //敵ターンの動作
+    private IEnumerator EnemyTurn(int territory)
+    {
+        var game = Game.GetInstance();
+
+        //コルーチン開始
+        mIsCoroutineExec = true;
+
+        //フィールドのイベントデータを取得
+        var fieldEventData = game.FieldEventData;
+        var eventlist = fieldEventData.Where(p => p.Timing == EventDataFormat.TimingType.EnemyTurnBegin).ToList();
+
+        //領地がない場合はスルー
+        if (game.TerritoryData[territory].AreaList.Count > 0)
         {
-            //ターンはじめイベントを実行
-            yield return EventExecute(eventlist);
 
-            //操作可能
-            game.ShowDialog("fase:" + (4-game.CurrentTime).ToString(), "プレイヤー操作開始");
-            while (game.IsDialogShowd) yield return null;
-            while (!Input.GetKeyDown(KeyCode.Space)) yield return null;
-
-            //ユーザー行動
-            //敵陣地選択
-            //戦闘前イベント
-            //戦闘
-            //分岐：戦闘敗北、戦闘勝利
-            //戦闘勝利　勝利後イベント
-            //戦闘敗北　敗北後イベント
-            //ターンはじめイベント・・・・・・繰り返し
-        }
-        //ターン終了
-
-        //敵ターン開始
-        //敵ターンはじめイベント
-        eventlist = fieldEventData.Where(p => p.Timing == EventDataFormat.TimingType.EnemyTurnBegin).ToList();
-        for (int i = 1; i < game.TerritoryData.Count; i++)
-        {
-            //領地がない場合はスルー
-            if (game.TerritoryData[i].AreaList.Count == 0) continue;
-
-            game.ShowDialog("敵ターン", game.TerritoryData[i].OwnerName + "領" + '\n' + "ターンはじめイベント開始");
+            game.ShowDialog("敵ターン", game.TerritoryData[territory].OwnerName + "領" + '\n' + "ターンはじめイベント開始");
             while (game.IsDialogShowd) yield return null;
 
 
@@ -86,13 +119,11 @@ class FieldController : MonoBehaviour
             game.ShowDialog("敵ターン", "敵行動");
             while (game.IsDialogShowd) yield return null;
         }
-        //戦闘
-        //戦闘前イベント
-        //戦闘
-        //分岐：戦闘敗北、戦闘勝利
-        //次の領地……繰り返し
 
-        game.CurrentTime = -1;
+        game.CurrentTime++;
+
+        //コルーチン終了
+        mIsCoroutineExec = false;
 
         yield return null;
     }
@@ -106,24 +137,27 @@ class FieldController : MonoBehaviour
         {
             //イベント実行フラグ
             bool isEventEnable = true;
-
-            //生存判定
+            
+            //味方の生存判定
             foreach (int unit in eventlist[i].ActorA)
             {
-                //味方の生存判定
+                //自領地にユニットが含まれているか
                 if (game.TerritoryData[0].UnitList.Contains(unit) == false)
                 {
+                    //含まれていなかったらイベントイベント棄却
                     isEventEnable = false;
                     break;
                 }
             }
+            if (!isEventEnable) continue;
 
+            //敵の生存判定
             foreach (int unit in eventlist[i].ActorB)
             {
-                //敵の生存判定
                 isEventEnable = false;
                 for (int j = 1; j < game.TerritoryData.Count; j++)
                 {
+                    //任意の領地にユニットが含まれているか
                     if (game.TerritoryData[j].UnitList.Contains(unit))
                     {
                         isEventEnable = true;
@@ -131,9 +165,9 @@ class FieldController : MonoBehaviour
                     }
                 }
 
+                //どの領地にも敵が見つからなかったらイベント棄却
                 if (!isEventEnable) break;
             }
-
             if (!isEventEnable) continue;
 
             //条件判定
@@ -172,7 +206,7 @@ class FieldController : MonoBehaviour
             }
 
             //実行
-            game.ExecuteScript(eventlist[i].FileName);
+            game.CallScript(eventlist[i].FileName);
             while (game.IsDialogShowd) yield return null;
 
             //次のスクリプト実行
@@ -190,6 +224,7 @@ class FieldController : MonoBehaviour
             var Base = Instantiate(game.TerritoryData[game.AreaData[i].Owner].FlagPrefab);
             Base.transform.SetParent(mCanvasInst.transform);
             Base.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(game.AreaData[i].Position.x, game.AreaData[i].Position.y, 1.0f);
+            Base.GetComponent<FieldButton>().AreaID = i;
         }
     }
 

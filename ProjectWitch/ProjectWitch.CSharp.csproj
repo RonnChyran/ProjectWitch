@@ -103,13 +103,14 @@
     <Compile Include="Assets\Resources\Effects\ImageEffects\Scripts\VignetteAndChromaticAberration.cs" />
     <Compile Include="Assets\Resources\Effects\ImageEffects\Scripts\Vortex.cs" />
     <Compile Include="Assets\Resources\Scripts\Army\LeaderMenu.cs" />
+    <Compile Include="Assets\Resources\Scripts\Battle\BattleDebugger.cs" />
     <Compile Include="Assets\Resources\Scripts\Common\ArmyJump.cs" />
     <Compile Include="Assets\Resources\Scripts\Common\MainCameraGetter.cs" />
-    <Compile Include="Assets\Resources\Scripts\Field\AreaButton.cs" />
     <Compile Include="Assets\Resources\Scripts\Field\CameraController.cs" />
-    <Compile Include="Assets\Resources\Scripts\Field\FieldAreaMenuController.cs" />
+    <Compile Include="Assets\Resources\Scripts\Field\FieldButton.cs" />
     <Compile Include="Assets\Resources\Scripts\Field\FieldController.cs" />
-    <Compile Include="Assets\Resources\Scripts\Field\MenuButton.cs" />
+    <Compile Include="Assets\Resources\Scripts\Field\FieldMenu.cs" />
+    <Compile Include="Assets\Resources\Scripts\Field\TurnCounter.cs" />
     <Compile Include="Assets\Resources\Scripts\System\Game.cs" />
     <Compile Include="Assets\Resources\Scripts\System\GameData.cs" />
     <Compile Include="Assets\Resources\Scripts\Title\LoadButton.cs" />

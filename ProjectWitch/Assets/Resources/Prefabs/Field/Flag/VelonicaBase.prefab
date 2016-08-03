@@ -11,7 +11,7 @@ GameObject:
   - 222: {fileID: 22250128}
   - 114: {fileID: 11437456}
   - 114: {fileID: 11447382}
-  - 114: {fileID: 11421836}
+  - 114: {fileID: 11471492}
   m_Layer: 5
   m_Name: VelonicaBase
   m_TagString: Untagged
@@ -36,20 +36,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &11421836
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 103972}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a11719a63f59ba4097f858546b36a46, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isPlayer: 0
-  mPlayerAreaMenuScene: PlayerMenu
-  mEnemyAreaMenuScene: EnemyMenu
 --- !u!114 &11437456
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -149,8 +135,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11421836}
-        m_MethodName: ButtonPush
+      - m_Target: {fileID: 11471492}
+        m_MethodName: OpenEnemyMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -162,6 +148,21 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &11471492
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 103972}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66acdda8816102b4ab807c553c3cfa56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mPlayerMenuPath: Prefabs/Field/Menu/PlayerMenu
+  mEnemyMenuAPath: Prefabs/Field/Menu/EnemyMenuA
+  mEnemuMenuBPath: Prefabs/Field/Menu/EnemyMenuB
+  mCommonMenuPath: Prefabs/Field/Menu/CommonMenu
 --- !u!222 &22225386
 CanvasRenderer:
   m_ObjectHideFlags: 1

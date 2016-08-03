@@ -7,9 +7,27 @@ using GameData;
 
 public class Game : MonoBehaviour
 {
-    //----------------------------------
-    //データ関連
-    //----------------------------------
+    #region 定数
+
+    //シーン名
+    private const string cSceneName_Battle      = "Battle";
+    private const string cSceneName_PreBattle   = "PreBattle";
+    private const string cSceneName_Field       = "Field";
+    private const string cSceneName_Save        = "Save";
+    private const string cSceneName_Load        = "Load";
+
+    //読み取り専用プロパティ
+    public string SceneName_Battle      { get { return cSceneName_Battle; } private set { } }
+    public string SceneName_PreBattle   { get { return cSceneName_PreBattle; } private set { } }
+    public string SceneName_Field       { get { return cSceneName_Field; } private set { } }
+    public string SceneName_Save        { get { return cSceneName_Save; } private set { } }
+    public string SceneName_Load        { get { return cSceneName_Load; } private set { } }
+
+
+    #endregion
+
+    #region ゲームデータ関連
+
     //プレイヤーのデータ
     //ユニットデータ
     public List<UnitDataFormat> UnitData { get; set; }
@@ -20,8 +38,8 @@ public class Game : MonoBehaviour
 
     //環境のデータ
     //現在のターン数
-    public int CurrentTrun { get; set; }
-    //現在の時間数
+    public int CurrentTurn { get; set; }
+    //現在の時間数 0:朝 1:昼 2:夜 3~:敵ターン
     public int CurrentTime { get; set; }
     //土地データ
     public List<AreaDataFormat> AreaData { get; set; }
@@ -44,10 +62,22 @@ public class Game : MonoBehaviour
     public List<EventDataFormat> TownEventData { get; set; }
     public List<EventDataFormat> ArmyEventData { get; set; }
 
-    //---------------------
-    //内部変数
-    //---------------------
+    #endregion
+
+    #region シーン間データ関連
+
+    public BattleDataIn BattleIn { get; set; }
+    public BattleDataOut BattleOut { get; set; }
+
+    #endregion
+
+    #region 制御変数
+
     public bool IsDialogShowd { get; set; }
+    public bool IsBattle { get; set; }
+    public bool IsScript { get; set; }
+
+    #endregion
 
     //Singleton
     private static Game mInst;
@@ -82,11 +112,27 @@ public class Game : MonoBehaviour
         IsDialogShowd = false;
 
         //データ系の初期化
-        CurrentTime = -1; //朝から
-
-        //システム変数の初期化
+        UnitData = new List<UnitDataFormat>();
+        SkillData = new List<SkillDataFormat>();
+        PlayerMana = 10000;
+        CurrentTime = 0; //朝から
+        CurrentTurn = 1;
+        AreaData = new List<AreaDataFormat>();
+        TerritoryData = new List<TerritoryDataFormat>();
         SystemMemory = new VirtualMemory();
         SystemMemory.Memory[0] = 0;
+        Config = new ConfigDataFormat();
+        AIData = new List<AIDataFormat>();
+        EquipmentData = new List<EquipmentDataFormat>();
+        CardData = new List<CardDataFormat>();
+        FieldEventData = new List<EventDataFormat>();
+        TownEventData = new List<EventDataFormat>();
+        ArmyEventData = new List<EventDataFormat>();
+
+        //シーン間データの初期化
+        BattleIn = new BattleDataIn();
+        BattleOut = new BattleDataOut();
+
         //あとセーブデータ読み込みなど
 
 #if DEBUG
@@ -113,22 +159,58 @@ public class Game : MonoBehaviour
 
     }
 
+    //フィールドの開始
+    public void CallField()
+    {
+        SceneManager.LoadScene(cSceneName_Field);
+    }
+
+    //戦闘の開始
+    public void CallPreBattle()
+    {
+        CallBattle();
+    }
+
+    public void CallBattle()
+    {
+        SceneManager.LoadScene(cSceneName_Battle);
+    }
+
     //スクリプトの開始
-    public void ExecuteScript(string filePath)
+    public void CallScript(string filePath)
     {
         ShowDialog("ExecuteScript", filePath + "を実行します");
     }
 
-    //現在の状態をセーブする
-    public void Save(int slot)
+    //セーブ画面を呼び出す
+    public void CallSave()
     {
+        SceneManager.LoadScene(cSceneName_Save);
+    }
 
+    //ロード画面を呼び出す
+    public void CallLoad()
+    {
+        SceneManager.LoadScene(cSceneName_Load);
+    }
+
+    //オートセーブする
+    public void AutoSave()
+    {
+        ShowDialog("オートセーブ", CurrentTurn.ToString() + "ターン目\nオートセーブしました。");
+        Save(0); //0スロットはオートセーブ用スロット
+    }
+
+    //現在の状態をセーブする
+    private void Save(int slot)
+    {
+        ShowDialog("save", "セーブ機能は実装されていません");
     }
 
     //スロット番号のセーブデータからデータを読み込む
-    public void Load(int slot)
+    private void Load(int slot)
     {
-
+        ShowDialog("load", "ロード機能は実装されていません");
     }
 
     //タイトルで初めからを選択したときの初回ロード（既存データの読み出し

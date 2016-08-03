@@ -11,7 +11,7 @@ GameObject:
   - 222: {fileID: 22268870}
   - 114: {fileID: 11464742}
   - 114: {fileID: 11494202}
-  - 114: {fileID: 11493706}
+  - 114: {fileID: 11409278}
   m_Layer: 5
   m_Name: LilyBase
   m_TagString: Untagged
@@ -36,6 +36,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &11409278
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66acdda8816102b4ab807c553c3cfa56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mPlayerMenuPath: Prefabs/Field/Menu/PlayerMenu
+  mEnemyMenuAPath: Prefabs/Field/Menu/EnemyMenuA
+  mEnemuMenuBPath: Prefabs/Field/Menu/EnemyMenuB
+  mCommonMenuPath: Prefabs/Field/Menu/CommonMenu
 --- !u!114 &11462964
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -96,20 +111,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &11493706
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100288}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a11719a63f59ba4097f858546b36a46, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isPlayer: 0
-  mPlayerAreaMenuScene: PlayerMenu
-  mEnemyAreaMenuScene: EnemyMenu
 --- !u!114 &11494202
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -149,8 +150,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11493706}
-        m_MethodName: ButtonPush
+      - m_Target: {fileID: 11409278}
+        m_MethodName: OpenEnemyMenu
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
