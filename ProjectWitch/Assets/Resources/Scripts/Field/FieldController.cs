@@ -38,6 +38,12 @@ class FieldController : MonoBehaviour
     {
         var game = Game.GetInstance();
 
+        //戦闘後処理
+        if(game.IsBattle)
+        {
+            StartCoroutine(AfterBattle());
+        }
+
         //コルーチンが動いていたら何もしない
         if (mIsCoroutineExec) return;
 
@@ -53,6 +59,8 @@ class FieldController : MonoBehaviour
             //現在の時間が3~のとき
             //敵のターン
             var territory = game.CurrentTime - 2;   //領地ＩＤを求める
+            
+            //領地IDが存在する範囲なら領地イベントを実行
             if (territory < game.TerritoryData.Count)
                 StartCoroutine(EnemyTurn(territory));
             else
@@ -124,6 +132,25 @@ class FieldController : MonoBehaviour
 
         //コルーチン終了
         mIsCoroutineExec = false;
+
+        yield return null;
+    }
+
+    //戦闘後処理
+    private IEnumerator AfterBattle()
+    {
+        var game = Game.GetInstance();
+        game.IsBattle = false;  //戦闘が終わったので戦闘フラグをオフ
+
+        //戦闘情報をリセット
+        game.BattleIn.Reset();
+
+        //戦闘後スクリプトの開始
+        //勝敗で実行されるスクリプトの分岐
+        //戦闘後スクリプトの終了
+
+        //時間を進める
+        game.CurrentTime++;
 
         yield return null;
     }

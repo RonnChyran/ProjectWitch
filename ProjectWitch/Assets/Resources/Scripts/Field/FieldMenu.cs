@@ -61,22 +61,8 @@ public class FieldMenu : MonoBehaviour {
         //二重起動の防止
         if (game.IsDialogShowd) return;
 
-
-        //戦闘前スクリプトの開始
-        //戦闘前スクリプト終了
-
-        //戦闘の呼び出し
-        game.CallPreBattle();
-
-        //戦闘後スクリプトの開始
-        //勝敗で実行されるスクリプトの分岐
-        //戦闘後スクリプトの終了
-
-        //時間を進める
-        game.CurrentTime++;
-
-        //メニューを閉じる
-        Close();
+        //コルーチンの開始
+        StartCoroutine(_CallBattle());
     }
 
     //マナ集め
@@ -101,5 +87,29 @@ public class FieldMenu : MonoBehaviour {
     {
         mFieldController.OpeningMenu = false;
         Destroy(this.gameObject);
+    }
+
+
+    //コルーチン
+    private IEnumerator _CallBattle()
+    {
+        var game = Game.GetInstance();
+
+        //戦闘前スクリプトの開始
+        game.ShowDialog("ExecuteScript", "戦闘前イベントの開始");
+        while (game.IsDialogShowd) yield return null;
+        //戦闘前スクリプト終了
+
+        //戦闘情報の格納
+        game.BattleIn.AreaID = AreaID;
+        if (game.AreaData[AreaID].Owner == 0)   //自領地での戦闘は防衛戦、それ以外は侵攻戦
+            game.BattleIn.IsInvasion = false;
+        else
+            game.BattleIn.IsInvasion = true;
+
+        //戦闘の呼び出し
+        game.CallPreBattle();
+
+        yield return null;
     }
 }

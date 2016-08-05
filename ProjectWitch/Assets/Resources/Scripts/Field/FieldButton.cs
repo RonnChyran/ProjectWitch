@@ -16,7 +16,7 @@ public class FieldButton : MonoBehaviour {
     private string mEnemyMenuAPath = "Prefabs/Field/Menu/EnemyMenuA";
 
     [SerializeField]
-    private string mEnemuMenuBPath = "Prefabs/Field/Menu/EnemyMenuB";
+    private string mEnemyMenuBPath = "Prefabs/Field/Menu/EnemyMenuB";
 
     [SerializeField]
     private string mCommonMenuPath = "Prefabs/Field/Menu/CommonMenu";

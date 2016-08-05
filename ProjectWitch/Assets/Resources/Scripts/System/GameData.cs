@@ -276,6 +276,9 @@ namespace GameData
         //旗画像パス
         public GameObject FlagPrefab { get; set; }
 
+        //メイン領地
+        public int MainArea { get; set; }
+
         //所有地点リスト
         public List<int> AreaList { get; set; }
 
@@ -420,10 +423,20 @@ namespace GameData
     {
         public BattleDataIn()
         {
-            PlayerUnits = new List<int>();
-            EnemyUnits = new List<int>();
-            PlayerCards = new List<int>();
-            EnemyCards = new List<int>();
+            Reset();
+        }
+
+        public void Reset()
+        {
+            PlayerUnits = Enumerable.Repeat<int>(-1, 3).ToList();
+            EnemyUnits = Enumerable.Repeat<int>(-1, 3).ToList();
+            PlayerCards = Enumerable.Repeat<int>(-1, 3).ToList();
+            EnemyCards = Enumerable.Repeat<int>(-1, 3).ToList();
+
+            AreaID = 0;
+            TimeOfDay = 0;
+            IsInvasion = true;
+            IsAuto = false;
         }
 
         //ユニットデータ
@@ -467,7 +480,7 @@ namespace GameData
             //ユニットデータに格納（0番目はキャプションなので読み飛ばす
             for(int i=1; i<rowData.Count; i++)
             {
-                if (rowData[i].Count != 37) continue;
+                if (rowData[i].Count != 41) continue;
 
                 //データの順番
                 //[0]ID         [1]名前       [2]レベル      [3]レベル成長限界          [4]HP
@@ -732,7 +745,7 @@ namespace GameData
             //データの代入
             for (int i = 1; i < rowData.Count; i++)
             {
-                if (rowData[i].Count != 4) continue;
+                if (rowData[i].Count != 5) continue;
 
                 var data = rowData[i];
                 var terData = new TerritoryDataFormat();
@@ -747,18 +760,20 @@ namespace GameData
                     //プレハブのロード
                     terData.FlagPrefab = (GameObject)Resources.Load("Prefabs/Field/Flag/" + data[1]);
 
+                    terData.MainArea = int.Parse(data[2]);
+
                     //所持ユニットリスト
                     terData.UnitList = new List<int>();
-                    var parts = data[2].Split(' ');
+                    var parts = data[3].Split(' ');
                     foreach (string part in parts)
                     {
                         if (part == "") continue;
                         terData.UnitList.Add(int.Parse(part));
                     }
 
-                    //所持ユニットリスト
+                    //所持カードリスト
                     terData.CardList = new List<int>();
-                    parts = data[3].Split(' ');
+                    parts = data[4].Split(' ');
                     foreach (string part in parts)
                     {
                         if (part == "") continue;

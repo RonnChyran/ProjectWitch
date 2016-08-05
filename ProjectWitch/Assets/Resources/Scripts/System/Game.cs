@@ -75,7 +75,7 @@ public class Game : MonoBehaviour
 
     public bool IsDialogShowd { get; set; }
     public bool IsBattle { get; set; }
-    public bool IsScript { get; set; }
+    public bool UsePreBattle { get; set; }
 
     #endregion
 
@@ -108,8 +108,10 @@ public class Game : MonoBehaviour
     //初期化処理
     void Setup()
     {
-        //ダイアログ非表示
+        //制御変数初期化
         IsDialogShowd = false;
+        IsBattle = false;
+        UsePreBattle = true;
 
         //データ系の初期化
         UnitData = new List<UnitDataFormat>();
@@ -168,11 +170,25 @@ public class Game : MonoBehaviour
     //戦闘の開始
     public void CallPreBattle()
     {
-        CallBattle();
+        if (UsePreBattle)
+        {
+            SceneManager.LoadScene(cSceneName_PreBattle);
+        }
+        else
+        {
+            //戦闘準備画面を出さず直接戦闘
+            UsePreBattle = true;
+            CallBattle();
+        }
     }
 
     public void CallBattle()
     {
+        //戦闘情報の格納
+        var time = (CurrentTime <= 2) ? CurrentTime : 2;
+        BattleIn.TimeOfDay = time;
+
+        IsBattle = true;
         SceneManager.LoadScene(cSceneName_Battle);
     }
 
