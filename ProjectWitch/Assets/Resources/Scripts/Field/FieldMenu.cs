@@ -47,9 +47,6 @@ public class FieldMenu : MonoBehaviour {
 
         game.ShowDialog("地点情報", areaInfo);
 
-        //時間を進める
-        game.CurrentTime++;
-
         Close();
     }
 
@@ -82,7 +79,7 @@ public class FieldMenu : MonoBehaviour {
         Close();
     }
 
-
+    //メニューを閉じる
     public void Close()
     {
         mFieldController.OpeningMenu = false;
@@ -102,10 +99,11 @@ public class FieldMenu : MonoBehaviour {
 
         //戦闘情報の格納
         game.BattleIn.AreaID = AreaID;
-        if (game.AreaData[AreaID].Owner == 0)   //自領地での戦闘は防衛戦、それ以外は侵攻戦
-            game.BattleIn.IsInvasion = false;
-        else
-            game.BattleIn.IsInvasion = true;
+        game.BattleIn.EnemyTerritory = game.AreaData[AreaID].Owner;
+        game.BattleIn.IsInvasion = true;
+
+        //時間を進める
+        game.CurrentTime++;
 
         //戦闘の呼び出し
         game.CallPreBattle();

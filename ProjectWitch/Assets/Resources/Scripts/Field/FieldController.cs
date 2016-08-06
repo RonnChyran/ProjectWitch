@@ -1,7 +1,4 @@
 ﻿using UnityEngine;
-using System;
-using System.IO;
-using System.Text;
 using System.Linq; //iOSで問題が起こるかも？
 using System.Collections.Generic;
 using System.Collections;
@@ -10,6 +7,14 @@ using GameData;
 
 class FieldController : MonoBehaviour
 {
+    //自動操作時のカメラスピード
+    [SerializeField]
+    private float mCameraSpeed = 1.0f;
+
+    //領地ハイライトのエフェクト
+    [SerializeField]
+    private GameObject mHiLightEffect;
+
     [SerializeField]
     private Canvas mCanvas;
     private Canvas mCanvasInst;
@@ -24,10 +29,16 @@ class FieldController : MonoBehaviour
     //コルーチンが動いているかどうか
     private bool mIsCoroutineExec = false;
 
+    //ベースへの参照
+    private List<GameObject> mBases = new List<GameObject>();
+
     void Start()
     {
+        //リストの初期化
+        mBases = Enumerable.Repeat<GameObject>(null, Game.GetInstance().AreaData.Count).ToList();
+
         //拠点設置
-        AddAreaPoint();
+        AreaPointReset();
 
         //道の描画
         AddRoad();
@@ -68,6 +79,7 @@ class FieldController : MonoBehaviour
                 //敵ターンが終了したので次のターンへ移行
                 game.CurrentTurn++;
                 game.CurrentTime = 0;
+                game.BattleCount = 0;
 
                 //オートセーブ
                 game.AutoSave();
@@ -107,31 +119,136 @@ class FieldController : MonoBehaviour
         //コルーチン開始
         mIsCoroutineExec = true;
 
+        //ダイアログが閉じるまで処理を進めない
+        while (game.IsDialogShowd) yield return null;
+
         //フィールドのイベントデータを取得
         var fieldEventData = game.FieldEventData;
         var eventlist = fieldEventData.Where(p => p.Timing == EventDataFormat.TimingType.EnemyTurnBegin).ToList();
 
-        //領地がない場合はスルー
-        if (game.TerritoryData[territory].AreaList.Count > 0)
+        //占領されている場合はスルー
+        if (game.AreaData[game.TerritoryData[territory].MainArea].Owner == territory)
         {
 
-            game.ShowDialog("敵ターン", game.TerritoryData[territory].OwnerName + "領" + '\n' + "ターンはじめイベント開始");
+            //各領地に設定されたイベントを抜き出す
+            eventlist = eventlist.Where(p => p.Area == territory).ToList();
+            
+            //ターンはじめイベント開始
+            EventExecute(eventlist);
             while (game.IsDialogShowd) yield return null;
 
+            //ターンはじめイベントで戦闘フラグが立った
+            //戦闘開始
+
+            //すでに交戦状態に入っている場合
+            if (game.TerritoryData[territory].IsActive)
+            {
+                //攻め込む領地
+                int targetArea = -1;
+
+                //隣接している領地から攻め込む領地を決定
+                {
+                    //nextAreaを列挙する
+                    var nextAreas = new List<int>();
+                    foreach (var area in game.TerritoryData[territory].AreaList)
+                    {
+                        //次の地点のリストを作っていく
+                        nextAreas.AddRange(game.AreaData[area].NextArea);
+                    }
+                    //重複要素を削除する
+                    nextAreas = nextAreas.Distinct().ToList();
+
+                    //nextAreasと被っている自領地を抜き出す
+                    nextAreas = nextAreas.Intersect(game.TerritoryData[0].AreaList).ToList();
+
+                    //被っている場所があったら、そこをランダムにターゲットとする
+                    if(nextAreas.Count > 0)
+                    {
+                        targetArea = nextAreas[Random.Range(0,nextAreas.Count-1)];
+                    }
+                    //被っていなかったら何もできないので終了
+                    else
+                    {
+                        game.CurrentTime++;
+                        mIsCoroutineExec = false;
+                        yield break;
+                    }
+                }
+
+                //敵ターンを進めるかどうか
+                if (game.TerritoryData[territory].MinBattleNum > game.BattleCount)
+                    game.BattleCount++;
+                else if (game.TerritoryData[territory].MaxBattleNum < game.BattleCount)
+                {
+                    game.BattleCount = 0;
+                    game.CurrentTime++;
+                    mIsCoroutineExec = false;
+                    yield break;
+                }
+                else
+                {
+                    //次に進むかどうかは乱数で決定
+                    if (Random.value < 0.5f)
+                    {
+                        game.BattleCount++;
+                    }
+                    else
+                    {
+                        game.BattleCount = 0;
+                        game.CurrentTime++;
+                        mIsCoroutineExec = false;
+                        yield break;
+                    }
+                }
 
 
-            game.ShowDialog("敵ターン", "ターンはじめイベント終了");
-            while (game.IsDialogShowd) yield return null;
+                //戦闘情報セット
+                game.BattleIn.AreaID = targetArea;
+                game.BattleIn.EnemyTerritory = territory;
+                game.BattleIn.IsInvasion = false;
 
-            //敵行動
-            game.ShowDialog("敵ターン", "敵行動");
-            while (game.IsDialogShowd) yield return null;
+                //攻めてきた演出
+                var camera = Camera.main;
+                var targetpos = game.AreaData[targetArea].Position;
+
+                //カメラをその領地に移動
+                var dir = targetpos - (Vector2)camera.transform.position;
+                var moveVec = dir.normalized;
+                while (dir.magnitude > 0.1f)
+                {
+                    camera.transform.position += new Vector3(moveVec.x, moveVec.y, 0.0f)/100.0f * mCameraSpeed;
+                    dir = targetpos - (Vector2)camera.transform.position;
+                    moveVec = dir.normalized;
+                    yield return new WaitForSeconds(0.01f);
+                }
+
+                var inst = Instantiate(mHiLightEffect);
+                inst.transform.position = targetpos;
+                yield return new WaitForSeconds(1.0f);
+
+                //敵行動
+                game.CallPreBattle();
+
+                //実行されないはず
+                mIsCoroutineExec = false;
+
+            }
+            //入っていない場合
+            else
+            {
+                //そのまま終了
+                game.CurrentTime++;
+                mIsCoroutineExec = false;
+                yield break;
+            }
         }
+        else
+        {
+            game.CurrentTime++;
 
-        game.CurrentTime++;
-
-        //コルーチン終了
-        mIsCoroutineExec = false;
+            //コルーチン終了
+            mIsCoroutineExec = false;
+        }
 
         yield return null;
     }
@@ -142,6 +259,16 @@ class FieldController : MonoBehaviour
         var game = Game.GetInstance();
         game.IsBattle = false;  //戦闘が終わったので戦闘フラグをオフ
 
+        //領地の占領判定
+        //オート戦闘の場合、占領判定はスクリプトで行う
+        //侵攻戦で勝った場合 領地を占領する
+        if (game.BattleIn.IsInvasion && game.BattleOut.IsWin)
+            ChangeAreaOwner(game.BattleIn.AreaID, 0);
+        //防衛戦で負けた場合 領地を奪われる
+        else if (!game.BattleIn.IsInvasion && !game.BattleOut.IsWin)
+            ChangeAreaOwner(game.BattleIn.AreaID, game.BattleIn.EnemyTerritory);
+
+
         //戦闘情報をリセット
         game.BattleIn.Reset();
 
@@ -149,8 +276,25 @@ class FieldController : MonoBehaviour
         //勝敗で実行されるスクリプトの分岐
         //戦闘後スクリプトの終了
 
-        //時間を進める
-        game.CurrentTime++;
+        yield return null;
+    }
+
+    //戦闘の開始
+    private IEnumerator CallBattle(int area, int territory)
+    {
+        var game = Game.GetInstance();
+
+        //戦闘前スクリプトの開始
+        game.ShowDialog("ExecuteScript", "戦闘前イベントの開始");
+        while (game.IsDialogShowd) yield return null;
+
+        //戦闘情報の格納
+        game.BattleIn.AreaID = area;
+        game.BattleIn.EnemyTerritory = territory;
+        game.BattleIn.IsInvasion = false;
+
+        //戦闘の呼び出し
+        game.CallPreBattle();
 
         yield return null;
     }
@@ -235,24 +379,44 @@ class FieldController : MonoBehaviour
             //実行
             game.CallScript(eventlist[i].FileName);
             while (game.IsDialogShowd) yield return null;
-
-            //次のスクリプト実行
+            
         }
     }
 
     //拠点の設置
-    void AddAreaPoint()
+    private void AreaPointReset()
     {
         var game = Game.GetInstance();
 
         mCanvasInst = Instantiate(mCanvas);
         for (int i = 1; i < game.AreaData.Count; i++)
         {
-            var Base = Instantiate(game.TerritoryData[game.AreaData[i].Owner].FlagPrefab);
-            Base.transform.SetParent(mCanvasInst.transform);
-            Base.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(game.AreaData[i].Position.x, game.AreaData[i].Position.y, 1.0f);
-            Base.GetComponent<FieldButton>().AreaID = i;
+            AddAreaPoint(i,game.AreaData[i].Owner);
         }
+    }
+
+    private void AddAreaPoint(int area, int owner)
+    {
+        var game = Game.GetInstance();
+
+        var Base = Instantiate(game.TerritoryData[owner].FlagPrefab);
+        Base.transform.SetParent(mCanvasInst.transform);
+        Base.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(game.AreaData[area].Position.x, game.AreaData[area].Position.y, 1.0f);
+        Base.GetComponent<FieldButton>().AreaID = area;
+
+        mBases[area] = Base;
+    }
+
+    //拠点の変更
+    private void ChangeAreaOwner(int targetArea, int newOwner)
+    {
+        var game = Game.GetInstance();
+
+        //拠点を再配置
+        Destroy(mBases[targetArea]);
+        AddAreaPoint(targetArea,newOwner);
+
+        game.ChangeAreaOwner(targetArea, newOwner);
     }
 
     //道の描画

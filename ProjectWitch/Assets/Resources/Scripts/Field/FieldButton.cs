@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
-using System.Collections;
+using System.Linq;
+using System.Collections.Generic;
 
 public class FieldButton : MonoBehaviour {
 
@@ -41,13 +41,26 @@ public class FieldButton : MonoBehaviour {
     //敵の領地メニューを開く
     public void OpenEnemyMenu()
     {
+        var game = Game.GetInstance();
+
         //地点が隣接しているかどうか判定
+        var nextAreas = new List<int>();
+        {
+            //隣接地点の取得
+            foreach (var area in game.TerritoryData[0].AreaList)
+            {
+                nextAreas.AddRange(game.AreaData[area].NextArea);
+            }
+            //重複を削除
+            nextAreas = nextAreas.Distinct().ToList();
+        }
 
-        //隣接していたら戦闘ありのメニューを呼ぶ
-        ShowMenu(mEnemyMenuAPath);
-
-        //していなかったら戦闘なしのメニューを呼ぶ
-        //ShowMenu(mEnemyMenuBPath);
+        if (nextAreas.Contains(AreaID))
+            //隣接していたら戦闘ありのメニューを呼ぶ
+            ShowMenu(mEnemyMenuAPath);
+        else
+            //していなかったら戦闘なしのメニューを呼ぶ
+            ShowMenu(mEnemyMenuBPath);
     }
 
     //メニューを開く
@@ -59,6 +72,8 @@ public class FieldButton : MonoBehaviour {
     //メニューを表示する
     private void ShowMenu(string MenuName)
     {
+        //敵ターンのときは無効
+        if (Game.GetInstance().CurrentTime >= 3) return;
         //メニュー開いていたら何もしない
         if (mFieldController.OpeningMenu) return;
         //ダイアログが開いていたら何もしない

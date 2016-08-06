@@ -73,8 +73,16 @@ public class Game : MonoBehaviour
 
     #region 制御変数
 
+    //ダイアログが開いているか
     public bool IsDialogShowd { get; set; }
+
+    //戦闘中かどうか
     public bool IsBattle { get; set; }
+
+    //連戦数
+    public int BattleCount { get; set; }
+
+    //編成画面から戦闘に入るかどうか
     public bool UsePreBattle { get; set; }
 
     #endregion
@@ -112,6 +120,7 @@ public class Game : MonoBehaviour
         IsDialogShowd = false;
         IsBattle = false;
         UsePreBattle = true;
+        BattleCount = 0;
 
         //データ系の初期化
         UnitData = new List<UnitDataFormat>();
@@ -245,12 +254,13 @@ public class Game : MonoBehaviour
         TerritoryData = DataLoader.LoadTerritoryData("Assets\\Resources\\Data\\territory_data.csv");
 
         //所持地点リスト（地点リストから算出
-        foreach (TerritoryDataFormat terData in TerritoryData)
+        for (int i = 0; i < TerritoryData.Count; i++)
         {
+            var terData = TerritoryData[i];
             terData.AreaList = new List<int>();
             for (int j = 1; j < AreaData.Count; j++)
             {
-                if (AreaData[j].Owner == terData.AreaList.Count)
+                if (AreaData[j].Owner == i)
                 {
                     terData.AreaList.Add(AreaData[j].ID);
                 }
@@ -273,4 +283,21 @@ public class Game : MonoBehaviour
 
     }
 
+
+    //各コマンド
+
+    //地点の領主を変更
+    //targetArea:変更する地点ＩＤ
+    //newOwner:新しい領主ID
+    public void ChangeAreaOwner(int targetArea, int newOwner)
+    {
+        //領地データのエリア番号を移し替える
+        var oldOwner = AreaData[targetArea].Owner;
+        TerritoryData[oldOwner].AreaList.Remove(targetArea);
+        TerritoryData[newOwner].AreaList.Add(targetArea);
+
+        //地点の領主番号を更新
+        AreaData[targetArea].Owner = newOwner;
+
+    }
 }
