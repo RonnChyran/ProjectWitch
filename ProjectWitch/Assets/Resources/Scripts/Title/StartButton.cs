@@ -13,6 +13,7 @@ public class StartButton : MonoBehaviour {
         var game = Game.GetInstance();
         game.FirstLoad();
 
-        SceneManager.LoadScene(mFieldSceneName);
+        //フィールドの呼び出し
+        game.CallField();
     }
 }

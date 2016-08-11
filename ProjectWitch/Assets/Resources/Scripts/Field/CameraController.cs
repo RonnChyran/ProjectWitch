@@ -17,6 +17,9 @@ public class CameraController : MonoBehaviour {
 
     void OnMouseDown()
     {
+        //敵ターンのときは無効
+        if (Game.GetInstance().CurrentTime >= 3) return;
+
         var ray = RectTransformUtility.ScreenPointToRay(Camera.main, Input.mousePosition);
 
         RaycastHit rHit;
@@ -32,6 +35,9 @@ public class CameraController : MonoBehaviour {
 
     void OnMouseDrag()
     {
+        //敵ターンのときは無効
+        if (Game.GetInstance().CurrentTime >= 3) return;
+
         Vector3 mousePos;
         var ray = RectTransformUtility.ScreenPointToRay(Camera.main, Input.mousePosition);
 
