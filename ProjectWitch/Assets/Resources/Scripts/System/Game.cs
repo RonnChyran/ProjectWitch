@@ -242,16 +242,16 @@ public class Game : MonoBehaviour
     public void FirstLoad()
     {
         //ユニットデータの読み出し
-        UnitData = DataLoader.LoadUnitData("Assets\\Resources\\Data\\unit_data.csv");
+        UnitData = DataLoader.LoadUnitData(GamePath.Data + "unit_data.csv");
 
         //スキルデータの読み出し
-        SkillData = DataLoader.LoadSkillData("Assets\\Resources\\Data\\skill_data.csv");
+        SkillData = DataLoader.LoadSkillData(GamePath.Data + "skill_data.csv");
 
         //地点データの読み出し
-        AreaData = DataLoader.LoadAreaData("Assets\\Resources\\Data\\area_data.csv");
+        AreaData = DataLoader.LoadAreaData(GamePath.Data + "area_data.csv");
 
         //領地データの読み出し
-        TerritoryData = DataLoader.LoadTerritoryData("Assets\\Resources\\Data\\territory_data.csv");
+        TerritoryData = DataLoader.LoadTerritoryData(GamePath.Data + "territory_data.csv");
 
         //所持地点リスト（地点リストから算出
         for (int i = 0; i < TerritoryData.Count; i++)
@@ -268,18 +268,18 @@ public class Game : MonoBehaviour
         }
 
         //AI
-        AIData = DataLoader.LoadAIData("Assets\\Resources\\Data\\ai_data.csv");
+        AIData = DataLoader.LoadAIData(GamePath.Data + "ai_data.csv");
 
         //装備
-        EquipmentData = DataLoader.LoadEquipmentData("Assets\\Resources\\Data\\equipment_data.csv");
+        EquipmentData = DataLoader.LoadEquipmentData(GamePath.Data + "equipment_data.csv");
 
         //カード
-        CardData = DataLoader.LoadCardData("Assets\\Resources\\Data\\card_data.csv");
+        CardData = DataLoader.LoadCardData(GamePath.Data + "card_data.csv");
 
         //イベントデータの読み出し
-        ArmyEventData =     DataLoader.LoadEventData("Assets\\Resources\\Data\\event_data_army.csv");
-        FieldEventData =    DataLoader.LoadEventData("Assets\\Resources\\Data\\event_data_field.csv");
-        TownEventData =     DataLoader.LoadEventData("Assets\\Resources\\Data\\event_data_town.csv");
+        ArmyEventData =     DataLoader.LoadEventData(GamePath.Data + "event_data_army.csv");
+        FieldEventData =    DataLoader.LoadEventData(GamePath.Data + "event_data_field.csv");
+        TownEventData =     DataLoader.LoadEventData(GamePath.Data + "event_data_town.csv");
 
     }
 

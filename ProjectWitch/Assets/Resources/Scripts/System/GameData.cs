@@ -1095,4 +1095,9 @@ namespace GameData
         }
     }
 
+    public class GamePath
+    {
+        public const string Data = "Assets\\Resources\\Data\\";
+        public const string Senario = "Assets\\Resources\\Senarios\\";
+    }
 }
