@@ -232,7 +232,7 @@ public class ScenarioWorkSpace : MonoBehaviour
 		get{ return mSpeed; }
 		set{ mSpeed = value; }
 	}
-	private float mSpeed = 5.0f;
+	private float mSpeed = 15.0f;
 
 	//	色(RGBA)
 	public Color32 Color
