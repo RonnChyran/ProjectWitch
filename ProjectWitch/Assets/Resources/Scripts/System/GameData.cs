@@ -111,7 +111,7 @@ namespace GameData
         public SkillDataFormat()
         {
             Status = Enumerable.Repeat<bool>(false, 7).ToList();
-            OtherState = Enumerable.Repeat<bool>(false, 9).ToList();
+            Attribute = Enumerable.Repeat<bool>(false, 3).ToList();
         }
 
         //名前
@@ -128,17 +128,26 @@ namespace GameData
             StatusUp,       //2:ステ上昇
             StatusDown,     //3:ステ下降
             Summon,         //4:召喚
-            Random          //5:ランダム
+            SoulSteal,      //5:ダメージ還元
+            Guard,          //6:ガード
+            TurnWait,       //7:順番下げ
+            NoDamage,       //8:ダメージ無効
+            PutTime,        //9:時間消費
+            StatusOff,      //10:ステータス取り消し
+            Random          //11:ランダム
         };
         public SkillType Type { get; set; }
+
+        //効果持続時間
+        public int Duration { get; set; }
 
         //ステ種類
         //[0]物功,[1]物防,[2]魔攻,[3]魔防,[4]機動,[5]指揮力,[6]地形補正
         public List<bool> Status { get; set; }
 
-        //特殊（拡張可能性あり）
-        //[0]毒付与、[1]ガード、[2]ダメージ還元、[3]順番下げ、[4]ダメ無効、[5]対ホムンクルス, [6]対ゾンビ, [7]時間消費, [8]ステータス補正取り消し
-        public List<bool> OtherState { get; set; }
+        //攻撃属性
+        //[0]毒付与、[1]対ホムンクルス, [2]対ゾンビ
+        public List<bool> Attribute { get; set; }
 
         //召喚用ユニット番号
         public int SummonUnit { get; set; }
@@ -950,15 +959,21 @@ namespace GameData
             //データの代入
             for (int i = 1; i < rowData.Count; i++)
             {
-                if (rowData[i].Count != 24) continue;
+                if (rowData[i].Count != 19) continue;
 
 
                 //データの順番
-                //[0]ID     [1]名前       [2]HP
-                //[3]PAtk   [4]MAtk       [5]PDef
-                //[6]MDef   [7]GPAtk      [8]GMAtk
-                //[9]GPDef  [10]GMDef     [11]Lead
-                //[12]Agi   [13]回復力    [14]説明
+                //[0]ID [1]名前   [2]威力   [3]スキルタイプ
+                //[4]効果時間
+                //[5]~[11]ステータスフラグ  
+                //[5]物功 [6]物防   [7]魔功   [8]魔防
+                //[9]機動 [10]指揮  [11]地形
+                //[12]~[14]攻撃属性
+                //[12]毒 [13]対ホムンクルス    [14]対ゾンビ
+                //[15]召喚するユニットID
+                //[16]効果範囲 
+                //[17]効果対象
+                //[18]エフェクト名
                 var data = rowData[i];
                 var skill = new SkillDataFormat();
 
@@ -971,21 +986,22 @@ namespace GameData
                     skill.Power = int.Parse(data[2]);
                     skill.Type = (SkillDataFormat.SkillType)Enum.ToObject(
                         typeof(SkillDataFormat.SkillType), int.Parse(data[3]));
+                    skill.Duration = int.Parse(data[4]);
 
                     //ステータス
-                    for (int j = 0, index = 4; j < 7; j++, index++)
+                    for (int j = 0, index = 5; j < 7; j++, index++)
                         skill.Status[j] = (data[index] == "0") ? false : true;
 
                     //特殊ステータス
-                    for (int j = 0, index = 11; j < 9; j++, index++)
-                        skill.OtherState[j] = (data[index] == "0") ? false : true;
+                    for (int j = 0, index = 12; j < 3; j++, index++)
+                        skill.Attribute[j] = (data[index] == "0") ? false : true;
 
-                    skill.SummonUnit = int.Parse(data[20]);
+                    skill.SummonUnit = int.Parse(data[15]);
                     skill.Range = (SkillDataFormat.SkillRange)Enum.ToObject(
-                        typeof(SkillDataFormat.SkillRange), int.Parse(data[21]));
+                        typeof(SkillDataFormat.SkillRange), int.Parse(data[16]));
                     skill.Target = (SkillDataFormat.SkillTarget)Enum.ToObject(
-                        typeof(SkillDataFormat.SkillTarget), int.Parse(data[22]));
-                    skill.EffectPath = data[23];
+                        typeof(SkillDataFormat.SkillTarget), int.Parse(data[17]));
+                    skill.EffectPath = data[18];
                 }
                 catch (ArgumentNullException e)
                 {
