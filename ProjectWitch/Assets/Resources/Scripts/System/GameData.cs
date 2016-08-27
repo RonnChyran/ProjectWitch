@@ -37,6 +37,9 @@ namespace GameData
         public int MaxHP { get; set; }
         public int HPRate { get; set; }     //HP成長率
 
+        //経験値
+        public int Experience { get; set; }
+
         //リーダー(Leader)
         public int LeaderPAtk { get; set; } //物理攻撃
         public int LeaderMAtk { get; set; } //魔法攻撃
