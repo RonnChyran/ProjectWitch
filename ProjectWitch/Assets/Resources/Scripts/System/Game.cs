@@ -69,6 +69,8 @@ public class Game : MonoBehaviour
     public BattleDataIn BattleIn { get; set; }
     public BattleDataOut BattleOut { get; set; }
 
+    public ScenarioDataIn ScenarioIn { get; set; }
+
     #endregion
 
     #region 制御変数

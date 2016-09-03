@@ -23,16 +23,16 @@ namespace Field
             switch(game.CurrentTime)
             {
                 case 0:
-                    mcText.text = "morning";
+                    mcText.text = "朝";
                     break;
                 case 1:
-                    mcText.text = "noon";
+                    mcText.text = "昼";
                     break;
                 case 2:
-                    mcText.text = "evening";
+                    mcText.text = "夕";
                     break;
                 default:
-                    mcText.text = "night";
+                    mcText.text = "晩";
                     break;
             }
         }

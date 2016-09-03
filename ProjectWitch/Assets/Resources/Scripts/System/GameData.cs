@@ -286,10 +286,15 @@ namespace GameData
         {
             IsActive = true;
             //IsActive = false;
+
+            IsAlive = true;
         }
 
         //領主名
         public string OwnerName { get; set; }
+
+        //領主名（英語）
+        public string OwnerNameEng { get; set; }
 
         //旗画像パス
         public GameObject FlagPrefab { get; set; }
@@ -299,6 +304,9 @@ namespace GameData
 
         //交戦中かどうか
         public bool IsActive { get; set; }
+
+        //その領地が有効かどうか（占領済みかどうか
+        public bool IsAlive { get; set; }
 
         //最小連戦数
         public int MinBattleNum { get; set; }
@@ -444,7 +452,7 @@ namespace GameData
 
     #endregion
 
-    #region 戦闘系
+    #region シーン間データ遷移系
 
     public class BattleDataIn
     {
@@ -499,6 +507,10 @@ namespace GameData
         public bool IsWin { get; set; }
     }
 
+    public class ScenarioDataIn
+    {
+        public string FileName { get; set; }
+    }
 
     #endregion
 
@@ -779,7 +791,7 @@ namespace GameData
             //データの代入
             for (int i = 1; i < rowData.Count; i++)
             {
-                if (rowData[i].Count != 7) continue;
+                if (rowData[i].Count != 8) continue;
 
                 var data = rowData[i];
                 var terData = new TerritoryDataFormat();
@@ -791,19 +803,22 @@ namespace GameData
                     //領主名
                     terData.OwnerName = data[0];
 
+                    //領主名英語
+                    terData.OwnerNameEng = data[1];
+
                     //プレハブのロード
-                    terData.FlagPrefab = (GameObject)Resources.Load("Prefabs/Field/Flag/" + data[1]);
+                    terData.FlagPrefab = (GameObject)Resources.Load("Prefabs/Field/Flag/" + data[2]);
 
                     //メイン領地の読み出し
-                    terData.MainArea = int.Parse(data[2]);
+                    terData.MainArea = int.Parse(data[3]);
 
                     //連戦数の読み出し
-                    terData.MinBattleNum = int.Parse(data[3]);
-                    terData.MaxBattleNum = int.Parse(data[4]);
+                    terData.MinBattleNum = int.Parse(data[4]);
+                    terData.MaxBattleNum = int.Parse(data[5]);
 
                     //所持ユニットリスト
                     terData.UnitList = new List<int>();
-                    var parts = data[5].Split(' ');
+                    var parts = data[6].Split(' ');
                     foreach (string part in parts)
                     {
                         if (part == "") continue;
@@ -812,7 +827,7 @@ namespace GameData
 
                     //所持カードリスト
                     terData.CardList = new List<int>();
-                    parts = data[6].Split(' ');
+                    parts = data[7].Split(' ');
                     foreach (string part in parts)
                     {
                         if (part == "") continue;

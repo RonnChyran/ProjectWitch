@@ -263,7 +263,7 @@ class FieldController : MonoBehaviour
         //オート戦闘の場合、占領判定はスクリプトで行う
         //侵攻戦で勝った場合 領地を占領する
         if (game.BattleIn.IsInvasion && game.BattleOut.IsWin)
-            ChangeAreaOwner(game.BattleIn.AreaID, 0);
+            ChangeAreaOwner(game.BattleIn.AreaID, game.BattleIn.PlayerTerritory);
         //防衛戦で負けた場合 領地を奪われる
         else if (!game.BattleIn.IsInvasion && !game.BattleOut.IsWin)
             ChangeAreaOwner(game.BattleIn.AreaID, game.BattleIn.EnemyTerritory);
