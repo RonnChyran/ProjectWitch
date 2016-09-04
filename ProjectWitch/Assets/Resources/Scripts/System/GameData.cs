@@ -37,6 +37,9 @@ namespace GameData
         public int MaxHP { get; set; }
         public int HPRate { get; set; }     //HP成長率
 
+        //経験値
+        public int Experience { get; set; }
+
         //リーダー(Leader)
         public int LeaderPAtk { get; set; } //物理攻撃
         public int LeaderMAtk { get; set; } //魔法攻撃
@@ -111,7 +114,7 @@ namespace GameData
         public SkillDataFormat()
         {
             Status = Enumerable.Repeat<bool>(false, 7).ToList();
-            OtherState = Enumerable.Repeat<bool>(false, 9).ToList();
+            Attribute = Enumerable.Repeat<bool>(false, 3).ToList();
         }
 
         //名前
@@ -128,17 +131,26 @@ namespace GameData
             StatusUp,       //2:ステ上昇
             StatusDown,     //3:ステ下降
             Summon,         //4:召喚
-            Random          //5:ランダム
+            SoulSteal,      //5:ダメージ還元
+            Guard,          //6:ガード
+            TurnWait,       //7:順番下げ
+            NoDamage,       //8:ダメージ無効
+            PutTime,        //9:時間消費
+            StatusOff,      //10:ステータス取り消し
+            Random          //11:ランダム
         };
         public SkillType Type { get; set; }
+
+        //効果持続時間
+        public int Duration { get; set; }
 
         //ステ種類
         //[0]物功,[1]物防,[2]魔攻,[3]魔防,[4]機動,[5]指揮力,[6]地形補正
         public List<bool> Status { get; set; }
 
-        //特殊（拡張可能性あり）
-        //[0]毒付与、[1]ガード、[2]ダメージ還元、[3]順番下げ、[4]ダメ無効、[5]対ホムンクルス, [6]対ゾンビ, [7]時間消費, [8]ステータス補正取り消し
-        public List<bool> OtherState { get; set; }
+        //攻撃属性
+        //[0]毒付与、[1]対ホムンクルス, [2]対ゾンビ
+        public List<bool> Attribute { get; set; }
 
         //召喚用ユニット番号
         public int SummonUnit { get; set; }
@@ -274,10 +286,15 @@ namespace GameData
         {
             IsActive = true;
             //IsActive = false;
+
+            IsAlive = true;
         }
 
         //領主名
         public string OwnerName { get; set; }
+
+        //領主名（英語）
+        public string OwnerNameEng { get; set; }
 
         //旗画像パス
         public GameObject FlagPrefab { get; set; }
@@ -287,6 +304,9 @@ namespace GameData
 
         //交戦中かどうか
         public bool IsActive { get; set; }
+
+        //その領地が有効かどうか（占領済みかどうか
+        public bool IsAlive { get; set; }
 
         //最小連戦数
         public int MinBattleNum { get; set; }
@@ -432,7 +452,7 @@ namespace GameData
 
     #endregion
 
-    #region 戦闘系
+    #region シーン間データ遷移系
 
     public class BattleDataIn
     {
@@ -487,6 +507,10 @@ namespace GameData
         public bool IsWin { get; set; }
     }
 
+    public class ScenarioDataIn
+    {
+        public string FileName { get; set; }
+    }
 
     #endregion
 
@@ -767,7 +791,7 @@ namespace GameData
             //データの代入
             for (int i = 1; i < rowData.Count; i++)
             {
-                if (rowData[i].Count != 7) continue;
+                if (rowData[i].Count != 8) continue;
 
                 var data = rowData[i];
                 var terData = new TerritoryDataFormat();
@@ -779,19 +803,22 @@ namespace GameData
                     //領主名
                     terData.OwnerName = data[0];
 
+                    //領主名英語
+                    terData.OwnerNameEng = data[1];
+
                     //プレハブのロード
-                    terData.FlagPrefab = (GameObject)Resources.Load("Prefabs/Field/Flag/" + data[1]);
+                    terData.FlagPrefab = (GameObject)Resources.Load("Prefabs/Field/Flag/" + data[2]);
 
                     //メイン領地の読み出し
-                    terData.MainArea = int.Parse(data[2]);
+                    terData.MainArea = int.Parse(data[3]);
 
                     //連戦数の読み出し
-                    terData.MinBattleNum = int.Parse(data[3]);
-                    terData.MaxBattleNum = int.Parse(data[4]);
+                    terData.MinBattleNum = int.Parse(data[4]);
+                    terData.MaxBattleNum = int.Parse(data[5]);
 
                     //所持ユニットリスト
                     terData.UnitList = new List<int>();
-                    var parts = data[5].Split(' ');
+                    var parts = data[6].Split(' ');
                     foreach (string part in parts)
                     {
                         if (part == "") continue;
@@ -800,7 +827,7 @@ namespace GameData
 
                     //所持カードリスト
                     terData.CardList = new List<int>();
-                    parts = data[6].Split(' ');
+                    parts = data[7].Split(' ');
                     foreach (string part in parts)
                     {
                         if (part == "") continue;
@@ -950,15 +977,21 @@ namespace GameData
             //データの代入
             for (int i = 1; i < rowData.Count; i++)
             {
-                if (rowData[i].Count != 24) continue;
+                if (rowData[i].Count != 19) continue;
 
 
                 //データの順番
-                //[0]ID     [1]名前       [2]HP
-                //[3]PAtk   [4]MAtk       [5]PDef
-                //[6]MDef   [7]GPAtk      [8]GMAtk
-                //[9]GPDef  [10]GMDef     [11]Lead
-                //[12]Agi   [13]回復力    [14]説明
+                //[0]ID [1]名前   [2]威力   [3]スキルタイプ
+                //[4]効果時間
+                //[5]~[11]ステータスフラグ  
+                //[5]物功 [6]物防   [7]魔功   [8]魔防
+                //[9]機動 [10]指揮  [11]地形
+                //[12]~[14]攻撃属性
+                //[12]毒 [13]対ホムンクルス    [14]対ゾンビ
+                //[15]召喚するユニットID
+                //[16]効果範囲 
+                //[17]効果対象
+                //[18]エフェクト名
                 var data = rowData[i];
                 var skill = new SkillDataFormat();
 
@@ -971,21 +1004,22 @@ namespace GameData
                     skill.Power = int.Parse(data[2]);
                     skill.Type = (SkillDataFormat.SkillType)Enum.ToObject(
                         typeof(SkillDataFormat.SkillType), int.Parse(data[3]));
+                    skill.Duration = int.Parse(data[4]);
 
                     //ステータス
-                    for (int j = 0, index = 4; j < 7; j++, index++)
+                    for (int j = 0, index = 5; j < 7; j++, index++)
                         skill.Status[j] = (data[index] == "0") ? false : true;
 
                     //特殊ステータス
-                    for (int j = 0, index = 11; j < 9; j++, index++)
-                        skill.OtherState[j] = (data[index] == "0") ? false : true;
+                    for (int j = 0, index = 12; j < 3; j++, index++)
+                        skill.Attribute[j] = (data[index] == "0") ? false : true;
 
-                    skill.SummonUnit = int.Parse(data[20]);
+                    skill.SummonUnit = int.Parse(data[15]);
                     skill.Range = (SkillDataFormat.SkillRange)Enum.ToObject(
-                        typeof(SkillDataFormat.SkillRange), int.Parse(data[21]));
+                        typeof(SkillDataFormat.SkillRange), int.Parse(data[16]));
                     skill.Target = (SkillDataFormat.SkillTarget)Enum.ToObject(
-                        typeof(SkillDataFormat.SkillTarget), int.Parse(data[22]));
-                    skill.EffectPath = data[23];
+                        typeof(SkillDataFormat.SkillTarget), int.Parse(data[17]));
+                    skill.EffectPath = data[18];
                 }
                 catch (ArgumentNullException e)
                 {
@@ -1095,4 +1129,9 @@ namespace GameData
         }
     }
 
+    public class GamePath
+    {
+        public const string Data = "Assets\\Resources\\Data\\";
+        public const string Senario = "Assets\\Resources\\Scenarios\\";
+    }
 }

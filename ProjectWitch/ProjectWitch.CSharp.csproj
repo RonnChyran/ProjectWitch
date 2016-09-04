@@ -107,13 +107,16 @@
     <Compile Include="Assets\Resources\Scripts\Battle\BattleInfo.cs" />
     <Compile Include="Assets\Resources\Scripts\Common\ArmyJump.cs" />
     <Compile Include="Assets\Resources\Scripts\Common\MainCameraGetter.cs" />
+    <Compile Include="Assets\Resources\Scripts\Field\Button\FieldButton.cs" />
+    <Compile Include="Assets\Resources\Scripts\Field\Button\FieldMenu.cs" />
     <Compile Include="Assets\Resources\Scripts\Field\CameraController.cs" />
-    <Compile Include="Assets\Resources\Scripts\Field\FieldButton.cs" />
     <Compile Include="Assets\Resources\Scripts\Field\FieldController.cs" />
-    <Compile Include="Assets\Resources\Scripts\Field\FieldMenu.cs" />
-    <Compile Include="Assets\Resources\Scripts\Field\MapColor.cs" />
-    <Compile Include="Assets\Resources\Scripts\Field\TimeCounter.cs" />
-    <Compile Include="Assets\Resources\Scripts\Field\TurnCounter.cs" />
+    <Compile Include="Assets\Resources\Scripts\Field\UI\InfoBoxIcon.cs" />
+    <Compile Include="Assets\Resources\Scripts\Field\UI\InfoBoxText.cs" />
+    <Compile Include="Assets\Resources\Scripts\Field\UI\MapColor.cs" />
+    <Compile Include="Assets\Resources\Scripts\Field\UI\OwnerText.cs" />
+    <Compile Include="Assets\Resources\Scripts\Field\UI\TimeCounter.cs" />
+    <Compile Include="Assets\Resources\Scripts\Field\UI\TurnCounter.cs" />
     <Compile Include="Assets\Resources\Scripts\PreBattle\CardList.cs" />
     <Compile Include="Assets\Resources\Scripts\PreBattle\DragCard.cs" />
     <Compile Include="Assets\Resources\Scripts\PreBattle\DragObject.cs" />
@@ -125,6 +128,16 @@
     <Compile Include="Assets\Resources\Scripts\PreBattle\UnitList.cs" />
     <Compile Include="Assets\Resources\Scripts\System\Game.cs" />
     <Compile Include="Assets\Resources\Scripts\System\GameData.cs" />
+    <Compile Include="Assets\Resources\Scripts\Talk\CommandPatterns.cs" />
+    <Compile Include="Assets\Resources\Scripts\Talk\Compiler.cs" />
+    <Compile Include="Assets\Resources\Scripts\Talk\CompilerFormat.cs" />
+    <Compile Include="Assets\Resources\Scripts\Talk\GraphicAndSoundCommand.cs" />
+    <Compile Include="Assets\Resources\Scripts\Talk\ScenarioWorkSpace.cs" />
+    <Compile Include="Assets\Resources\Scripts\Talk\StructureAnalyzer.cs" />
+    <Compile Include="Assets\Resources\Scripts\Talk\SystemCommand.cs" />
+    <Compile Include="Assets\Resources\Scripts\Talk\TagPattern.cs" />
+    <Compile Include="Assets\Resources\Scripts\Talk\TextCommand.cs" />
+    <Compile Include="Assets\Resources\Scripts\Talk\WordAnalyzer.cs" />
     <Compile Include="Assets\Resources\Scripts\Title\LoadButton.cs" />
     <Compile Include="Assets\Resources\Scripts\Title\StartButton.cs" />
     <Compile Include="Assets\Resources\Scripts\UI\DialogWindow.cs" />
@@ -211,6 +224,8 @@
     <None Include="Assets\Resources\Effects\ToonShading\Shaders\ToonLit.shader" />
     <None Include="Assets\Resources\Effects\ToonShading\Shaders\ToonLitOutline.shader" />
     <None Include="Assets\Resources\Effects\Unlit\UnlitCastShadow.shader" />
+    <None Include="Assets\Resources\Scenarios\test.txt" />
+    <None Include="Assets\Resources\Scenarios\testscript.txt" />
     <None Include="Assets\Resources\Senarios\testscript.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
