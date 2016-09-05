@@ -14,6 +14,7 @@ GameObject:
   - 81: {fileID: 8195454}
   - 114: {fileID: 11464758}
   - 114: {fileID: 11467090}
+  - 45: {fileID: 45000011902282758}
   m_Layer: 0
   m_Name: BattleCamera
   m_TagString: MainCamera
@@ -27,9 +28,10 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 101182}
-  m_LocalRotation: {x: 0.102133684, y: 0, z: 0, w: 0.9947707}
-  m_LocalPosition: {x: 0, y: 2.378, z: -10.105}
+  m_LocalRotation: {x: -0.025966384, y: 0.3102702, z: -0.008473596, w: -0.950256}
+  m_LocalPosition: {x: -0.27585554, y: 1.2984885, z: -4.3995013}
   m_LocalScale: {x: 1.4558866, y: 1.4558865, z: 1.4558865}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -60,7 +62,7 @@ Camera:
     m_Bits: 4294967295
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
-  m_TargetDisplay: 0
+  m_TargetDisplay: 1
   m_TargetEye: 3
   m_HDR: 0
   m_OcclusionCulling: 1
@@ -93,14 +95,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resolution: 1
-  screenBlendMode: 0
+  screenBlendMode: 1
   sunTransform: {fileID: 0}
   radialBlurIterations: 2
   sunColor: {r: 1, g: 1, b: 1, a: 1}
-  sunThreshold: {r: 0.87, g: 0.74, b: 0.65, a: 1}
-  sunShaftBlurRadius: 4.65
-  sunShaftIntensity: 1.15
-  maxRadius: 0.853
+  sunThreshold: {r: 0.43529415, g: 0.3921569, b: 0.29803923, a: 1}
+  sunShaftBlurRadius: 1.89
+  sunShaftIntensity: 0.7
+  maxRadius: 0.9
   useDepthTexture: 1
   sunShaftsShader: {fileID: 4800000, guid: d3b1c8c1036784176946f5cfbfb7fe4c, type: 3}
   simpleClearShader: {fileID: 4800000, guid: f688f89ed5eb847c5b19c934a0f1e772, type: 3}
@@ -118,10 +120,10 @@ MonoBehaviour:
   tweakMode: 0
   screenBlendMode: 1
   hdr: 0
-  sepBlurSpread: 1.5
+  sepBlurSpread: 1.05
   useSrcAlphaAsMask: 0
-  bloomIntensity: 0.36
-  bloomThreshold: 0.5
+  bloomIntensity: 0.38
+  bloomThreshold: -0.05
   bloomBlurIterations: 2
   lensflares: 0
   hollywoodFlareBlurIterations: 2
@@ -163,3 +165,11 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 101182}
   m_IsPrefabParent: 1
+--- !u!45 &45000011902282758
+Skybox:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 101182}
+  m_Enabled: 1
+  m_CustomSkybox: {fileID: 2100000, guid: 4067de1a02072244798361060c5e7325, type: 2}
