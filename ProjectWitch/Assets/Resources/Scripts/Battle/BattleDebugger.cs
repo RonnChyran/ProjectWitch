@@ -16,7 +16,7 @@ public class BattleDebugger : MonoBehaviour {
     {
         var game = Game.GetInstance();
         game.BattleOut.IsWin = false;
-
+        
         BattleEnd();
 
     }
@@ -24,10 +24,10 @@ public class BattleDebugger : MonoBehaviour {
     public void BattleEnd()
     {
         var game = Game.GetInstance();
-        var sceneName = game.SceneName_Battle;
 
-        //フィールドの再ロード
-        Game.GetInstance().CallField();
+        game.IsBattle = false;
+        game.CallAfterBattle();
+       
     }
 	
 }

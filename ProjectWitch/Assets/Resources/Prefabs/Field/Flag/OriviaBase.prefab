@@ -11,7 +11,7 @@ GameObject:
   - 222: {fileID: 22230588}
   - 114: {fileID: 11445780}
   - 114: {fileID: 11499946}
-  - 114: {fileID: 11498736}
+  - 114: {fileID: 114000013516299196}
   m_Layer: 5
   m_Name: OriviaBase
   m_TagString: Untagged
@@ -96,21 +96,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u6575"
---- !u!114 &11498736
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 120230}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66acdda8816102b4ab807c553c3cfa56, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mPlayerMenuPath: Prefabs/Field/Menu/PlayerMenu
-  mEnemyMenuAPath: Prefabs/Field/Menu/EnemyMenuA
-  mEnemuMenuBPath: Prefabs/Field/Menu/EnemyMenuB
-  mCommonMenuPath: CommonMenu
 --- !u!114 &11499946
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -150,7 +135,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 11498736}
+      - m_Target: {fileID: 114000013516299196}
         m_MethodName: OpenEnemyMenu
         m_Mode: 1
         m_Arguments:
@@ -184,6 +169,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 22441966}
   m_RootOrder: 0
@@ -201,6 +187,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 22440874}
   m_Father: {fileID: 0}
@@ -221,3 +208,17 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 120230}
   m_IsPrefabParent: 1
+--- !u!114 &114000013516299196
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 120230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ee906443b917e746a19c943c7840839, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mPlayerMenu: {fileID: 154598, guid: c612ee13213648149bce3edae2db600a, type: 2}
+  mEnemyMenuA: {fileID: 122546, guid: 7b0e3f21c84a720469c2766bd1608e32, type: 2}
+  mEnemyMenuB: {fileID: 173914, guid: fceea59ac7e7e4d498acbb77051cf32f, type: 2}

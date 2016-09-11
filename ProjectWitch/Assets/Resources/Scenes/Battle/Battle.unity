@@ -181,7 +181,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &331155545
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -253,7 +253,7 @@ RectTransform:
   - {fileID: 360645954}
   - {fileID: 1149745382}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
@@ -480,7 +480,7 @@ RectTransform:
   m_Children:
   - {fileID: 1813005130}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
@@ -697,7 +697,35 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
+--- !u!1 &733432957
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 733432958}
+  m_Layer: 0
+  m_Name: BattleController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &733432958
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 733432957}
+  m_LocalRotation: {x: 0.051900197, y: -0, z: -0, w: 0.99865234}
+  m_LocalPosition: {x: 0, y: 1.05, z: -10.105}
+  m_LocalScale: {x: 1.4558866, y: 1.4558865, z: 1.4558865}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
 --- !u!1 &800996821
 GameObject:
   m_ObjectHideFlags: 0
@@ -913,7 +941,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 430766, guid: faf8facd8e6695640af571b008a1ee2f, type: 2}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: faf8facd8e6695640af571b008a1ee2f, type: 2}
@@ -947,7 +975,7 @@ Transform:
   - {fileID: 516137702}
   - {fileID: 605133401}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
 --- !u!1001 &1570974157
 Prefab:
   m_ObjectHideFlags: 0
@@ -985,7 +1013,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 471312, guid: f06beb50ecbc362449478db1bead6c94, type: 2}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 101182, guid: f06beb50ecbc362449478db1bead6c94, type: 2}
       propertyPath: m_Name
@@ -1401,7 +1429,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 413358, guid: 5456ff164d1d049c9b61260b6499f655, type: 2}
       propertyPath: m_RootOrder
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 413358, guid: 5456ff164d1d049c9b61260b6499f655, type: 2}
       propertyPath: m_LocalEulerAnglesHint.y

@@ -61,9 +61,14 @@
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Xcode">
+      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Common">
+      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Common.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Resources\Effects\Battle\Scripts\FXController.cs" />
     <Compile Include="Assets\Resources\Effects\ImageEffects\Scripts\Antialiasing.cs" />
     <Compile Include="Assets\Resources\Effects\ImageEffects\Scripts\Bloom.cs" />
     <Compile Include="Assets\Resources\Effects\ImageEffects\Scripts\BloomAndFlares.cs" />
@@ -104,14 +109,21 @@
     <Compile Include="Assets\Resources\Effects\ImageEffects\Scripts\Vortex.cs" />
     <Compile Include="Assets\Resources\Models\Background\Scripts\UVScroller.cs" />
     <Compile Include="Assets\Resources\Scripts\Army\LeaderMenu.cs" />
+    <Compile Include="Assets\Resources\Scripts\Battle\BattleController.cs" />
     <Compile Include="Assets\Resources\Scripts\Battle\BattleDebugger.cs" />
     <Compile Include="Assets\Resources\Scripts\Battle\BattleInfo.cs" />
     <Compile Include="Assets\Resources\Scripts\Common\ArmyJump.cs" />
+    <Compile Include="Assets\Resources\Scripts\Common\FXController.cs" />
     <Compile Include="Assets\Resources\Scripts\Common\MainCameraGetter.cs" />
-    <Compile Include="Assets\Resources\Scripts\Field\Button\FieldButton.cs" />
-    <Compile Include="Assets\Resources\Scripts\Field\Button\FieldMenu.cs" />
+    <Compile Include="Assets\Resources\Scripts\Field\Button\FieldButtonBase.cs" />
+    <Compile Include="Assets\Resources\Scripts\Field\Button\FlagButton.cs" />
+    <Compile Include="Assets\Resources\Scripts\Field\Button\FlagMenu.cs" />
+    <Compile Include="Assets\Resources\Scripts\Field\Button\Menu.cs" />
+    <Compile Include="Assets\Resources\Scripts\Field\Button\MenuBase.cs" />
+    <Compile Include="Assets\Resources\Scripts\Field\Button\MenuButton.cs" />
     <Compile Include="Assets\Resources\Scripts\Field\CameraController.cs" />
     <Compile Include="Assets\Resources\Scripts\Field\FieldController.cs" />
+    <Compile Include="Assets\Resources\Scripts\Field\FieldUIController.cs" />
     <Compile Include="Assets\Resources\Scripts\Field\UI\InfoBoxIcon.cs" />
     <Compile Include="Assets\Resources\Scripts\Field\UI\InfoBoxText.cs" />
     <Compile Include="Assets\Resources\Scripts\Field\UI\MapColor.cs" />
@@ -123,6 +135,7 @@
     <Compile Include="Assets\Resources\Scripts\PreBattle\DragObject.cs" />
     <Compile Include="Assets\Resources\Scripts\PreBattle\DragUnit.cs" />
     <Compile Include="Assets\Resources\Scripts\PreBattle\PreBattleButton.cs" />
+    <Compile Include="Assets\Resources\Scripts\PreBattle\PreBattleController.cs" />
     <Compile Include="Assets\Resources\Scripts\PreBattle\RecieveCard.cs" />
     <Compile Include="Assets\Resources\Scripts\PreBattle\RecieveObject.cs" />
     <Compile Include="Assets\Resources\Scripts\PreBattle\RecieveUnit.cs" />
