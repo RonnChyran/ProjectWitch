@@ -46,7 +46,9 @@ namespace Scenario.WorkSpace
 		{
 			if (mVirtualMachine == null) return;
 
-			bool skipFlag = Input.GetKeyDown (KeyCode.Return);
+            float mouseWheel = Input.GetAxis("TalkNext");
+            bool isNext = Input.GetButtonDown("TalkNext");
+			bool skipFlag = (mouseWheel<0 || isNext);
 			bool isWaiting = Updater is WaitUpdater;
 			bool isPausing = Updater is PauseUpdater;
 			if (skipFlag&&isWaiting&&!isPausing) {
