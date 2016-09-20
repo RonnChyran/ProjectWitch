@@ -365,6 +365,12 @@ namespace GameData
     //コンフィグ
     public class ConfigDataFormat
     {
+        public ConfigDataFormat()
+        {
+            //iniで読み込むようにする
+            TextSpeed = 10.0f;
+        }
+
         //解像度
         public Vector2 Resolution { get; set; }
         //フルスクリーンか否か
@@ -386,12 +392,15 @@ namespace GameData
 
         //戦闘の速さ
         public int BattleSpeed { get; set; }
+
+        //テキストスピード
+        public float TextSpeed { get; set; }
     }
 
     //仮想メモリ
     public class VirtualMemory
     {
-        public List<object> Memory{ get; set; }
+        public List<object> Memory{ get; private set; }
 
         public VirtualMemory()
         {

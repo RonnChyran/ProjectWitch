@@ -142,16 +142,25 @@
     <Compile Include="Assets\Resources\Scripts\PreBattle\UnitList.cs" />
     <Compile Include="Assets\Resources\Scripts\System\Game.cs" />
     <Compile Include="Assets\Resources\Scripts\System\GameData.cs" />
-    <Compile Include="Assets\Resources\Scripts\Talk\CommandPatterns.cs" />
+    <Compile Include="Assets\Resources\Scripts\Talk\Analyzer\CommandPatterns.cs" />
+    <Compile Include="Assets\Resources\Scripts\Talk\Analyzer\CompilerFormat.cs" />
+    <Compile Include="Assets\Resources\Scripts\Talk\Analyzer\StructureAnalyzer.cs" />
+    <Compile Include="Assets\Resources\Scripts\Talk\Analyzer\TagPattern.cs" />
+    <Compile Include="Assets\Resources\Scripts\Talk\Analyzer\WordAnalyzer.cs" />
+    <Compile Include="Assets\Resources\Scripts\Talk\CG&amp;SE\AnimationController.cs" />
+    <Compile Include="Assets\Resources\Scripts\Talk\CG&amp;SE\GraphicsCommand.cs" />
+    <Compile Include="Assets\Resources\Scripts\Talk\CG&amp;SE\GraphicsWorkSpace.cs" />
+    <Compile Include="Assets\Resources\Scripts\Talk\CG&amp;SE\SoundsCommand.cs" />
+    <Compile Include="Assets\Resources\Scripts\Talk\CG&amp;SE\SoundsWorkSpace.cs" />
+    <Compile Include="Assets\Resources\Scripts\Talk\CG&amp;SE\StandCGController.cs" />
     <Compile Include="Assets\Resources\Scripts\Talk\Compiler.cs" />
-    <Compile Include="Assets\Resources\Scripts\Talk\CompilerFormat.cs" />
-    <Compile Include="Assets\Resources\Scripts\Talk\GraphicAndSoundCommand.cs" />
-    <Compile Include="Assets\Resources\Scripts\Talk\ScenarioWorkSpace.cs" />
-    <Compile Include="Assets\Resources\Scripts\Talk\StructureAnalyzer.cs" />
-    <Compile Include="Assets\Resources\Scripts\Talk\SystemCommand.cs" />
-    <Compile Include="Assets\Resources\Scripts\Talk\TagPattern.cs" />
-    <Compile Include="Assets\Resources\Scripts\Talk\TextCommand.cs" />
-    <Compile Include="Assets\Resources\Scripts\Talk\WordAnalyzer.cs" />
+    <Compile Include="Assets\Resources\Scripts\Talk\System\OtherCommand.cs" />
+    <Compile Include="Assets\Resources\Scripts\Talk\System\SystemCommand.cs" />
+    <Compile Include="Assets\Resources\Scripts\Talk\Text\TextCommand.cs" />
+    <Compile Include="Assets\Resources\Scripts\Talk\Text\TextWorkSpace.cs" />
+    <Compile Include="Assets\Resources\Scripts\Talk\Whole\GameWorkSpace.cs" />
+    <Compile Include="Assets\Resources\Scripts\Talk\Whole\ScenarioWorkSpace.cs" />
+    <Compile Include="Assets\Resources\Scripts\Talk\Whole\VirtualMachine.cs" />
     <Compile Include="Assets\Resources\Scripts\Title\LoadButton.cs" />
     <Compile Include="Assets\Resources\Scripts\Title\StartButton.cs" />
     <Compile Include="Assets\Resources\Scripts\UI\DialogWindow.cs" />
@@ -239,8 +248,8 @@
     <None Include="Assets\Resources\Effects\ToonShading\Shaders\ToonLitOutline.shader" />
     <None Include="Assets\Resources\Effects\Unlit\UnlitCastShadow.shader" />
     <None Include="Assets\Resources\Scenarios\test.txt" />
+    <None Include="Assets\Resources\Scenarios\test_2.txt" />
     <None Include="Assets\Resources\Scenarios\testscript.txt" />
-    <None Include="Assets\Resources\Senarios\testscript.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>

@@ -147,6 +147,9 @@ public class Game : MonoBehaviour
         //シーン間データの初期化
         BattleIn = new BattleDataIn();
         BattleOut = new BattleDataOut();
+        ScenarioIn = new ScenarioDataIn();
+
+        ScenarioIn.FileName = "test.txt";
 
         //あとセーブデータ読み込みなど
 

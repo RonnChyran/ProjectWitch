@@ -111,13 +111,15 @@ namespace Field
         {
             var dir = targetpos - (Vector2)mCamera.transform.position;
             var moveVec = dir.normalized;
-            while (dir.magnitude > mAutoCameraSpeed/100.0f)
+            while (dir.magnitude > mAutoCameraSpeed/50.0f)
             {
                 mCamera.transform.position += new Vector3(moveVec.x, moveVec.y, 0.0f) / 100.0f * mAutoCameraSpeed;
                 dir = targetpos - (Vector2)mCamera.transform.position;
                 moveVec = dir.normalized;
                 yield return new WaitForSeconds(0.01f);
             }
+
+            yield return null;
         }
     }
 

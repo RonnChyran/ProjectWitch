@@ -38,14 +38,8 @@ public class FXController : MonoBehaviour {
 
         if (mLifeTime < 0)
         {
+            EndEvent();
             Destroy(this.gameObject);
         }
 	}
-
-    //オブジェクト破棄時の処理
-    void OnDestroy()
-    {
-        //終了イベントを呼び出す
-        EndEvent();
-    }
 }

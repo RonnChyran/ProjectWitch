@@ -292,6 +292,7 @@ namespace Field
 
             //時間を進める
             game.CurrentTime++;
+            
 
         }
 
@@ -342,6 +343,8 @@ namespace Field
 
             //戦闘呼び出し
             game.CallPreBattle();
+            FieldUIController = null;
+            CameraController = null;
             SceneManager.UnloadScene(game.SceneName_FieldUI);
             yield return null;
 
