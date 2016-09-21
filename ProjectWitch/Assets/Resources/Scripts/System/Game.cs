@@ -13,6 +13,7 @@ public class Game : MonoBehaviour
     private const string cSceneName_Battle      = "Battle";
     private const string cSceneName_PreBattle   = "PreBattle";
     private const string cSceneName_Field       = "Field";
+    private const string cSceneName_FieldUI     = "FieldUI";
     private const string cSceneName_Save        = "Save";
     private const string cSceneName_Load        = "Load";
 
@@ -20,6 +21,7 @@ public class Game : MonoBehaviour
     public string SceneName_Battle      { get { return cSceneName_Battle; } private set { } }
     public string SceneName_PreBattle   { get { return cSceneName_PreBattle; } private set { } }
     public string SceneName_Field       { get { return cSceneName_Field; } private set { } }
+    public string SceneName_FieldUI     { get { return cSceneName_FieldUI; }  private set { } }
     public string SceneName_Save        { get { return cSceneName_Save; } private set { } }
     public string SceneName_Load        { get { return cSceneName_Load; } private set { } }
 
@@ -145,6 +147,9 @@ public class Game : MonoBehaviour
         //シーン間データの初期化
         BattleIn = new BattleDataIn();
         BattleOut = new BattleDataOut();
+        ScenarioIn = new ScenarioDataIn();
+
+        ScenarioIn.FileName = "test.txt";
 
         //あとセーブデータ読み込みなど
 
@@ -177,13 +182,18 @@ public class Game : MonoBehaviour
     {
         SceneManager.LoadScene(cSceneName_Field);
     }
+    public Scene CallFieldUI()
+    {
+        SceneManager.LoadScene(cSceneName_FieldUI, LoadSceneMode.Additive);
+        return SceneManager.GetSceneByName(cSceneName_FieldUI);
+    }
 
     //戦闘の開始
     public void CallPreBattle()
     {
         if (UsePreBattle)
         {
-            SceneManager.LoadScene(cSceneName_PreBattle);
+            SceneManager.LoadScene(cSceneName_PreBattle,LoadSceneMode.Additive);
         }
         else
         {
@@ -198,9 +208,15 @@ public class Game : MonoBehaviour
         //戦闘情報の格納
         var time = (CurrentTime <= 2) ? CurrentTime : 2;
         BattleIn.TimeOfDay = time;
+        
+        SceneManager.UnloadScene(cSceneName_PreBattle);
+        SceneManager.LoadScene(cSceneName_Battle,LoadSceneMode.Additive);
+    }
 
-        IsBattle = true;
-        SceneManager.LoadScene(cSceneName_Battle);
+    //戦闘後
+    public void CallAfterBattle()
+    {
+        SceneManager.UnloadScene(cSceneName_Battle);
     }
 
     //スクリプトの開始

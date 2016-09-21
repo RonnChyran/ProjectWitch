@@ -1,41 +1,79 @@
 ;ここはコメントになります
-
-;場面1
-;タイミング　しょっぱな
-[background ref = "bg_forestA"]
+[background ref = "1000"]
+[bgm ref = "000_title"]
+*main
 [loadcg id=0 ref = "000_cv_aliceA"]
-#チシャ
-……リ……ま、……リスさ……！[p]
-アリス様！[p]
-;明転
-;BGM再生
-;イベントＣＧ 001 寝起きのアリス
+[drawcg id=0 mode="slidein"]
+[loadcg id=1 ref = "000_cv_aliceA"]
+[drawcg id=1 mode="fadein"]
+[loadcg id=2 ref = "000_cv_aliceA"]
+[drawcg id=2 pos="left" mode="slidein"]
 #アリス
-うーん……。[p]
-#チシャ
-アリス様！　朝ですよ！
-早く起きてください！[p]
-#アリス
-うーん……起きた起きた。[n]
-はいはい……おはよー。[p]
-#チシャ
-アリス様、入りますよー！[p]
-#アリス
-入ったらぶっ殺すぞ！！[p]
-#チシャ
-わっ！　な、何でですかぁ！[p]
-#アリス
-うるせえ！　とにかく外で待ってろ！！[p]
-;[cn]
-寝起きとは思えない大声でチシャをしかりつけ、[n]
-アリスはもそもそとベッドからはい出した。[p]
-#アリス
-うー……ん！！[p]
-;[cn]
-大きく伸びをすると、ぽいぽいとパジャマを放り、[n]
-タンスから着慣れたドレスを取り出した。[p]
-#アリス
-よしっ……と。[p]
-;[cn]
-最後に帽子をかぶると、アリスは鏡の前でにやりと笑い、[n]
-鼻歌交じりに部屋を出ていった。[p]
+あめんぼあかいなあいうえお[p]
+;[jump label = "main"]
+[se ref = "barrier"]
+[cn]
+[textspeed value=10.0]あいうえおかきくけこさしすせそ[n]
+[textspeed value=40.0]たちつてとなにぬねのはひふへほ[n]
+[textspeed value=0.0]まみむめもやゆよらりるれろわをん[p]
+[clearcg id=1 mode="fadeout"]
+[clearcg id=2 mode="slideout"]
+[moveto id=0 x=50 y=50 time=1000]
+[rotate id=0 angle=360 time=1000]
+[scale  id=0 size=-1 time=500]
+[scale  id=0 size=-1 time=500]
+[stopbgm]
+[filter name="fade"  time=500]
+[filter name="clear" time=500]
+[filter name="flush" time=500]
+;ローカル変数を代入
+[local_memset index=0 value=100]
+;足し算(100 + 50)
+[calc opr="add" index0=0 value1=50 to=0]
+index=0は
+[if opr="eqr" index0=0 value1=160]
+160
+[elif opr="eqr" index0=0 value1=150]
+150
+[else]
+160でも150でもない
+[endif]
+[movie ref = "testmovie" skip="true"]
+[p]
+[local_memget index=0 to=1]
+
+;システム変数
+[sys_memset value=10 index=1]
+[sys_memget index=1 local=20]
+
+;↓これだけは勝手に追加してます
+;[log value="あいうえお" または index=0]
+;ログを出力します。
+;valueは値として、indexは変数として認識
+[log index=20]
+
+[battle_unit_in p0=0 p1=1 p2=2 e0=3 e1=4 e2=5]
+[battle_nonpre]
+[battle_auto]
+[call_ending index = 100]
+
+[if_death unit=0,1,2]
+生存
+[else]
+死亡
+[endif]
+[p]
+
+このあたりは全部何がしかのシステムいじり
+[unit_heal_all territory=0]
+[unit_heal unit=0,1]
+[unit_kill unit=0,1]
+[unit_employ unit=0,1,2]
+[p]
+#ヘレン
+[voice ref="020004"]
+フンフンフーーン♪[n]
+そろそろ焼きあがるわね。[n]
+おいしくできたかなぁ……。[p]
+[voice ref="020005"]
+後でヘレンに味見してもらおっと！[p]

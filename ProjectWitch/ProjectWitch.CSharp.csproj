@@ -61,9 +61,14 @@
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Xcode">
+      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.iOS.Extensions.Common">
+      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Common.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Resources\Effects\Battle\Scripts\FXController.cs" />
     <Compile Include="Assets\Resources\Effects\ImageEffects\Scripts\Antialiasing.cs" />
     <Compile Include="Assets\Resources\Effects\ImageEffects\Scripts\Bloom.cs" />
     <Compile Include="Assets\Resources\Effects\ImageEffects\Scripts\BloomAndFlares.cs" />
@@ -104,14 +109,21 @@
     <Compile Include="Assets\Resources\Effects\ImageEffects\Scripts\Vortex.cs" />
     <Compile Include="Assets\Resources\Models\Background\Scripts\UVScroller.cs" />
     <Compile Include="Assets\Resources\Scripts\Army\LeaderMenu.cs" />
+    <Compile Include="Assets\Resources\Scripts\Battle\BattleController.cs" />
     <Compile Include="Assets\Resources\Scripts\Battle\BattleDebugger.cs" />
     <Compile Include="Assets\Resources\Scripts\Battle\BattleInfo.cs" />
     <Compile Include="Assets\Resources\Scripts\Common\ArmyJump.cs" />
+    <Compile Include="Assets\Resources\Scripts\Common\FXController.cs" />
     <Compile Include="Assets\Resources\Scripts\Common\MainCameraGetter.cs" />
-    <Compile Include="Assets\Resources\Scripts\Field\Button\FieldButton.cs" />
-    <Compile Include="Assets\Resources\Scripts\Field\Button\FieldMenu.cs" />
+    <Compile Include="Assets\Resources\Scripts\Field\Button\FieldButtonBase.cs" />
+    <Compile Include="Assets\Resources\Scripts\Field\Button\FlagButton.cs" />
+    <Compile Include="Assets\Resources\Scripts\Field\Button\FlagMenu.cs" />
+    <Compile Include="Assets\Resources\Scripts\Field\Button\Menu.cs" />
+    <Compile Include="Assets\Resources\Scripts\Field\Button\MenuBase.cs" />
+    <Compile Include="Assets\Resources\Scripts\Field\Button\MenuButton.cs" />
     <Compile Include="Assets\Resources\Scripts\Field\CameraController.cs" />
     <Compile Include="Assets\Resources\Scripts\Field\FieldController.cs" />
+    <Compile Include="Assets\Resources\Scripts\Field\FieldUIController.cs" />
     <Compile Include="Assets\Resources\Scripts\Field\UI\InfoBoxIcon.cs" />
     <Compile Include="Assets\Resources\Scripts\Field\UI\InfoBoxText.cs" />
     <Compile Include="Assets\Resources\Scripts\Field\UI\MapColor.cs" />
@@ -123,22 +135,32 @@
     <Compile Include="Assets\Resources\Scripts\PreBattle\DragObject.cs" />
     <Compile Include="Assets\Resources\Scripts\PreBattle\DragUnit.cs" />
     <Compile Include="Assets\Resources\Scripts\PreBattle\PreBattleButton.cs" />
+    <Compile Include="Assets\Resources\Scripts\PreBattle\PreBattleController.cs" />
     <Compile Include="Assets\Resources\Scripts\PreBattle\RecieveCard.cs" />
     <Compile Include="Assets\Resources\Scripts\PreBattle\RecieveObject.cs" />
     <Compile Include="Assets\Resources\Scripts\PreBattle\RecieveUnit.cs" />
     <Compile Include="Assets\Resources\Scripts\PreBattle\UnitList.cs" />
     <Compile Include="Assets\Resources\Scripts\System\Game.cs" />
     <Compile Include="Assets\Resources\Scripts\System\GameData.cs" />
-    <Compile Include="Assets\Resources\Scripts\Talk\CommandPatterns.cs" />
+    <Compile Include="Assets\Resources\Scripts\Talk\Analyzer\CommandPatterns.cs" />
+    <Compile Include="Assets\Resources\Scripts\Talk\Analyzer\CompilerFormat.cs" />
+    <Compile Include="Assets\Resources\Scripts\Talk\Analyzer\StructureAnalyzer.cs" />
+    <Compile Include="Assets\Resources\Scripts\Talk\Analyzer\TagPattern.cs" />
+    <Compile Include="Assets\Resources\Scripts\Talk\Analyzer\WordAnalyzer.cs" />
+    <Compile Include="Assets\Resources\Scripts\Talk\CG&amp;SE\AnimationController.cs" />
+    <Compile Include="Assets\Resources\Scripts\Talk\CG&amp;SE\GraphicsCommand.cs" />
+    <Compile Include="Assets\Resources\Scripts\Talk\CG&amp;SE\GraphicsWorkSpace.cs" />
+    <Compile Include="Assets\Resources\Scripts\Talk\CG&amp;SE\SoundsCommand.cs" />
+    <Compile Include="Assets\Resources\Scripts\Talk\CG&amp;SE\SoundsWorkSpace.cs" />
+    <Compile Include="Assets\Resources\Scripts\Talk\CG&amp;SE\StandCGController.cs" />
     <Compile Include="Assets\Resources\Scripts\Talk\Compiler.cs" />
-    <Compile Include="Assets\Resources\Scripts\Talk\CompilerFormat.cs" />
-    <Compile Include="Assets\Resources\Scripts\Talk\GraphicAndSoundCommand.cs" />
-    <Compile Include="Assets\Resources\Scripts\Talk\ScenarioWorkSpace.cs" />
-    <Compile Include="Assets\Resources\Scripts\Talk\StructureAnalyzer.cs" />
-    <Compile Include="Assets\Resources\Scripts\Talk\SystemCommand.cs" />
-    <Compile Include="Assets\Resources\Scripts\Talk\TagPattern.cs" />
-    <Compile Include="Assets\Resources\Scripts\Talk\TextCommand.cs" />
-    <Compile Include="Assets\Resources\Scripts\Talk\WordAnalyzer.cs" />
+    <Compile Include="Assets\Resources\Scripts\Talk\System\OtherCommand.cs" />
+    <Compile Include="Assets\Resources\Scripts\Talk\System\SystemCommand.cs" />
+    <Compile Include="Assets\Resources\Scripts\Talk\Text\TextCommand.cs" />
+    <Compile Include="Assets\Resources\Scripts\Talk\Text\TextWorkSpace.cs" />
+    <Compile Include="Assets\Resources\Scripts\Talk\Whole\GameWorkSpace.cs" />
+    <Compile Include="Assets\Resources\Scripts\Talk\Whole\ScenarioWorkSpace.cs" />
+    <Compile Include="Assets\Resources\Scripts\Talk\Whole\VirtualMachine.cs" />
     <Compile Include="Assets\Resources\Scripts\Title\LoadButton.cs" />
     <Compile Include="Assets\Resources\Scripts\Title\StartButton.cs" />
     <Compile Include="Assets\Resources\Scripts\UI\DialogWindow.cs" />
@@ -226,8 +248,8 @@
     <None Include="Assets\Resources\Effects\ToonShading\Shaders\ToonLitOutline.shader" />
     <None Include="Assets\Resources\Effects\Unlit\UnlitCastShadow.shader" />
     <None Include="Assets\Resources\Scenarios\test.txt" />
+    <None Include="Assets\Resources\Scenarios\test_2.txt" />
     <None Include="Assets\Resources\Scenarios\testscript.txt" />
-    <None Include="Assets\Resources\Senarios\testscript.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>
