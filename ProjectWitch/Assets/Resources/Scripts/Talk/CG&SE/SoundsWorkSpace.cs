@@ -121,6 +121,15 @@ namespace Scenario.WorkSpace
 		[SerializeField]
 		private AudioSource mVoiceSource;
 
+		//SE&Voiceが止まっているかどうかを調べる
+		public bool IsPlayingSEAndVoice()
+		{
+			bool isPlaying = false;
+			isPlaying |= mSESource.isPlaying;
+			isPlaying |= mVoiceSource.isPlaying;
+			return isPlaying;
+		}
+
 		public void SetCommandDelegaters(VirtualMachine vm)
 		{
 			//BGMを再生
@@ -151,7 +160,7 @@ namespace Scenario.WorkSpace
 					string name = Converter.ObjectToString(arguments[0], out error);
 					if (error != null) return error;
 					int volume = Converter.ObjectToInt(arguments[1], out error);
-					if (error != null) return error; 
+					if (error != null) return error;
 
 					PlaySE(name, volume);
 					return null;

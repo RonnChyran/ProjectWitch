@@ -275,6 +275,7 @@ MonoBehaviour:
   mTextView: {fileID: 1357350970}
   mNameView: {fileID: 1755479041}
   mTextBackground: {fileID: 9180277}
+  mNextIcon: {fileID: 445472759}
   mText: {fileID: 938442177}
   mName: {fileID: 1208506596}
   mSpeed: 20
@@ -291,6 +292,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1598866842}
   m_RootOrder: 0
+--- !u!1 &445472759 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1000010459859410, guid: 61d30cc03aedd374c8263a43838cf0f5,
+    type: 2}
+  m_PrefabInternal: {fileID: 1778665536}
 --- !u!1 &456437950
 GameObject:
   m_ObjectHideFlags: 0
@@ -1325,6 +1331,9 @@ MonoBehaviour:
   mGraphicsWorkSpace: {fileID: 1395049177}
   mSoundsWorkSpace: {fileID: 568664200}
   mGameWorkSpace: {fileID: 456437952}
+  mSkipWaitDuration: 0
+  mAutoWaitDuration: 0.1
+  mAutoMode: 0
 --- !u!4 &1598866842
 Transform:
   m_ObjectHideFlags: 0
@@ -1650,6 +1659,10 @@ Prefab:
         type: 2}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1000010459859410, guid: 61d30cc03aedd374c8263a43838cf0f5, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 61d30cc03aedd374c8263a43838cf0f5, type: 2}

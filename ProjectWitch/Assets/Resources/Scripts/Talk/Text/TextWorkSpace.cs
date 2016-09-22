@@ -52,6 +52,10 @@ namespace Scenario.WorkSpace
 		[SerializeField]
 		private GameObject mTextBackground;
 
+		//テキストのNextアイコン
+		[SerializeField]
+		private GameObject mNextIcon;
+
 		//テキスト
 		protected string Text
 		{
@@ -113,10 +117,17 @@ namespace Scenario.WorkSpace
 			{
 				mTWS = tws;
 			}
+			public override void Setup ()
+			{
+				mTWS.mNextIcon.SetActive(true);
+				base.Setup ();
+			}
 			public override void Finish()
 			{
+				mTWS.mNextIcon.SetActive(false);
 				mTWS.Text = "";
 				mTWS.ResetSpeed ();
+				base.Finish ();
 			}
 		}
 

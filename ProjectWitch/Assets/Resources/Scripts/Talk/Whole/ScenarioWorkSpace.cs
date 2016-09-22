@@ -46,29 +46,60 @@ namespace Scenario.WorkSpace
 		{
 			if (mVirtualMachine == null) return;
 
-            float mouseWheel = Input.GetAxis("TalkNext");
-            bool isNext = Input.GetButtonDown("TalkNext");
-			bool skipFlag = (mouseWheel<0 || isNext);
+			bool stepNextFlag = false;
+			float mouseWheel = Input.GetAxis("TalkNext");
+			bool isNext = Input.GetButtonDown("TalkNext");
+			stepNextFlag |= (mouseWheel<0 || isNext);
+
+			bool skipFlag = Input.GetButton("TalkSkip");
+			if (Updater is WaitUpdater)
+			{
+				if ((Updater as WaitUpdater).Time < mSkipWaitDuration)
+					skipFlag = false;
+			}
+			stepNextFlag |= skipFlag;
+
+			if (Input.GetButtonDown ("TalkAuto"))
+				mAutoMode ^= true; 
+			bool autoFlag = false;
+			if (Updater is WaitUpdater)
+			{
+				bool isFinishAllExp = true;
+				isFinishAllExp &= (Updater as WaitUpdater).Time >= mAutoWaitDuration;
+				isFinishAllExp &= !mSoundsWorkSpace.IsPlayingSEAndVoice ();
+				if (isFinishAllExp)
+					autoFlag = mAutoMode;
+			}
+			stepNextFlag |= autoFlag;
+
 			bool isWaiting = Updater is WaitUpdater;
-			bool isPausing = Updater is PauseUpdater;
-			if (skipFlag&&isWaiting&&!isPausing) {
+
+			//ここで次ステップへの処理を行う
+			if (stepNextFlag&&isWaiting)
+			{
 				mSoundsWorkSpace.StopVoice ();
 				SetUpdater(null);
-				skipFlag = false;
+				stepNextFlag = false;
 			}
 
+			//ここで次のUpdaterまでプログラムを進める
+			//Updaterが来たらそこでループを抜ける
 			while (true) {
 				//ここを適切に入れ替えればSkipできるはず
-				if (!skipFlag) {
-					if (Updater != null) break;
+				if (!stepNextFlag) {
+					if (Updater != null)
+						break;
 				} else {
-					if (Updater is WaitUpdater) break;
+					if (Updater is WaitUpdater)
+						break;
 				}
+
 				SetUpdater(null);
 				if (!mVirtualMachine.RunCommand ())
 					break;
 			}
 
+			//Updaterの更新
 			if (Updater != null)
 			{
 				Updater.Update (Time.deltaTime);
@@ -76,8 +107,6 @@ namespace Scenario.WorkSpace
 					SetUpdater(null);
 			}
 		}
-
-
 
 		//アップデータコマンドはここに入る
 		private UpdaterFormat mUpdater;
@@ -111,6 +140,16 @@ namespace Scenario.WorkSpace
 		//ゲームシステム関係のフィールド
 		[SerializeField]
 		private GameWorkSpace mGameWorkSpace;
+
+		[SerializeField]
+		//次の会話をスキップする前にこの時間分だけ待つ
+		private float mSkipWaitDuration;
+		[SerializeField]
+		//自動で次の会話に遷移する前にこの時間分だけ待つ
+		private float mAutoWaitDuration;
+		[SerializeField]
+		//自動遷移モードフラグ
+		private bool mAutoMode;
 
 		public void SetCommandDelegaters(VirtualMachine vm)
 		{
@@ -170,8 +209,15 @@ namespace Scenario.WorkSpace
 
 	//待機コマンド(ユーザーの操作を待機)
 	public class WaitUpdater : UpdaterFormat{
-		public override void Setup (){}
-		public override void Update(float deltaTime){}
+		public float Time{ get; private set; }
+		public override void Setup ()
+		{
+			Time = 0.0f;
+		}
+		public override void Update(float deltaTime)
+		{
+			Time += deltaTime;
+		}
 		public override void Finish(){}
 	}
 	//待機コマンド(一定の処理が完了するまで待機)
