@@ -22,6 +22,9 @@ namespace Field
             if (isOpening)
             {
                 HideMenu();
+
+                //メニューを親にセット
+                mInst.transform.SetParent(transform);
             }
             //開いていなかった場合メニューを開く
             else

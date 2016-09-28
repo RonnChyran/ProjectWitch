@@ -10,7 +10,7 @@ namespace PreBattle
         public void CallBattle()
         {
             var game = Game.GetInstance();
-            game.CallBattle();
+            StartCoroutine(game.CallBattle());
         }
     }
 }

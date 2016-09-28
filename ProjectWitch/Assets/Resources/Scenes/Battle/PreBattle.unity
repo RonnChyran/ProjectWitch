@@ -2367,7 +2367,6 @@ GameObject:
   - 20: {fileID: 971483421}
   - 92: {fileID: 971483420}
   - 124: {fileID: 971483419}
-  - 81: {fileID: 971483418}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -2375,13 +2374,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &971483418
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 971483417}
-  m_Enabled: 1
 --- !u!124 &971483419
 Behaviour:
   m_ObjectHideFlags: 0
@@ -3980,7 +3972,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1527528293}
   m_HandleRect: {fileID: 1527528292}
   m_Direction: 0
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:

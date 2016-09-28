@@ -1,0 +1,51 @@
+﻿;script 104
+;データロード
+[loadcg id=0 ref="000_cv_aliceA"]
+[loadcg id=1 ref="008_cv_kuroA"]
+[loadcg id=2 ref="011_cv_werewolfA"]
+[background ref="1006"]
+[bgm ref="004_battle1"]
+[drawcg id=0 pos="right"]
+[drawcg id=1 pos="left"]
+
+#ワーウルフ
+来たか。メイジー様、お力を……。[p]
+#アリス
+オイ、あそこに立っている奴は誰だ。[p]
+#クロ
+あれは……メイジー様の部下の、[n]
+たしかワーウルフとかいう者だったかと。[p]
+#アリス
+フン、狼男か。メイジーのやつ、珍しいものを飼ってるじゃないか。[p]
+#クロ
+いかがなされますか。[p]
+#アリス
+当然ひねりつぶす、全軍とつげ……いや、待て。[n]
+何か言ってるみたいだな。[p]
+[filter name="fade" time="500"]
+[clearcg id=0]
+[clearcg id=1]
+[drawcg id=2 pos="center"]
+[filter name="clear" time="500"]
+#ワーウルフ
+敵軍に告ぐ！！　 我らは貴様を打倒するために[n]
+集まった同士である！[p]
+政治に関心を向けず、遊びほうけ、民をないがしろに[n]
+するような畜生を、我らは領主とは認めない！！[p]
+我らの領主にふさわしいのはメイジー様を置いてほかになし！！[p]
+[filter name="fade" time="500"]
+[clearcg id=2]
+[drawcg id=0 pos="right"]
+[drawcg id=1 pos="left"]
+[filter name="clear" time="500"]
+#アリス
+ちっ、ああいう輩が一番面倒なんだ……。クロ、全軍を前へ押し出せ。[p]
+#クロ
+はっ。[p]
+#アリス
+貴様らのやっていることが如何に下らん革命ゴッコ[n]
+なのか、その身にしっかりと教えてやろう。[n]
+クフフフフフフ……。[p]
+
+
+[sys_memset index=104 value="1"]

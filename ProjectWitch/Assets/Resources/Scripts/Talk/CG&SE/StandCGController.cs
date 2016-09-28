@@ -75,7 +75,7 @@ namespace Scenario
 		}
 
 		//立ち絵を表示
-		public void ShowStandCG(int id, out string error)
+		public void ShowStandCG(int id, bool isShowFront, out string error)
 		{
 			error = null;
 			if (!(0 <= id && id < mCGArray.Length))
@@ -84,12 +84,18 @@ namespace Scenario
 				return;
 			}
 			GameObject obj = mCGArray [id];
+			if (obj == null) 
+			{
+				error = "ID=" + id + "の立ち絵が存在しません";
+				return;
+			}
 
-			obj.transform.SetAsFirstSibling ();
+			if (!isShowFront)
+				obj.transform.SetAsFirstSibling ();
 			obj.SetActive (true);
 		}
 
-		//立ち絵を表示
+		//立ち絵を非表示
 		public void HideStandCG(int id, out string error)
 		{
 			error = null;
@@ -99,6 +105,11 @@ namespace Scenario
 				return;
 			}
 			GameObject obj = mCGArray [id];
+			if (obj == null) 
+			{
+				error = "ID=" + id + "の立ち絵が存在しません";
+				return;
+			}
 			obj.SetActive (false);
 		}
 

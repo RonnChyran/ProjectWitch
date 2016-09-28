@@ -34,6 +34,7 @@ namespace Scenario.WorkSpace
 		{
 			mTextVisible = isVisible;
 			RefreshVisibility ();
+
 		}
 
 		private bool mNameVisible = true;
@@ -45,12 +46,87 @@ namespace Scenario.WorkSpace
 			mTextBackground.SetActive (mTextVisible);
 		}
 
+		//テキスト、名前の背景
 		[SerializeField]
 		private GameObject mTextView;
 		[SerializeField]
 		private GameObject mNameView;
 		[SerializeField]
 		private GameObject mTextBackground;
+
+		//テキストを指定速度で再生するアップデータ
+		public class TextWindowUpdater : UpdaterFormat
+		{
+			private TextWorkSpace mTWS;
+			private bool mHidden;
+
+			private RawImage mNameImage;
+			private Text mName;
+			private RawImage mTextImage;
+			private Text mText;
+
+			private float mTime = 0.0f;
+			private float mDuration;
+
+			public TextWindowUpdater(bool hidden, float duration, TextWorkSpace tws)
+			{
+				mDuration = duration;
+				mHidden = hidden;
+				mTWS = tws;
+			}
+
+			//これまでのテキストを取得
+			public override void Setup ()
+			{
+				mNameImage 	= mTWS.mNameView.GetComponent<RawImage> ();
+				mName 		= mTWS.mName;
+				mTextImage 	= mTWS.mTextView.GetComponent<RawImage> ();
+				mText	 	= mTWS.mText;
+			}
+			//テキストを追加
+			public override void Update (float deltaTime)
+			{
+				mTime += deltaTime;
+				if (mTime >= mDuration)
+				{
+					SetActive (false);
+					return;
+				}
+
+				float progress = Mathf.Clamp (mTime, 0, mDuration)/mDuration; 
+				SetOpacity(GetOpacity (progress));
+			}
+			public override void Finish ()
+			{
+				SetOpacity(GetOpacity (1.0f));
+			}
+			private float GetOpacity (float progress)
+			{
+				if (mHidden)
+					return progress;
+				else
+					return 1.0f - progress;
+			}
+			private void SetOpacity (float opacity)
+			{
+				Color buf;
+				buf = mName.color;
+				buf.a = opacity;
+				mName.color = buf;
+
+				buf = mNameImage.color;
+				buf.a = opacity;
+				mNameImage.color = buf;
+
+				buf = mText.color;
+				buf.a = opacity;
+				mText.color = buf;
+
+				buf = mTextImage.color;
+				buf.a = opacity;
+				mTextImage.color = buf;
+			}
+		}
 
 		//テキストのNextアイコン
 		[SerializeField]
@@ -155,6 +231,20 @@ namespace Scenario.WorkSpace
 				"InvisibleName",
 				new CommandDelegater(false, 0, delegate(object[] arguments){
 					SetNameVisible(false);
+					return null;
+				}));
+			vm.AddCommandDelegater(
+				"InvisibleTextWindow",
+				new CommandDelegater(true, 0, delegate(object[] arguments){
+					UpdaterFormat updater = new TextWindowUpdater(true, 0.5f, this);
+					arguments[0] = updater;
+					return null;
+				}));
+			vm.AddCommandDelegater(
+				"VisibleTextWindow",
+				new CommandDelegater(true, 0, delegate(object[] arguments){
+					UpdaterFormat updater = new TextWindowUpdater(false, 0.5f, this);
+					arguments[0] = updater;
 					return null;
 				}));
 			vm.AddCommandDelegater(

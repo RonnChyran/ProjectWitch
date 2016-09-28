@@ -20,6 +20,7 @@ namespace GameData
         public UnitDataFormat()
         {
             Love = 0;
+            IsAlive = true;
         }
 
         //ユニット名
@@ -77,6 +78,9 @@ namespace GameData
 
         //撤退するか死ぬか ture:死ぬ　false：撤退する（捕獲コマンドが無効
         public bool Deathable { get; set; }
+
+        //生きているか
+        public bool IsAlive { get; set; }
 
         //好感度
         public int Love { get; set; }
@@ -368,7 +372,7 @@ namespace GameData
         public ConfigDataFormat()
         {
             //iniで読み込むようにする
-            TextSpeed = 10.0f;
+            TextSpeed = 50.0f;
         }
 
         //解像度
@@ -400,11 +404,11 @@ namespace GameData
     //仮想メモリ
     public class VirtualMemory
     {
-        public List<object> Memory{ get; private set; }
+        public List<string> Memory{ get; private set; }
 
         public VirtualMemory()
         {
-            Memory = Enumerable.Repeat<object>(-1, 70000).ToList();
+            Memory = Enumerable.Repeat<string>("-1", 70000).ToList();
         }
     }
 
@@ -484,6 +488,7 @@ namespace GameData
             TimeOfDay = 0;
             IsInvasion = true;
             IsAuto = false;
+            IsEvent = false;
         }
 
         //ユニットデータ
@@ -509,6 +514,9 @@ namespace GameData
 
         //自動戦闘か否か
         public bool IsAuto { get; set; }
+
+        //イベント戦闘か否か
+        public bool IsEvent { get; set; }
     }
 
     public class BattleDataOut
@@ -518,7 +526,16 @@ namespace GameData
 
     public class ScenarioDataIn
     {
+        public void Reset()
+        {
+            FileName = "";
+            NextA = -1;
+            NextB = -1;
+        }
+
         public string FileName { get; set; }
+        public int NextA { get; set; }
+        public int NextB { get; set; }
     }
 
     #endregion
@@ -709,7 +726,7 @@ namespace GameData
             //データの代入
             for(int i=1; i<rowData.Count; i++)
             {
-                if (rowData[i].Count != 10) continue;
+                if (rowData[i].Count != 11) continue;
 
                 var data = rowData[i];
                 var eventData = new EventDataFormat();
@@ -719,19 +736,19 @@ namespace GameData
                 try
                 {
                     //ファイル名
-                    eventData.FileName = data[0];
+                    eventData.FileName = data[1] + ".txt";
 
                     //タイミング
                     eventData.Timing = 
                         (EventDataFormat.TimingType)Enum.ToObject(typeof(EventDataFormat.TimingType),
-                        int.Parse(data[1]));
+                        int.Parse(data[2]));
 
                     //地点ＩＤ
-                    eventData.Area = int.Parse(data[2]);
+                    eventData.Area = int.Parse(data[3]);
 
                     //味方登場人物
                     eventData.ActorA = new List<int>();
-                    var parts = data[3].Split(' ');
+                    var parts = data[4].Split(' ');
                     foreach( string part in parts )
                     {
                         if (part == "") continue;
@@ -740,7 +757,7 @@ namespace GameData
 
                     //敵登場人物
                     eventData.ActorB = new List<int>();
-                    parts = data[4].Split(' ');
+                    parts = data[5].Split(' ');
                     foreach( string part in parts)
                     {
                         if (part == "") continue;
@@ -748,9 +765,9 @@ namespace GameData
                     }
 
                     //条件読み出し
-                    if (data[5] != "")
+                    if (data[6] != "")
                     {
-                        eventData.If_Val = int.Parse(data[5]);
+                        eventData.If_Val = int.Parse(data[6]);
                         eventData.If_Ope =
                             (EventDataFormat.OperationType)Enum.ToObject(typeof(EventDataFormat.OperationType),
                             int.Parse(data[6]));
@@ -762,9 +779,9 @@ namespace GameData
                     }
 
                     //次のスクリプト
-                    if (data[8] != "") eventData.NextA = int.Parse(data[8]);
+                    if (data[9] != "") eventData.NextA = int.Parse(data[9]);
                     else eventData.NextA = -1;
-                    if (data[9] != "") eventData.NextB = int.Parse(data[9]);
+                    if (data[10] != "") eventData.NextB = int.Parse(data[10]);
                     else eventData.NextB = -1;
                 }
                 catch (ArgumentNullException e)

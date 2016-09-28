@@ -128,6 +128,12 @@ namespace Scenario.Compiler{
 			} else {
 				commandList.Add(new SetArgumentCommand ("fadein"));
 			}
+
+			if (arguments.ContainName ("layer")) {
+				commandList.Add(arguments.Get ("layer"));
+			} else {
+				commandList.Add(new SetArgumentCommand ("back"));
+			}
 			commandList.Add (new RunOrderCommand ("ShowCG"));
 			commandList.Add (new RunOrderCommand ("SetUpdater"));
 

@@ -8,7 +8,7 @@ Material:
   m_PrefabInternal: {fileID: 0}
   m_Name: 329_bg_town_UV6
   m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: _EMISSION _NORMALMAP
+  m_ShaderKeywords: _EMISSION _NORMALMAP _SPECULARHIGHLIGHTS_OFF
   m_LightmapFlags: 1
   m_CustomRenderQueue: -1
   stringTagMap: {}
@@ -72,7 +72,7 @@ Material:
     m_Floats:
     - first:
         name: _BumpScale
-      second: 0.9
+      second: 0.34
     - first:
         name: _Cutoff
       second: 0.5
@@ -87,7 +87,7 @@ Material:
       second: 1
     - first:
         name: _Glossiness
-      second: 0.74
+      second: 0.229
     - first:
         name: _GlossyReflections
       second: 1
@@ -108,7 +108,7 @@ Material:
       second: 0
     - first:
         name: _SpecularHighlights
-      second: 1
+      second: 0
     - first:
         name: _SrcBlend
       second: 1
@@ -121,7 +121,7 @@ Material:
     m_Colors:
     - first:
         name: _Color
-      second: {r: 1, g: 1, b: 1, a: 1}
+      second: {r: 0.7352941, g: 0.71023744, b: 0.60553634, a: 1}
     - first:
         name: _EmissionColor
       second: {r: 0, g: 0, b: 0, a: 1}

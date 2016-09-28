@@ -19,6 +19,7 @@ namespace Scenario.Compiler{
 		public CreateCommandsOfOther() : base(){
 			List<PatternFormat> patternList = new List<PatternFormat> ();
 			patternList.Add (new CreateSetBattleUnitCommand ());
+			patternList.Add (new CreateSetBattleAreaCommand ());
 			patternList.Add (new CreateSetBattleNonPreCommand ());
 			patternList.Add (new CreateSetAutoBattleCommand ());
 			patternList.Add (new CreateCallEndingCommand ());
@@ -29,6 +30,7 @@ namespace Scenario.Compiler{
 			patternList.Add (new CreateHealUnitCommand ());
 			patternList.Add (new CreateKillUnitCommand ());
 			patternList.Add (new CreateEmployUnitCommand ());
+			patternList.Add (new CreateChangeAreaOwnerCommand ());
 			mPatternList = patternList;
 		}
 	}
@@ -83,6 +85,33 @@ namespace Scenario.Compiler{
 			}
 
 			commandList.Add (new RunOrderCommand("SetBattleUnit"));
+
+			if (arguments.Count > 0) {
+				CompilerLog.Log(line, index, "無効な引数があります。");
+				return null;
+			}
+			return commandList.GetArray ();
+		}
+	}
+
+	//戦う領地を指定
+	public class CreateSetBattleAreaCommand : Pattern_TagFormat
+	{
+		protected override string TagName(){
+			return "battle_area";
+		}
+
+		protected override CommandFormat[] CreateCommand(ArgumentDictionary arguments, int line, int index)
+		{
+			CommandList commandList = new CommandList();
+
+			if (arguments.ContainName ("id")) {
+				commandList.Add(arguments.Get ("id"));
+			} else {
+				CompilerLog.Log (line, index, "id引数が不足しています。");
+				return null;
+			}
+			commandList.Add (new RunOrderCommand("SetBattleArea"));
 
 			if (arguments.Count > 0) {
 				CompilerLog.Log(line, index, "無効な引数があります。");
@@ -324,6 +353,33 @@ namespace Scenario.Compiler{
 				return null;
 			}
 			commandList.Add (new RunOrderCommand("EmployUnit"));
+
+			if (arguments.Count > 0) {
+				CompilerLog.Log(line, index, "無効な引数があります。");
+				return null;
+			}
+			return commandList.GetArray ();
+		}
+	}
+
+	//指定領地のユニット回復
+	public class CreateChangeAreaOwnerCommand : Pattern_TagFormat
+	{
+		protected override string TagName(){
+			return "change_area_owner";
+		}
+
+		protected override CommandFormat[] CreateCommand(ArgumentDictionary arguments, int line, int index)
+		{
+			CommandList commandList = new CommandList();
+
+			if (arguments.ContainName ("id")) {
+				commandList.Add(arguments.Get ("id"));
+			} else {
+				CompilerLog.Log (line, index, "id引数が不足しています。");
+				return null;
+			}
+			commandList.Add (new RunOrderCommand("ChangeAreaOwner"));
 
 			if (arguments.Count > 0) {
 				CompilerLog.Log(line, index, "無効な引数があります。");

@@ -26,7 +26,7 @@ public class BattleDebugger : MonoBehaviour {
         var game = Game.GetInstance();
 
         game.IsBattle = false;
-        game.CallAfterBattle();
+        SceneManager.UnloadScene(game.SceneName_Battle);
        
     }
 	

@@ -6,6 +6,7 @@
 using UnityEngine;
 
 using System.Collections.Generic;
+using System;
 
 using GameData;
 using Scenario.Compiler;
@@ -25,21 +26,54 @@ namespace Scenario.WorkSpace
 		{
 			error = null;
 
+            var game = Game.GetInstance();
+            for(int i=0; i<2; i++)
+            {
+                if (p[i] == -1) continue;
+
+                game.BattleIn.PlayerUnits[i] = p[i];
+            }
+
+            for(int i=0; i<2; i++)
+            {
+                if (e[i] == -1) continue;
+
+                game.BattleIn.EnemyUnits[i] = e[i];
+            }
+
+            game.BattleIn.IsEvent = true;
 		}
 
-		//battle_nonpreタグ
-		//	error	:エラーメッセージ
-		void BattleNonPre(out string error)
+        //battle_areaタグ
+        //	id		:戦闘領地を指定
+        //	error	:エラーメッセージ
+        void BattleArea(int id, out string error)
+        {
+            error = null;
+
+        }
+
+        //battle_nonpreタグ
+        //	error	:エラーメッセージ
+        void BattleNonPre(out string error)
 		{
 			error = null;
+            var game = Game.GetInstance();
 
-		}
+            //戦闘準備画面を用いない
+            game.UsePreBattle = false;
+
+        }
 
 		//battle_autoタグ
 		//	error	:エラーメッセージ
 		void BattleAuto(out string error)
 		{
 			error = null;
+            var game = Game.GetInstance();
+
+            //次の戦闘をオート戦闘に
+            game.BattleIn.IsAuto = true;
 
 		}
 
@@ -55,21 +89,50 @@ namespace Scenario.WorkSpace
 		//if_aliveタグ
 		//	unitIds	:指定されたユニットのIDの配列
 		//	error	:エラーメッセージ
-		bool IfAlive(int[] unitIds, out string error)
+		bool IfAlive(int[] unitIDs, out string error)
 		{
 			error = null;
+            var game = Game.GetInstance();
+            
+            foreach(var unitID in unitIDs)
+            {
+                try
+                {
+                    if (!game.UnitData[unitID].IsAlive)
+                        return false;
+                }
+                catch(ArgumentException e)
+                {
+                    error = "unitIDが存在しない範囲の値です";
+                    error += e.Message;
+                }
+            }
 
-			return false;
+			return true;
 		}
 
 		//if_deathタグ
 		//	unitIds	:指定されたユニットのIDの配列
 		//	error	:エラーメッセージ
-		bool IfDeath(int[] unitIds, out string error)
+		bool IfDeath(int[] unitIDs, out string error)
 		{
 			error = null;
+            var game = Game.GetInstance();
 
-			return false;
+            foreach(var unitID in unitIDs)
+            {
+                try
+                {
+                    if (game.UnitData[unitID].IsAlive)
+                        return false;
+                }
+                catch(ArgumentException e)
+                {
+                    error = "unitIDが存在しない範囲の値です";
+                    error += e.Message;
+                }
+            }
+			return true;
 		}
 
 		//unit_heal_allタグ
@@ -78,40 +141,104 @@ namespace Scenario.WorkSpace
 		void UnitHealAll(int territory, out string error)
 		{
 			error = null;
+            var game = Game.GetInstance();
+
+            //指定領地のユニットIDをすべて受け取る
+            var unitIDs = game.TerritoryData[territory].UnitList;
+
+            foreach(var unitID in unitIDs)
+            {
+                try
+                {
+                    game.UnitData[unitID].HP = game.UnitData[unitID].MaxHP;
+                    game.UnitData[unitID].SoldierNum = game.UnitData[unitID].MaxSoldierNum;
+                }
+                catch(ArgumentException e)
+                {
+                    error = "unitIDが存在しない範囲の値です:";
+                    error += e.Message;
+                }
+            }
+
 
 		}
 
 		//unit_healタグ
 		//	unitIds	:指定されたユニットのIDの配列
 		//	error	:エラーメッセージ
-		void UnitHeal(int[] unitIds, out string error)
+		void UnitHeal(int[] unitIDs, out string error)
 		{
 			error = null;
+            var game = Game.GetInstance();
+
+            foreach(var unitID in unitIDs)
+            {
+                try
+                {
+                    game.UnitData[unitID].HP = game.UnitData[unitID].MaxHP;
+                    game.UnitData[unitID].SoldierNum = game.UnitData[unitID].MaxSoldierNum;
+                }
+                catch(ArgumentException e)
+                {
+                    error = "unitIDが存在しない範囲です";
+                    error += e.Message;
+                }
+            }
 
 		}
 
 		//unit_killタグ
 		//	unitIds	:指定されたユニットのIDの配列
 		//	error	:エラーメッセージ
-		void UnitKill(int[] unitIds, out string error)
+		void UnitKill(int[] unitIDs, out string error)
 		{
 			error = null;
+            var game = Game.GetInstance();
 
-		}
+            foreach (var unitID in unitIDs)
+            {
+               game.TerritoryData[0].UnitList.Remove(unitID);
+            }
+
+        }
 
 		//unit_employタグ
 		//	unitIds	:指定されたユニットのIDの配列
 		//	error	:エラーメッセージ
-		void UnitEmploy(int[] unitIds, out string error)
+		void UnitEmploy(int[] unitIDs, out string error)
 		{
 			error = null;
+            var game = Game.GetInstance();
+            var unitList = game.TerritoryData[0].UnitList;
 
-		}
+            foreach (var unitID in unitIDs)
+            {
+                //すでに雇っていた場合は無効にする
+                if (unitList.Contains(unitID))
+                    continue;
+
+                //ユニットを自領地に含める
+                unitList.Add(unitID);
+            }
+
+        }
+
+        [SerializeField]
+        private GameObject mTalkController;
 
         //スクリプト終了
         public void ScriptEnd()
         {
-            Debug.Log("終了");
+            mTalkController.GetComponent<TalkController>().EndScript();
+        }
+
+        //change_owner_areaタグ
+        //	id		:指定された領地のID
+        //	error	:エラーメッセージ
+        void ChangeAreaOwner(int id, out string error)
+        {
+            error = null;
+
         }
 
         public void SetCommandDelegaters(VirtualMachine vm)
@@ -145,7 +272,7 @@ namespace Scenario.WorkSpace
 					int count = memory.Memory.Count;
 					object value = arguments[1];
 					if (0 <= index && index<count){
-						memory.Memory[index] = value;
+						memory.Memory[index] = value.ToString();
 						return null;
 					}
 					return "システム変数のインデックスは0 ~ "+ (count - 1) +"です(" + index + ")";
@@ -176,8 +303,19 @@ namespace Scenario.WorkSpace
 					return error;
 				}));
 
-			//戦闘データのセット
-			vm.AddCommandDelegater (
+            //戦闘データのセット
+            vm.AddCommandDelegater(
+                "SetBattleArea",
+                new CommandDelegater(false, 1, delegate (object[] arguments) {
+                    string error;
+                    int id = Converter.ObjectToInt(arguments[0], out error);
+                    if (error != null) return error;
+                    BattleArea(id, out error);
+                    return error;
+                }));
+
+            //戦闘データのセット
+            vm.AddCommandDelegater (
 				"SetBattleNonPre",
 				new CommandDelegater (false, 0, delegate(object[] arguments) {
 					string error;
@@ -311,6 +449,17 @@ namespace Scenario.WorkSpace
 					UnitEmploy(unitIds, out error);
 					return error;
 				}));
-		}
+
+            //戦闘データのセット
+            vm.AddCommandDelegater(
+                "ChangeAreaOwner",
+                new CommandDelegater(false, 1, delegate (object[] arguments) {
+                    string error;
+                    int id = Converter.ObjectToInt(arguments[0], out error);
+                    if (error != null) return error;
+                    ChangeAreaOwner(id, out error);
+                    return error;
+                }));
+        }
 	}
 }

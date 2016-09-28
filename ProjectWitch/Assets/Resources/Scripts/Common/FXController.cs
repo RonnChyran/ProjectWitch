@@ -5,7 +5,8 @@ using System;
 public delegate void FXEventHandler();
 
 
-public class FXController : MonoBehaviour {
+public class FXController : MonoBehaviour
+{
 
     //components
     private ParticleSystem[] mPartSystem;
@@ -20,26 +21,28 @@ public class FXController : MonoBehaviour {
     private float mLifeTime = 2.0f;
 
     //event
-    public event FXEventHandler EndEvent;
+    public event FXEventHandler EndEvent=null;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start()
+    {
         mPartSystem = GetComponentsInChildren<ParticleSystem>();
 
         for (int i = 0; i < mPartSystem.Length; i++)
             mPartSystem[i].playbackSpeed = mPlaySpeed;
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
 
         //寿命管理
         mLifeTime -= Time.deltaTime;
 
         if (mLifeTime < 0)
         {
-            EndEvent();
+            if(EndEvent != null)EndEvent();
             Destroy(this.gameObject);
         }
-	}
+    }
 }

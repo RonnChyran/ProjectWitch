@@ -136,6 +136,10 @@ namespace Field
             //ターンはじめイベントを実行
             yield return EventExecute(eventlist);
 
+            //戦闘オンだったら戦闘開始
+            if (game.BattleIn.IsEvent)
+                yield return StartCoroutine(CallBattle(game.BattleIn.AreaID, 0, true));
+
             //時間が変化するまで待機
             while (currentTime == game.CurrentTime) yield return null;
 
@@ -323,6 +327,25 @@ namespace Field
             //戦闘後スクリプトの開始
             //勝敗で実行されるスクリプトの分岐
             //戦闘後スクリプトの終了
+            if(game.BattleOut.IsWin)
+            {
+                var exescript = game.ScenarioIn.NextA;
+                if(exescript>=0)
+                    game.CallScript(game.FieldEventData[exescript]);
+                yield return null;
+            }
+            else
+            {
+                var exescript = game.ScenarioIn.NextB;
+                if(exescript>=0)
+                    game.CallScript(game.FieldEventData[exescript]);
+                yield return null;
+
+            }
+            while (game.IsTalk) yield return null;
+
+            game.BattleIn.Reset();
+            game.ScenarioIn.Reset();
 
             yield return null;
         }
@@ -342,7 +365,7 @@ namespace Field
             game.BattleIn.IsInvasion = invation;
 
             //戦闘呼び出し
-            game.CallPreBattle();
+            yield return StartCoroutine(game.CallPreBattle());
             FieldUIController = null;
             CameraController = null;
             SceneManager.UnloadScene(game.SceneName_FieldUI);
@@ -355,9 +378,9 @@ namespace Field
             yield return StartCoroutine(AfterBattle());
         }
 
- 
+
         //イベント制御
-        IEnumerator EventExecute(List<EventDataFormat> eventlist)
+        private IEnumerator EventExecute(List<EventDataFormat> eventlist)
         {
             var game = Game.GetInstance();
 
@@ -401,7 +424,7 @@ namespace Field
                 //条件判定
                 if (eventlist[i].If_Val != -1)  //条件なしの時If_Val == -1
                 {
-                    int src = (int)game.SystemMemory.Memory[eventlist[i].If_Val];
+                    int src = int.Parse(game.SystemMemory.Memory[eventlist[i].If_Val]);
                     var imm = eventlist[i].If_Imm;
 
                     //演算結果用
@@ -434,8 +457,12 @@ namespace Field
                 }
 
                 //実行
-                game.CallScript(eventlist[i].FileName);
-                while (game.IsDialogShowd) yield return null;
+                game.CallScript(eventlist[i]);
+                yield return null;
+                while (game.IsTalk) yield return null;
+
+                //スクリプトを一つ実行したら終了
+                yield break;
 
             }
         }

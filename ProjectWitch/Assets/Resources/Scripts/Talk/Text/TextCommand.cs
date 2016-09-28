@@ -28,6 +28,8 @@ namespace Scenario.Compiler{
 			patternList.Add (new CreateNewLineCommand ());
 			patternList.Add (new CreateTextCommand ());
 			patternList.Add (new CreateClearNameCommand ());
+			patternList.Add (new CreateShowTextWindowCommand ());
+			patternList.Add (new CreateHideTextWindowCommand ());
 			patternList.Add (new CreateTextSpeedCommand ());
 			mPatternList = patternList;
 		}
@@ -95,6 +97,46 @@ namespace Scenario.Compiler{
 		}
 	}
 
+	//テキストウィンドウを表示
+	public class CreateShowTextWindowCommand : Pattern_TagFormat
+	{
+		protected override string TagName(){
+			return "show_message";
+		}
+		protected override CommandFormat[] CreateCommand(ArgumentDictionary arguments, int line, int index)
+		{
+			CommandList commandList = new CommandList ();
+
+			if (arguments.Count > 0) {
+				CompilerLog.Log(line, index, "無効な引数があります。");
+				return null;
+			}
+
+			commandList.Add(new RunOrderCommand("InvisibleTextWindow"));
+			commandList.Add(new RunOrderCommand ("SetUpdater"));
+			return commandList.GetArray ();
+		}
+	}
+	//テキストウィンドウを非表示
+	public class CreateHideTextWindowCommand : Pattern_TagFormat
+	{
+		protected override string TagName(){
+			return "hide_message";
+		}
+		protected override CommandFormat[] CreateCommand(ArgumentDictionary arguments, int line, int index)
+		{
+			CommandList commandList = new CommandList ();
+
+			if (arguments.Count > 0) {
+				CompilerLog.Log(line, index, "無効な引数があります。");
+				return null;
+			}
+
+			commandList.Add(new RunOrderCommand("VisibleTextWindow"));
+			commandList.Add(new RunOrderCommand ("SetUpdater"));
+			return commandList.GetArray ();
+		}
+	}
 	//テキスト表示コマンド
 	public class CreateTextCommand : Pattern_CreateCommand
 	{

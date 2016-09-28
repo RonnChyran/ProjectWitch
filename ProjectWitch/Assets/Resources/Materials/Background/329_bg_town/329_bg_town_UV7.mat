@@ -7,12 +7,11 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: 329_bg_town_UV7
-  m_Shader: {fileID: 46, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: _ALPHATEST_ON _NORMALMAP
-  m_LightmapFlags: 5
-  m_CustomRenderQueue: 2450
-  stringTagMap:
-    RenderType: TransparentCutout
+  m_Shader: {fileID: 4800000, guid: 963484209d11fd7f110076aa44295342, type: 3}
+  m_ShaderKeywords: _ALPHATEST_ON _EMISSION _NORMALMAP
+  m_LightmapFlags: 1
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
   m_SavedProperties:
     serializedVersion: 2
     m_TexEnvs:
@@ -72,6 +71,9 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - first:
+        name: _BumpAmt
+      second: 41
+    - first:
         name: _BumpScale
       second: 1
     - first:
@@ -84,8 +86,14 @@ Material:
         name: _DstBlend
       second: 0
     - first:
+        name: _GlossMapScale
+      second: 1
+    - first:
         name: _Glossiness
       second: 0.45
+    - first:
+        name: _GlossyReflections
+      second: 1
     - first:
         name: _Metallic
       second: 0
@@ -98,6 +106,12 @@ Material:
     - first:
         name: _Parallax
       second: 0.02
+    - first:
+        name: _SmoothnessTextureChannel
+      second: 0
+    - first:
+        name: _SpecularHighlights
+      second: 1
     - first:
         name: _SrcBlend
       second: 1

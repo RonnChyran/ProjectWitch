@@ -1,0 +1,24 @@
+﻿;script 101
+
+アリス領　どこでも
+;条件：　戦闘初勝利
+;タイミング：　侵攻戦戦闘後、防衛戦戦闘後
+
+;リソースロード
+[loadcg id=0 ref="000_cv_aliceA"]
+[loadcg id=1 ref="008_cv_kuroA"]
+[background ref="1006"]
+[bgm ref="018_event3"]
+[drawcg id=0 pos="right"]
+[drawcg id=1 pos="left"]
+
+#アリス
+ヘッ！　ざまあみやがれ。[p]
+#クロ
+メイジー様の勢力は後退した模様。ひとまず勝利でございます、アリス様。[p]
+#アリス
+メイジーを捕らえることはできなかったがまあいい。[p]
+すぐに捕まえてやるぞ、クフフフフフフ……。 [p]
+
+
+[sys_memset index=101 value="1"]

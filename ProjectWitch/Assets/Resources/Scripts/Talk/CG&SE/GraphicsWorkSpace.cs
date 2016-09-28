@@ -38,6 +38,17 @@ namespace Scenario.WorkSpace
 		//立ち絵を表示させるレイヤー
 		[SerializeField]
 		private StandCGController mCGLayer;
+		//立ち絵のアンカー
+		[SerializeField]
+		private Transform mStandCGAnchor1;
+		[SerializeField]
+		private Transform mStandCGAnchor2;
+		[SerializeField]
+		private Transform mStandCGAnchor3;
+		[SerializeField]
+		private Transform mStandCGAnchor4;
+		[SerializeField]
+		private Transform mStandCGAnchor5;
 
 		//立ち絵の位置用のアップデータ
 		private class StandCGUpdater : UpdaterFormat
@@ -175,13 +186,15 @@ namespace Scenario.WorkSpace
 			//立ち絵を表示
 			vm.AddCommandDelegater(
 				"ShowCG",
-				new CommandDelegater(true, 3, delegate(object[] arguments){
+				new CommandDelegater(true, 4, delegate(object[] arguments){
 					string error;
 					int id = Converter.ObjectToInt(arguments[0], out error);
 					if (error != null) return error;
 					string pos = Converter.ObjectToString(arguments[1], out error);
 					if (error != null) return error;
 					string mode = Converter.ObjectToString(arguments[2], out error);
+					if (error != null) return error;
+					string layer = Converter.ObjectToString(arguments[3], out error);
 					if (error != null) return error;
 
 					Rect canvasRect = CanvasRect;
@@ -190,23 +203,58 @@ namespace Scenario.WorkSpace
 					Vector3 position_next = new Vector3(0.0f, 0.0f, 0.0f);
 					switch (pos) {
 					case "right":
-						position_prev = new Vector3(x, 0.0f, 0.0f);
-						position_next = new Vector3(500.0f, 0.0f, 0.0f);
+						pos = "4";
 						break;
 					case "center":
-						position_prev = new Vector3(x, 0.0f, 0.0f);
-						position_next = new Vector3(0.0f, 0.0f, 0.0f);
+						pos = "3";
 						break;
 					case "left":
+						pos = "2";
+						break;
+					default:
+						break;
+					}
+					switch (pos) {
+					case "5":
+						position_prev = new Vector3(x, 0.0f, 0.0f);
+						position_next = new Vector3(mStandCGAnchor5.localPosition.x, 0.0f, 0.0f);
+						break;
+					case "4":
+						position_prev = new Vector3(x, 0.0f, 0.0f);
+						position_next = new Vector3(mStandCGAnchor4.localPosition.x, 0.0f, 0.0f);
+						break;
+					case "3":
+						position_prev = new Vector3(x, 0.0f, 0.0f);
+						position_next = new Vector3(mStandCGAnchor3.localPosition.x, 0.0f, 0.0f);
+						break;
+					case "2":
 						position_prev = new Vector3(-x, 0.0f, 0.0f);
-						position_next = new Vector3(-500.0f, 0.0f, 0.0f);
+						position_next = new Vector3(mStandCGAnchor2.localPosition.x, 0.0f, 0.0f);
+						break;
+					case "1":
+						position_prev = new Vector3(-x, 0.0f, 0.0f);
+						position_next = new Vector3(mStandCGAnchor1.localPosition.x, 0.0f, 0.0f);
 						break;
 					default:
 						return "正しい位置を指定してください。";
 					}
+
+					bool isShowFront;
+					switch (layer)
+					{
+					case "front":
+						isShowFront = true;
+						break;
+					case "back":
+						isShowFront = false;
+						break;
+					default:
+						return "正しいモードを指定してください。";
+					}
 					position_next = mCGLayer.GetUnduplicatePosition(position_next);
 
-					mCGLayer.ShowStandCG(id, out error);
+					mCGLayer.ShowStandCG(id, isShowFront, out error);
+					if (error != null) return error;
 
 					GameObject obj = mCGLayer.GetStandCG(id, out error);
 					if (error != null) return error;
@@ -240,7 +288,8 @@ namespace Scenario.WorkSpace
 					default:
 						return "正しいモードを指定してください。";
 					}
-					arguments[3] = updater;
+
+					arguments[4] = updater;
 					return error;
 				}));
 			//立ち絵を非表示
@@ -471,34 +520,6 @@ namespace Scenario.WorkSpace
 						return "[Filter] 正しい処理名を指定してください。";
 					}
 					arguments[4] = updater;
-					return null;
-				}));
-
-			//動画を呼び出し
-			vm.AddCommandDelegater (
-				"movie",
-				new CommandDelegater (false, 2, delegate(object[] arguments) {
-					string error;
-					string name = Converter.ObjectToString(arguments[0], out error);
-					if (error != null) return error;
-					string path = mMoviePath + name;
-
-					string skipStr = Converter.ObjectToString(arguments[1], out error);
-					if (error != null) return error;
-
-					FullScreenMovieControlMode mode = FullScreenMovieControlMode.Hidden;
-					switch(skipStr){
-					case "true":
-						mode = FullScreenMovieControlMode.CancelOnInput;
-						break;
-					case "false":
-						break;
-					default:
-						return "skipには true もしくは false を指定してください。";
-					}
-					Debug.Log("movie:" + path);
-
-					Handheld.PlayFullScreenMovie(path, new Color32(0,0,0,0xFF), mode);
 					return null;
 				}));
 		}

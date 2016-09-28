@@ -16,6 +16,7 @@ public class Game : MonoBehaviour
     private const string cSceneName_FieldUI     = "FieldUI";
     private const string cSceneName_Save        = "Save";
     private const string cSceneName_Load        = "Load";
+    private const string cSceneName_Talk        = "Talk";
 
     //読み取り専用プロパティ
     public string SceneName_Battle      { get { return cSceneName_Battle; } private set { } }
@@ -24,7 +25,7 @@ public class Game : MonoBehaviour
     public string SceneName_FieldUI     { get { return cSceneName_FieldUI; }  private set { } }
     public string SceneName_Save        { get { return cSceneName_Save; } private set { } }
     public string SceneName_Load        { get { return cSceneName_Load; } private set { } }
-
+    public string SceneName_Talk        { get { return cSceneName_Talk; } private set { } }
 
     #endregion
 
@@ -83,6 +84,9 @@ public class Game : MonoBehaviour
     //戦闘中かどうか
     public bool IsBattle { get; set; }
 
+    //スクリプト実行中かどうか
+    public bool IsTalk { get; set; }
+
     //連戦数
     public int BattleCount { get; set; }
 
@@ -123,6 +127,7 @@ public class Game : MonoBehaviour
         //制御変数初期化
         IsDialogShowd = false;
         IsBattle = false;
+        IsTalk = false;
         UsePreBattle = true;
         BattleCount = 0;
 
@@ -135,7 +140,7 @@ public class Game : MonoBehaviour
         AreaData = new List<AreaDataFormat>();
         TerritoryData = new List<TerritoryDataFormat>();
         SystemMemory = new VirtualMemory();
-        SystemMemory.Memory[0] = 0;
+        SystemMemory.Memory[0] = "0";
         Config = new ConfigDataFormat();
         AIData = new List<AIDataFormat>();
         EquipmentData = new List<EquipmentDataFormat>();
@@ -148,8 +153,6 @@ public class Game : MonoBehaviour
         BattleIn = new BattleDataIn();
         BattleOut = new BattleDataOut();
         ScenarioIn = new ScenarioDataIn();
-
-        ScenarioIn.FileName = "test.txt";
 
         //あとセーブデータ読み込みなど
 
@@ -189,40 +192,38 @@ public class Game : MonoBehaviour
     }
 
     //戦闘の開始
-    public void CallPreBattle()
+    public IEnumerator CallPreBattle()
     {
         if (UsePreBattle)
         {
-            SceneManager.LoadScene(cSceneName_PreBattle,LoadSceneMode.Additive);
+            yield return SceneManager.LoadSceneAsync(cSceneName_PreBattle,LoadSceneMode.Additive);
         }
         else
         {
             //戦闘準備画面を出さず直接戦闘
             UsePreBattle = true;
-            CallBattle();
+            yield return StartCoroutine(CallBattle());
         }
     }
 
-    public void CallBattle()
+    public IEnumerator CallBattle()
     {
         //戦闘情報の格納
         var time = (CurrentTime <= 2) ? CurrentTime : 2;
         BattleIn.TimeOfDay = time;
         
         SceneManager.UnloadScene(cSceneName_PreBattle);
-        SceneManager.LoadScene(cSceneName_Battle,LoadSceneMode.Additive);
-    }
-
-    //戦闘後
-    public void CallAfterBattle()
-    {
-        SceneManager.UnloadScene(cSceneName_Battle);
+        yield return SceneManager.LoadSceneAsync(cSceneName_Battle,LoadSceneMode.Additive);
+        yield return null;
     }
 
     //スクリプトの開始
-    public void CallScript(string filePath)
+    public void CallScript(EventDataFormat e)
     {
-        ShowDialog("ExecuteScript", filePath + "を実行します");
+        ScenarioIn.FileName = e.FileName;
+        ScenarioIn.NextA = e.NextA;
+        ScenarioIn.NextB = e.NextB;
+        SceneManager.LoadScene(cSceneName_Talk, LoadSceneMode.Additive);
     }
 
     //セーブ画面を呼び出す
