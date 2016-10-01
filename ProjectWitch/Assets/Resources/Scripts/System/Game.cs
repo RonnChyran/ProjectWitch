@@ -221,6 +221,7 @@ public class Game : MonoBehaviour
     public void CallScript(EventDataFormat e)
     {
         ScenarioIn.FileName = e.FileName;
+
         ScenarioIn.NextA = e.NextA;
         ScenarioIn.NextB = e.NextB;
         SceneManager.LoadScene(cSceneName_Talk, LoadSceneMode.Additive);

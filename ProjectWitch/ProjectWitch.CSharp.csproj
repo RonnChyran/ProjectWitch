@@ -63,6 +63,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\MoviePlayer\Scripts\MobileMoviePlayer.cs" />
+    <Compile Include="Assets\MoviePlayer\Scripts\MovieTexturePlayer.cs" />
     <Compile Include="Assets\Resources\Effects\ImageEffects\Scripts\Antialiasing.cs" />
     <Compile Include="Assets\Resources\Effects\ImageEffects\Scripts\Bloom.cs" />
     <Compile Include="Assets\Resources\Effects\ImageEffects\Scripts\BloomAndFlares.cs" />
@@ -165,6 +167,7 @@
     <Compile Include="Assets\Resources\Scripts\Utility\fitter.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\MoviePlayer\Readme.txt" />
     <None Include="Assets\Resources\Effects\GlassRefraction\Shaders\GlassStainedBumpDistort.shader" />
     <None Include="Assets\Resources\Effects\ImageEffects\Shaders\BlendModesOverlay.shader" />
     <None Include="Assets\Resources\Effects\ImageEffects\Shaders\BlurEffectConeTaps.shader" />

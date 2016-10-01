@@ -327,14 +327,14 @@ namespace Field
             //戦闘後スクリプトの開始
             //勝敗で実行されるスクリプトの分岐
             //戦闘後スクリプトの終了
-            if(game.BattleOut.IsWin)
+            if(game.BattleOut.IsWin)    //戦闘勝利時のスクリプト
             {
                 var exescript = game.ScenarioIn.NextA;
                 if(exescript>=0)
                     game.CallScript(game.FieldEventData[exescript]);
                 yield return null;
             }
-            else
+            else                        //戦闘敗北時の
             {
                 var exescript = game.ScenarioIn.NextB;
                 if(exescript>=0)
@@ -422,38 +422,41 @@ namespace Field
                 if (!isEventEnable) continue;
 
                 //条件判定
-                if (eventlist[i].If_Val != -1)  //条件なしの時If_Val == -1
+                for (int j = 0; i < eventlist[i].If_Val.Count; j++)
                 {
-                    int src = int.Parse(game.SystemMemory.Memory[eventlist[i].If_Val]);
-                    var imm = eventlist[i].If_Imm;
-
-                    //演算結果用
-                    bool result = false;
-                    switch (eventlist[i].If_Ope)
+                    if (eventlist[i].If_Val[j] != -1)  //条件なしの時If_Val == -1
                     {
-                        case EventDataFormat.OperationType.Equal:
-                            result = (src == imm);
-                            break;
-                        case EventDataFormat.OperationType.Bigger:
-                            result = (src > imm);
-                            break;
-                        case EventDataFormat.OperationType.BiggerEqual:
-                            result = (src >= imm);
-                            break;
-                        case EventDataFormat.OperationType.Smaller:
-                            result = (src < imm);
-                            break;
-                        case EventDataFormat.OperationType.SmallerEqual:
-                            result = (src <= imm);
-                            break;
-                        case EventDataFormat.OperationType.NotEqual:
-                            result = (src != imm);
-                            break;
-                        default:
-                            result = false;
-                            break;
+                        int src = int.Parse(game.SystemMemory.Memory[eventlist[i].If_Val[j]]);
+                        var imm = eventlist[i].If_Imm[j];
+
+                        //演算結果用
+                        bool result = false;
+                        switch (eventlist[i].If_Ope[j])
+                        {
+                            case EventDataFormat.OperationType.Equal:
+                                result = (src == imm);
+                                break;
+                            case EventDataFormat.OperationType.Bigger:
+                                result = (src > imm);
+                                break;
+                            case EventDataFormat.OperationType.BiggerEqual:
+                                result = (src >= imm);
+                                break;
+                            case EventDataFormat.OperationType.Smaller:
+                                result = (src < imm);
+                                break;
+                            case EventDataFormat.OperationType.SmallerEqual:
+                                result = (src <= imm);
+                                break;
+                            case EventDataFormat.OperationType.NotEqual:
+                                result = (src != imm);
+                                break;
+                            default:
+                                result = false;
+                                break;
+                        }
+                        if (!result) continue;
                     }
-                    if (!result) continue;
                 }
 
                 //実行

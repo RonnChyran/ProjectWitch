@@ -229,7 +229,7 @@ namespace Scenario.WorkSpace
         //スクリプト終了
         public void ScriptEnd()
         {
-            mTalkController.GetComponent<TalkController>().EndScript();
+            StartCoroutine(mTalkController.GetComponent<TalkController>().EndScript());
         }
 
         //change_owner_areaタグ

@@ -415,6 +415,13 @@ namespace GameData
     //イベントデータ
     public class EventDataFormat
     {
+        public EventDataFormat()
+        {
+            If_Val = new List<int>();
+            If_Ope = new List<OperationType>();
+            If_Imm = new List<int>();
+        }
+
         //スクリプトファイル名
         public string FileName { get; set; }
 
@@ -438,7 +445,7 @@ namespace GameData
         public List<int> ActorB { get; set; }
 
         //条件式に使う変数番号
-        public int If_Val { get; set; }
+        public List<int> If_Val { get; set; }
 
         //条件式に使う演算子
         public enum OperationType : int
@@ -450,10 +457,11 @@ namespace GameData
             SmallerEqual,
             NotEqual
         }
-        public OperationType If_Ope { get; set; }
+
+        public List<OperationType> If_Ope { get; set; }
 
         //条件式に使う即値
-        public int If_Imm { get; set; }
+        public List<int> If_Imm { get; set; }
 
         //次のスクリプトA
         public int NextA { get; set; }
@@ -461,6 +469,32 @@ namespace GameData
         //次のスクリプトB
         public int NextB { get; set; }
         
+    }
+
+    //イベントデータ用演算子の拡張メソッド
+    public static class OperationTypeExt
+    {
+        static string[] opeStr =
+        {
+                "=",
+                ">",
+                "<",
+                ">=",
+                "<=",
+                "!="
+            };
+        public static EventDataFormat.OperationType Parse(this EventDataFormat.OperationType ope, string str)
+        {
+            for (int i = 0; i < opeStr.Length; i++)
+            {
+                if (str.Equals(opeStr[i]))
+                {
+                    return (EventDataFormat.OperationType)Enum.ToObject(typeof(EventDataFormat.OperationType),
+                        i);
+                }
+            }
+            return EventDataFormat.OperationType.Equal;
+        }
     }
 
     #endregion
@@ -723,10 +757,17 @@ namespace GameData
             //生データの読み出し
             var rowData = CSVReader(filePath);
 
+            //データの形式
+            //[0]id [1]filename [2]タイミング
+            //[3]場所 [4]味方登場人物 [5]敵登場人物
+            //[6]条件1:変数 [7]条件1:式 [8]条件1:即値
+            //[9]条件2:変数 [10]条件2:式 [11]条件2:即値
+            //[13]次のスクリプト1 [14]次のスクリプト2
+
             //データの代入
             for(int i=1; i<rowData.Count; i++)
             {
-                if (rowData[i].Count != 11) continue;
+                if (rowData[i].Count != 14) continue;
 
                 var data = rowData[i];
                 var eventData = new EventDataFormat();
@@ -764,24 +805,40 @@ namespace GameData
                         eventData.ActorB.Add(int.Parse(part));
                     }
 
-                    //条件読み出し
+                    //条件読み出し1
                     if (data[6] != "")
                     {
-                        eventData.If_Val = int.Parse(data[6]);
-                        eventData.If_Ope =
-                            (EventDataFormat.OperationType)Enum.ToObject(typeof(EventDataFormat.OperationType),
-                            int.Parse(data[6]));
-                        eventData.If_Imm = int.Parse(data[7]);
+                        var dummy = EventDataFormat.OperationType.Equal;
+                        eventData.If_Val.Add(int.Parse(data[6]));
+                        eventData.If_Ope.Add(dummy.Parse(data[7]));
+                        eventData.If_Imm.Add(int.Parse(data[8]));
                     }
                     else
                     {
-                        eventData.If_Val = -1;
+                        eventData.If_Val.Add(-1);
+                        eventData.If_Ope.Add(EventDataFormat.OperationType.Equal);
+                        eventData.If_Imm.Add(0);
+                    }
+
+                    //条件読み出し2
+                    if (data[9] != "")
+                    {
+                        var dummy = EventDataFormat.OperationType.Equal;
+                        eventData.If_Val.Add(int.Parse(data[9]));
+                        eventData.If_Ope.Add(dummy.Parse(data[10]));
+                        eventData.If_Imm.Add(int.Parse(data[11]));
+                    }
+                    else
+                    {
+                        eventData.If_Val.Add(-1);
+                        eventData.If_Ope.Add(EventDataFormat.OperationType.Equal);
+                        eventData.If_Imm.Add(0);
                     }
 
                     //次のスクリプト
-                    if (data[9] != "") eventData.NextA = int.Parse(data[9]);
+                    if (data[12] != "") eventData.NextA = int.Parse(data[12]);
                     else eventData.NextA = -1;
-                    if (data[10] != "") eventData.NextB = int.Parse(data[10]);
+                    if (data[13] != "") eventData.NextB = int.Parse(data[13]);
                     else eventData.NextB = -1;
                 }
                 catch (ArgumentNullException e)
