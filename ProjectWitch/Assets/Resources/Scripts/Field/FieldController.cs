@@ -172,8 +172,7 @@ namespace Field
                 eventlist = eventlist.Where(p => p.Area == territory).ToList();
 
                 //ターンはじめイベント開始
-                EventExecute(eventlist);
-                while (game.IsDialogShowd) yield return null;
+                yield return StartCoroutine(EventExecute(eventlist));
 
                 //ターンはじめイベントで戦闘フラグが立った
                 //戦闘開始
@@ -249,6 +248,12 @@ namespace Field
                     //エフェクトを表示
                     yield return StartCoroutine(FieldUIController.ShowHiLightEffect(targetpos));
 
+                    //戦闘前スクリプトの開始
+                    eventlist = fieldEventData.Where(p => p.Timing == EventDataFormat.TimingType.EnemyBattle).ToList();
+                    eventlist = eventlist.Where(p => p.Area == targetArea).ToList();
+                    yield return StartCoroutine(EventExecute(eventlist));
+                    while (game.IsTalk) yield return null;
+
                     //戦闘開始
                     yield return StartCoroutine(CallBattle(targetArea, territory, false));
 
@@ -287,15 +292,15 @@ namespace Field
         {
             var game = Game.GetInstance();
 
-            //コルーチンの起動フラグを立てる
-            //mIsCoroutineExec = true;
+            //戦闘前スクリプトの開始
+            var eventlist = game.FieldEventData.Where(p => p.Timing == EventDataFormat.TimingType.PlayerBattle).ToList();
+            eventlist = eventlist.Where(p => p.Area == area).ToList();
+            yield return StartCoroutine(EventExecute(eventlist));
+            while (game.IsTalk) yield return null;
 
             //先頭の開始
             yield return StartCoroutine(CallBattle(area, territory, true));
             yield return null;
-
-            //コルーチンの終了
-            //mIsCoroutineExec = false;
 
             //時間を進める
             game.CurrentTime++;
@@ -357,10 +362,6 @@ namespace Field
         private IEnumerator CallBattle(int area, int territory, bool invation)
         {
             var game = Game.GetInstance();
-            
-            //戦闘前スクリプトの開始
-            game.ShowDialog("ExecuteScript", "戦闘前イベントの開始");
-            while (game.IsDialogShowd) yield return null;
 
             //戦闘情報の格納
             game.BattleIn.AreaID = area;
