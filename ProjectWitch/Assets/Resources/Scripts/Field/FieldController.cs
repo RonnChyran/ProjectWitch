@@ -3,6 +3,7 @@ using UnityEngine.SceneManagement;
 using System.Linq; //iOSで問題が起こるかも？
 using System.Collections.Generic;
 using System.Collections;
+using System;
 
 using GameData;
 
@@ -201,7 +202,7 @@ namespace Field
                         //被っている場所があったら、そこをランダムにターゲットとする
                         if (nextAreas.Count > 0)
                         {
-                            targetArea = nextAreas[Random.Range(0, nextAreas.Count - 1)];
+                            targetArea = nextAreas[UnityEngine.Random.Range(0, nextAreas.Count - 1)];
                         }
                         //被っていなかったら何もできないので終了
                         else
@@ -225,7 +226,7 @@ namespace Field
                     else
                     {
                         //次に進むかどうかは乱数で決定
-                        if (Random.value < 0.5f)
+                        if (UnityEngine.Random.value < 0.5f)
                         {
                             game.BattleCount++;
                         }
@@ -253,6 +254,7 @@ namespace Field
 
                     //コルーチンの終了
                     mIsCoroutineExec = false;
+                    yield break;
 
                 }
                 //入っていない場合
@@ -286,13 +288,14 @@ namespace Field
             var game = Game.GetInstance();
 
             //コルーチンの起動フラグを立てる
-            mIsCoroutineExec = true;
+            //mIsCoroutineExec = true;
 
             //先頭の開始
             yield return StartCoroutine(CallBattle(area, territory, true));
+            yield return null;
 
             //コルーチンの終了
-            mIsCoroutineExec = false;
+            //mIsCoroutineExec = false;
 
             //時間を進める
             game.CurrentTime++;
@@ -422,41 +425,49 @@ namespace Field
                 if (!isEventEnable) continue;
 
                 //条件判定
-                for (int j = 0; i < eventlist[i].If_Val.Count; j++)
+                try
                 {
-                    if (eventlist[i].If_Val[j] != -1)  //条件なしの時If_Val == -1
+                    bool result = false;
+                    for (int j = 0; j < eventlist[i].If_Val.Count; j++)
                     {
-                        int src = int.Parse(game.SystemMemory.Memory[eventlist[i].If_Val[j]]);
-                        var imm = eventlist[i].If_Imm[j];
-
-                        //演算結果用
-                        bool result = false;
-                        switch (eventlist[i].If_Ope[j])
+                        if (eventlist[i].If_Val[j] != -1)  //条件なしの時If_Val == -1
                         {
-                            case EventDataFormat.OperationType.Equal:
-                                result = (src == imm);
-                                break;
-                            case EventDataFormat.OperationType.Bigger:
-                                result = (src > imm);
-                                break;
-                            case EventDataFormat.OperationType.BiggerEqual:
-                                result = (src >= imm);
-                                break;
-                            case EventDataFormat.OperationType.Smaller:
-                                result = (src < imm);
-                                break;
-                            case EventDataFormat.OperationType.SmallerEqual:
-                                result = (src <= imm);
-                                break;
-                            case EventDataFormat.OperationType.NotEqual:
-                                result = (src != imm);
-                                break;
-                            default:
-                                result = false;
-                                break;
+                            int src = int.Parse(game.SystemMemory.Memory[eventlist[i].If_Val[j]]);
+                            var imm = eventlist[i].If_Imm[j];
+
+                            //演算結果用
+                            switch (eventlist[i].If_Ope[j])
+                            {
+                                case EventDataFormat.OperationType.Equal:
+                                    result = (src == imm);
+                                    break;
+                                case EventDataFormat.OperationType.Bigger:
+                                    result = (src > imm);
+                                    break;
+                                case EventDataFormat.OperationType.BiggerEqual:
+                                    result = (src >= imm);
+                                    break;
+                                case EventDataFormat.OperationType.Smaller:
+                                    result = (src < imm);
+                                    break;
+                                case EventDataFormat.OperationType.SmallerEqual:
+                                    result = (src <= imm);
+                                    break;
+                                case EventDataFormat.OperationType.NotEqual:
+                                    result = (src != imm);
+                                    break;
+                                default:
+                                    result = false;
+                                    break;
+                            }
+                            if (!result) break;
                         }
-                        if (!result) continue;
                     }
+                    if (!result) continue;
+                }
+                catch(ArgumentException e)
+                {
+                    Debug.Log(e.Message);
                 }
 
                 //実行

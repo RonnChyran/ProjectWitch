@@ -408,7 +408,7 @@ namespace GameData
 
         public VirtualMemory()
         {
-            Memory = Enumerable.Repeat<string>("-1", 70000).ToList();
+            Memory = Enumerable.Repeat<string>("0", 70000).ToList();
         }
     }
 
@@ -785,7 +785,10 @@ namespace GameData
                         int.Parse(data[2]));
 
                     //地点ＩＤ
-                    eventData.Area = int.Parse(data[3]);
+                    if (data[3] != "")
+                        eventData.Area = int.Parse(data[3]);
+                    else
+                        eventData.Area = -1;
 
                     //味方登場人物
                     eventData.ActorA = new List<int>();
