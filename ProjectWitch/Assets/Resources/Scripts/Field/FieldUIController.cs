@@ -13,6 +13,8 @@ namespace Field
         //自動操作時のカメラスピード
         [SerializeField]
         private float mCameraSpeed = 1.0f;
+        [SerializeField]
+        private float mLineDepth = 90.0f;
 
         //領地ハイライトのエフェクト
         [SerializeField]
@@ -137,8 +139,8 @@ namespace Field
                     foreach (int a in target)
                     {
                         if (a != 0)//aが０じゃないなら線を引く
-                            DrawLine(new Vector3(game.AreaData[current].Position.x, game.AreaData[current].Position.y, 2.0f),
-                                new Vector3(game.AreaData[a].Position.x, game.AreaData[a].Position.y, 2.0f));
+                            DrawLine(new Vector3(game.AreaData[current].Position.x, game.AreaData[current].Position.y, mLineDepth),
+                                new Vector3(game.AreaData[a].Position.x, game.AreaData[a].Position.y, mLineDepth));
                     }
                     Closelist.Add(game.AreaData[current]);
                     Openlist.Remove(game.AreaData[current]);
@@ -151,8 +153,8 @@ namespace Field
                 }
                 else
                 {  //子供がいれば
-                    DrawLine(new Vector3(game.AreaData[current].Position.x, game.AreaData[current].Position.y, 2.0f),
-                        new Vector3(game.AreaData[child].Position.x, game.AreaData[child].Position.y, 2.0f));
+                    DrawLine(new Vector3(game.AreaData[current].Position.x, game.AreaData[current].Position.y, mLineDepth),
+                        new Vector3(game.AreaData[child].Position.x, game.AreaData[child].Position.y, mLineDepth));
                     bool c = Openlist.Contains(game.AreaData[current]);
 
                     if (c == false)

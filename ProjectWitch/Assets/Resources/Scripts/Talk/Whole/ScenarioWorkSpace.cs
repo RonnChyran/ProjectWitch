@@ -37,6 +37,7 @@ namespace Scenario.WorkSpace
 			mSoundsWorkSpace.SetCommandDelegaters (vm);
 			mGameWorkSpace.SetCommandDelegaters (vm);
 
+            vm.AddNotification("scriptBegin", new NotifyMethod(mGameWorkSpace.ScriptBegin));
 			vm.AddNotification ("scriptEnd", new NotifyMethod(mGameWorkSpace.ScriptEnd));
 			mVirtualMachine = vm;
 		}

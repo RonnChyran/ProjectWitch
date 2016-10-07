@@ -226,10 +226,83 @@ namespace Scenario.WorkSpace
         [SerializeField]
         private GameObject mTalkController;
 
+        //インスペクターから登録してくだせ
+        [SerializeField]
+        private ScenarioWorkSpace mSWS;
+        
+        //スタート時に仮想マシンへ割り込みする処理
+        private class ScriptBeginAnimator : PauseUpdater
+        {
+            //継続時間
+            float mTime = 2.0f;
+            //現在の時間
+            private float mCurrentTime = 0.0f;
+            //アニメーションコンポーネント
+            private Animator mcTWindow;
+            private Animator mcNWindow;
+
+            public ScriptBeginAnimator(float time, Animator cTWindow, Animator cNWindow)
+            {
+                mTime = time;
+                mcTWindow = cTWindow;
+                mcNWindow = cNWindow;
+                mcTWindow.SetBool("IsBegin", true);
+                mcNWindow.SetBool("IsBegin", true);
+            }
+
+            //初期化処理
+            public override void Setup()
+            {
+            }
+            //更新処理
+            public override void Update(float deltaTime)
+            {
+                mCurrentTime += deltaTime;
+                if (mCurrentTime > mTime)
+                {
+                    SetActive(false);//アップデータを抜ける処理
+                }
+            }
+            //終了処理
+            public override void Finish()
+            {
+
+            }
+        }
+
+        [SerializeField]
+        private float mBeginTime = 2.0f;
+
+        //スクリプト開始
+        public void ScriptBegin()
+        {
+            var cTWindow = mTWindow.GetComponent<Animator>();
+            var cNWindow = mNWindow.GetComponent<Animator>();
+
+            //割り込みを登録
+            mSWS.SetUpdater(new ScriptBeginAnimator(mBeginTime,cTWindow,cNWindow));
+            Debug.Log("開始");
+        }
+
+        [SerializeField]
+        private GameObject mTWindow;
+        [SerializeField]
+        private GameObject mTWindowBack;
+        [SerializeField]
+        private GameObject mNWindow;
+
         //スクリプト終了
         public void ScriptEnd()
         {
-            StartCoroutine(mTalkController.GetComponent<TalkController>().EndScript());
+            var cTWindow = mTWindow.GetComponent<Animator>();
+            var cTWindowBack = mTWindowBack.GetComponent<Animator>();
+            var cNWindow = mNWindow.GetComponent<Animator>();
+
+            cTWindow.SetBool("IsEnd", true);
+            cTWindowBack.SetBool("IsEnd", true);
+            cNWindow.SetBool("IsEnd", true);
+
+           // StartCoroutine(mTalkController.GetComponent<TalkController>().EndScript());
         }
 
         //change_owner_areaタグ

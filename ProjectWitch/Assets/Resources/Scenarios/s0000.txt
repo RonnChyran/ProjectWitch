@@ -147,7 +147,7 @@
 [cn]
 体が重く、頭はぼうっとしている。[p]
 
-[background ref="1002"]
+[background ref="1042"]
 [filter name="clear" time="500"]
 
 #アリス
@@ -163,7 +163,7 @@
 うちの屋敷……じゃないし。[n]
 うーん、町へ行ってから露店を散策して、そのあと会議で……。[n]
 あれ、覚えてないぞ……。[p]
-[drawcg id=3 pos="left"]
+[drawcg id=3 pos="2"]
 
 #？？？
 あっ、目が覚めましたね。[p]
@@ -193,7 +193,7 @@
 [cn]
 …………。
 [bgm ref ="007_town"]
-[background ref="1003"]
+[background ref="1004"]
 [clearcg id=3]
 [filter name="clear" time="500"]
 
@@ -204,7 +204,7 @@
 あー、会議なんてやってられないぜ。[p]
 へへっ、トイレなんて嘘だってーの！[n]
 このまま町で遊んで帰るかぁ！[p]
-[drawcg id=3 pos="left"]
+[drawcg id=3 pos="left" layer="front"]
 
 #ヴェロニカ
 アリス！　ああもう、あなたは領主になってもそうなんですね。[p]
@@ -252,7 +252,7 @@
 [filter name="fade" time="500"]
 [cn]
 ……………。[p]
-[background ref="1003"]
+[background ref="1042"]
 [bgm ref="014_velonica"]
 [filter name="clear" time="500"]
 
@@ -287,14 +287,14 @@
 早めに仕掛けておいてよかったねえ、ライザ？[p]
 #ヴェロニカ
 ライザ！　ニア！　あなたたち！！[p]
-[moveto id=3 x=60 y=50 time=200]
+[move id=0 x=20 y=0 time=200]
+[move id=3 x=30 y=0 time=200]
 
 [bgm ref="015_raiza&nia"]
-[drawcg id=4 pos="left"]
-;[move id=4 x=10 y=0 time=0]
+[drawcg id=4 pos="1"]
 #ライザ
 キヒヒッ！　ざまあないなぁヴェロニカ！[p]
-[drawcg id=5 pos="left"]
+[drawcg id=5 pos="2" layer="front"]
 #ニア
 ざまあないぜヴェロニカー！[p]
 #ライザ
