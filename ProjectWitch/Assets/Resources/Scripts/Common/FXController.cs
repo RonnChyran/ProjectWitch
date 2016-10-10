@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 using System;
 
 //ＦＸ終了イベント用のイベントハンドラ
@@ -21,7 +22,8 @@ public class FXController : MonoBehaviour
     private float mLifeTime = 2.0f;
 
     //event
-    public event FXEventHandler EndEvent=null;
+    [SerializeField]
+    public UnityEvent EndEvent=null;
 
     // Use this for initialization
     void Start()
@@ -41,7 +43,7 @@ public class FXController : MonoBehaviour
 
         if (mLifeTime < 0)
         {
-            if(EndEvent != null)EndEvent();
+            if(EndEvent != null)EndEvent.Invoke();
             Destroy(this.gameObject);
         }
     }

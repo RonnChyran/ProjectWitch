@@ -56,7 +56,7 @@ namespace Field
         {
             var inst = Instantiate(mHiLightEffect);
             inst.transform.position = targetPos;
-            inst.GetComponent<FXController>().EndEvent += new FXEventHandler(EndEffect);
+            inst.GetComponent<FXController>().EndEvent.AddListener(EndEffect);
             mEffectEnable = true;
 
             //エフェクト終了まで待つ
