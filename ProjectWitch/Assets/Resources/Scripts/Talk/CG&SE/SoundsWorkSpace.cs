@@ -37,9 +37,10 @@ namespace Scenario.WorkSpace
 			}
 
 			if (fileName != null) {
+                var game = Game.GetInstance();
 				audioSource.clip = (AudioClip)Resources.Load (mBGMPath + fileName);
 				audioSource.Play ();
-				audioSource.volume = (float)volume / 100.0f;
+				audioSource.volume = (float)volume / 100.0f * game.Config.BGMVolume;
 			}
 
 			fadeoutAudio.SetAnimation (new FadeOutBGM ());
@@ -83,10 +84,11 @@ namespace Scenario.WorkSpace
 		//SE再生
 		public void PlaySE(string fileName, float volume)
 		{
+            var game = Game.GetInstance();
 			AudioSource audio = mSESource;
 
 			audio.clip = (AudioClip)Resources.Load (mSEPath + fileName);
-			audio.volume = (float)volume/100.0f;
+			audio.volume = (float)volume/100.0f * game.Config.SEVolume;
 			audio.Play ();
 		}
 
@@ -101,9 +103,10 @@ namespace Scenario.WorkSpace
 		//Voice再生
 		public void PlayVoice(string fileName, float volume)
 		{
+            var game = Game.GetInstance();
 			AudioSource audio = mVoiceSource;
 			audio.clip = (AudioClip)Resources.Load (mVoicePath + fileName);
-			audio.volume = (float)volume/100.0f;
+			audio.volume = (float)volume/100.0f * game.Config.VoiceVolume;
 			audio.Play ();
 		}
 		//Voice停止

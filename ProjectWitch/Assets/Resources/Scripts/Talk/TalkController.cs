@@ -19,8 +19,6 @@ public class TalkController : MonoBehaviour {
         //トークシーンの開始
         game.IsTalk = true;
 
-        ////画面を明るくする
-        //StartCoroutine(FadeIn());
 	}
 
     public IEnumerator EndScript()
@@ -28,10 +26,7 @@ public class TalkController : MonoBehaviour {
         var game = Game.GetInstance();
 
         yield return new WaitForSeconds(1.5f);
-
-        ////画面を暗くする
-        //yield return StartCoroutine(FadeOut());
-        
+      
         //トークシーンの終了
         game.IsTalk = false;
 

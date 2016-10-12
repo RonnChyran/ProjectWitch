@@ -27,6 +27,11 @@ public class Game : MonoBehaviour
     public string SceneName_Load        { get { return cSceneName_Load; } private set { } }
     public string SceneName_Talk        { get { return cSceneName_Talk; } private set { } }
 
+    //毎ターンのマナ回復率
+    private float mManaRecoveryRate = 0.1f; //10%
+    //毎ターンのHP回復率
+    private float mHPRecoveryRate = 0.2f; //20%
+
     #endregion
 
     #region ゲームデータ関連
@@ -319,5 +324,38 @@ public class Game : MonoBehaviour
         //地点の領主番号を更新
         AreaData[targetArea].Owner = newOwner;
 
+    }
+
+    //エリアのマナを回復量だけ回復
+    public void RecoverMana()
+    {
+        foreach(var area in AreaData)
+        {
+            //最大マナの10%回復
+            area.Mana += (int)((float)area.MaxMana * mManaRecoveryRate);
+            if (area.Mana > area.MaxMana) area.Mana = area.MaxMana;
+        }
+    }
+
+    //ユニットを回復量だけ回復
+    public void RecoverUnit()
+    {
+        foreach(var unit in UnitData)
+        {
+            //死んでいたらスルー
+            if (!unit.IsAlive) continue;
+
+            //ユニットの回復量分兵士数を回復
+            //HPは固定比率回復
+
+            //HP回復
+            unit.HP += (int)((float)unit.MaxHP * mHPRecoveryRate);
+            if (unit.HP > unit.MaxHP) unit.HP = unit.MaxHP;
+
+            //兵数回復
+            unit.SoldierNum += unit.Curative;
+            if (unit.SoldierNum > unit.MaxSoldierNum) unit.SoldierNum = unit.MaxSoldierNum;
+
+        }
     }
 }

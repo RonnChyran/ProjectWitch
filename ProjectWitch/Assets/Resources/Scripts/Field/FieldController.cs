@@ -140,10 +140,34 @@ namespace Field
             //戦闘オンだったら戦闘開始
             if (game.BattleIn.IsEvent)
                 yield return StartCoroutine(CallBattle(game.BattleIn.AreaID, 0, true));
+            
+            //一日の始まりのみの処理
+            if (currentTime == 0)
+            {
+                //二重起動防止
+                while (game.IsDialogShowd) yield return null;
+
+                //ターンはじめ表示
+                var settle = GetSettlement();
+                string str = game.CurrentTurn.ToString() + "日目\n" +
+                    "本日の収支：" + settle.ToString() + "M";
+                game.ShowDialog("収支報告", str);
+                while (game.IsDialogShowd) yield return null;
+
+                //収支加算
+                game.PlayerMana += settle;
+
+                //マナ回復
+                game.RecoverMana();
+
+                //兵数回復
+                game.RecoverUnit();
+
+            }
 
             //時間が変化するまで待機
             while (currentTime == game.CurrentTime) yield return null;
-
+            
             //コルーチン終了
             mIsCoroutineExec = false;
             yield return null;
@@ -381,8 +405,7 @@ namespace Field
             //戦闘終了処理
             yield return StartCoroutine(AfterBattle());
         }
-
-
+        
         //イベント制御
         private IEnumerator EventExecute(List<EventDataFormat> eventlist)
         {
@@ -491,6 +514,28 @@ namespace Field
 
             //表示の変更
             FieldUIController.ChangeAreaOwner(targetArea, newOwner);
+        }
+
+        //収入の計算
+        private int GetSettlement()
+        {
+            var game = Game.GetInstance();
+            //計算方法：現在の所持領地の所持マナの平均の10%
+
+            //現在の所持地点を取得
+            var areas = game.TerritoryData[0].AreaList;
+
+            //領地がなかったら抜ける
+            if (areas.Count == 0) return -1;
+
+            //平均の算出
+            var sum = 0;
+            foreach (var area in areas) sum += game.AreaData[area].Mana;
+            var ave = sum / areas.Count;
+
+            //平均の10%を返す
+            return ave / 10;
+
         }
     }
 }

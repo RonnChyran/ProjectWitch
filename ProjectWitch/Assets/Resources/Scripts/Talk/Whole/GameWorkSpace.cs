@@ -302,7 +302,7 @@ namespace Scenario.WorkSpace
             cTWindowBack.SetBool("IsEnd", true);
             cNWindow.SetBool("IsEnd", true);
 
-           // StartCoroutine(mTalkController.GetComponent<TalkController>().EndScript());
+           StartCoroutine(mTalkController.GetComponent<TalkController>().EndScript());
         }
 
         //change_owner_areaタグ

@@ -110,6 +110,9 @@ namespace GameData
         //戦闘兵士プレハブ名
         public string BattleGroupPrefabPath { get; set; }
 
+        //コメント
+        public string Comment { get; set; }
+
     }
 
     //スキルデータ
@@ -270,6 +273,9 @@ namespace GameData
         //所有マナ
         public int Mana { get; set; }
 
+        //限界マナ
+        public int MaxMana { get; set; }
+
         //戦闘時間
         public int Time { get; set; }
 
@@ -373,6 +379,10 @@ namespace GameData
         {
             //iniで読み込むようにする
             TextSpeed = 50.0f;
+
+            BGMVolume = 0.5f;
+            SEVolume = 0.5f;
+            VoiceVolume = 1.0f;
         }
 
         //解像度
@@ -390,9 +400,11 @@ namespace GameData
         //全体の音量
         public int MasterVolume { get; set; }
         //BGMの音量
-        public int BGMVolume { get; set; }
+        public float BGMVolume { get; set; }
         //SEの音量
-        public int SEVolume { get; set; }
+        public float SEVolume { get; set; }
+        //Voiceの音量
+        public float VoiceVolume { get; set; }
 
         //戦闘の速さ
         public int BattleSpeed { get; set; }
@@ -555,7 +567,21 @@ namespace GameData
 
     public class BattleDataOut
     {
+        public BattleDataOut()
+        {
+            DeadUnits = new List<int>();
+            CatchedUnits = new List<int>();
+            EscapedUnits = new List<int>();
+        }
+
+        //戦闘勝利フラグ
         public bool IsWin { get; set; }
+        //死亡したユニット
+        public List<int> DeadUnits { get; set; }
+        //捕獲したユニット
+        public List<int> CatchedUnits { get; set; }
+        //逃走したユニット
+        public List<int> EscapedUnits { get; set; }
     }
 
     public class ScenarioDataIn
@@ -586,7 +612,7 @@ namespace GameData
             //ユニットデータに格納（0番目はキャプションなので読み飛ばす
             for(int i=1; i<rowData.Count; i++)
             {
-                if (rowData[i].Count != 41) continue;
+                if (rowData[i].Count != 42) continue;
 
                 //データの順番
                 //[0]ID         [1]名前       [2]レベル      [3]レベル成長限界          [4]HP
@@ -603,7 +629,7 @@ namespace GameData
                 //[35]装備             [36]AI番号
                 //[37]立ち絵画像名     [38]顔アイコン画像    
                 //[39]戦闘リーダープレハブ名
-                //[40]戦闘兵士プレハブ名
+                //[40]戦闘兵士プレハブ名 [41]キャラ説明
                 var unit = new UnitDataFormat();
                 var data = rowData[i];
 
@@ -654,6 +680,7 @@ namespace GameData
                     unit.FaceIamgePath = data[38];
                     unit.BattleLeaderPrefabPath = data[39];
                     unit.BattleGroupPrefabPath = data[40];
+                    unit.Comment = data[41];
                 }
                 catch(ArgumentNullException e)
                 {
@@ -706,6 +733,7 @@ namespace GameData
                     area.Owner = int.Parse(data[4]);
                     area.Level = int.Parse(data[5]);
                     area.Mana = int.Parse(data[6]);
+                    area.MaxMana = int.Parse(data[6]);
                     area.Time = int.Parse(data[7]);
 
                     //地形補正

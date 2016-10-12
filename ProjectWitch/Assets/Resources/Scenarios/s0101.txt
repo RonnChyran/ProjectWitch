@@ -1,24 +1,71 @@
 ﻿;script 101
 
-アリス領　どこでも
+;アリス領　どこでも
 ;条件：　戦闘初勝利
 ;タイミング：　侵攻戦戦闘後、防衛戦戦闘後
 
 ;リソースロード
 [loadcg id=0 ref="000_cv_aliceA"]
 [loadcg id=1 ref="008_cv_kuroA"]
-[background ref="1006"]
-[bgm ref="018_event3"]
+[loadcg id=2 ref="010_cv_meisieA"]
+[loadcg id=3 ref="011_cv_werewolfA"]
+[background ref="1009"]
+[bgm ref="004_battle1"]
 [drawcg id=0 pos="right"]
 [drawcg id=1 pos="left"]
 
 #アリス
+[voice ref="010006"]
 ヘッ！　ざまあみやがれ。[p]
 #クロ
-メイジー様の勢力は後退した模様。ひとまず勝利でございます、アリス様。[p]
+[voice ref="010007"]
+メイジー様の勢力は後退した模様。[n]
+ひとまず勝利でございます、アリス様。[p]
 #アリス
-メイジーを捕らえることはできなかったがまあいい。[p]
-すぐに捕まえてやるぞ、クフフフフフフ……。 [p]
+[voice ref="010008"]
+メイジーを捕らえることはできなかったがまあいい。[n]
+すぐに捕まえてやるぞ、 クフフフフフフ……。 [p]
+;アリス領　アッサム砦
+[filter name="fade" time=500]
+[clearcg id=0]
+[clearcg id=1]
+[cn]
+…………。[p]
 
+;リソースロード
+[drawcg id=2 pos="right"]
+[drawcg id=3 pos="left"]
+[filter name="clear" time=500]
+
+#ワーウルフ
+[voice ref="010009"]
+メイジー様！　ご無事ですか。[p]
+#メイジー
+[voice ref="010010"]
+ワーウルフ……[n]
+うん、何とか。[p]
+#ワーウルフ
+[voice ref="010011"]
+兵数は五分五分。[n]
+なのにこの差は一体……。[p]
+#メイジー
+[voice ref="010012"]
+姉さんこういうのは得意だから。[p]
+[voice ref="010012a"]
+本当はもっと兵が集まると思っていたんだけど、[n]
+見通しが甘かったわ。[p]
+#ワーウルフ
+[voice ref="010013"]
+メイジー様、今はとりあえずお引き退きを。[p]
+#メイジー
+[voice ref="010014"]
+ええ、わかったわ。[n]
+ここは任せたわよ、ワーウルフ。[p]
+#ワーウルフ
+[voice ref="010015"]
+はっ、お任せください。[p]
+[voice ref="010015a"]
+ここは先代様がロレーヌの魔女たちの進行を防ぐために作られた強固な砦。[n]
+そう簡単には落とせますまい。[p]
 
 [sys_memset index=101 value="1"]

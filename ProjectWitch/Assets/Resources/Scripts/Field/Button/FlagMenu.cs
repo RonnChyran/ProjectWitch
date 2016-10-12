@@ -76,7 +76,20 @@ namespace Field
             //二重起動の防止
             if (game.IsDialogShowd) return;
 
-            game.ShowDialog("マナ収集", "xxxxのマナを収集しました");
+            //取得するマナ量
+            var mana = game.AreaData[AreaID].Mana;
+
+            //表示する文字列の構成
+            var str = "地点：" + game.AreaData[AreaID].Name +"\n";
+            str += "現在の所持マナ：" + game.PlayerMana + "M\n";
+            str += "取得マナ：" + mana.ToString() + "M\n";
+            str += "取得後の所持マナ：" + (game.PlayerMana + mana).ToString() + "M\n";
+
+            game.ShowDialog("マナ収集", str);
+
+            //マナの増加処理
+            game.PlayerMana += mana;
+            game.AreaData[AreaID].Mana = 0;
 
             //時間を進める
             game.CurrentTime++;
