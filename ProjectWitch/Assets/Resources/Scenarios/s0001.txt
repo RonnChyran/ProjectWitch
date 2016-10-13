@@ -11,7 +11,7 @@
 [drawcg id=0 pos="right"]
 [drawcg id=1 pos="left"]
 [bgm ref="017_event2"]
-[background ref="1004"]
+[background ref="1025"]
 
 
 ;ライザ戦後
@@ -83,12 +83,12 @@
 牢から出られればね……。[n]
 ……、おい、ヴェロニカ。[n]
 ちょっと思いついたことがあるんだが……。[p]
-[cn]
 [filter name="fade" time="500"]
 [clearcg id=1]
 [drawcg id=1 pos="right"]
 [moveto id=1 x=90 y=50 time=0]
 [move id=0 x=10 y=0 time=0]
+[cn]
 ……………。[p]
 [filter name="clear" time="500"]
 #アリス

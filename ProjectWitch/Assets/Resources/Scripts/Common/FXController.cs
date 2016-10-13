@@ -11,15 +11,18 @@ public class FXController : MonoBehaviour
 
     //components
     private ParticleSystem[] mPartSystem;
+    private Animator[] mAnimators;
 
     //inspector
     //再生速度
     [SerializeField]
     private float mPlaySpeed = 1.0f;
+    public float PlaySpeed { get { return mPlaySpeed; } set { mPlaySpeed = value; } }
 
     //寿命
     [SerializeField]
     private float mLifeTime = 2.0f;
+    public float LifeTime { get { return mLifeTime; } set { mLifeTime = value; } }
 
     //event
     [SerializeField]
@@ -29,9 +32,13 @@ public class FXController : MonoBehaviour
     void Start()
     {
         mPartSystem = GetComponentsInChildren<ParticleSystem>();
+        mAnimators = GetComponentsInChildren<Animator>();
 
-        for (int i = 0; i < mPartSystem.Length; i++)
-            mPartSystem[i].playbackSpeed = mPlaySpeed;
+        foreach(var part in mPartSystem)
+            part.playbackSpeed = mPlaySpeed;
+
+        foreach(var anim in mAnimators)
+            anim.speed = mPlaySpeed;
     }
 
     // Update is called once per frame

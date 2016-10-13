@@ -10,7 +10,7 @@
 ;アリス領　アリスの館、地下の牢獄
 ;条件　メイジーを捕獲
 ;タイミング　戦闘後
-[background ref="1004"]
+[background ref="1025"]
 [bgm ref="020_event5"]
 [drawcg id=0 pos="3"]
 [drawcg id=1 pos="4"]
@@ -70,7 +70,7 @@
 ;場面15　アリス領　ニルギリ砦
 ;条件　メイジーを撃破
 ;タイミング　戦闘後
-[background ref="1008"]
+[background ref="1014"]
 [bgm ref="019_event4"]
 [drawcg id=1 pos="2"]
 [drawcg id=0 pos="5"]
@@ -133,5 +133,5 @@
 [endif]
 
 
-[sys_memset index=113 value="1"]
-[sys_memset index=10000 value="1"]
+[sys_meset index=113 value="1"]
+[sys_meset index=10000 value="1"]
