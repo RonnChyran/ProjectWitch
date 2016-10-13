@@ -26,6 +26,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 416290}
+  - 114: {fileID: 114000010507314300}
   m_Layer: 0
   m_Name: 250_fx_aliceA
   m_TagString: Untagged
@@ -9002,7 +9003,7 @@ ParticleSystemRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_SelectedWireframeHidden: 0
+  m_SelectedWireframeHidden: 1
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
@@ -9236,7 +9237,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 4000011165126100}
-  - 114: {fileID: 114000012963513782}
   m_Layer: 0
   m_Name: 250_fx_aliceA
   m_TagString: Untagged
@@ -9374,12 +9374,12 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114000012963513782
+--- !u!114 &114000010507314300
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000014032866428}
+  m_GameObject: {fileID: 111622}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e8e96deee70cdeb4d906845053c42fca, type: 3}
@@ -9387,6 +9387,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mPlaySpeed: 1
   mLifeTime: 6
+  EndEvent:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
 --- !u!198 &198000011608600204
 ParticleSystem:
   m_ObjectHideFlags: 1

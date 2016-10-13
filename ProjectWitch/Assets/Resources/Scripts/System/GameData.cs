@@ -527,14 +527,25 @@ namespace GameData
             PlayerCards = Enumerable.Repeat<int>(-1, 3).ToList();
             EnemyCards = Enumerable.Repeat<int>(-1, 3).ToList();
 
+            //テストデータセット
             PlayerTerritory = 0;
-            EnemyTerritory = 1;
+            EnemyTerritory = 9;
 
-            AreaID = 0;
-            TimeOfDay = 0;
+            AreaID = 1;
+            TimeOfDay = 1;
             IsInvasion = true;
             IsAuto = false;
             IsEvent = false;
+
+            PlayerUnits[0] = 0;
+            PlayerUnits[1] = 0;
+            PlayerUnits[2] = -1;
+            EnemyUnits[0] = 0;
+            EnemyUnits[1] = 0;
+            EnemyUnits[2] = -1;
+            EnemyCards[0] = 0;
+            EnemyCards[1] = 0;
+            EnemyCards[2] = -1;
         }
 
         //ユニットデータ
@@ -570,7 +581,7 @@ namespace GameData
         public BattleDataOut()
         {
             DeadUnits = new List<int>();
-            CatchedUnits = new List<int>();
+            CapturedUnits = new List<int>();
             EscapedUnits = new List<int>();
         }
 
@@ -579,7 +590,7 @@ namespace GameData
         //死亡したユニット
         public List<int> DeadUnits { get; set; }
         //捕獲したユニット
-        public List<int> CatchedUnits { get; set; }
+        public List<int> CapturedUnits { get; set; }
         //逃走したユニット
         public List<int> EscapedUnits { get; set; }
     }
