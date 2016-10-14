@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class BattleController : MonoBehaviour {
@@ -14,4 +15,12 @@ public class BattleController : MonoBehaviour {
 	void Update () {
 	
 	}
+
+    public void BattleEnd()
+    {
+        var game = Game.GetInstance();
+
+        game.IsBattle = false;
+        SceneManager.UnloadScene(game.SceneName_Battle);
+    }
 }
