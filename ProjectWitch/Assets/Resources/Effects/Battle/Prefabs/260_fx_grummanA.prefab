@@ -76,6 +76,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 404068}
+  - 114: {fileID: 114000011942733472}
   m_Layer: 0
   m_Name: 260_fx_grummanA
   m_TagString: Untagged
@@ -14671,7 +14672,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 4000011209880006}
-  - 114: {fileID: 114000010174312170}
   m_Layer: 0
   m_Name: 260_fx_grumanA
   m_TagString: Untagged
@@ -14693,12 +14693,12 @@ Transform:
   - {fileID: 425038}
   m_Father: {fileID: 404068}
   m_RootOrder: 0
---- !u!114 &114000010174312170
+--- !u!114 &114000011942733472
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000014249762580}
+  m_GameObject: {fileID: 164396}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e8e96deee70cdeb4d906845053c42fca, type: 3}

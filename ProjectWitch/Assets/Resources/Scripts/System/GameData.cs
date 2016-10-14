@@ -543,9 +543,6 @@ namespace GameData
             EnemyUnits[0] = 0;
             EnemyUnits[1] = 0;
             EnemyUnits[2] = -1;
-            EnemyCards[0] = 0;
-            EnemyCards[1] = 0;
-            EnemyCards[2] = -1;
         }
 
         //ユニットデータ
@@ -1055,7 +1052,7 @@ namespace GameData
             //データの代入
             for (int i = 1; i < rowData.Count; i++)
             {
-                if (rowData[i].Count != 2) continue;
+                if (rowData[i].Count != 3) continue;
 
 
                 //データの順番

@@ -223,6 +223,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 4000012617879604}
+  - 114: {fileID: 114000013724560634}
   m_Layer: 0
   m_Name: 252_fx_meisieA
   m_TagString: Untagged
@@ -729,7 +730,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 4000011583926238}
-  - 114: {fileID: 114000010131870762}
   m_Layer: 0
   m_Name: 252_fx_meigieA
   m_TagString: Untagged
@@ -1710,12 +1710,12 @@ Transform:
   - {fileID: 4000011424843108}
   m_Father: {fileID: 4000011715194260}
   m_RootOrder: 0
---- !u!114 &114000010131870762
+--- !u!114 &114000013724560634
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000013377840002}
+  m_GameObject: {fileID: 1000010843779684}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e8e96deee70cdeb4d906845053c42fca, type: 3}
@@ -1723,6 +1723,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mPlaySpeed: 2
   mLifeTime: 2.5
+  EndEvent:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
 --- !u!198 &198000010222529780
 ParticleSystem:
   m_ObjectHideFlags: 1

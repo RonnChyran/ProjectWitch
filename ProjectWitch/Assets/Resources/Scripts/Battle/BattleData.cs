@@ -156,14 +156,15 @@ namespace Battle
 		private GameObject mAreaObj;
 
 		//コンストラクタ
-		public BattleArea()
+		public BattleArea(GameObject parent)
 		{
 			mGame = Game.GetInstance();
 
 			if (AreaID < 0 || AreaID >= mGame.AreaData.Count)
 				return;
 			mAreaObj = (GameObject)Resources.Load("Prefabs/Background3D/" + AreaData.BackgroundName);
-			MonoBehaviour.Instantiate(mAreaObj);
+			var inst  = MonoBehaviour.Instantiate(mAreaObj);
+            inst.transform.SetParent(parent.transform);
 		}
 
 		// 地形補正

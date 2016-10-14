@@ -75,6 +75,10 @@ namespace Battle
 		[SerializeField]
 		public UnityEvent EndEvent = null;
 
+        //背景の親オブジェクト
+        [SerializeField]
+        private GameObject mBGParent = null;
+
 		// 戦闘入力データ
 		public BattleDataIn BattleDataIn { get { return mGame.BattleIn; } }
 		// 戦闘出力データ
@@ -175,7 +179,7 @@ namespace Battle
 			mEscapeConfUI.SetActive(false);
 			mConfigUI.SetActive(false);
 			mBattleEndUI.SetActive(false);
-			Area = new BattleArea();
+			Area = new BattleArea(mBGParent);
 
 			IsEffect = false;
 			IsBattleEnd = false;

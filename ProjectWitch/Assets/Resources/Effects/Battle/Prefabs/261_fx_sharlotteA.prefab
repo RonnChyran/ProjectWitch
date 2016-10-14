@@ -43,6 +43,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 459440}
+  - 114: {fileID: 114000012722965184}
   m_Layer: 0
   m_Name: 261_fx_sharlotteA
   m_TagString: Untagged
@@ -1978,7 +1979,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 4000012408780898}
-  - 114: {fileID: 114000010874786190}
   m_Layer: 0
   m_Name: 261_fx_sharlotteA
   m_TagString: Untagged
@@ -2029,12 +2029,12 @@ Transform:
   - {fileID: 4000010404868690}
   m_Father: {fileID: 459440}
   m_RootOrder: 0
---- !u!114 &114000010874786190
+--- !u!114 &114000012722965184
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000012693948802}
+  m_GameObject: {fileID: 187802}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e8e96deee70cdeb4d906845053c42fca, type: 3}

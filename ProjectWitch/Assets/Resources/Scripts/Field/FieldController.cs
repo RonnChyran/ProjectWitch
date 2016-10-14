@@ -272,6 +272,9 @@ namespace Field
                     //エフェクトを表示
                     yield return StartCoroutine(FieldUIController.ShowHiLightEffect(targetpos));
 
+                    //敵ユニットのセット
+                    SetEnemyUnits(territory);
+
                     //戦闘前スクリプトの開始
                     eventlist = fieldEventData.Where(p => p.Timing == EventDataFormat.TimingType.EnemyBattle).ToList();
                     eventlist = eventlist.Where(p => p.Area == targetArea).ToList();
@@ -316,11 +319,14 @@ namespace Field
         {
             var game = Game.GetInstance();
 
+            //敵情報のセット
+            SetEnemyUnits(territory);
+
             //戦闘前スクリプトの開始
             var eventlist = game.FieldEventData.Where(p => p.Timing == EventDataFormat.TimingType.PlayerBattle).ToList();
             eventlist = eventlist.Where(p => p.Area == area).ToList();
             yield return StartCoroutine(EventExecute(eventlist));
-            while (game.IsTalk) yield return null;
+            while (game.IsTalk) yield return null;            
 
             //先頭の開始
             yield return StartCoroutine(CallBattle(area, territory, true));
@@ -351,6 +357,19 @@ namespace Field
             //防衛戦で負けた場合 領地を奪われる
             else if (!game.BattleIn.IsInvasion && !game.BattleOut.IsWin)
                 ChangeAreaOwner(game.BattleIn.AreaID, game.BattleIn.EnemyTerritory);
+
+            //ユニットの死亡処理
+            foreach(var unit in game.BattleOut.DeadUnits)
+            {
+                game.UnitData[unit].IsAlive = false;
+            }
+
+            //ユニットの捕獲処理
+            foreach(var unit in game.BattleOut.CapturedUnits)
+            {
+                game.TerritoryData[game.BattleIn.EnemyTerritory].UnitList.Remove(unit);
+                game.TerritoryData[game.BattleIn.PlayerTerritory].UnitList.Add(unit);
+            }
 
 
             //戦闘情報をリセット
@@ -536,6 +555,25 @@ namespace Field
             //平均の10%を返す
             return ave / 10;
 
+        }
+
+        //敵ユニットの自動セット
+        private void SetEnemyUnits(int territory)
+        {
+            var game = Game.GetInstance();
+
+            var enemies = game.TerritoryData[territory].UnitList;
+            var battleUnits = new List<int>();
+            foreach (var unit in enemies)
+            {
+                if (game.UnitData[unit].IsAlive && !battleUnits.Contains(unit))
+                {
+                    battleUnits.Add(unit);
+                    if (battleUnits.Count >= 3) break;
+                }
+            }
+            for (int i = battleUnits.Count; i < 3; i++) battleUnits.Add(-1);
+            game.BattleIn.EnemyUnits = battleUnits;
         }
     }
 }

@@ -8,6 +8,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 443372}
+  - 114: {fileID: 114000013603987222}
   m_Layer: 0
   m_Name: 258_fx_doodA
   m_TagString: Untagged
@@ -1875,7 +1876,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 4000013055778500}
-  - 114: {fileID: 114000013598836400}
   m_Layer: 0
   m_Name: 258_fx_doodA
   m_TagString: Untagged
@@ -1897,12 +1897,12 @@ Transform:
   - {fileID: 495096}
   m_Father: {fileID: 443372}
   m_RootOrder: 0
---- !u!114 &114000013598836400
+--- !u!114 &114000013603987222
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000012111197306}
+  m_GameObject: {fileID: 124736}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e8e96deee70cdeb4d906845053c42fca, type: 3}
