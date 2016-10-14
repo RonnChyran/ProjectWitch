@@ -373,13 +373,22 @@ namespace Scenario.Compiler{
 		{
 			CommandList commandList = new CommandList();
 
-			if (arguments.ContainName ("id")) {
-				commandList.Add(arguments.Get ("id"));
+			if (arguments.ContainName ("area")) {
+				commandList.Add(arguments.Get ("area"));
 			} else {
-				CompilerLog.Log (line, index, "id引数が不足しています。");
+				CompilerLog.Log (line, index, "area引数が不足しています。");
 				return null;
-			}
-			commandList.Add (new RunOrderCommand("ChangeAreaOwner"));
+            }
+            if (arguments.ContainName("owner"))
+            {
+                commandList.Add(arguments.Get("owner"));
+            }
+            else
+            {
+                CompilerLog.Log(line, index, "owner引数が不足しています。");
+                return null;
+            }
+            commandList.Add (new RunOrderCommand("ChangeAreaOwner"));
 
 			if (arguments.Count > 0) {
 				CompilerLog.Log(line, index, "無効な引数があります。");

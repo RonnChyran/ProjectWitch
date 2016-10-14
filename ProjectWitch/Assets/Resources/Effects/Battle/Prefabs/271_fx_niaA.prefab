@@ -66,7 +66,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000013421341430}
   m_LocalRotation: {x: -0.5180814, y: -0.48123968, z: 0.5125162, w: 0.48716235}
-  m_LocalPosition: {x: -0, y: -0.03, z: -0.43}
+  m_LocalPosition: {x: 1.18, y: 1.38, z: -7.12}
   m_LocalScale: {x: 1.344814, y: 0.04973095, z: 1.7935857}
   m_LocalEulerAnglesHint: {x: -0.651, y: -90.00001, z: 93.461006}
   m_Children: []
@@ -102,13 +102,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mPlaySpeed: 1
   mLifeTime: 3
+  EndEvent:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
 --- !u!198 &198000013322735644
 ParticleSystem:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000013421341430}
-  serializedVersion: 4
+  serializedVersion: 2
   lengthInSec: 3
   startDelay:
     scalar: 0
@@ -146,13 +151,12 @@ ParticleSystem:
       m_RotationOrder: 4
     minMaxState: 0
   speed: 1
+  randomSeed: 3516043153
   looping: 0
   prewarm: 0
   playOnAwake: 1
   moveWithTransform: 1
-  autoRandomSeed: 1
   scalingMode: 1
-  randomSeed: -778924143
   InitialModule:
     serializedVersion: 2
     enabled: 1
@@ -1886,7 +1890,7 @@ ParticleSystemRenderer:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_RenderMode: 0
-  m_SortMode: 0
+  m_SortMode: 1
   m_MinParticleSize: 0
   m_MaxParticleSize: 0.5
   m_CameraVelocityScale: 0

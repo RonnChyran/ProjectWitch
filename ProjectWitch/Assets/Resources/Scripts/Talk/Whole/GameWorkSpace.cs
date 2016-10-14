@@ -29,15 +29,11 @@ namespace Scenario.WorkSpace
             var game = Game.GetInstance();
             for(int i=0; i<2; i++)
             {
-                if (p[i] == -1) continue;
-
                 game.BattleIn.PlayerUnits[i] = p[i];
             }
 
             for(int i=0; i<2; i++)
             {
-                if (e[i] == -1) continue;
-
                 game.BattleIn.EnemyUnits[i] = e[i];
             }
 
@@ -49,6 +45,10 @@ namespace Scenario.WorkSpace
         //	error	:エラーメッセージ
         void BattleArea(int id, out string error)
         {
+            var game = Game.GetInstance();
+
+            game.BattleIn.AreaID = id;
+
             error = null;
 
         }
@@ -308,8 +308,12 @@ namespace Scenario.WorkSpace
         //change_owner_areaタグ
         //	id		:指定された領地のID
         //	error	:エラーメッセージ
-        void ChangeAreaOwner(int id, out string error)
+        void ChangeAreaOwner(int area, int owner, out string error)
         {
+            var game = Game.GetInstance();
+
+            game.ChangeAreaOwner(area, owner);
+
             error = null;
 
         }
@@ -526,11 +530,13 @@ namespace Scenario.WorkSpace
             //戦闘データのセット
             vm.AddCommandDelegater(
                 "ChangeAreaOwner",
-                new CommandDelegater(false, 1, delegate (object[] arguments) {
+                new CommandDelegater(false, 2, delegate (object[] arguments) {
                     string error;
-                    int id = Converter.ObjectToInt(arguments[0], out error);
+                    int area = Converter.ObjectToInt(arguments[0], out error);
                     if (error != null) return error;
-                    ChangeAreaOwner(id, out error);
+                    int owner = Converter.ObjectToInt(arguments[1], out error);
+                    if (error != null) return error;
+                    ChangeAreaOwner(area, owner, out error);
                     return error;
                 }));
         }
