@@ -41,39 +41,39 @@ namespace GameData
         //経験値
         public int Experience { get; set; }
 
-        //リーダー(Leader)
-        public int LeaderPAtk { get; set; } //物理攻撃
-        public int LeaderMAtk { get; set; } //魔法攻撃
-        public int LeaderPDef { get; set; } //物理防御
-        public int LeaderMDef { get; set; } //魔法防御
-                                            //集団(Group)
-        public int GroupPAtk { get; set; }      //物理攻撃
-        public int GroupMAtk { get; set; }  //魔法攻撃
-        public int GroupPDef { get; set; }      //物理防御
-        public int GroupMDef { get; set; }  //魔法防御
-                                            //成長率（リーダー）
-        public int LeaderPAtkRate { get; set; } //物理攻撃成長率
-        public int LeaderMAtkRate { get; set; } //魔法攻撃成長率
-        public int LeaderPDefRate { get; set; } //物理防御成長率
-        public int LeaderMDefRate { get; set; } //魔法防御成長率
-                                                //成長率（集団）
-        public int GroupPAtkRate { get; set; }      //物理攻撃成長率
-        public int GroupMAtkRate { get; set; }  //魔法攻撃成長率
-        public int GroupPDefRate { get; set; }      //物理防御成長率
-        public int GroupMDefRate { get; set; }  //魔法防御成長率
+        //初期値
+        public int LPAtk0 { get; set; }     //物理攻撃
+        public int LMAtk0 { get; set; }     //魔法攻撃
+        public int LPDef0 { get; set; }     //物理防御
+        public int LMDef0 { get; set; }     //魔法防御
+                                            
+        public int GPAtk0 { get; set; }     //物理攻撃
+        public int GMAtk0 { get; set; }     //魔法攻撃
+        public int GPDef0 { get; set; }     //物理防御
+        public int GMDef0 { get; set; }     //魔法防御
+
+        public int LPAtk100 { get; set; }   //物理攻撃Lv100時
+        public int LMAtk100 { get; set; }   //魔法攻撃Lv100時
+        public int LPDef100 { get; set; }   //物理防御Lv100時
+        public int LMDef100 { get; set; }   //魔法防御Lv100時
+                                            
+        public int GPAtk100 { get; set; }   //物理攻撃Lv100時
+        public int GMAtk100 { get; set; }   //魔法攻撃Lv100時
+        public int GPDef100 { get; set; }   //物理防御Lv100時
+        public int GMDef100 { get; set; }   //魔法防御Lv100時
 
         //指揮力
-        public int Leadership { get; set; }
-        public int LeadershipRate { get; set; } //指揮力成長率
+        public int Lead0    { get; set; }    //指揮力初期値
+        public int Lead100  { get; set; }    //指揮力Lv100時
         //機動力
-        public int Agility { get; set; }
-        public int AgilityRate { get; set; }    //機動力成長率
+        public int Agi0     { get; set; }    //機動力初期値
+        public int Agi100   { get; set; }    //機動力Lv100時
         //回復力
-        public int Curative { get; set; }
-        public int CurativeRate { get; set; }   //回復力成長率
+        public int Cur0     { get; set; }   //回復力初期値
+        public int Cur100   { get; set; }   //回復力Lv100時
+
         //兵士数
         public int SoldierNum { get; set; }
-        //最大兵士数
         public int MaxSoldierNum { get; set; }
 
         //撤退するか死ぬか ture:死ぬ　false：撤退する（捕獲コマンドが無効
@@ -113,6 +113,20 @@ namespace GameData
         //コメント
         public string Comment { get; set; }
 
+        //クエリ
+        public int LeaderPAtk { get { return (int)(LPAtk0 + LPAtk100 / 100.0f * Level); } private set { } } //物理攻撃
+        public int LeaderMAtk { get { return (int)(LMAtk0 + LMAtk100 / 100.0f * Level); } private set { } } //魔法攻撃
+        public int LeaderPDef { get { return (int)(LPDef0 + LPDef100 / 100.0f * Level); } private set { } } //物理防御
+        public int LeaderMDef { get { return (int)(LMDef0 + LMDef100 / 100.0f * Level); } private set { } } //魔法防御
+                                            
+        public int GroupPAtk { get { return (int)(GPAtk0 + GPAtk100 / 100.0f * Level); } private set { } }  //物理攻撃
+        public int GroupMAtk { get { return (int)(GMAtk0 + GMAtk100 / 100.0f * Level); } private set { } }  //魔法攻撃
+        public int GroupPDef { get { return (int)(GPDef0 + GPDef100 / 100.0f * Level); } private set { } }  //物理防御
+        public int GroupMDef { get { return (int)(GMDef0 + GMDef100 / 100.0f * Level); } private set { } }  //魔法防御
+
+        public int Leadership { get { return (int) (Lead0 + Lead100 / 100.0f * Level); } private set { } }  //指揮力
+        public int Curative { get { return (int)(Cur0 + Cur100 / 100.0f * Level); } private set { } }       //回復力
+        public int Agility { get { return (int)(Agi0 + Agi100 / 100.0f * Level); } private set { } }        //機動力
     }
 
     //スキルデータ
@@ -531,18 +545,18 @@ namespace GameData
             PlayerTerritory = 0;
             EnemyTerritory = 9;
 
-            AreaID = 1;
+            AreaID = 3;
             TimeOfDay = 1;
             IsInvasion = true;
             IsAuto = false;
             IsEvent = false;
 
-            PlayerUnits[0] = 0;
-            PlayerUnits[1] = 0;
-            PlayerUnits[2] = -1;
-            EnemyUnits[0] = 0;
-            EnemyUnits[1] = 0;
-            EnemyUnits[2] = -1;
+            PlayerUnits[0] = 296;
+            PlayerUnits[1] = 297;
+            PlayerUnits[2] = 300;
+            EnemyUnits[0] = 298;
+            EnemyUnits[1] = 301;
+            EnemyUnits[2] = 302;
         }
 
         //ユニットデータ
@@ -651,28 +665,28 @@ namespace GameData
                     unit.HP = int.Parse(data[4]);
                     unit.MaxHP = unit.HP;
                     unit.HPRate = int.Parse(data[5]);
-                    unit.LeaderPAtk = int.Parse(data[6]);
-                    unit.LeaderMAtk = int.Parse(data[7]);
-                    unit.LeaderPDef = int.Parse(data[8]);
-                    unit.LeaderMDef = int.Parse(data[9]);
-                    unit.GroupPAtk = int.Parse(data[10]);
-                    unit.GroupMAtk = int.Parse(data[11]);
-                    unit.GroupPDef = int.Parse(data[12]);
-                    unit.GroupMDef = int.Parse(data[13]);
-                    unit.LeaderPAtkRate = int.Parse(data[14]);
-                    unit.LeaderMAtkRate = int.Parse(data[15]);
-                    unit.LeaderPDefRate = int.Parse(data[16]);
-                    unit.LeaderMDefRate = int.Parse(data[17]);
-                    unit.GroupPAtkRate = int.Parse(data[18]);
-                    unit.GroupMAtkRate = int.Parse(data[19]);
-                    unit.GroupPDefRate = int.Parse(data[20]);
-                    unit.GroupMDefRate = int.Parse(data[21]);
-                    unit.Leadership = int.Parse(data[22]);
-                    unit.Agility = int.Parse(data[23]);
-                    unit.LeadershipRate = int.Parse(data[24]);
-                    unit.AgilityRate = int.Parse(data[25]);
-                    unit.Curative = int.Parse(data[26]);
-                    unit.CurativeRate = int.Parse(data[27]);
+                    unit.LPAtk0 = int.Parse(data[6]);
+                    unit.LMAtk0 = int.Parse(data[7]);
+                    unit.LPDef0 = int.Parse(data[8]);
+                    unit.LMDef0 = int.Parse(data[9]);
+                    unit.GPAtk0 = int.Parse(data[10]);
+                    unit.GMAtk0 = int.Parse(data[11]);
+                    unit.GPDef0 = int.Parse(data[12]);
+                    unit.GMDef0 = int.Parse(data[13]);
+                    unit.LPAtk100 = int.Parse(data[14]);
+                    unit.LMAtk100 = int.Parse(data[15]);
+                    unit.LPDef100 = int.Parse(data[16]);
+                    unit.LMDef100 = int.Parse(data[17]);
+                    unit.GPAtk100 = int.Parse(data[18]);
+                    unit.GMAtk100 = int.Parse(data[19]);
+                    unit.GPDef100 = int.Parse(data[20]);
+                    unit.GMDef100 = int.Parse(data[21]);
+                    unit.Lead0 = int.Parse(data[22]);
+                    unit.Agi0 = int.Parse(data[23]);
+                    unit.Lead100 = int.Parse(data[24]);
+                    unit.Agi100 = int.Parse(data[25]);
+                    unit.Cur0 = int.Parse(data[26]);
+                    unit.Cur100 = int.Parse(data[27]);
                     unit.SoldierNum = int.Parse(data[28]);
                     unit.MaxSoldierNum = unit.SoldierNum;
                     unit.Deathable = (data[29] == "0") ? false : true;
@@ -813,7 +827,7 @@ namespace GameData
                 try
                 {
                     //ファイル名
-                    eventData.FileName = data[1] + ".txt";
+                    eventData.FileName = data[1];
 
                     //タイミング
                     eventData.Timing = 
@@ -1222,29 +1236,27 @@ namespace GameData
         private static List<List<string>> CSVReader(string filePath)
         {
             var outData = new List<List<string>>();
-
-            try
+            
+            var tAsset = Resources.Load(filePath) as TextAsset;
+            if(tAsset == null)
             {
-                using (var stream = new StreamReader(filePath, Encoding.GetEncoding("Shift_JIS")))
-                {
-                    while (!stream.EndOfStream)
-                    {
-                        var line = stream.ReadLine();
-                        var factors = line.Split(',');
-
-                        var list = new List<string>();
-                        foreach (var value in factors)
-                        {
-                            list.Add(value);
-                        }
-                        outData.Add(list);
-                    }
-                }
+                Debug.Assert(false,"データファイルの読み込みに失敗しました : " + filePath);
             }
-            catch(System.Exception e)
+
+            var text = tAsset.text;
+            var reader = new StringReader(text);
+            
+            while(reader.Peek() > -1)
             {
-                Debug.Log("データファイルの読み込みに失敗しました : " + filePath);
-                Debug.Log(e.Message);
+                var line = reader.ReadLine();
+                var factors = line.Split(',');
+
+                var list = new List<string>();
+                foreach (var value in factors)
+                {
+                    list.Add(value);
+                }
+                outData.Add(list);
             }
 
             return outData;
@@ -1253,7 +1265,6 @@ namespace GameData
 
     public class GamePath
     {
-        public const string Data = "Assets\\Resources\\Data\\";
-        public const string Senario = "Assets\\Resources\\Scenarios\\";
+        public string Data = "Data/";
     }
 }

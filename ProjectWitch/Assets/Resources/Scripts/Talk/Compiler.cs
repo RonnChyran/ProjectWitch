@@ -70,15 +70,23 @@ namespace Scenario.Compiler
 		//コンパイル
 		public VirtualMachine CompileScript(string path)
 		{
-			if (!File.Exists (path))
-			{
-				CompilerLog.Log ("(" + path + ")ファイルが存在しません");
-				return null;
-			}
-			FileInfo fi = new FileInfo(path);
-			StreamReader sr = new StreamReader(fi.OpenRead(), Encoding.GetEncoding("UTF-8"));
+            //if (!File.Exists (path))
+            //{
+            //	CompilerLog.Log ("(" + path + ")ファイルが存在しません");
+            //	return null;
+            //}
+            //FileInfo fi = new FileInfo(path);
+            //StreamReader sr = new StreamReader(fi.OpenRead(), Encoding.GetEncoding("UTF-8"));
 
-			string text = sr.ReadToEnd ();
+            var tasset = Resources.Load(path) as TextAsset;            
+            if (!tasset)
+            {
+            	CompilerLog.Log ("(" + path + ")ファイルが存在しません");
+            	return null;
+            }
+            var reader = new StringReader(tasset.text);
+			string text = reader.ReadToEnd ();
+
 			//CRLF、CRをLFに変換
 			text = new Regex ("\r\n|\r").Replace (text, "\n");
 			//コメントを消去

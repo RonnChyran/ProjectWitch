@@ -177,6 +177,7 @@ namespace Battle
 
 		// マウスオーバーした時
 		public void OnPointerEnter(PointerEventData e) {
+
 			if (!BattleObj.IsPlayerSelectTime || !IsExsistUnit || Unit.UnitData.HP == 0)
 				return;
 			var turnUnit = BattleObj.TurnUnit;

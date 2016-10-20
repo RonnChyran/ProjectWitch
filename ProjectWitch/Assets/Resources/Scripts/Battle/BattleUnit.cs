@@ -41,7 +41,12 @@ namespace Battle
 	// ユニットの全体操作クラス
 	public class BattleUnit : MonoBehaviour
 	{
-		private readonly float OutDisplay = 7f;
+        //デバッグテキスト出力用
+        [SerializeField]
+        private GameObject mDebugText = null;
+        private DebugText mcDebugText = null;
+
+        private readonly float OutDisplay = 7f;
 
 		private Game mGame;
 		private BattleData mBattle;
@@ -286,39 +291,80 @@ namespace Battle
 
 		#region 戦闘データ算出
 
+        //補正兵数計算
+        private float GetCorrectSoldierNum()
+        {
+            var s = UnitData.SoldierNum;
+
+            if (s < 1000) return s;
+            else if (s < 2000) return (s - 1000f) / 2f + 1000f;
+            else return (s - 2000f) / 4f + 1500f;
+        }
+
 		// 集団攻撃ダメージ（物理）
 		private float GetGroupPhyBaseDamage()
 		{
-			return Leadership * mBattle.Coe5 + GPAtk * mBattle.Coe6;
+			return Leadership + GPAtk;
 		}
 
 		public float GetGroupPhyDamage()
 		{
-			return (GetGroupPhyBaseDamage() * UnitData.SoldierNum * AreaCorPAtk + mBattle.Rand1) * PositionCoe;
+            if (GPAtk == 0) return 0;
+
+            var result = (GetGroupPhyBaseDamage() * GetCorrectSoldierNum() * AreaCorPAtk + mBattle.Rand1)
+                * PositionCoe * mBattle.Coe5 + GetCorrectSoldierNum() * mBattle.Coe6;
+
+#if DEBUG
+            mcDebugText.Push(UnitData.Name + " G PAtk", GetGroupPhyBaseDamage());
+            mcDebugText.Push(UnitData.Name + " G PDamage", result);
+#endif
+            return result;
 		}
 
 		// 集団攻撃ダメージ（魔法）
 		private float GetGroupMagBaseDamage()
 		{
-			return Leadership * mBattle.Coe7 + GMAtk * mBattle.Coe8;
+			return Leadership + GMAtk;
 		}
 
 		public float GetGroupMagDamage()
 		{
-			return GetGroupMagBaseDamage() * UnitData.SoldierNum * AreaCorMAtk + mBattle.Rand2;
+            if (GMAtk == 0) return 0;
+
+            var result = (GetGroupMagBaseDamage() * GetCorrectSoldierNum() * AreaCorMAtk + mBattle.Rand2)
+                *mBattle.Coe7 + GetCorrectSoldierNum() * mBattle.Coe8;
+
+#if DEBUG
+            mcDebugText.Push(UnitData.Name + " G MDamage", result);
+#endif
+            
+            return result;
 		}
 
 		// 集団軽減ダメージ（物理）
 		private float GetGroupPhyRedDamage()
 		{
-			return (Leadership * mBattle.Coe9 + GPDef * mBattle.Coe10) * AreaCorPDef + mBattle.Rand3;
-		}
+            var result = (Leadership * mBattle.Coe9 + GPDef * mBattle.Coe10) * AreaCorPDef + mBattle.Rand3;
+
+#if DEBUG
+            mcDebugText.Push(UnitData.Name + " G PRegDamage", result);
+#endif
+
+            return result;
+        }
 
 		// 集団軽減ダメージ（物理）
 		private float GetGroupMagRedDamage()
 		{
-			return (Leadership * mBattle.Coe11 + GMDef * mBattle.Coe12) * AreaCorMDef + mBattle.Rand4;
-		}
+            var result = (Leadership * mBattle.Coe11 + GMDef * mBattle.Coe12) * AreaCorMDef + mBattle.Rand4;
+
+#if DEBUG
+            mcDebugText.Push(UnitData.Name + " G MRegDamage", result);
+#endif
+
+            return result;
+        }
+
 
 		// スキルダメージ
 		public float GetSkillDamage(float baseATK, SkillDataFormat skill, bool isPhy)
@@ -329,13 +375,17 @@ namespace Battle
 		// リーダー攻撃ダメージ（物理）
 		public float GetLeaderPhyDamage()
 		{
-			return (LPAtk * LAtkSkill.Power / 100 + mBattle.Rand5) * PositionCoe;
+            if (LPAtk == 0) return 0;
+
+			return (LPAtk * LAtkSkill.Power / 100.0f * mBattle.Coe21 + mBattle.Rand5) * PositionCoe;
 		}
 
 		// リーダー攻撃ダメージ（魔法）
 		public float GetLeaderMagDamage()
 		{
-			return LMAtk * LAtkSkill.Power / 100 + mBattle.Rand6;
+            if (LMAtk == 0) return 0;
+
+            return LMAtk * LAtkSkill.Power / 100.0f * mBattle.Coe22 + mBattle.Rand6;
 		}
 
 		// リーダー軽減ダメージ（物理）
@@ -367,8 +417,15 @@ namespace Battle
 		{
 			float sufPhyDamage = System.Math.Max(phyDamage * mBattle.Coe1 - GetPhyRedDamage() * mBattle.Coe2, 0);
 			float sufMagDamage = System.Math.Max(magDamage * mBattle.Coe3 - GetMagRedDamage() * mBattle.Coe4, 0);
-			return sufPhyDamage + sufMagDamage;
-		}
+
+            var result = sufPhyDamage + sufMagDamage;
+
+#if DEBUG
+            mcDebugText.Push(UnitData.Name + " G Damage", result);
+#endif
+
+            return result;
+        }
 
 		// 捕獲ダメージ
 		public float GetCaptureDamage(float phyDamage, float magDamage)
@@ -518,8 +575,11 @@ namespace Battle
 		// 表示する兵士数を増減する
 		public void SetDisplaySoldier()
 		{
-			int nextDisplayNum = (int)System.Math.Ceiling((float)(mSoldierObj.Count) * DisplaySoldierNum / UnitData.MaxSoldierNum);
-			int preDisplayNum = 0;
+            int nextDisplayNum = 0;
+            if (UnitData.MaxSoldierNum != 0)
+                nextDisplayNum = (int)System.Math.Ceiling((float)(mSoldierObj.Count) * DisplaySoldierNum / UnitData.MaxSoldierNum);
+
+            int preDisplayNum = 0;
 			foreach (var soldier in mSoldierObj)
 			{
 				if (soldier.activeSelf)
@@ -713,9 +773,11 @@ namespace Battle
 
 		// Use this for initialization
 		void Start()
-		{
-
-		}
+        {
+            if (!mDebugText)
+                mDebugText = GameObject.FindWithTag("DebugObject");
+            mcDebugText = mDebugText.GetComponent<DebugText>();
+        }
 
 		// Update is called once per frame
 		void Update()

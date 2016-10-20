@@ -25,7 +25,7 @@ namespace Scenario.WorkSpace
 			VirtualMachine vm = null;
 
 			string name = Game.GetInstance ().ScenarioIn.FileName;
-			string path = Application.dataPath + "/" + mScenarioPath + name;
+			string path = mScenarioPath + name;
 			ScriptCompiler compiler = new ScriptCompiler();
 			vm = compiler.CompileScript (path);
 

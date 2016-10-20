@@ -27,6 +27,9 @@ public class Game : MonoBehaviour
     public string SceneName_Load        { get { return cSceneName_Load; } private set { } }
     public string SceneName_Talk        { get { return cSceneName_Talk; } private set { } }
 
+    //データパス
+    private GamePath Path;
+
     //毎ターンのマナ回復率
     private float mManaRecoveryRate = 0.1f; //10%
     //毎ターンのHP回復率
@@ -129,6 +132,8 @@ public class Game : MonoBehaviour
     //初期化処理
     void Setup()
     {
+        Path = new GamePath();
+
         //制御変数初期化
         IsDialogShowd = false;
         IsBattle = false;
@@ -189,6 +194,7 @@ public class Game : MonoBehaviour
     public void CallField()
     {
         SceneManager.LoadScene(cSceneName_Field);
+        SceneManager.LoadScene(cSceneName_FieldUI, LoadSceneMode.Additive);
     }
     public Scene CallFieldUI()
     {
@@ -241,7 +247,8 @@ public class Game : MonoBehaviour
     //ロード画面を呼び出す
     public void CallLoad()
     {
-        SceneManager.LoadScene(cSceneName_Load);
+        ShowDialog("じっそうしてないよ！", "");
+        //SceneManager.LoadScene(cSceneName_Load);
     }
 
     //オートセーブする
@@ -267,16 +274,16 @@ public class Game : MonoBehaviour
     public void FirstLoad()
     {
         //ユニットデータの読み出し
-        UnitData = DataLoader.LoadUnitData(GamePath.Data + "unit_data.csv");
+        UnitData = DataLoader.LoadUnitData(Path.Data + "unit_data");
 
         //スキルデータの読み出し
-        SkillData = DataLoader.LoadSkillData(GamePath.Data + "skill_data.csv");
+        SkillData = DataLoader.LoadSkillData(Path.Data + "skill_data");
 
         //地点データの読み出し
-        AreaData = DataLoader.LoadAreaData(GamePath.Data + "area_data.csv");
+        AreaData = DataLoader.LoadAreaData(Path.Data + "area_data");
 
         //領地データの読み出し
-        TerritoryData = DataLoader.LoadTerritoryData(GamePath.Data + "territory_data.csv");
+        TerritoryData = DataLoader.LoadTerritoryData(Path.Data + "territory_data");
 
         //所持地点リスト（地点リストから算出
         for (int i = 0; i < TerritoryData.Count; i++)
@@ -293,18 +300,18 @@ public class Game : MonoBehaviour
         }
 
         //AI
-        AIData = DataLoader.LoadAIData(GamePath.Data + "ai_data.csv");
+        AIData = DataLoader.LoadAIData(Path.Data + "ai_data");
 
         //装備
-        EquipmentData = DataLoader.LoadEquipmentData(GamePath.Data + "equipment_data.csv");
+        EquipmentData = DataLoader.LoadEquipmentData(Path.Data + "equipment_data");
 
         //カード
-        CardData = DataLoader.LoadCardData(GamePath.Data + "card_data.csv");
+        CardData = DataLoader.LoadCardData(Path.Data + "card_data");
 
         //イベントデータの読み出し
-        ArmyEventData =     DataLoader.LoadEventData(GamePath.Data + "event_data_army.csv");
-        FieldEventData =    DataLoader.LoadEventData(GamePath.Data + "event_data_field.csv");
-        TownEventData =     DataLoader.LoadEventData(GamePath.Data + "event_data_town.csv");
+        ArmyEventData =     DataLoader.LoadEventData(Path.Data + "event_data_army");
+        FieldEventData =    DataLoader.LoadEventData(Path.Data + "event_data_field");
+        TownEventData =     DataLoader.LoadEventData(Path.Data + "event_data_town");
 
     }
 

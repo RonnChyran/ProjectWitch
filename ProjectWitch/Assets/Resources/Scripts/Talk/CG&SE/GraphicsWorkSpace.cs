@@ -74,7 +74,7 @@ namespace Scenario.WorkSpace
 			public override void Update (float deltaTime)
 			{
 				mTime += deltaTime;
-				mMethod (mTime/mDuration);
+				mMethod (Mathf.Clamp(mTime/mDuration, 0f, 1f));
 				if (mTime > mDuration)
 					SetActive(false);
 			}
