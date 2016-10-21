@@ -27,12 +27,12 @@ namespace Scenario.WorkSpace
 			error = null;
 
             var game = Game.GetInstance();
-            for(int i=0; i<2; i++)
+            for(int i=0; i<3; i++)
             {
                 game.BattleIn.PlayerUnits[i] = p[i];
             }
 
-            for(int i=0; i<2; i++)
+            for(int i=0; i<3; i++)
             {
                 game.BattleIn.EnemyUnits[i] = e[i];
             }

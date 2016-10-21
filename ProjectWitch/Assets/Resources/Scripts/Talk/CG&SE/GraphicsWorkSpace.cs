@@ -18,6 +18,9 @@ namespace Scenario.WorkSpace
 {
 	public class GraphicsWorkSpace : MonoBehaviour
 	{
+		[SerializeField]
+		ScenarioWorkSpace mSWS;
+
 		//キャンバス
 		[SerializeField]
 		private RectTransform mCanvas;
@@ -31,6 +34,9 @@ namespace Scenario.WorkSpace
 		//背景用スプライト
 		[SerializeField]
 		private GameObject mBackgroundSprite;
+
+		//背景の不透明度(最初の段階で1にする)
+		private bool mNeedsToFadeBackGround = true;
 
 		//立ち絵のパス
 		[SerializeField]
@@ -51,15 +57,15 @@ namespace Scenario.WorkSpace
 		private Transform mStandCGAnchor5;
 
 		//立ち絵の位置用のアップデータ
-		private class StandCGUpdater : UpdaterFormat
+		private class CGAnimationUpdater : UpdaterFormat
 		{
 			public delegate void AnimationDelegate(float progress);
 
 			private float mTime;
 			private AnimationDelegate mMethod;
 			private float mDuration;
-			private StandCGUpdater(){}
-			public StandCGUpdater(float duration, AnimationDelegate method)
+			private CGAnimationUpdater(){}
+			public CGAnimationUpdater(float duration, AnimationDelegate method)
 			{
 				mDuration = duration;
 				mMethod = method;
@@ -164,6 +170,16 @@ namespace Scenario.WorkSpace
 					if (error != null) return error;
 					string path = mBackgroundPath + name;
 					mBackgroundSprite.GetComponent<RawImage>().texture = Resources.Load (path) as Texture2D;
+					if (mNeedsToFadeBackGround)
+					{
+						float time = 0.5f;
+						RawImage img = mBackgroundSprite.GetComponent<RawImage>();
+						Color prevColor = img.color;
+						mSWS.SetUpdater(new CGAnimationUpdater(time, delegate(float progress) {
+							img.color = new Color(prevColor.r, prevColor.g, prevColor.b, progress);
+						}));
+						mNeedsToFadeBackGround = true;
+					}
 					return null;
 				}));
 			//立ち絵を読み込み
@@ -267,7 +283,7 @@ namespace Scenario.WorkSpace
 						{
 							Transform trans = obj.transform;
 							trans.localPosition = position_prev;
-							updater = new StandCGUpdater(time, delegate(float progress) {
+							updater = new CGAnimationUpdater(time, delegate(float progress) {
 								trans.localPosition = position_prev * (1.0f - progress) + position_next * progress;
 							});
 						}
@@ -278,7 +294,7 @@ namespace Scenario.WorkSpace
 							Transform trans = obj.transform;
 							trans.localPosition = position_next;
 							RawImage image = obj.GetComponent<RawImage> ();
-							updater = new StandCGUpdater(time, delegate(float progress) {
+							updater = new CGAnimationUpdater(time, delegate(float progress) {
 								Color cp = image.color;
 								image.color = new Color(cp.r, cp.g, cp.b, progress);
 							});
@@ -322,7 +338,7 @@ namespace Scenario.WorkSpace
 					{
 					case "slideout":
 						{
-							updater = new StandCGUpdater(time, delegate(float progress) {
+							updater = new CGAnimationUpdater(time, delegate(float progress) {
 								trans.localPosition = position_prev * (1.0f - progress) + position_next * progress;
 								if (progress>0.99)
 									mCGLayer.HideStandCG(id, out error);
@@ -334,7 +350,7 @@ namespace Scenario.WorkSpace
 						{
 							RawImage image = obj.GetComponent<RawImage> ();
 							Color cp = image.color;
-							updater = new StandCGUpdater(time, delegate(float progress) {
+							updater = new CGAnimationUpdater(time, delegate(float progress) {
 								image.color = new Color(cp.r, cp.g, cp.b, (1.0f - progress) * cp.a);
 								if (progress>0.99)
 									mCGLayer.HideStandCG(id, out error); 
@@ -376,7 +392,7 @@ namespace Scenario.WorkSpace
 					Vector3 position_prev = trans.localPosition;
 					Vector3 position_next = new Vector3(x, y, 0.0f) + new Vector3(canvasRect.x, canvasRect.y, 0.0f);
 
-					UpdaterFormat transUpdater = new StandCGUpdater(time, delegate(float progress) {
+					UpdaterFormat transUpdater = new CGAnimationUpdater(time, delegate(float progress) {
 						trans.localPosition = position_prev * (1.0f - progress) + position_next * progress;
 					});
 					arguments[4] = transUpdater;
@@ -409,7 +425,7 @@ namespace Scenario.WorkSpace
 					Vector3 position_prev = trans.localPosition;
 					Vector3 position_next = trans.localPosition + new Vector3(x, y, 0.0f);
 
-					UpdaterFormat transUpdater = new StandCGUpdater(time, delegate(float progress) {
+					UpdaterFormat transUpdater = new CGAnimationUpdater(time, delegate(float progress) {
 						trans.localPosition = position_prev * (1.0f - progress) + position_next * progress;
 					});
 					arguments[4] = transUpdater;
@@ -435,7 +451,7 @@ namespace Scenario.WorkSpace
 					Transform trans = obj.transform;
 					Quaternion quaternion_prev = trans.localRotation;
 
-					UpdaterFormat transUpdater = new StandCGUpdater(time, delegate(float progress) {
+					UpdaterFormat transUpdater = new CGAnimationUpdater(time, delegate(float progress) {
 						trans.localRotation = quaternion_prev * Quaternion.Euler(new Vector3(0.0f, 0.0f, progress * angle));
 					});
 					arguments[3] = transUpdater;
@@ -461,7 +477,7 @@ namespace Scenario.WorkSpace
 					Transform trans = obj.transform;
 					Vector3 size_prev = trans.localScale;
 
-					UpdaterFormat transUpdater = new StandCGUpdater(time, delegate(float progress) {
+					UpdaterFormat transUpdater = new CGAnimationUpdater(time, delegate(float progress) {
 						float currScale = (1.0f - progress)  * 1.0f + progress * scale;
 						trans.localScale = Vector3.Scale(size_prev, new Vector3(currScale, currScale, 1.0f));
 					});
