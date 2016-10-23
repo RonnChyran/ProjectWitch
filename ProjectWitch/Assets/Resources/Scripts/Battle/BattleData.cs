@@ -45,9 +45,9 @@ namespace Battle
         private float mCoe11 = 0;
         [SerializeField, Tooltip("集団軽減ダメージ、集団魔法防御力")]
         private float mCoe12 = 0;
-        [SerializeField, Tooltip("リーダー軽減ダメージ、物理防御力")]
+        [SerializeField, Tooltip("リーダー軽減ダメージ、物理防御力1")]
         private float mCoe13 = 0;
-        [SerializeField, Tooltip("リーダー軽減ダメージ、魔法防御力")]
+        [SerializeField, Tooltip("リーダー軽減ダメージ、魔法防御力1")]
         private float mCoe14 = 0;
         [SerializeField, Tooltip("捕獲ダメージ")]
         private float mCoe15 = 0;
@@ -61,10 +61,18 @@ namespace Battle
         private float mCoe19 = 0;
         [SerializeField, Tooltip("毒ダメージ")]
         private float mCoe20 = 0;
-        [SerializeField, Tooltip("リーダー攻撃ダメージ、物理攻撃力")]
+        [SerializeField, Tooltip("リーダー攻撃ダメージ、物理攻撃力1")]
         private float mCoe21 = 0;
-        [SerializeField, Tooltip("リーダー攻撃ダメージ、魔法攻撃力")]
+        [SerializeField, Tooltip("リーダー攻撃ダメージ、魔法攻撃力1")]
         private float mCoe22 = 0;
+        [SerializeField, Tooltip("リーダー攻撃ダメージ、物理攻撃力2")]
+        private float mCoe23 = 0;
+        [SerializeField, Tooltip("リーダー攻撃ダメージ、魔法攻撃力2")]
+        private float mCoe24 = 0;
+        [SerializeField, Tooltip("リーダー軽減ダメージ、物理攻撃力2")]
+        private float mCoe25 = 0;
+        [SerializeField, Tooltip("リーダー軽減ダメージ、魔法攻撃力2")]
+        private float mCoe26 = 0;
         [SerializeField, Tooltip("集団攻撃ダメージ（物理）、中央値"), HeaderAttribute("乱数")]
         private int mRandMed1 = 0;
         [SerializeField, Tooltip("集団攻撃ダメージ（物理）、振幅")]
@@ -128,6 +136,10 @@ namespace Battle
         public float Coe20 { get { return mCoe20; } }
         public float Coe21 { get { return mCoe21; } }
         public float Coe22 { get { return mCoe22; } }
+        public float Coe23 { get { return mCoe23; } }
+        public float Coe24 { get { return mCoe24; } }
+        public float Coe25 { get { return mCoe25; } }
+        public float Coe26 { get { return mCoe26; } }
         int GetRand(int med, int amp)
         {
             return med - amp / 2 + BattleRandom.Range(0, amp);

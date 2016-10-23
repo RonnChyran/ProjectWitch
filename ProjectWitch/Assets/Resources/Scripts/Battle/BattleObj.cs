@@ -474,7 +474,7 @@ namespace Battle
 			{
 				if (false) { }
 				else if (type == DamageType.Normal)
-					DamageNum = target.GetNormalDamage(phyDamage, magDamage);
+					DamageNum = target.GetNormalDamage(phyDamage, magDamage, toLeader);
 				else if (type == DamageType.Counter)
 					DamageNum = target.GetCounterDamage(phyDamage, 0);
 				else if (type == DamageType.CaptureCounter)
@@ -799,9 +799,8 @@ namespace Battle
 						yield return null;
 					if (DamageNum != 0)
 					{
-						var damage = EndTargetUnit.GetNormalDamage(phyDamage, magDamage);
-						// 回復
-						StartCoroutine(HealProcess(actionUnit, damage, 0));
+                        // 回復
+						StartCoroutine(HealProcess(actionUnit, DamageNum, 0));
 					}
 				}
 				else if (actionUnit != null && skill.Type == SkillDataFormat.SkillType.Guard)

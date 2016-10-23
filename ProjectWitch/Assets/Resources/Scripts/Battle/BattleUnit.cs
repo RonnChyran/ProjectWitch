@@ -121,9 +121,9 @@ namespace Battle
 		// 魔法攻撃力
 		public float LMAtk { get { return (UnitData.LeaderMAtk + (IsEquipment ? Equipment.LeaderMAtk : 0)) * MagAtkPercentCoe; } }
 		// 物理防御力
-		public float LPDef { get { return (UnitData.LeaderPDef + (IsEquipment ? Equipment.LeaderPDef : 0)) * (IsDefense ? 1 : 2) * PhyDefPercentCoe; } }
+		public float LPDef { get { return (UnitData.LeaderPDef + (IsEquipment ? Equipment.LeaderPDef : 0)) * (IsDefense ? 2 : 1) * PhyDefPercentCoe; } }
 		// 魔法防御力
-		public float LMDef { get { return (UnitData.LeaderMDef + (IsEquipment ? Equipment.LeaderMDef : 0)) * (IsDefense ? 1 : 2) * MagDefPercentCoe; } }
+		public float LMDef { get { return (UnitData.LeaderMDef + (IsEquipment ? Equipment.LeaderMDef : 0)) * (IsDefense ? 2 : 1) * MagDefPercentCoe; } }
 		// 指揮力
 		public float Leadership { get { return (UnitData.Leadership + (IsEquipment ? Equipment.Leadership : 0)) * AreaCorLeadership * LeadershipPercentCoe; } }
 		// 機動力
@@ -134,9 +134,9 @@ namespace Battle
 		// 集団魔法攻撃力
 		public float GMAtk { get { return (UnitData.GroupMAtk + (IsEquipment ? Equipment.GroupMAtk : 0)) * MagAtkPercentCoe; } }
 		// 集団物理防御力
-		public float GPDef { get { return (UnitData.GroupPDef + (IsEquipment ? Equipment.GroupPDef : 0)) * (IsDefense ? 1 : 2) * PhyDefPercentCoe; } }
+		public float GPDef { get { return (UnitData.GroupPDef + (IsEquipment ? Equipment.GroupPDef : 0)) * (IsDefense ? 2 : 1) * PhyDefPercentCoe; } }
 		// 集団魔法防御力
-		public float GMDef { get { return (UnitData.GroupMDef + (IsEquipment ? Equipment.GroupMDef : 0)) * (IsDefense ? 1 : 2) * MagDefPercentCoe; } }
+		public float GMDef { get { return (UnitData.GroupMDef + (IsEquipment ? Equipment.GroupMDef : 0)) * (IsDefense ? 2 : 1) * MagDefPercentCoe; } }
 
 		// ポジション
 		public Position Position { get; set; }
@@ -301,38 +301,37 @@ namespace Battle
             else return (s - 2000f) / 4f + 1500f;
         }
 
-		// 集団攻撃ダメージ（物理）
-		private float GetGroupPhyBaseDamage()
-		{
-			return Leadership + GPAtk;
-		}
+        //集団ダメージ補正機
+        private float CalcCorrectGroupDamage(float damage)
+        {
+            if (damage < 200) return damage;
+            else if (damage < 500) return (damage - 200) / 2 + 200;
+            else return (damage - 500) / 4 + 350;
+        }
 
+		// 集団攻撃ダメージ（物理）
 		public float GetGroupPhyDamage()
 		{
             if (GPAtk == 0) return 0;
 
-            var result = (GetGroupPhyBaseDamage() * GetCorrectSoldierNum() * AreaCorPAtk + mBattle.Rand1)
-                * PositionCoe * mBattle.Coe5 + GetCorrectSoldierNum() * mBattle.Coe6;
+            var result = ((Leadership + GPAtk) * GetCorrectSoldierNum() * AreaCorPAtk + mBattle.Rand1)
+                * PositionCoe * mBattle.Coe5;
+            result = CalcCorrectGroupDamage(result);
 
 #if DEBUG
-            mcDebugText.Push(UnitData.Name + " G PAtk", GetGroupPhyBaseDamage());
             mcDebugText.Push(UnitData.Name + " G PDamage", result);
 #endif
             return result;
 		}
 
 		// 集団攻撃ダメージ（魔法）
-		private float GetGroupMagBaseDamage()
-		{
-			return Leadership + GMAtk;
-		}
-
 		public float GetGroupMagDamage()
 		{
             if (GMAtk == 0) return 0;
 
-            var result = (GetGroupMagBaseDamage() * GetCorrectSoldierNum() * AreaCorMAtk + mBattle.Rand2)
-                *mBattle.Coe7 + GetCorrectSoldierNum() * mBattle.Coe8;
+            var result = ((Leadership + GMAtk) * GetCorrectSoldierNum() * AreaCorMAtk + mBattle.Rand2)
+                *mBattle.Coe7;
+            result = CalcCorrectGroupDamage(result);
 
 #if DEBUG
             mcDebugText.Push(UnitData.Name + " G MDamage", result);
@@ -344,7 +343,7 @@ namespace Battle
 		// 集団軽減ダメージ（物理）
 		private float GetGroupPhyRedDamage()
 		{
-            var result = (Leadership * mBattle.Coe9 + GPDef * mBattle.Coe10) * AreaCorPDef + mBattle.Rand3;
+            var result = (Leadership + GPDef) * mBattle.Coe9 * AreaCorPDef + mBattle.Rand3;
 
 #if DEBUG
             mcDebugText.Push(UnitData.Name + " G PRegDamage", result);
@@ -356,7 +355,7 @@ namespace Battle
 		// 集団軽減ダメージ（物理）
 		private float GetGroupMagRedDamage()
 		{
-            var result = (Leadership * mBattle.Coe11 + GMDef * mBattle.Coe12) * AreaCorMDef + mBattle.Rand4;
+            var result = (Leadership + GMDef) * mBattle.Coe11 * AreaCorMDef + mBattle.Rand4;
 
 #if DEBUG
             mcDebugText.Push(UnitData.Name + " G MRegDamage", result);
@@ -413,11 +412,20 @@ namespace Battle
 		}
 
 		// 通常ダメージ
-		public float GetNormalDamage(float phyDamage, float magDamage)
+		public float GetNormalDamage(float phyDamage, float magDamage, bool targetIsLeader)
 		{
-			float sufPhyDamage = System.Math.Max(phyDamage * mBattle.Coe1 - GetPhyRedDamage() * mBattle.Coe2, 0);
-			float sufMagDamage = System.Math.Max(magDamage * mBattle.Coe3 - GetMagRedDamage() * mBattle.Coe4, 0);
-
+            float sufPhyDamage=0.0f;
+            float sufMagDamage=0.0f;
+            if (!IsExistSoldier || targetIsLeader)
+            {
+                sufPhyDamage = System.Math.Max(phyDamage * mBattle.Coe1 - GetPhyRedDamage() * mBattle.Coe2, 0);
+                sufMagDamage = System.Math.Max(magDamage * mBattle.Coe3 - GetMagRedDamage() * mBattle.Coe4, 0);
+            }
+            else
+            {
+                sufPhyDamage = System.Math.Max(phyDamage * mBattle.Coe6 - GetPhyRedDamage() * mBattle.Coe8, 0);
+                sufMagDamage = System.Math.Max(magDamage * mBattle.Coe10 - GetMagRedDamage() * mBattle.Coe12, 0);
+            }
             var result = sufPhyDamage + sufMagDamage;
 
 #if DEBUG
@@ -430,19 +438,19 @@ namespace Battle
 		// 捕獲ダメージ
 		public float GetCaptureDamage(float phyDamage, float magDamage)
 		{
-			return GetNormalDamage(phyDamage, magDamage) * mBattle.Coe15;
+			return GetNormalDamage(phyDamage, magDamage, true) * mBattle.Coe15;
 		}
 
 		// カウンターダメージ
 		public float GetCounterDamage(float phyDamage, float magDamage)
 		{
-			return GetNormalDamage(phyDamage, magDamage) * mBattle.Coe16;
+			return GetNormalDamage(phyDamage, magDamage, false) * mBattle.Coe16;
 		}
 
 		// 捕獲カウンターダメージ
 		public float GetCaptureCounterDamage(float phyDamage, float magDamage)
 		{
-			return GetNormalDamage(phyDamage, magDamage) * mBattle.Coe17;
+			return GetNormalDamage(phyDamage, magDamage, false) * mBattle.Coe17;
 		}
 
 		// 兵士回復量

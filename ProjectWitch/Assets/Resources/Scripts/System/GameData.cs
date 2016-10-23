@@ -35,8 +35,9 @@ namespace GameData
         //HP
         public int HP { get; set; }
         //最大HP
-        public int MaxHP { get; set; }
-        public int HPRate { get; set; }     //HP成長率
+        public int MaxHP { get { return (int)(HP0 + HP100 / 100.0f * Level); } private set { } }
+        public int HP0 { get; set; }
+        public int HP100 { get; set; }     //HP成長率
 
         //経験値
         public int Experience { get; set; }
@@ -662,9 +663,9 @@ namespace GameData
                     unit.Name = data[1];
                     unit.Level = int.Parse(data[2]);
                     unit.MaxLevel = int.Parse(data[3]);
-                    unit.HP = int.Parse(data[4]);
-                    unit.MaxHP = unit.HP;
-                    unit.HPRate = int.Parse(data[5]);
+                    unit.HP0 = int.Parse(data[4]);
+                    unit.HP100 = int.Parse(data[5]);
+                    unit.HP = unit.MaxHP;
                     unit.LPAtk0 = int.Parse(data[6]);
                     unit.LMAtk0 = int.Parse(data[7]);
                     unit.LPDef0 = int.Parse(data[8]);
