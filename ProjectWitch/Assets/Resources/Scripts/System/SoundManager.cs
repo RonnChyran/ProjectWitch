@@ -18,10 +18,7 @@ public class SoundManager : MonoBehaviour {
 
     //サウンドリスト
     private List<int> mSoundList;
-
-    //定数
-    private const string filePath = "Data/sound.csv";
-	
+    
 	// Update is called once per frame
 	void Update () {
 	
@@ -34,6 +31,8 @@ public class SoundManager : MonoBehaviour {
         for (int i = 0; i < BGMChannelSize; i++) mcBGMs.Add(gameObject.AddComponent<AudioSource>());
         for (int i = 0; i < SEChannelSize; i++) mcSEs.Add(gameObject.AddComponent<AudioSource>());
         for (int i = 0; i < VoiceChannelSize; i++) mcVoices.Add(gameObject.AddComponent<AudioSource>());
+
+        
     }
 
     //再初期化
@@ -85,8 +84,15 @@ namespace GameData
             private set { }
         }
 
+        //初期化
+        public void Init()
+        {
+            //事前ロードするか
+            if (PreLoad)
+                LoadResource();
+        }
 
-
+        //リソースのインスタンス化
         private void LoadResource()
         {
             var game = Game.GetInstance();
