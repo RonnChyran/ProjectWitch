@@ -1266,6 +1266,9 @@ namespace GameData
 
     public class GamePath
     {
-        public string Data = "Data/";
+        public static readonly string Data = "Data/";
+        public static readonly string BGM = "Sounds/BGM/";
+        public static readonly string SE = "Sounds/SE/";
+        public static readonly string Voice = "Sounds/Voice/";
     }
 }
