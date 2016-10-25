@@ -108,27 +108,39 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="ProjectWitch.CSharp.Plugins.csproj">
+      <Project>{6BCDAE06-138F-30E6-F913-C8D243D0C347}</Project>
+      <Name>ProjectWitch.CSharp.Plugins</Name>
+    </ProjectReference>
     <ProjectReference Include="ProjectWitch.CSharp.csproj">
       <Project>{3B7B7A0E-7889-E64D-797D-99ED3BF095E0}</Project>
       <Name>ProjectWitch.CSharp</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Resources\Editor\DebugWindow.cs" />
-    <Compile Include="Assets\Resources\Editor\ImageEffects\AntialiasingEditor.cs" />
-    <Compile Include="Assets\Resources\Editor\ImageEffects\BloomAndFlaresEditor.cs" />
-    <Compile Include="Assets\Resources\Editor\ImageEffects\BloomEditor.cs" />
-    <Compile Include="Assets\Resources\Editor\ImageEffects\CameraMotionBlurEditor.cs" />
-    <Compile Include="Assets\Resources\Editor\ImageEffects\ColorCorrectionCurvesEditor.cs" />
-    <Compile Include="Assets\Resources\Editor\ImageEffects\ColorCorrectionLookupEditor.cs" />
-    <Compile Include="Assets\Resources\Editor\ImageEffects\CreaseShadingEditor.cs" />
-    <Compile Include="Assets\Resources\Editor\ImageEffects\DepthOfFieldDeprecatedEditor.cs" />
-    <Compile Include="Assets\Resources\Editor\ImageEffects\DepthOfFieldEditor.cs" />
-    <Compile Include="Assets\Resources\Editor\ImageEffects\EdgeDetectionEditor.cs" />
-    <Compile Include="Assets\Resources\Editor\ImageEffects\NoiseAndGrainEditor.cs" />
-    <Compile Include="Assets\Resources\Editor\ImageEffects\SunShaftsEditor.cs" />
-    <Compile Include="Assets\Resources\Editor\ImageEffects\TonemappingEditor.cs" />
-    <Compile Include="Assets\Resources\Editor\ImageEffects\VignetteAndChromaticAberrationEditor.cs" />
+    <Compile Include="Assets\Editor\CriWare\CriAtom\CriAtomEditor.cs" />
+    <Compile Include="Assets\Editor\CriWare\CriAtom\CriAtomListenerEditor.cs" />
+    <Compile Include="Assets\Editor\CriWare\CriAtom\CriAtomSourceEditor.cs" />
+    <Compile Include="Assets\Editor\CriWare\CriAtom\CriAtomWindow.cs" />
+    <Compile Include="Assets\Editor\CriWare\CriAtom\CriAtomWindowPrefs.cs" />
+    <Compile Include="Assets\Editor\CriWare\CriWareEditor.cs" />
+    <Compile Include="Assets\Editor\CriWare\CriWareInitializerEditor.cs" />
+    <Compile Include="Assets\Editor\CriWare\CriWareVersionWindow.cs" />
+    <Compile Include="Assets\Editor\DebugWindow.cs" />
+    <Compile Include="Assets\Editor\ImageEffects\AntialiasingEditor.cs" />
+    <Compile Include="Assets\Editor\ImageEffects\BloomAndFlaresEditor.cs" />
+    <Compile Include="Assets\Editor\ImageEffects\BloomEditor.cs" />
+    <Compile Include="Assets\Editor\ImageEffects\CameraMotionBlurEditor.cs" />
+    <Compile Include="Assets\Editor\ImageEffects\ColorCorrectionCurvesEditor.cs" />
+    <Compile Include="Assets\Editor\ImageEffects\ColorCorrectionLookupEditor.cs" />
+    <Compile Include="Assets\Editor\ImageEffects\CreaseShadingEditor.cs" />
+    <Compile Include="Assets\Editor\ImageEffects\DepthOfFieldDeprecatedEditor.cs" />
+    <Compile Include="Assets\Editor\ImageEffects\DepthOfFieldEditor.cs" />
+    <Compile Include="Assets\Editor\ImageEffects\EdgeDetectionEditor.cs" />
+    <Compile Include="Assets\Editor\ImageEffects\NoiseAndGrainEditor.cs" />
+    <Compile Include="Assets\Editor\ImageEffects\SunShaftsEditor.cs" />
+    <Compile Include="Assets\Editor\ImageEffects\TonemappingEditor.cs" />
+    <Compile Include="Assets\Editor\ImageEffects\VignetteAndChromaticAberrationEditor.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\MoviePlayer\Readme.txt" />

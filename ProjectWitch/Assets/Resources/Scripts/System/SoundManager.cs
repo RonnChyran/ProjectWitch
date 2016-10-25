@@ -1,122 +1,86 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 
-using GameData;
+//サウンドの種類
+public enum SoundType { BGM, SE, Voice }
 
+//サウンド管理クラス
 public class SoundManager : MonoBehaviour {
 
-    //各オーディオのチャンネル数
-    public int BGMChannelSize { get; set; }
-    public int SEChannelSize { get; set; }
-    public int VoiceChannelSize { get; set; }
+    //BGMのソースオブジェクト
+    [SerializeField]
+    private GameObject mBGMSource = null;
+    private CriAtomSource mcBGM = null;
 
-    //各オーディオソース
-    private List<AudioSource> mcBGMs;
-    private List<AudioSource> mcSEs;
-    private List<AudioSource> mcVoices;
+    //SEのソースオブジェクト
+    [SerializeField]
+    private GameObject mSESource = null;
+    private CriAtomSource mcSE = null;
 
-    //サウンドリスト
-    private List<int> mSoundList;
+    //ボイスのソースオブジェクト
+    [SerializeField]
+    private GameObject mVoiceSource = null;
+    private CriAtomSource mcVoice = null;
     
-	// Update is called once per frame
-	void Update () {
-	
-	}
-
-    //初期化
-    public void Init()
-    {
-        //コンポーネントの作成
-        for (int i = 0; i < BGMChannelSize; i++) mcBGMs.Add(gameObject.AddComponent<AudioSource>());
-        for (int i = 0; i < SEChannelSize; i++) mcSEs.Add(gameObject.AddComponent<AudioSource>());
-        for (int i = 0; i < VoiceChannelSize; i++) mcVoices.Add(gameObject.AddComponent<AudioSource>());
-
-        
-    }
-
-    //再初期化
-    public void Reset()
-    {
-        //コンポーネントをいったん削除
-        foreach (var c in mcBGMs) Destroy(c);
-        foreach (var c in mcSEs) Destroy(c);
-        foreach (var c in mcVoices) Destroy(c);
-
-        //再初期化
-        Init();
-    }
-
-    public void PlayLoop(int id)
-    {
-
-    }
-
-    public void PlayOneShot(int id)
-    {
-
-    }
-}
-
-namespace GameData
-{
-    public class SoundDataFormat
-    {
-        //事前ロードを行うかどうか
-        bool PreLoad { get; set; }
-
-        //ファイル名
-        string Name { get; set; }
-
-        //種別
-        public enum SoundType : int { BGM = 0, SE = 1, Voice = 2 }
-        SoundType Type { get; set; }
-
-        //AudioClipのインスタンス
-        private AudioClip mResource = null;
-        public AudioClip AudioClip
+    //サウンドの種類とキューシート名の対応表
+    private readonly Dictionary<SoundType, string> mCueSheetList
+        = new Dictionary<SoundType, string>()
         {
-            get
-            {
-                if (mResource) LoadResource();
-                return mResource;
-            }
-            private set { }
+            { SoundType.BGM,    "BGM" },
+            { SoundType.SE,     "SE" },
+            { SoundType.Voice,  "Voice" }
+        };
+    
+    public void Start()
+    {
+        //エラーチェック
+        Debug.Assert(mBGMSource, "BGMソースをセットしてください");
+        Debug.Assert(mSESource, "SEソースをセットしてください");
+        Debug.Assert(mVoiceSource, "Voiceソースをセットしてください");
+
+        //コンポーネントの取得
+        mcBGM = mBGMSource.GetComponent<CriAtomSource>();
+        mcSE = mSESource.GetComponent<CriAtomSource>();
+        mcVoice = mVoiceSource.GetComponent<CriAtomSource>();
+
+        //エラーチェック
+        Debug.Assert(mcBGM, "BGMソースにCriAtomSourceコンポーネントをセットしてください");
+        Debug.Assert(mcSE, "SEソースにCriAtomSourceコンポーネントをセットしてください");
+        Debug.Assert(mcVoice, "VoiceソースにCriAtomSourceコンポーネントをセットしてください");
+    }
+
+    public void Play(string name, SoundType type)
+    {
+        var source = GetSource(type);
+
+        source.cueSheet = mCueSheetList[type];
+        source.cueName = name;
+
+        source.Play();
+    }
+
+    public void Stop(SoundType type)
+    {
+        var source = GetSource(type);
+
+        source.Stop();
+    }
+
+    private CriAtomSource GetSource(SoundType type)
+    {
+
+        CriAtomSource source = null;
+        switch (type)
+        {
+            case SoundType.BGM: source = mcBGM; break;
+            case SoundType.SE: source = mcSE; break;
+            case SoundType.Voice: source = mcVoice; break;
+            default: break;
         }
 
-        //初期化
-        public void Init()
-        {
-            //事前ロードするか
-            if (PreLoad)
-                LoadResource();
-        }
+        Debug.Assert(source, "サウンドタイプが不正です");
 
-        //リソースのインスタンス化
-        private void LoadResource()
-        {
-            var game = Game.GetInstance();
-
-            var filepath = "";
-            switch(Type)
-            {
-                case SoundType.BGM:
-                    filepath = GamePath.BGM;
-                    break;
-
-                case SoundType.SE:
-                    filepath = GamePath.SE;
-                    break;
-
-                case SoundType.Voice:
-                    filepath = GamePath.Voice;
-                    break;
-
-                default:
-                    break;
-            }
-
-            mResource = Resources.Load(filepath + Name) as AudioClip;
-        }
+        return source;
     }
+
 }

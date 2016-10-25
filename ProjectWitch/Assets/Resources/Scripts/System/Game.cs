@@ -34,6 +34,14 @@ public class Game : MonoBehaviour
 
     #endregion
 
+    #region マネージャー
+
+    [SerializeField]
+    private SoundManager mSoundManager = null;
+    public SoundManager SoundManager { get { return mSoundManager; } private set { } }
+
+    #endregion
+
     #region ゲームデータ関連
 
     //プレイヤーのデータ

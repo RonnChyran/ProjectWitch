@@ -69,6 +69,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="ProjectWitch.CSharp.Plugins.csproj">
+      <Project>{6BCDAE06-138F-30E6-F913-C8D243D0C347}</Project>
+      <Name>ProjectWitch.CSharp.Plugins</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Assets\MoviePlayer\Scripts\MobileMoviePlayer.cs" />
     <Compile Include="Assets\MoviePlayer\Scripts\MovieTexturePlayer.cs" />
     <Compile Include="Assets\Resources\Effects\ImageEffects\Scripts\Antialiasing.cs" />
@@ -160,6 +166,7 @@
     <Compile Include="Assets\Resources\Scripts\System\Game.cs" />
     <Compile Include="Assets\Resources\Scripts\System\GameData.cs" />
     <Compile Include="Assets\Resources\Scripts\System\SoundManager.cs" />
+    <Compile Include="Assets\Resources\Scripts\System\SoundTester.cs" />
     <Compile Include="Assets\Resources\Scripts\Talk\Analyzer\CommandPatterns.cs" />
     <Compile Include="Assets\Resources\Scripts\Talk\Analyzer\CompilerFormat.cs" />
     <Compile Include="Assets\Resources\Scripts\Talk\Analyzer\StructureAnalyzer.cs" />

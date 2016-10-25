@@ -1234,82 +1234,6 @@ namespace GameData
             return outData;
         }
 
-        public static List<SoundDataFormat>LoadSoundData(string filePath)
-        {
-            var outData = new List<SoundDataFormat>();
-
-            //生データの読み出し
-            var rowData = CSVReader(filePath);
-
-            //データの代入
-            for (int i = 1; i < rowData.Count; i++)
-            {
-                if (rowData[i].Count != 19) continue;
-
-
-                //データの順番
-                //[0]ID [1]名前   [2]威力   [3]スキルタイプ
-                //[4]効果時間
-                //[5]~[11]ステータスフラグ  
-                //[5]物功 [6]物防   [7]魔功   [8]魔防
-                //[9]機動 [10]指揮  [11]地形
-                //[12]~[14]攻撃属性
-                //[12]毒 [13]対ホムンクルス    [14]対ゾンビ
-                //[15]召喚するユニットID
-                //[16]効果範囲 
-                //[17]効果対象
-                //[18]エフェクト名
-                var data = rowData[i];
-                var skill = new SkillDataFormat();
-
-                //無名アイテムがあったら読み飛ばす
-                if (data[1] == "") continue;
-
-                try
-                {
-                    skill.Name = data[1];
-                    skill.Power = int.Parse(data[2]);
-                    skill.Type = (SkillDataFormat.SkillType)Enum.ToObject(
-                        typeof(SkillDataFormat.SkillType), int.Parse(data[3]));
-                    skill.Duration = int.Parse(data[4]);
-
-                    //ステータス
-                    for (int j = 0, index = 5; j < 7; j++, index++)
-                        skill.Status[j] = (data[index] == "0") ? false : true;
-
-                    //特殊ステータス
-                    for (int j = 0, index = 12; j < 3; j++, index++)
-                        skill.Attribute[j] = (data[index] == "0") ? false : true;
-
-                    skill.SummonUnit = int.Parse(data[15]);
-                    skill.Range = (SkillDataFormat.SkillRange)Enum.ToObject(
-                        typeof(SkillDataFormat.SkillRange), int.Parse(data[16]));
-                    skill.Target = (SkillDataFormat.SkillTarget)Enum.ToObject(
-                        typeof(SkillDataFormat.SkillTarget), int.Parse(data[17]));
-                    skill.EffectPath = data[18];
-                }
-                catch (ArgumentNullException e)
-                {
-                    Debug.Log("スキルデータの読み取りに失敗：データが空です");
-                    Debug.Log(e.Message);
-                }
-                catch (FormatException e)
-                {
-                    Debug.Log("スキルデータの読み取りに失敗：データの形式が違います");
-                    Debug.Log(e.Message);
-                }
-                catch (OverflowException e)
-                {
-                    Debug.Log("スキルデータの読み取りに失敗：データがオーバーフローしました");
-                    Debug.Log(e.Message);
-                }
-
-                outData.Add(skill);
-            }
-
-            return outData;
-        }
-
         private static List<List<string>> CSVReader(string filePath)
         {
             var outData = new List<List<string>>();
@@ -1343,8 +1267,5 @@ namespace GameData
     public class GamePath
     {
         public static readonly string Data = "Data/";
-        public static readonly string BGM = "Sounds/BGM/";
-        public static readonly string SE = "Sounds/SE/";
-        public static readonly string Voice = "Sounds/Voice/";
     }
 }

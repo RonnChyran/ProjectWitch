@@ -316,7 +316,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11467090, guid: f06beb50ecbc362449478db1bead6c94, type: 2}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 11464758, guid: f06beb50ecbc362449478db1bead6c94, type: 2}
       propertyPath: m_Enabled
@@ -364,7 +364,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11467090, guid: f06beb50ecbc362449478db1bead6c94, type: 2}
       propertyPath: bloomIntensity
-      value: 0.01
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 11464758, guid: f06beb50ecbc362449478db1bead6c94, type: 2}
       propertyPath: useDepthTexture
@@ -401,6 +401,50 @@ Prefab:
     - target: {fileID: 2018290, guid: f06beb50ecbc362449478db1bead6c94, type: 2}
       propertyPath: m_Depth
       value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11467090, guid: f06beb50ecbc362449478db1bead6c94, type: 2}
+      propertyPath: sepBlurSpread
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 11467090, guid: f06beb50ecbc362449478db1bead6c94, type: 2}
+      propertyPath: useSrcAlphaAsMask
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 11467090, guid: f06beb50ecbc362449478db1bead6c94, type: 2}
+      propertyPath: bloomThreshold
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 11467090, guid: f06beb50ecbc362449478db1bead6c94, type: 2}
+      propertyPath: lensFlareVignetteMask
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 11467090, guid: f06beb50ecbc362449478db1bead6c94, type: 2}
+      propertyPath: lensFlareShader
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 11467090, guid: f06beb50ecbc362449478db1bead6c94, type: 2}
+      propertyPath: vignetteShader
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 11467090, guid: f06beb50ecbc362449478db1bead6c94, type: 2}
+      propertyPath: separableBlurShader
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 11467090, guid: f06beb50ecbc362449478db1bead6c94, type: 2}
+      propertyPath: addBrightStuffOneOneShader
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 11467090, guid: f06beb50ecbc362449478db1bead6c94, type: 2}
+      propertyPath: screenBlendShader
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 11467090, guid: f06beb50ecbc362449478db1bead6c94, type: 2}
+      propertyPath: hollywoodFlaresShader
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 11467090, guid: f06beb50ecbc362449478db1bead6c94, type: 2}
+      propertyPath: brightPassFilterShader
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 45000011902282758, guid: f06beb50ecbc362449478db1bead6c94, type: 2}
@@ -2614,15 +2658,15 @@ Prefab:
     m_Modifications:
     - target: {fileID: 430766, guid: faf8facd8e6695640af571b008a1ee2f, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 341.7217
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 430766, guid: faf8facd8e6695640af571b008a1ee2f, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 175.37851
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 430766, guid: faf8facd8e6695640af571b008a1ee2f, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 0.625
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 430766, guid: faf8facd8e6695640af571b008a1ee2f, type: 2}
       propertyPath: m_LocalRotation.x
