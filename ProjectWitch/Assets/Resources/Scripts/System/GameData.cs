@@ -398,6 +398,7 @@ namespace GameData
             BGMVolume = 0.5f;
             SEVolume = 0.5f;
             VoiceVolume = 1.0f;
+            MasterVolume = 1.0f;
         }
 
         //解像度
@@ -413,7 +414,7 @@ namespace GameData
         public GraphicQualityEnum GraphicQuality { get; set; }
 
         //全体の音量
-        public int MasterVolume { get; set; }
+        public float MasterVolume { get; set; }
         //BGMの音量
         public float BGMVolume { get; set; }
         //SEの音量
@@ -532,11 +533,18 @@ namespace GameData
     {
         public BattleDataIn()
         {
-            Reset();
+            Init();
         }
 
         public void Reset()
         {
+            Init();
+            BGM = Game.GetInstance().BattleBGM;
+        }
+
+        void Init()
+        {
+
             PlayerUnits = Enumerable.Repeat<int>(-1, 3).ToList();
             EnemyUnits = Enumerable.Repeat<int>(-1, 3).ToList();
             PlayerCards = Enumerable.Repeat<int>(-1, 3).ToList();
@@ -558,6 +566,7 @@ namespace GameData
             EnemyUnits[0] = 298;
             EnemyUnits[1] = 301;
             EnemyUnits[2] = 302;
+
         }
 
         //ユニットデータ
@@ -586,6 +595,9 @@ namespace GameData
 
         //イベント戦闘か否か
         public bool IsEvent { get; set; }
+
+        //バトルBGM
+        public string BGM { get; set; }
     }
 
     public class BattleDataOut

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
+using System;
 
 using GameData;
 
@@ -17,6 +18,7 @@ public class Game : MonoBehaviour
     private const string cSceneName_Save        = "Save";
     private const string cSceneName_Load        = "Load";
     private const string cSceneName_Talk        = "Talk";
+    private const string cSceneName_Opening     = "Opening";
 
     //読み取り専用プロパティ
     public string SceneName_Battle      { get { return cSceneName_Battle; } private set { } }
@@ -26,6 +28,7 @@ public class Game : MonoBehaviour
     public string SceneName_Save        { get { return cSceneName_Save; } private set { } }
     public string SceneName_Load        { get { return cSceneName_Load; } private set { } }
     public string SceneName_Talk        { get { return cSceneName_Talk; } private set { } }
+    public string SceneName_Opening     { get { return cSceneName_Opening; } private set { } }
 
     //毎ターンのマナ回復率
     private float mManaRecoveryRate = 0.1f; //10%
@@ -61,6 +64,10 @@ public class Game : MonoBehaviour
     public List<AreaDataFormat> AreaData { get; set; }
     //領地データ
     public List<TerritoryDataFormat> TerritoryData { get; set; }
+    //フィールドのBGM
+    public string FieldBGM { get; set; }
+    //通常バトルのBGM
+    public string BattleBGM { get; set; }
 
     //その他データ
     //システム変数
@@ -77,6 +84,8 @@ public class Game : MonoBehaviour
     public List<EventDataFormat> FieldEventData { get; set; }
     public List<EventDataFormat> TownEventData { get; set; }
     public List<EventDataFormat> ArmyEventData { get; set; }
+
+
 
     #endregion
 
@@ -114,8 +123,8 @@ public class Game : MonoBehaviour
     {
         if (mInst == null)
         {
-            GameObject gameObject = new GameObject("Game");
-            mInst = gameObject.AddComponent<Game>();
+            GameObject gameObject = Resources.Load("Prefabs/System/Game") as GameObject;
+            mInst = Instantiate(gameObject).GetComponent<Game>();
         }
         return mInst;
     }
@@ -144,30 +153,47 @@ public class Game : MonoBehaviour
         UsePreBattle = true;
         BattleCount = 0;
 
-        //データ系の初期化
-        UnitData = new List<UnitDataFormat>();
-        SkillData = new List<SkillDataFormat>();
-        PlayerMana = 10000;
-        CurrentTime = 0; //朝から
-        CurrentTurn = 1;
-        AreaData = new List<AreaDataFormat>();
-        TerritoryData = new List<TerritoryDataFormat>();
-        SystemMemory = new VirtualMemory();
-        SystemMemory.Memory[0] = "0";
-        Config = new ConfigDataFormat();
-        AIData = new List<AIDataFormat>();
-        EquipmentData = new List<EquipmentDataFormat>();
-        CardData = new List<CardDataFormat>();
-        FieldEventData = new List<EventDataFormat>();
-        TownEventData = new List<EventDataFormat>();
-        ArmyEventData = new List<EventDataFormat>();
+        try
+        {
 
-        //シーン間データの初期化
-        BattleIn = new BattleDataIn();
-        BattleOut = new BattleDataOut();
-        ScenarioIn = new ScenarioDataIn();
+            //データ系の初期化
+            UnitData = new List<UnitDataFormat>();
+            SkillData = new List<SkillDataFormat>();
+            PlayerMana = 10000;
+            CurrentTime = 0; //朝から
+            CurrentTurn = 1;
+            FieldBGM = "002_alice1";
+            BattleBGM = "004_battle1";
+            AreaData = new List<AreaDataFormat>();
+            TerritoryData = new List<TerritoryDataFormat>();
+            SystemMemory = new VirtualMemory();
+            SystemMemory.Memory[0] = "0";
+            Config = new ConfigDataFormat();
+            AIData = new List<AIDataFormat>();
+            EquipmentData = new List<EquipmentDataFormat>();
+            CardData = new List<CardDataFormat>();
+            FieldEventData = new List<EventDataFormat>();
+            TownEventData = new List<EventDataFormat>();
+            ArmyEventData = new List<EventDataFormat>();
 
-        //あとセーブデータ読み込みなど
+            //シーン間データの初期化
+            BattleIn = new BattleDataIn();
+            BattleOut = new BattleDataOut();
+            ScenarioIn = new ScenarioDataIn();
+
+            //あとセーブデータ読み込みなど
+
+        }
+        catch(InvalidCastException e)
+        {
+            Debug.LogError("キャストミスです");
+            return;
+        }
+        catch(OverflowException e)
+        {
+            Debug.LogError("データがオーバーフローしました");
+            return;
+        }
 
 #if DEBUG
         FirstLoad();

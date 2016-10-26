@@ -14,6 +14,6 @@ public class StartButton : MonoBehaviour {
         game.FirstLoad();
 
         //フィールドの呼び出し
-        game.CallField();
+        SceneManager.LoadScene(game.SceneName_Opening);
     }
 }

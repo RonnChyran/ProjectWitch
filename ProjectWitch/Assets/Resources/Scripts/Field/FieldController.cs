@@ -69,6 +69,9 @@ namespace Field
         {
             MenuClickable = true;
             FlagClickable = true;
+
+            //BGMの再生
+            PlayBGM();
         }
 
         void Update()
@@ -140,7 +143,10 @@ namespace Field
             //戦闘オンだったら戦闘開始
             if (game.BattleIn.IsEvent)
                 yield return StartCoroutine(CallBattle(game.BattleIn.AreaID, 0, true));
-            
+
+            //BGM再開
+            PlayBGM();
+
             //一日の始まりのみの処理
             if (currentTime == 0)
             {
@@ -284,6 +290,9 @@ namespace Field
                     //戦闘開始
                     yield return StartCoroutine(CallBattle(targetArea, territory, false));
 
+                    //BGM再開
+                    PlayBGM();
+
                     //コルーチンの終了
                     mIsCoroutineExec = false;
                     yield break;
@@ -397,6 +406,9 @@ namespace Field
 
             game.BattleIn.Reset();
             game.ScenarioIn.Reset();
+
+            //BGMの再開
+            PlayBGM();
 
             yield return null;
         }
@@ -574,6 +586,26 @@ namespace Field
             }
             for (int i = battleUnits.Count; i < 3; i++) battleUnits.Add(-1);
             game.BattleIn.EnemyUnits = battleUnits;
+        }
+
+        //BGMの再生
+        private void PlayBGM()
+        {
+            var game = Game.GetInstance();
+
+            //すでに再生済みなら無視する
+            if (game.SoundManager.GetCueName(SoundType.BGM).Equals(game.FieldBGM))
+                return;
+
+            //再生
+            game.SoundManager.Play(game.FieldBGM, SoundType.BGM);
+        }
+
+        //BGMの停止
+        private void StopBGM()
+        {
+            var game = Game.GetInstance();
+            game.SoundManager.Stop(SoundType.BGM);
         }
     }
 }

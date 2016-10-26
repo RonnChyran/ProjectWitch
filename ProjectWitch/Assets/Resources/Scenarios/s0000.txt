@@ -91,7 +91,7 @@
 そんなわがまま言ってないで下さいよ、断るの大変なんですから……。[p]
 
 [moveto id=1 x=50 y=50 time=100]
-[se ref="door"]
+[se ref="046_door"]
 [drawcg id=2 pos="left" mode="slidein"]
 #メイジー
 [voice ref="000019"]
@@ -359,7 +359,7 @@
 ;効果音
 [stopbgm]
 [filter name="flush" color="ffffff" time=400]
-[se ref="barrier"]
+[se ref="049_b_barrier"]
 #ヴェロニカ
 [voice ref="000072"]
 なっ！？　これは……！！[p]
@@ -380,7 +380,7 @@
 [moveto id=0 x=90 y=50 time=100]
 [moveto id=3 x=70 y=50 time=200]
 
-[bgm ref="015_raiza&nia"]
+[bgm ref="015_raizania"]
 [drawcg id=4 pos="2"]
 [moveto id=4 x=35 y=50 time=200]
 #ライザ

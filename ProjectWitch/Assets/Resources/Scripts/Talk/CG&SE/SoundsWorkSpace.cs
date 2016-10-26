@@ -20,64 +20,9 @@ namespace Scenario.WorkSpace
 		//BGM再生(ヘルパー関数)
 		public void PlayBGM(string fileName, int volume)
 		{
-			mBGMSource1.GetComponent<AnimationController> ().SetAnimation (null);
-			mBGMSource2.GetComponent<AnimationController> ().SetAnimation (null);
-			float volume1 = mBGMSource1.GetComponent<AudioSource> ().volume;
-			float volume2 = mBGMSource2.GetComponent<AudioSource> ().volume;
-
-			AudioSource audioSource = null;
-			AnimationController fadeoutAudio = null;
-
-			if (volume1 < volume2) {
-				audioSource = mBGMSource1.GetComponent<AudioSource> ();
-				fadeoutAudio = mBGMSource2.GetComponent<AnimationController> ();
-			} else {
-				audioSource = mBGMSource2.GetComponent<AudioSource> ();
-				fadeoutAudio = mBGMSource1.GetComponent<AnimationController> ();
-			}
-
 			if (fileName != null) {
                 var game = Game.GetInstance();
-				audioSource.clip = (AudioClip)Resources.Load (mBGMPath + fileName);
-				audioSource.Play ();
-				audioSource.volume = (float)volume / 100.0f * game.Config.BGMVolume;
-			}
-
-			fadeoutAudio.SetAnimation (new FadeOutBGM ());
-		}
-
-		//BGMのパス
-		[SerializeField]
-		private string mBGMPath;
-
-		//BGMの発生源
-		[SerializeField]
-		private GameObject mBGMSource1;
-		[SerializeField]
-		private GameObject mBGMSource2;
-
-		public class FadeOutBGM : AnimationFormat
-		{
-			private AudioSource mAudio;
-			public override void Setup (GameObject target)
-			{
-				mAudio = target.GetComponent<AudioSource> ();
-			}
-			public override void Update (GameObject target)
-			{
-				AudioSource audio = mAudio;
-				float volume = audio.volume;
-				if (volume > 0.01) {
-					audio.volume = volume * Mathf.Pow (0.25f, Time.deltaTime);
-				} else {
-					audio.volume = 0.0f;
-					audio.Stop ();
-					SetActive (false);
-				}
-			}
-			public override void Finish (GameObject target)
-			{
-				mAudio = null;
+                game.SoundManager.Play(fileName, SoundType.BGM);
 			}
 		}
 
@@ -85,51 +30,34 @@ namespace Scenario.WorkSpace
 		public void PlaySE(string fileName, float volume)
 		{
             var game = Game.GetInstance();
-			AudioSource audio = mSESource;
 
-			audio.clip = (AudioClip)Resources.Load (mSEPath + fileName);
-			audio.volume = (float)volume/100.0f * game.Config.SEVolume;
-			audio.Play ();
+            game.SoundManager.Play(fileName, SoundType.SE);
 		}
-
-		//SEのパス
-		[SerializeField]
-		private string mSEPath;
-
-		//SEの発生源
-		[SerializeField]
-		private AudioSource mSESource;
 
 		//Voice再生
 		public void PlayVoice(string fileName, float volume)
 		{
             var game = Game.GetInstance();
-			AudioSource audio = mVoiceSource;
-			audio.clip = (AudioClip)Resources.Load (mVoicePath + fileName);
-			audio.volume = (float)volume/100.0f * game.Config.VoiceVolume;
-			audio.Play ();
+
+            game.SoundManager.Play(fileName, SoundType.Voice);
 		}
 		//Voice停止
 		public void StopVoice()
 		{
-			AudioSource audio = mVoiceSource;
-			audio.Stop ();
+            var game = Game.GetInstance();
+
+            game.SoundManager.Stop(SoundType.Voice);
 		}
 
-		//Voiceのパス
-		[SerializeField]
-		private string mVoicePath;
-
-		//Voiceの発生源
-		[SerializeField]
-		private AudioSource mVoiceSource;
-
-		//SE&Voiceが止まっているかどうかを調べる
+		//SE&Voiceが再生しているかどうか
 		public bool IsPlayingSEAndVoice()
 		{
+            var game = Game.GetInstance();
+
 			bool isPlaying = false;
-			isPlaying |= mSESource.isPlaying;
-			isPlaying |= mVoiceSource.isPlaying;
+			isPlaying |= game.SoundManager.IsPlaying(SoundType.SE);
+			isPlaying |= game.SoundManager.IsPlaying(SoundType.Voice);
+
 			return isPlaying;
 		}
 

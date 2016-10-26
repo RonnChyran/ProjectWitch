@@ -49,14 +49,34 @@ public class SoundManager : MonoBehaviour {
         Debug.Assert(mcVoice, "VoiceソースにCriAtomSourceコンポーネントをセットしてください");
     }
 
+    public void Update()
+    {
+        var game = Game.GetInstance();
+
+        //ボリュームの同期
+        var master = game.Config.MasterVolume;
+        mcBGM.volume = game.Config.BGMVolume * master;
+        mcSE.volume = game.Config.SEVolume * master;
+        mcVoice.volume = game.Config.VoiceVolume * master;
+    }
+
     public void Play(string name, SoundType type)
     {
+        if(!IsExist(name, type))
+        {
+            Debug.LogWarning("指定したサウンドファイルは存在しません　" +
+                "　種別：" + mCueSheetList[type] + 
+                "　名前：" + name);
+            return;
+        }
+
         var source = GetSource(type);
 
         source.cueSheet = mCueSheetList[type];
         source.cueName = name;
 
-        source.Play();
+        var inst = source.Play();
+        
     }
 
     public void Stop(SoundType type)
@@ -64,6 +84,20 @@ public class SoundManager : MonoBehaviour {
         var source = GetSource(type);
 
         source.Stop();
+    }
+
+    public bool IsPlaying(SoundType type)
+    {
+        var source = GetSource(type);
+
+        return source.status == CriAtomSource.Status.Playing;
+    }
+
+    public string GetCueName(SoundType type)
+    {
+        var source = GetSource(type);
+
+        return source.cueName;
     }
 
     private CriAtomSource GetSource(SoundType type)
@@ -81,6 +115,20 @@ public class SoundManager : MonoBehaviour {
         Debug.Assert(source, "サウンドタイプが不正です");
 
         return source;
+    }
+
+    private bool IsExist(string cueName, SoundType type)
+    {
+        CriAtomExAcb acb = null;
+        switch (type)
+        {
+            case SoundType.BGM: acb = CriAtom.GetAcb("BGM"); break;
+            case SoundType.SE: acb = CriAtom.GetAcb("SE"); break;
+            case SoundType.Voice: acb = CriAtom.GetAcb("Voice"); break;
+            default: break;
+        }
+
+        return acb.Exists(cueName);
     }
 
 }
