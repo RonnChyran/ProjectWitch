@@ -598,6 +598,16 @@ namespace GameData
 
         //バトルBGM
         public string BGM { get; set; }
+
+        //敵の戦闘タイプ
+        public enum BattleType
+        {
+            ToDestroyedAll,         //全ユニットが死亡するまで戦う
+            ToDestroyedOne,         //あるユニットの兵士が全滅するか、リーダーが死亡するまで戦う
+            ToDestroyedOneLeader,   //あるユニットのリーダーが死亡するまで戦う
+            HarfTimePass,           //総戦闘時間の半分が経過するまで戦う
+        }
+        public BattleType EnemyBattleType { get; set; }
     }
 
     public class BattleDataOut
