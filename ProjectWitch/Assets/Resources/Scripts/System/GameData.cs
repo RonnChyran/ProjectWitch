@@ -315,6 +315,9 @@ namespace GameData
             IsAlive = true;
         }
 
+        //領主ID
+        public int ID { get; set; }
+
         //領主名
         public string OwnerName { get; set; }
 
@@ -327,26 +330,60 @@ namespace GameData
         //メイン領地
         public int MainArea { get; set; }
 
-        //交戦中かどうか
-        public bool IsActive { get; set; }
+        //所有地点リスト
+        public List<int> AreaList {
+            get
+            {
+                var game = Game.GetInstance();
+                var areadata = game.AreaData;
+
+                //地域データから自分が所持している地点を探す
+                var list = new List<int>();
+                foreach(var area in areadata)
+                {
+                    if (area.Owner == ID) list.Add(area.ID);
+                }
+                return list;
+            }
+            private set { } }
+
+        //所持グループリスト
+        public List<int> GroupList { get; set; }
 
         //その領地が有効かどうか（占領済みかどうか
-        public bool IsAlive { get; set; }
+        private int dominationFlagIndex;  //占領済みフラグの変数番号
+        public bool IsAlive
+        {
+            get
+            {
+                var game = Game.GetInstance();
+                var num = int.Parse(game.SystemMemory.Memory[dominationFlagIndex]);
+                return (num == 0);
+            }
+            private set { }
+        }
 
-        //最小連戦数
-        public int MinBattleNum { get; set; }
+        //交戦中かどうか
+        private int activeFlagIndex;    //交戦フラグの変数番号
+        public bool IsActive {
+            get
+            {
+                var game = Game.GetInstance();
+                var num = int.Parse(game.SystemMemory.Memory[activeFlagIndex]);
+                return (num == 1);
+            }
+            private set { } }
 
-        //最大連戦数
-        public int MaxBattleNum { get; set; }
-
-        //所有地点リスト
-        public List<int> AreaList { get; set; }
-
-        //ユニットリスト
-        public List<int> UnitList { get; set; }
-
-        //所持カードリスト
-        public List<int> CardList { get; set; }
+        //宣戦布告可能かどうか
+        private int invationableFlagIndex;  //宣戦布告可能フラグの変数番号
+        public bool IsInvationable {
+            get
+            {
+                var game = Game.GetInstance();
+                var num = int.Parse(game.SystemMemory.Memory[invationableFlagIndex]);
+                return (num == 1);
+            }
+            private set { } }
     }
 
     //AIデータ
@@ -946,6 +983,10 @@ namespace GameData
 
             //生データの読み出し
             var rowData = CSVReader(filePath);
+
+            //[0]ID [1]領主名　[2]領主名(英語)
+            //[3]旗画像パス [4]グループリスト [5]交戦フラグ
+            //[6]宣戦布告可能フラグ
 
             //データの代入
             for (int i = 1; i < rowData.Count; i++)
