@@ -7,15 +7,16 @@ namespace PreBattle
     {
         //カード単体のベース
         [SerializeField]
-        private GameObject mCard;
+        private GameObject mCard=null;
 
         // Use this for initialization
         void Start()
         {
             var game = Game.GetInstance();
+            var groupID = game.TerritoryData[0].GroupList[0];
+            var group = game.GroupData[groupID];
 
-            var playerCards = game.TerritoryData[0].CardList;
-            foreach(var card in playerCards)
+            foreach (var card in group.CardList)
             {
                 //カードの生成
                 var inst = Instantiate(mCard);

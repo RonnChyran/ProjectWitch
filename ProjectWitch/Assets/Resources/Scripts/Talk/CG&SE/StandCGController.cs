@@ -19,7 +19,7 @@ namespace Scenario
 
         //立ち絵表示用のプレハブ
         [SerializeField]
-        private GameObject mCGPrefab;
+        private GameObject mCGPrefab = null;
 
         public GameObject GetStandCG(int id, out string error)
         {

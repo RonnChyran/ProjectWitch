@@ -5,7 +5,7 @@ using System.Collections;
 public class Rotation : MonoBehaviour {
 
     [SerializeField]
-    private float mRotateSpeed;
+    private float mRotateSpeed = 0.0f;
 
 	// Use this for initialization
 	void Start () {

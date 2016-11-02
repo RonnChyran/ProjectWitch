@@ -48,11 +48,11 @@ namespace Scenario.WorkSpace
 
 		//テキスト、名前の背景
 		[SerializeField]
-		private GameObject mTextView;
-		[SerializeField]
-		private GameObject mNameView;
-		[SerializeField]
-		private GameObject mTextBackground;
+		private GameObject mTextView = null;
+        [SerializeField]
+        private GameObject mNameView = null;
+        [SerializeField]
+        private GameObject mTextBackground = null;
 
 		//テキストを指定速度で再生するアップデータ
 		public class TextWindowUpdater : UpdaterFormat
@@ -128,9 +128,9 @@ namespace Scenario.WorkSpace
 			}
 		}
 
-		//テキストのNextアイコン
-		[SerializeField]
-		private GameObject mNextIcon;
+        //テキストのNextアイコン
+        [SerializeField]
+        private GameObject mNextIcon = null;
 
 		//テキスト
 		protected string Text
@@ -138,8 +138,8 @@ namespace Scenario.WorkSpace
 			get{return mText.text;}
 			set{mText.text = value;}
 		}
-		[SerializeField]
-		private Text mText;
+        [SerializeField]
+        private Text mText = null;
 		//テキストを指定速度で再生するアップデータ
 		public class TextUpdater : UpdaterFormat
 		{
@@ -214,7 +214,7 @@ namespace Scenario.WorkSpace
 			set{ mName.text = value; }
 		}
 		[SerializeField]
-		private Text mName;
+		private Text mName = null;
 
 		//テキスト関連のプロパティ
 		//	速さ(文字/sec)

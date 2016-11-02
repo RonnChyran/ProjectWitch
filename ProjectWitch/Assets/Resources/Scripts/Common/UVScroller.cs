@@ -6,7 +6,7 @@ public class UVScroller : MonoBehaviour {
     private MeshRenderer mcRenderer;
 
     [SerializeField]
-    private Vector2 mScrollSpeed;
+    private Vector2 mScrollSpeed = Vector2.zero;
 
 	// Use this for initialization
 	void Start () {

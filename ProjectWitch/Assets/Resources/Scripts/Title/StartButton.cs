@@ -4,9 +4,6 @@ using System.Collections;
 
 public class StartButton : MonoBehaviour {
 
-    [SerializeField]
-    private string mFieldSceneName = "";
-
     public void OnClick()
     {
         //初回用リソースをロード

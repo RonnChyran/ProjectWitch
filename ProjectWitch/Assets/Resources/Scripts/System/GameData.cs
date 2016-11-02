@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq; //iOSで動かないかも
 
 using UnityEngine;
+using Extention;
 
 namespace GameData
 {
@@ -205,6 +206,9 @@ namespace GameData
     //カードデータ
     public class CardDataFormat
     {
+        //ID
+        public int ID { get; set; }
+
         //名前
         public string Name { get; set; }
 
@@ -309,10 +313,6 @@ namespace GameData
     {
         public TerritoryDataFormat()
         {
-            IsActive = true;
-            //IsActive = false;
-
-            IsAlive = true;
         }
 
         //領主ID
@@ -331,7 +331,8 @@ namespace GameData
         public int MainArea { get; set; }
 
         //所有地点リスト
-        public List<int> AreaList {
+        public List<int> AreaList
+        {
             get
             {
                 var game = Game.GetInstance();
@@ -339,51 +340,202 @@ namespace GameData
 
                 //地域データから自分が所持している地点を探す
                 var list = new List<int>();
-                foreach(var area in areadata)
+                foreach (var area in areadata)
                 {
                     if (area.Owner == ID) list.Add(area.ID);
                 }
                 return list;
             }
-            private set { } }
+            private set { }
+        }
 
         //所持グループリスト
         public List<int> GroupList { get; set; }
 
-        //その領地が有効かどうか（占領済みかどうか
-        private int dominationFlagIndex;  //占領済みフラグの変数番号
-        public bool IsAlive
+        //占領済みフラグの変数番号
+        public int DeadFlagIndex { get; set; }
+
+        //交戦フラグの変数番号
+        public int ActiveFlagIndex { get; set; }
+
+        //宣戦布告可能フラグの変数番号
+        public int InvationableFlagIndex { get; set; }
+
+        //状態
+        public enum TerritoryState
         {
+            Prepare,    //宣戦布告不可
+            Ready,      //宣戦布告可
+            Active,     //交戦中
+            Dead        //占領済み
+        }
+        private TerritoryState state = TerritoryState.Prepare;
+        public TerritoryState State {
             get
             {
                 var game = Game.GetInstance();
-                var num = int.Parse(game.SystemMemory.Memory[dominationFlagIndex]);
-                return (num == 0);
+
+                if (state == TerritoryState.Prepare)
+                {
+                    if (InvationableFlagIndex == -1)
+                        state = TerritoryState.Ready;
+                    else if (!game.SystemMemory.IsZero(InvationableFlagIndex))
+                        state = TerritoryState.Ready;
+                }
+                if (state == TerritoryState.Ready)
+                {
+                    if (ActiveFlagIndex == -1)
+                        state = TerritoryState.Active;
+                    else if (!game.SystemMemory.IsZero(ActiveFlagIndex))
+                        state = TerritoryState.Active;
+                }
+                if (state == TerritoryState.Active)
+                {
+                    if (DeadFlagIndex == -1)
+                        state = TerritoryState.Dead;
+                    else if (!game.SystemMemory.IsZero(DeadFlagIndex))
+                        state = TerritoryState.Dead;
+                }
+                return state;
             }
-            private set { }
+            private set { } }
+
+        //---------
+        //クエリ
+        //---------
+
+        //指定のユニットを全グループから除外
+        public void RemoveUnit(int unit)
+        {
+            var game = Game.GetInstance();
+            var groups = game.GroupData.GetFromIndex(GroupList);
+
+            //すべてのグループからユニットを除外
+            foreach (var group in groups)
+            {
+                group.UnitList.Remove(unit);
+            }
+        }
+    }
+
+    //グループデータ
+    public class GroupDataFormat
+    {
+        //ID
+        public int ID { get; set; }
+
+        //グループ名
+        public string Name { get; set; }
+
+        //戦闘タイプ列挙
+        public enum BattleType : int
+        {
+            ToDestroyedAll = 1,         //全ユニットが死亡するまで戦う
+            ToDestroyedOne = 2,         //あるユニットの兵士が全滅するか、リーダーが死亡するまで戦う
+            ToDestroyedOneLeader = 3,   //あるユニットのリーダーが死亡するまで戦う
+            HarfTimePass = 4,           //総戦闘時間の半分が経過するまで戦う
+            HarfTimePassForceQuit = 5,  //全体ターンの半分が経過したら戦闘を中断する
+            DontDomination = 6,         //侵攻しない（進行パターン
         }
 
-        //交戦中かどうか
-        private int activeFlagIndex;    //交戦フラグの変数番号
-        public bool IsActive {
+        //侵攻タイプ
+        public BattleType DominationType { get; set; }
+
+        //防衛タイプ
+        public BattleType DefenseType { get; set; }
+
+        //防衛優先度
+        public int DefensePriority { get; set; }
+
+        //リストの選択方法列挙
+        public enum ChoiseMethod : int
+        {
+            AscendingOrder = 1,     //順番に生きているユニットを選択
+            Random3 = 2,            //ランダムに生きている３体を選択
+            RandomAll = 3,          //数もメンバーもランダムに決める
+        }
+
+        //ユニットの選択方法
+        public ChoiseMethod UnitChoiseMethod { get; set; }
+
+        //カードの選択方法
+        public ChoiseMethod CardChoiseMethod { get; set; }
+
+        //侵攻開始フラグ
+        public int BeginDominationFlagIndex { get; set; }
+
+        //侵攻ルート
+        public List<int> DominationRoute { get; set; }
+
+        //ユニットリスト
+        public List<int> UnitList { get; set; }
+
+        //カードリスト
+        public List<int> CardList { get; set; }
+
+        //状態
+        public enum GroupState
+        {
+            Ready,  //始動前
+            Active, //活動中
+            Dead    //死亡
+        }
+        public GroupState state = GroupState.Ready;
+        public GroupState State {
             get
             {
                 var game = Game.GetInstance();
-                var num = int.Parse(game.SystemMemory.Memory[activeFlagIndex]);
-                return (num == 1);
+
+                if (state == GroupState.Ready)
+                    if (BeginDominationFlagIndex == -1)
+                        state = GroupState.Active;
+                    else if (game.SystemMemory.IsZero(BeginDominationFlagIndex))
+                        state = GroupState.Active;
+
+                return state;
             }
             private set { } }
 
-        //宣戦布告可能かどうか
-        private int invationableFlagIndex;  //宣戦布告可能フラグの変数番号
-        public bool IsInvationable {
-            get
+        //クエリ
+
+        //戦闘に出すユニットを取得
+        public List<int> GetBattleUnits()
+        {
+            //ユニットリストからメソッドに応じて３体抽出
+            var units = new List<int>();
+            switch(UnitChoiseMethod)
             {
-                var game = Game.GetInstance();
-                var num = int.Parse(game.SystemMemory.Memory[invationableFlagIndex]);
-                return (num == 1);
+                case ChoiseMethod.AscendingOrder:
+                    units = UnitList.GetOrderN(3);
+                    break;
+                case ChoiseMethod.Random3:
+                    units = UnitList.RandomN(3);
+                    break;
+                case ChoiseMethod.RandomAll:
+                    units = UnitList.RandomN(UnityEngine.Random.Range(1, 2));
+                    break;
+                default:
+                    break;
             }
-            private set { } }
+
+            //3隊に満たない部分を-1で補充
+            while (units.Count < 3)
+                units.Add(-1);
+
+            return units;
+        }
+
+        //死亡状態に移行する
+        public void Kill()
+        {
+            state = GroupState.Dead;
+        }
+
+        //自営団のIDを取得
+        public static int GetDefaultID()
+        {
+            return 49;
+        }
     }
 
     //AIデータ
@@ -469,11 +621,38 @@ namespace GameData
     //仮想メモリ
     public class VirtualMemory
     {
-        public List<string> Memory{ get; private set; }
+        private List<string> memory;
+
+        public string this[int index]
+        {
+            get { return memory[index]; }
+            set { memory[index] = value; }
+        }
 
         public VirtualMemory()
         {
-            Memory = Enumerable.Repeat<string>("0", 70000).ToList();
+            memory = Enumerable.Repeat<string>("0", 70000).ToList();
+        }
+
+        //----------
+        //クエリ
+        //----------
+
+        //指定したインデックスの値が、整数の0かどうか
+        public bool IsZero(int index)
+        {
+            var num = int.Parse(memory[index]);
+            return (num == 0);
+        }
+
+        //配列サイズの取得
+        public int Count
+        {
+            get
+            {
+                return memory.Count;
+            }
+            private set { }
         }
     }
 
@@ -637,14 +816,7 @@ namespace GameData
         public string BGM { get; set; }
 
         //敵の戦闘タイプ
-        public enum BattleType
-        {
-            ToDestroyedAll,         //全ユニットが死亡するまで戦う
-            ToDestroyedOne,         //あるユニットの兵士が全滅するか、リーダーが死亡するまで戦う
-            ToDestroyedOneLeader,   //あるユニットのリーダーが死亡するまで戦う
-            HarfTimePass,           //総戦闘時間の半分が経過するまで戦う
-        }
-        public BattleType EnemyBattleType { get; set; }
+        public GroupDataFormat.BattleType EnemyBattleType { get; set; }
     }
 
     public class BattleDataOut
@@ -890,9 +1062,7 @@ namespace GameData
                     eventData.FileName = data[1];
 
                     //タイミング
-                    eventData.Timing = 
-                        (EventDataFormat.TimingType)Enum.ToObject(typeof(EventDataFormat.TimingType),
-                        int.Parse(data[2]));
+                    eventData.Timing = ToEnum<EventDataFormat.TimingType>(int.Parse(data[2]));
 
                     //地点ＩＤ
                     if (data[3] != "")
@@ -985,13 +1155,14 @@ namespace GameData
             var rowData = CSVReader(filePath);
 
             //[0]ID [1]領主名　[2]領主名(英語)
-            //[3]旗画像パス [4]グループリスト [5]交戦フラグ
-            //[6]宣戦布告可能フラグ
+            //[3]旗画像パス [4]メイン領地 [5]グループリスト 
+            //[6]占領フラグ [7]交戦フラグ
+            //[8]宣戦布告可能フラグ
 
             //データの代入
             for (int i = 1; i < rowData.Count; i++)
             {
-                if (rowData[i].Count != 8) continue;
+                if (rowData[i].Count != 9) continue;
 
                 var data = rowData[i];
                 var terData = new TerritoryDataFormat();
@@ -1000,39 +1171,54 @@ namespace GameData
 
                 try
                 {
+                    //ID
+                    terData.ID = int.Parse(data[0]);
+
                     //領主名
-                    terData.OwnerName = data[0];
+                    terData.OwnerName = data[1];
 
                     //領主名英語
-                    terData.OwnerNameEng = data[1];
+                    terData.OwnerNameEng = data[2];
 
                     //プレハブのロード
-                    terData.FlagPrefab = (GameObject)Resources.Load("Prefabs/Field/Flag/" + data[2]);
+                    terData.FlagPrefab = (GameObject)Resources.Load("Prefabs/Field/Flag/" + data[3]);
+                    if (terData.FlagPrefab == null)
+                    {
+                        Debug.LogWarning(terData.ID.ToString() + ":" +
+                            terData.OwnerName + "領の旗プレハブが不明です。" +
+                            "Prefabs/Field/Flag/" + data[3] +
+                            "があることを確認してください。");
+                    }
 
                     //メイン領地の読み出し
-                    terData.MainArea = int.Parse(data[3]);
+                    terData.MainArea = int.Parse(data[4]);
 
-                    //連戦数の読み出し
-                    terData.MinBattleNum = int.Parse(data[4]);
-                    terData.MaxBattleNum = int.Parse(data[5]);
-
-                    //所持ユニットリスト
-                    terData.UnitList = new List<int>();
-                    var parts = data[6].Split(' ');
+                    //グループリスト
+                    terData.GroupList = new List<int>();
+                    var parts = data[5].Split(' ');
                     foreach (string part in parts)
                     {
                         if (part == "") continue;
-                        terData.UnitList.Add(int.Parse(part));
+                        terData.GroupList.Add(int.Parse(part));
                     }
 
-                    //所持カードリスト
-                    terData.CardList = new List<int>();
-                    parts = data[7].Split(' ');
-                    foreach (string part in parts)
-                    {
-                        if (part == "") continue;
-                        terData.CardList.Add(int.Parse(part));
-                    }
+                    //占領フラグ
+                    if (data[6] == "")
+                        terData.DeadFlagIndex = -1;
+                    else
+                        terData.DeadFlagIndex = int.Parse(data[6]);
+
+                    //交戦フラグ
+                    if (data[7] == "")
+                        terData.ActiveFlagIndex = -1;
+                    else
+                        terData.ActiveFlagIndex = int.Parse(data[7]);
+
+                    //宣戦布告可能フラグ
+                    if (data[8] == "")
+                        terData.InvationableFlagIndex = -1;
+                    else
+                        terData.InvationableFlagIndex = int.Parse(data[8]);
                 }
                 catch (ArgumentNullException e)
                 {
@@ -1051,6 +1237,114 @@ namespace GameData
                 }
 
                 outData.Add(terData);
+            }
+
+            return outData;
+        }
+
+        public static List<GroupDataFormat> LoadGroupData(string filePath)
+        {
+            var outData = new List<GroupDataFormat>();
+
+            //生データの読み出し
+            var rowData = CSVReader(filePath);
+
+            //[0]ID [1]名前
+            //[2]侵攻タイプ [3]防衛タイプ 
+            //[4]防衛優先度 [5]ユニットの選択方法
+            //[6]カードの選択方法 [7]侵攻開始フラグ [8]侵攻ルート
+            //[9]ユニットリスト [10]カードリスト
+
+            //データの代入
+            for (int i = 1; i < rowData.Count; i++)
+            {
+                if (rowData[i].Count != 11) continue;
+
+                var data = rowData[i];
+                var groupData = new GroupDataFormat();
+
+                if (data[0] == "") continue;
+
+                try
+                {
+                    //ID
+                    groupData.ID = int.Parse(data[0]);
+
+                    //領主名
+                    groupData.Name = data[1];
+
+                    //侵攻タイプ
+                    groupData.DominationType = 
+                        ToEnum<GroupDataFormat.BattleType>(int.Parse(data[2]));
+
+                    //防衛タイプ
+                    groupData.DefenseType =
+                        ToEnum<GroupDataFormat.BattleType>(int.Parse(data[3]));
+
+                    //防衛優先度
+                    groupData.DefensePriority = int.Parse(data[4]);
+
+                    //ユニットの選択方法
+                    groupData.UnitChoiseMethod =
+                        ToEnum<GroupDataFormat.ChoiseMethod>(int.Parse(data[5]));
+
+                    //カードの選択方法
+                    groupData.CardChoiseMethod =
+                        ToEnum<GroupDataFormat.ChoiseMethod>(int.Parse(data[6]));
+
+                    //侵攻開始フラグ
+                    if (data[7] == "")
+                        groupData.BeginDominationFlagIndex = -1;
+                    else
+                        groupData.BeginDominationFlagIndex = int.Parse(data[7]);
+
+                    //侵攻ルート
+                    var list = new List<int>();
+                    var areas = data[8].Split(' ');
+                    foreach(var area in areas)
+                    {
+                        if (area == "") continue;
+                        list.Add(int.Parse(area));
+                    }
+                    groupData.DominationRoute = list;
+
+                    //ユニットリスト
+                    list = new List<int>();
+                    var units = data[9].Split(' ');
+                    foreach(var unit in units)
+                    {
+                        if (unit == "") continue;
+                        list.Add(int.Parse(unit));
+                    }
+                    groupData.UnitList = list;
+
+                    //カードリスト
+                    list = new List<int>();
+                    var cards = data[10].Split(' ');
+                    foreach(var card in cards)
+                    {
+                        if (card == "") continue;
+                        list.Add(int.Parse(card));
+                    }
+                    groupData.CardList = list;
+                }
+                catch (ArgumentNullException e)
+                {
+                    Debug.Log("グループデータの読み取りに失敗：データが空です");
+                    Debug.Log(e.Message);
+                }
+                catch (FormatException e)
+                {
+                    Debug.Log("グループデータの読み取りに失敗：データの形式が違います");
+                    Debug.Log(e.Message);
+                }
+                catch (OverflowException e)
+                {
+                    Debug.Log("グループデータの読み取りに失敗：データがオーバーフローしました");
+                    Debug.Log(e.Message);
+                }
+
+                outData.Add(groupData);
             }
 
             return outData;
@@ -1253,7 +1547,7 @@ namespace GameData
             //データの代入
             for (int i = 1; i < rowData.Count; i++)
             {
-                if (rowData[i].Count != 7) continue;
+                if (rowData[i].Count != 8) continue;
 
 
                 //データの順番
@@ -1261,18 +1555,18 @@ namespace GameData
                 var card = new CardDataFormat();
 
                 //無名アイテムがあったら読み飛ばす
-                if (data[0] == "") continue;
+                if (data[1] == "") continue;
 
                 try
                 {
-                    card.Name = data[0];
-                    card.Timing = (CardDataFormat.CardTiming)Enum.ToObject(
-                        typeof(CardDataFormat.CardTiming), int.Parse(data[1]));
-                    card.Duration = int.Parse(data[2]);
-                    card.SkillID = int.Parse(data[3]);
-                    card.ImageFront = data[4];
-                    card.ImageBack = data[5];
-                    card.Description = data[6];
+                    card.ID = int.Parse(data[0]);
+                    card.Name = data[1];
+                    card.Timing = ToEnum<CardDataFormat.CardTiming>(int.Parse(data[2]));
+                    card.Duration = int.Parse(data[3]);
+                    card.SkillID = int.Parse(data[4]);
+                    card.ImageFront = data[5];
+                    card.ImageBack = data[6];
+                    card.Description = data[7];
 
                 }
                 catch (ArgumentNullException e)
@@ -1325,10 +1619,16 @@ namespace GameData
 
             return outData;
         }
+
+        private static T ToEnum<T>(int value)
+        {
+            return (T)Enum.ToObject(typeof(T),value);
+        }
     }
 
     public class GamePath
     {
         public static readonly string Data = "Data/";
     }
+
 }

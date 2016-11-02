@@ -10,7 +10,7 @@ namespace Field
 
         //画像のセット
         [SerializeField]
-        private Sprite[] mSprites;
+        private Sprite[] mSprites = null;
 
         // Use this for initialization
         void Start()

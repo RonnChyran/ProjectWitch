@@ -32,7 +32,9 @@ public class InfoBoxText : MonoBehaviour {
         text += game.PlayerMana.ToString() + "\n";
 
         //ユニット
-        text += game.TerritoryData[0].UnitList.Count.ToString() + "\n";
+        var groupID = game.TerritoryData[0].GroupList[0];
+        var groupData = game.GroupData[groupID];
+        text += groupData.UnitList.Count.ToString() + "\n";
 
         //所持領地
         text += game.TerritoryData[0].AreaList.Count.ToString() + "/"
@@ -40,7 +42,7 @@ public class InfoBoxText : MonoBehaviour {
 
         //総兵力
         var soldireNumList =
-            from p in game.TerritoryData[0].UnitList
+            from p in groupData.UnitList
             select game.UnitData[p].SoldierNum;
 
         int sumSoldire = 0;

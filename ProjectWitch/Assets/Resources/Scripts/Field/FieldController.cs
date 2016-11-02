@@ -6,6 +6,7 @@ using System.Collections;
 using System;
 
 using GameData;
+using Extention;
 
 namespace Field
 {
@@ -116,7 +117,6 @@ namespace Field
                     //敵ターンが終了したので次のターンへ移行
                     game.CurrentTurn++;
                     game.CurrentTime = 0;
-                    game.BattleCount = 0;
 
                     //オートセーブ
                     game.AutoSave();
@@ -183,6 +183,7 @@ namespace Field
         private IEnumerator EnemyTurn(int territory)
         {
             var game = Game.GetInstance();
+            var ter = game.TerritoryData[territory];
 
             //コルーチン開始
             mIsCoroutineExec = true;
@@ -195,7 +196,7 @@ namespace Field
             var eventlist = fieldEventData.Where(p => p.Timing == EventDataFormat.TimingType.EnemyTurnBegin).ToList();
 
             //占領されている場合はスルー
-            if (game.AreaData[game.TerritoryData[territory].MainArea].Owner == territory)
+            if (ter.State != TerritoryDataFormat.TerritoryState.Dead)
             {
 
                 //各領地に設定されたイベントを抜き出す
@@ -208,90 +209,32 @@ namespace Field
                 //戦闘開始
 
                 //すでに交戦状態に入っている場合
-                if (game.TerritoryData[territory].IsActive)
+                if (ter.State == TerritoryDataFormat.TerritoryState.Active)
                 {
-                    //攻め込む領地
-                    int targetArea = -1;
-
-                    //隣接している領地から攻め込む領地を決定
+                    foreach (var group in ter.GroupList)
                     {
-                        //nextAreaを列挙する
-                        var nextAreas = new List<int>();
-                        foreach (var area in game.TerritoryData[territory].AreaList)
-                        {
-                            //次の地点のリストを作っていく
-                            nextAreas.AddRange(game.AreaData[area].NextArea);
-                        }
-                        //重複要素を削除する
-                        nextAreas = nextAreas.Distinct().ToList();
+                        //攻め込む領地
+                        int targetArea = GetDominationTarget(territory, group);
 
-                        //nextAreasと被っている自領地を抜き出す
-                        nextAreas = nextAreas.Intersect(game.TerritoryData[0].AreaList).ToList();
+                        //攻めてきた演出
+                        yield return StartCoroutine(DominationEffect(targetArea));
 
-                        //被っている場所があったら、そこをランダムにターゲットとする
-                        if (nextAreas.Count > 0)
-                        {
-                            targetArea = nextAreas[UnityEngine.Random.Range(0, nextAreas.Count - 1)];
-                        }
-                        //被っていなかったら何もできないので終了
-                        else
-                        {
-                            game.CurrentTime++;
-                            mIsCoroutineExec = false;
-                            yield break;
-                        }
+                        //敵ユニットのセット
+                        SetEnemy(group, true);
+
+                        //戦闘前スクリプトの開始
+                        eventlist = fieldEventData.Where(p => p.Timing == EventDataFormat.TimingType.EnemyBattle).ToList();
+                        eventlist = eventlist.Where(p => p.Area == targetArea).ToList();
+                        yield return StartCoroutine(EventExecute(eventlist));
+                        while (game.IsTalk) yield return null;
+
+                        //戦闘開始
+                        yield return StartCoroutine(CallBattle(targetArea, territory, false));
+
+                        //BGM再開
+                        PlayBGM();
                     }
-
-                    //敵ターンを進めるかどうか
-                    if (game.TerritoryData[territory].MinBattleNum > game.BattleCount)
-                        game.BattleCount++;
-                    else if (game.TerritoryData[territory].MaxBattleNum < game.BattleCount)
-                    {
-                        game.BattleCount = 0;
-                        game.CurrentTime++;
-                        mIsCoroutineExec = false;
-                        yield break;
-                    }
-                    else
-                    {
-                        //次に進むかどうかは乱数で決定
-                        if (UnityEngine.Random.value < 0.5f)
-                        {
-                            game.BattleCount++;
-                        }
-                        else
-                        {
-                            game.BattleCount = 0;
-                            game.CurrentTime++;
-                            mIsCoroutineExec = false;
-                            yield break;
-                        }
-                    }
-
-                    //攻めてきた演出
-                    var camera = Camera.main;
-                    var targetpos = game.AreaData[targetArea].Position;
-
-                    //カメラをその領地に移動
-                    yield return StartCoroutine(CameraController.MoveTo(targetpos));
-
-                    //エフェクトを表示
-                    yield return StartCoroutine(FieldUIController.ShowHiLightEffect(targetpos));
-
-                    //敵ユニットのセット
-                    SetEnemyUnits(territory);
-
-                    //戦闘前スクリプトの開始
-                    eventlist = fieldEventData.Where(p => p.Timing == EventDataFormat.TimingType.EnemyBattle).ToList();
-                    eventlist = eventlist.Where(p => p.Area == targetArea).ToList();
-                    yield return StartCoroutine(EventExecute(eventlist));
-                    while (game.IsTalk) yield return null;
-
-                    //戦闘開始
-                    yield return StartCoroutine(CallBattle(targetArea, territory, false));
-
-                    //BGM再開
-                    PlayBGM();
+                    game.CurrentTime++;
 
                     //コルーチンの終了
                     mIsCoroutineExec = false;
@@ -328,8 +271,11 @@ namespace Field
         {
             var game = Game.GetInstance();
 
-            //敵情報のセット
-            SetEnemyUnits(territory);
+            //防衛戦を担当する敵グループを取得
+            var group = GetDefenseGroup(area, territory);
+
+            //グループからユニットをセット
+            SetEnemy(group, false);
 
             //戦闘前スクリプトの開始
             var eventlist = game.FieldEventData.Where(p => p.Timing == EventDataFormat.TimingType.PlayerBattle).ToList();
@@ -371,13 +317,24 @@ namespace Field
             foreach(var unit in game.BattleOut.DeadUnits)
             {
                 game.UnitData[unit].IsAlive = false;
+
+                //すべての領地からユニットを除外
+                foreach(var territory in game.TerritoryData)
+                {
+                    territory.RemoveUnit(unit);
+                }
             }
 
             //ユニットの捕獲処理
             foreach(var unit in game.BattleOut.CapturedUnits)
             {
-                game.TerritoryData[game.BattleIn.EnemyTerritory].UnitList.Remove(unit);
-                game.TerritoryData[game.BattleIn.PlayerTerritory].UnitList.Add(unit);
+                //敵領地のすべてのグループからユニットを除外
+                var territory = game.TerritoryData[game.BattleIn.EnemyTerritory];
+                territory.RemoveUnit(unit);
+
+                //味方領地に追加
+                var groupID = game.TerritoryData[game.BattleIn.PlayerTerritory].GroupList[0];
+                game.GroupData[groupID].UnitList.Add(unit);
             }
 
 
@@ -385,8 +342,6 @@ namespace Field
             game.BattleIn.Reset();
 
             //戦闘後スクリプトの開始
-            //勝敗で実行されるスクリプトの分岐
-            //戦闘後スクリプトの終了
             if(game.BattleOut.IsWin)    //戦闘勝利時のスクリプト
             {
                 var exescript = game.ScenarioIn.NextA;
@@ -394,7 +349,7 @@ namespace Field
                     game.CallScript(game.FieldEventData[exescript]);
                 yield return null;
             }
-            else                        //戦闘敗北時の
+            else                        //戦闘敗北時のスクリプト
             {
                 var exescript = game.ScenarioIn.NextB;
                 if(exescript>=0)
@@ -406,9 +361,6 @@ namespace Field
 
             game.BattleIn.Reset();
             game.ScenarioIn.Reset();
-
-            //BGMの再開
-            PlayBGM();
 
             yield return null;
         }
@@ -450,10 +402,18 @@ namespace Field
                 //味方の生存判定
                 foreach (int unit in eventlist[i].ActorA)
                 {
-                    //自領地にユニットが含まれているか
-                    if (game.TerritoryData[0].UnitList.Contains(unit) == false)
+                    //ユニットが生きているか
+                    if (!game.UnitData[unit].IsAlive)
                     {
-                        //含まれていなかったらイベントイベント棄却
+                        isEventEnable = false;
+                        break;
+                    }
+
+                    //自領地にユニットが含まれているか
+                    var playerUnitList = game.GroupData[game.TerritoryData[0].GroupList[0]].UnitList;
+                    if (playerUnitList.Contains(unit) == false)
+                    {
+                        //含まれていなかったらイベント棄却
                         isEventEnable = false;
                         break;
                     }
@@ -464,13 +424,23 @@ namespace Field
                 foreach (int unit in eventlist[i].ActorB)
                 {
                     isEventEnable = false;
+
+                    //ユニットが生きているか
+                    if (!game.UnitData[unit].IsAlive) break;
+
+                    //任意の領地にユニットが含まれているか
                     for (int j = 1; j < game.TerritoryData.Count; j++)
                     {
-                        //任意の領地にユニットが含まれているか
-                        if (game.TerritoryData[j].UnitList.Contains(unit))
+                        //領地の所持するグループに所属するユニットから総当たりする
+                        var groupList = game.TerritoryData[j].GroupList;
+                        foreach (var groupID in groupList)
                         {
-                            isEventEnable = true;
-                            break;
+                            var group = game.GroupData[groupID];
+                            if (group.UnitList.Contains(unit))
+                            {
+                                isEventEnable = true;
+                                break;
+                            }
                         }
                     }
 
@@ -487,7 +457,7 @@ namespace Field
                     {
                         if (eventlist[i].If_Val[j] != -1)  //条件なしの時If_Val == -1
                         {
-                            int src = int.Parse(game.SystemMemory.Memory[eventlist[i].If_Val[j]]);
+                            int src = int.Parse(game.SystemMemory[eventlist[i].If_Val[j]]);
                             var imm = eventlist[i].If_Imm[j];
 
                             //演算結果用
@@ -569,23 +539,103 @@ namespace Field
 
         }
 
-        //敵ユニットの自動セット
-        private void SetEnemyUnits(int territory)
+        //侵攻する領地を侵攻ルートから決定する
+        private int GetDominationTarget(int territory, int group)
+        {
+            var game = Game.GetInstance();
+            var route = game.GroupData[group].DominationRoute;
+
+            try
+            {
+                //終点から検索して、一番最初の自領地を見つける
+                //その次の領地がプレイヤーの領地ならその領地をターゲットにする
+                for (int i = route.Count - 2; i >= 0; i--)
+                {
+                    var area = game.AreaData[route[i]];
+
+                    //終点から数えた一番最初の自領地を見つける
+                    if (area.Owner == territory)
+                    {
+                        var nextArea = game.AreaData[route[i + 1]];
+                        //次の領地がプレイヤーの領地かどうか
+                        if (nextArea.Owner == 0)
+                            return i;
+                    }
+                }
+            }
+            catch (ArgumentException)
+            {
+                Debug.LogError("グループの侵攻ルートが不正です。データを確認してください : groupID:"+
+                    group.ToString());
+            }
+            return -1;
+        }
+
+        //攻めてくる演出
+        private IEnumerator DominationEffect(int targetArea)
+        {
+            var game = Game.GetInstance();
+            var camera = Camera.main;
+            var targetpos = game.AreaData[targetArea].Position;
+
+            //カメラをその領地に移動
+            yield return StartCoroutine(CameraController.MoveTo(targetpos));
+
+            //エフェクトを表示
+            yield return StartCoroutine(FieldUIController.ShowHiLightEffect(targetpos));
+
+        }
+
+        //敵情報のセット
+        private void SetEnemy(int groupID, bool IsDomination)
+        {
+            var game = Game.GetInstance();
+            var group = game.GroupData[groupID];
+
+            //グループのユニットリストから3体取得
+            var units = group.GetBattleUnits();
+
+            //BattleInにセット
+            game.BattleIn.EnemyUnits = units;
+
+            //バトルタイプのセット
+            game.BattleIn.EnemyBattleType = 
+                (IsDomination) ? group.DominationType : group.DefenseType;
+
+        }
+
+        //優先度を基準に防御する敵ユニットを求める
+        private int GetDefenseGroup(int area, int territory)
         {
             var game = Game.GetInstance();
 
-            var enemies = game.TerritoryData[territory].UnitList;
-            var battleUnits = new List<int>();
-            foreach (var unit in enemies)
+            var groupIDs = game.TerritoryData[territory].GroupList;
+            var groups = game.GroupData.GetFromIndex(groupIDs);
+
+            //その地域を防衛ラインに指定するグループをフィルタにかける
+            groups = groups.Where(g => g.DominationRoute.Contains(area) == true).ToList();
+
+            //防衛ラインに持つグループがいなかったら自営団を出す
+            if (groups.Count == 0) return GroupDataFormat.GetDefaultID();
+
+            //生きているグループをフィルタにかける
+            groups = groups.Where(g => g.state == GroupDataFormat.GroupState.Active).ToList();
+
+            //生きているグループがいなかったら自営団を出す
+            if (groups.Count == 0) return GroupDataFormat.GetDefaultID();
+
+            //グループを優先度でソートする
+            groups = groups.OrderBy(p => p.DefensePriority).ToList();
+            
+            //指定領地を死守領地としているグループがあれば最優先
+            foreach(var group in groups)
             {
-                if (game.UnitData[unit].IsAlive && !battleUnits.Contains(unit))
-                {
-                    battleUnits.Add(unit);
-                    if (battleUnits.Count >= 3) break;
-                }
+                if (group.DominationRoute[0] == area)
+                    return group.ID;
             }
-            for (int i = battleUnits.Count; i < 3; i++) battleUnits.Add(-1);
-            game.BattleIn.EnemyUnits = battleUnits;
+
+            //死守領地でなければ優先度の先頭グループが返る
+            return groups[0].ID;
         }
 
         //BGMの再生

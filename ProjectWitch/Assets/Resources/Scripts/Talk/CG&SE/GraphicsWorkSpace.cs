@@ -18,43 +18,43 @@ namespace Scenario.WorkSpace
 {
 	public class GraphicsWorkSpace : MonoBehaviour
 	{
-		[SerializeField]
-		ScenarioWorkSpace mSWS;
+        [SerializeField]
+        ScenarioWorkSpace mSWS = null;
 
-		//キャンバス
-		[SerializeField]
-		private RectTransform mCanvas;
+        //キャンバス
+        [SerializeField]
+        private RectTransform mCanvas = null;
 		private Rect CanvasRect{
 			get{ return mCanvas.rect; }
 		}
 
-		//背景のパス
-		[SerializeField]
-		private string mBackgroundPath;
-		//背景用スプライト
-		[SerializeField]
-		private GameObject mBackgroundSprite;
+        //背景のパス
+        [SerializeField]
+        private string mBackgroundPath = null;
+        //背景用スプライト
+        [SerializeField]
+        private GameObject mBackgroundSprite = null;
 
 		//背景の不透明度(最初の段階で1にする)
 		private bool mNeedsToFadeBackGround = true;
 
-		//立ち絵のパス
-		[SerializeField]
-		private string mCGPath;
-		//立ち絵を表示させるレイヤー
-		[SerializeField]
-		private StandCGController mCGLayer;
-		//立ち絵のアンカー
-		[SerializeField]
-		private Transform mStandCGAnchor1;
-		[SerializeField]
-		private Transform mStandCGAnchor2;
-		[SerializeField]
-		private Transform mStandCGAnchor3;
-		[SerializeField]
-		private Transform mStandCGAnchor4;
-		[SerializeField]
-		private Transform mStandCGAnchor5;
+        //立ち絵のパス
+        [SerializeField]
+        private string mCGPath = null;
+        //立ち絵を表示させるレイヤー
+        [SerializeField]
+        private StandCGController mCGLayer = null;
+        //立ち絵のアンカー
+        [SerializeField]
+        private Transform mStandCGAnchor1 = null;
+        [SerializeField]
+        private Transform mStandCGAnchor2 = null;
+        [SerializeField]
+        private Transform mStandCGAnchor3 = null;
+        [SerializeField]
+        private Transform mStandCGAnchor4 = null;
+        [SerializeField]
+        private Transform mStandCGAnchor5 = null;
 
 		//立ち絵の位置用のアップデータ
 		private class CGAnimationUpdater : UpdaterFormat
@@ -96,9 +96,9 @@ namespace Scenario.WorkSpace
 			get{return mMask.color;}
 			set{mMask.color = value;}
 		}
-		//マスク
-		[SerializeField]
-		private Image mMask;
+        //マスク
+        [SerializeField]
+        private Image mMask = null;
 
 		//フィルタ用のアップデータ
 		class MaskAnimation : PauseUpdater
@@ -156,8 +156,8 @@ namespace Scenario.WorkSpace
 		}
 
 		//立ち絵のパス
-		[SerializeField]
-		private string mMoviePath;
+		//[SerializeField]
+		//private string mMoviePath = "";
 
 		public void SetCommandDelegaters(VirtualMachine vm)
 		{

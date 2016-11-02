@@ -13,6 +13,9 @@ using Scenario.Compiler;
 using Scenario.Command;
 using Scenario.WorkSpace;
 
+using Extention;
+using System.Linq;
+
 namespace Scenario.WorkSpace
 {
 	//シナリオ操作時のワークスペース
@@ -144,8 +147,14 @@ namespace Scenario.WorkSpace
             var game = Game.GetInstance();
 
             //指定領地のユニットIDをすべて受け取る
-            var unitIDs = game.TerritoryData[territory].UnitList;
-
+            var groupIDs = game.TerritoryData[territory].GroupList;
+            var groups = game.GroupData.GetFromIndex(groupIDs);
+            var unitIDs = new List<int>();
+            foreach (var group in groups)
+                unitIDs.AddRange(group.UnitList);
+            unitIDs = unitIDs.Distinct().ToList();
+            
+            //ユニットを回復させる
             foreach(var unitID in unitIDs)
             {
                 try
@@ -197,7 +206,13 @@ namespace Scenario.WorkSpace
 
             foreach (var unitID in unitIDs)
             {
-               game.TerritoryData[0].UnitList.Remove(unitID);
+                game.UnitData[unitID].IsAlive = false;
+
+                //すべての領地からユニットを除外
+                foreach (var territory in game.TerritoryData)
+                {
+                    territory.RemoveUnit(unitID);
+                }
             }
 
         }
@@ -209,7 +224,8 @@ namespace Scenario.WorkSpace
 		{
 			error = null;
             var game = Game.GetInstance();
-            var unitList = game.TerritoryData[0].UnitList;
+            var groupID = game.TerritoryData[0].GroupList[0];
+            var unitList = game.GroupData[groupID].UnitList;
 
             foreach (var unitID in unitIDs)
             {
@@ -224,11 +240,11 @@ namespace Scenario.WorkSpace
         }
 
         [SerializeField]
-        private GameObject mTalkController;
+        private GameObject mTalkController = null;
 
         //インスペクターから登録してくだせ
         [SerializeField]
-        private ScenarioWorkSpace mSWS;
+        private ScenarioWorkSpace mSWS = null;
         
         //スタート時に仮想マシンへ割り込みする処理
         private class ScriptBeginAnimator : PauseUpdater
@@ -285,11 +301,11 @@ namespace Scenario.WorkSpace
         }
 
         [SerializeField]
-        private GameObject mTWindow;
+        private GameObject mTWindow = null;
         [SerializeField]
-        private GameObject mTWindowBack;
+        private GameObject mTWindowBack = null;
         [SerializeField]
-        private GameObject mNWindow;
+        private GameObject mNWindow = null;
 
         //スクリプト終了
         public void ScriptEnd()
@@ -330,9 +346,9 @@ namespace Scenario.WorkSpace
 					if (error != null) return error;
 
 					VirtualMemory memory = Game.GetInstance().SystemMemory;
-					int count = memory.Memory.Count;
+					int count = memory.Count;
 					if (0 <= index && index<count){
-						arguments[1] = memory.Memory[index];
+						arguments[1] = memory[index];
 						return null;
 					}
 					return "システム変数のインデックスは0 ~ "+ (count - 1) +"です(" + index + ")";
@@ -346,10 +362,10 @@ namespace Scenario.WorkSpace
 					if (error != null) return error;
 
 					VirtualMemory memory = Game.GetInstance().SystemMemory;
-					int count = memory.Memory.Count;
+					int count = memory.Count;
 					object value = arguments[1];
 					if (0 <= index && index<count){
-						memory.Memory[index] = value.ToString();
+						memory[index] = value.ToString();
 						return null;
 					}
 					return "システム変数のインデックスは0 ~ "+ (count - 1) +"です(" + index + ")";

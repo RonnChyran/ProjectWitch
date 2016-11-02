@@ -7,7 +7,7 @@ namespace Field
     {
         //生成するメニューのプレハブ
         [SerializeField]
-        private GameObject mCommonMenu;
+        private GameObject mCommonMenu = null;
 
         //今このメニューが開いているかどうか
         private bool isOpening = false;

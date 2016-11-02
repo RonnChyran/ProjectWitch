@@ -10,22 +10,22 @@ namespace Field
 
     public class FieldUIController : MonoBehaviour
     {
-        //自動操作時のカメラスピード
-        [SerializeField]
-        private float mCameraSpeed = 1.0f;
+        ////自動操作時のカメラスピード
+        //[SerializeField]
+        //private float mCameraSpeed = 1.0f;
         [SerializeField]
         private float mLineDepth = 90.0f;
 
         //領地ハイライトのエフェクト
         [SerializeField]
-        private GameObject mHiLightEffect;
+        private GameObject mHiLightEffect=null;
         private bool mEffectEnable = false;
 
         [SerializeField]
-        private GameObject mCanvas;
+        private GameObject mCanvas=null;
 
         [SerializeField]
-        private GameObject mLine;
+        private GameObject mLine=null;
 
         //ベースへの参照
         private List<GameObject> mBases = new List<GameObject>();

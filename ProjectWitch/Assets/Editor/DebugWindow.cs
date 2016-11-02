@@ -29,7 +29,7 @@ public class DebugWindow : EditorWindow {
 
         if (!EditorApplication.isPlaying) return;
         var game = Game.GetInstance();
-        var memoryList = game.SystemMemory.Memory;
+        var memoryList = game.SystemMemory;
 
         mScrollPos = EditorGUILayout.BeginScrollView(mScrollPos, GUI.skin.box);
         {

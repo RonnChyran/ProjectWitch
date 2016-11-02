@@ -64,6 +64,8 @@ public class Game : MonoBehaviour
     public List<AreaDataFormat> AreaData { get; set; }
     //領地データ
     public List<TerritoryDataFormat> TerritoryData { get; set; }
+    //グループデータ
+    public List<GroupDataFormat> GroupData { get; set; }
     //フィールドのBGM
     public string FieldBGM { get; set; }
     //通常バトルのBGM
@@ -109,9 +111,6 @@ public class Game : MonoBehaviour
     //スクリプト実行中かどうか
     public bool IsTalk { get; set; }
 
-    //連戦数
-    public int BattleCount { get; set; }
-
     //編成画面から戦闘に入るかどうか
     public bool UsePreBattle { get; set; }
 
@@ -151,7 +150,6 @@ public class Game : MonoBehaviour
         IsBattle = false;
         IsTalk = false;
         UsePreBattle = true;
-        BattleCount = 0;
 
         try
         {
@@ -160,14 +158,17 @@ public class Game : MonoBehaviour
             UnitData = new List<UnitDataFormat>();
             SkillData = new List<SkillDataFormat>();
             PlayerMana = 10000;
+
             CurrentTime = 0; //朝から
             CurrentTurn = 1;
             FieldBGM = "002_alice1";
             BattleBGM = "004_battle1";
             AreaData = new List<AreaDataFormat>();
             TerritoryData = new List<TerritoryDataFormat>();
+            GroupData = new List<GroupDataFormat>();
+
             SystemMemory = new VirtualMemory();
-            SystemMemory.Memory[0] = "0";
+            SystemMemory[0] = "0";
             Config = new ConfigDataFormat();
             AIData = new List<AIDataFormat>();
             EquipmentData = new List<EquipmentDataFormat>();
@@ -184,12 +185,12 @@ public class Game : MonoBehaviour
             //あとセーブデータ読み込みなど
 
         }
-        catch(InvalidCastException e)
+        catch(InvalidCastException)
         {
             Debug.LogError("キャストミスです");
             return;
         }
-        catch(OverflowException e)
+        catch(OverflowException)
         {
             Debug.LogError("データがオーバーフローしました");
             return;
@@ -314,19 +315,8 @@ public class Game : MonoBehaviour
         //領地データの読み出し
         TerritoryData = DataLoader.LoadTerritoryData(GamePath.Data + "territory_data");
 
-        //所持地点リスト（地点リストから算出
-        for (int i = 0; i < TerritoryData.Count; i++)
-        {
-            var terData = TerritoryData[i];
-            terData.AreaList = new List<int>();
-            for (int j = 1; j < AreaData.Count; j++)
-            {
-                if (AreaData[j].Owner == i)
-                {
-                    terData.AreaList.Add(AreaData[j].ID);
-                }
-            }
-        }
+        //グループデータの読み出し
+        GroupData = DataLoader.LoadGroupData(GamePath.Data + "group_data");
 
         //AI
         AIData = DataLoader.LoadAIData(GamePath.Data + "ai_data");

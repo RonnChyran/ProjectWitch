@@ -18,7 +18,7 @@ namespace Scenario.WorkSpace
 	{
 		//スクリプトフォルダのパス
 		[SerializeField]
-		private string mScenarioPath;
+		private string mScenarioPath = "";
 
 		//コマンドを読み込む
 		void Start (){
@@ -128,26 +128,26 @@ namespace Scenario.WorkSpace
 
 		//テキスト関連のフィールド
 		[SerializeField]
-		private TextWorkSpace mTextWorkSpace;
+		private TextWorkSpace mTextWorkSpace = null;
 
 		//グラフィック関係のフィールド
 		[SerializeField]
-		private GraphicsWorkSpace mGraphicsWorkSpace;
+		private GraphicsWorkSpace mGraphicsWorkSpace = null;
 
-		//サウンド関係のフィールド
-		[SerializeField]
-		private SoundsWorkSpace mSoundsWorkSpace;
+        //サウンド関係のフィールド
+        [SerializeField]
+        private SoundsWorkSpace mSoundsWorkSpace = null;
 
-		//ゲームシステム関係のフィールド
-		[SerializeField]
-		private GameWorkSpace mGameWorkSpace;
+        //ゲームシステム関係のフィールド
+        [SerializeField]
+        private GameWorkSpace mGameWorkSpace = null;
 
-		[SerializeField]
-		//次の会話をスキップする前にこの時間分だけ待つ
-		private float mSkipWaitDuration;
-		[SerializeField]
-		//自動で次の会話に遷移する前にこの時間分だけ待つ
-		private float mAutoWaitDuration;
+        [SerializeField]
+        //次の会話をスキップする前にこの時間分だけ待つ
+        private float mSkipWaitDuration = 0.01f;
+        [SerializeField]
+        //自動で次の会話に遷移する前にこの時間分だけ待つ
+        private float mAutoWaitDuration = 0.01f;
 		[SerializeField]
 		//自動遷移モードフラグ
 		private bool mAutoMode;

@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
+using GameData;
+
 namespace Field
 {
     public class FlagButton : FieldButtonBase
@@ -13,13 +15,13 @@ namespace Field
 
         //各メニューのプレハブ
         [SerializeField]
-        private GameObject mPlayerMenu;
+        private GameObject mPlayerMenu=null;
 
         [SerializeField]
-        private GameObject mEnemyMenuA;
+        private GameObject mEnemyMenuA=null;
 
         [SerializeField]
-        private GameObject mEnemyMenuB;
+        private GameObject mEnemyMenuB=null;
 
 
         //プレイヤーの領地メニューを開く
@@ -56,7 +58,10 @@ namespace Field
                 nextAreas = nextAreas.Distinct().ToList();
             }
 
-            if (nextAreas.Contains(AreaID))
+            var territory = game.TerritoryData[game.AreaData[AreaID].Owner];
+            if (nextAreas.Contains(AreaID) && 
+                (territory.State == TerritoryDataFormat.TerritoryState.Ready ||
+                territory.State == TerritoryDataFormat.TerritoryState.Active))
                 //隣接していたら戦闘ありのメニューを呼ぶ
                 ShowMenu(mEnemyMenuA);
             else

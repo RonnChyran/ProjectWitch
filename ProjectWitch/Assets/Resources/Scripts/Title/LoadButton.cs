@@ -5,9 +5,6 @@ using System.Collections;
 
 public class LoadButton : MonoBehaviour {
 
-    [SerializeField]
-    private string mLoadSceneName = "";
-
 	public void OnClick()
     {
         var game = Game.GetInstance();

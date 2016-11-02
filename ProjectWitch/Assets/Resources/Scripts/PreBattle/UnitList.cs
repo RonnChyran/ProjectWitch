@@ -7,18 +7,19 @@ namespace PreBattle
     {
         //ユニット単体のベース
         [SerializeField]
-        private GameObject mUnit;
+        private GameObject mUnit = null;
 
         //ユニットを縦に二つセットする
         [SerializeField]
-        private GameObject mUnitBox;
+        private GameObject mUnitBox = null;
 
         // Use this for initialization
         void Start()
         {
             var game = Game.GetInstance();
 
-            var playerUnits = game.TerritoryData[0].UnitList;
+            var groupID = game.TerritoryData[0].GroupList[0];
+            var playerUnits = game.GroupData[groupID].UnitList;
             for(int i=0; i<playerUnits.Count; i+=2)
             {
                 var unit1 = playerUnits[i];
