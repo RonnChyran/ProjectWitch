@@ -2,6 +2,7 @@
 using System.Linq; //iOSで問題が起こるかも？
 using System.Collections.Generic;
 using System.Collections;
+using UnityEngine.UI;
 
 using GameData;
 
@@ -22,13 +23,33 @@ namespace Field
         private bool mEffectEnable = false;
 
         [SerializeField]
-        private GameObject mCanvas=null;
+        private GameObject mFlagCanvas = null;
+
+        [SerializeField]
+        private GameObject mCameraCanvas = null;
+        public GameObject CameraCanvas { get { return mCameraCanvas; } private set { } }
 
         [SerializeField]
         private GameObject mLine=null;
 
+        //旗のプレハブ
+        [SerializeField]
+        private GameObject mBasePrefab = null;
+
+        //旗の画像フォルダパス
+        [SerializeField]
+        private string mFlagTexFolderPath = null;
+
         //ベースへの参照
         private List<GameObject> mBases = new List<GameObject>();
+
+        //現在選択している領地
+        public int SelectedTerritory { get; set; }
+        //現在行動している領地
+        public int ActiveTerritory { get; set; }
+        //オーナーパネルロックフラグ
+        public bool OwnerPanelLock { get; set; }
+
 
         void Start()
         {
@@ -45,6 +66,10 @@ namespace Field
             var fieldCtlr = GameObject.FindWithTag("FieldController");
             fieldCtlr.GetComponent<FieldController>().FieldUIController = this;
 
+            //内部変数初期化
+            SelectedTerritory = -1;
+            ActiveTerritory = -1;
+            OwnerPanelLock = false;
         }
 
         void Update()
@@ -85,10 +110,16 @@ namespace Field
         {
             var game = Game.GetInstance();
 
-            var Base = Instantiate(game.TerritoryData[owner].FlagPrefab);
-            Base.transform.SetParent(mCanvas.transform);
+            //旗画像ロード
+            var path = mFlagTexFolderPath + game.TerritoryData[owner].FlagTexName;
+            var sprite = Resources.Load<Sprite>(path);
+
+            var Base = Instantiate(mBasePrefab);
+            Base.transform.SetParent(mFlagCanvas.transform);
             Base.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(game.AreaData[area].Position.x, game.AreaData[area].Position.y, 1.0f);
+            Base.GetComponent<Image>().sprite = sprite;
             Base.GetComponent<FlagButton>().AreaID = area;
+            Base.GetComponent<FlagButton>().FieldUIController = this;
 
             mBases[area] = Base;
         }
@@ -171,7 +202,7 @@ namespace Field
             if (!mLine) return;
 
             var inst = Instantiate(mLine);
-            inst.transform.SetParent(mCanvas.transform);
+            inst.transform.SetParent(mFlagCanvas.transform);
             inst.GetComponent<LineRenderer>().SetPositions(new Vector3[] { pointA, pointB });
         }
     }

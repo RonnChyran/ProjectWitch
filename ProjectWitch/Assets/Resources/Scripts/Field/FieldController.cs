@@ -87,6 +87,7 @@ namespace Field
             {
                 //現在の時間が0~2のとき
                 //プレイヤーのターン
+                mFieldUIController.ActiveTerritory = 0;
                 StartCoroutine(PlayerTurn());
             }
             else
@@ -104,7 +105,10 @@ namespace Field
 
                 //領地IDが存在する範囲なら領地イベントを実行
                 if (territory < game.TerritoryData.Count)
+                {
+                    mFieldUIController.ActiveTerritory = territory;
                     StartCoroutine(EnemyTurn(territory));
+                }
                 else
                 {
                     //メニュー操作を有効にする
@@ -213,6 +217,10 @@ namespace Field
                 {
                     foreach (var group in ter.GroupList)
                     {
+                        var groupData = game.GroupData[group];
+                        if (groupData.state != GroupDataFormat.GroupState.Active)
+                            continue;
+
                         //攻め込む領地
                         int targetArea = GetDominationTarget(territory, group);
 
@@ -575,7 +583,6 @@ namespace Field
         private IEnumerator DominationEffect(int targetArea)
         {
             var game = Game.GetInstance();
-            var camera = Camera.main;
             var targetpos = game.AreaData[targetArea].Position;
 
             //カメラをその領地に移動

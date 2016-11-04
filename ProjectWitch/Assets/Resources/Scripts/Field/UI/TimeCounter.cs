@@ -6,13 +6,23 @@ namespace Field
 {
     public class TimeCounter : MonoBehaviour
     {
+        //各画像
+        [SerializeField]
+        private Sprite mMorningSp = null;
+        [SerializeField]
+        private Sprite mNoonSp = null;
+        [SerializeField]
+        private Sprite mEveningSp = null;
+        [SerializeField]
+        private Sprite mNightSp = null;
+
         //コンポーネント
-        private Text mcText;
+        private Image mcImage;
 
         // Use this for initialization
         void Start()
         {
-            mcText = GetComponent<Text>();
+            mcImage = GetComponent<Image>();
         }
 
         // Update is called once per frame
@@ -23,16 +33,16 @@ namespace Field
             switch(game.CurrentTime)
             {
                 case 0:
-                    mcText.text = "朝";
+                    mcImage.sprite = mMorningSp;
                     break;
                 case 1:
-                    mcText.text = "昼";
+                    mcImage.sprite = mNoonSp;
                     break;
                 case 2:
-                    mcText.text = "夕";
+                    mcImage.sprite = mEveningSp;
                     break;
                 default:
-                    mcText.text = "晩";
+                    mcImage.sprite = mNightSp;
                     break;
             }
         }

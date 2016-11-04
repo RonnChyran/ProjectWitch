@@ -1,82 +1,132 @@
 ﻿using UnityEngine;
-using System.Collections;
+using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Linq;
-
+using UnityEngine.EventSystems;
 using GameData;
 
 namespace Field
 {
-    public class FlagButton : FieldButtonBase
+    public class FlagButton : MonoBehaviour
+        , IPointerEnterHandler
+        , IPointerExitHandler
     {
 
         //地点番号
         public int AreaID { get; set; }
 
-        //各メニューのプレハブ
+        //領主番号
+        private int mTerritoryID = -1;
+
+        //各エリアメニューのプレハブ
         [SerializeField]
-        private GameObject mPlayerMenu=null;
-
+        private GameObject mAreaPrefab = null;
         [SerializeField]
-        private GameObject mEnemyMenuA=null;
+        private GameObject mAreaNamePrefab = null;
 
-        [SerializeField]
-        private GameObject mEnemyMenuB=null;
+        //各コントローラ
+        public FieldUIController FieldUIController { get; set; }
+        public FieldController FieldController { get; set; }
 
+        //生成した子オブジェクトのインスタンス
+        private GameObject mInstAreaWindow = null;
+        private GameObject mInstAreaName = null;
 
-        //プレイヤーの領地メニューを開く
-        public void OpenPlayerMenu()
+        //ボタンコントローラ
+        private Button mcButton = null;
+
+        void Start()
         {
-            //フラグメニューが開けるかどうか
-            if (!mFieldController.FlagClickable) return;
+            var game = Game.GetInstance();
+            mTerritoryID = game.AreaData[AreaID].Owner;
 
-            //メニューを開く
-            ShowMenu(mPlayerMenu);
+            var obj = GameObject.FindWithTag("FieldController");
+            FieldController = obj.GetComponent<FieldController>();
 
-            //フラグメニューを開けないようにする
-            mFieldController.FlagClickable = false;
+            mcButton = GetComponent<Button>();
+            if (!mcButton) Debug.LogError("Buttonコンポーネントを付けてください");
         }
 
-        //敵の領地メニューを開く
-        //領地が味方領地に隣接していたら地点制圧コマンドが追加される
-        public void OpenEnemyMenu()
+        void Update()
         {
-            //フラグメニューが開けるかどうか
-            if (!mFieldController.FlagClickable) return;
+            if (FieldController.FlagClickable)
+                mcButton.interactable = true;
+            else
+                mcButton.interactable = false;
+        }
 
+        public void OpenMenu()
+        {
             var game = Game.GetInstance();
 
-            //地点が隣接しているかどうか判定
-            var nextAreas = new List<int>();
-            {
-                //隣接地点の取得
-                foreach (var area in game.TerritoryData[0].AreaList)
-                {
-                    nextAreas.AddRange(game.AreaData[area].NextArea);
-                }
-                //重複を削除
-                nextAreas = nextAreas.Distinct().ToList();
-            }
+            //クリック音再生
+            game.SoundManager.PlaySE(SE.Click);
 
-            var territory = game.TerritoryData[game.AreaData[AreaID].Owner];
-            if (nextAreas.Contains(AreaID) && 
-                (territory.State == TerritoryDataFormat.TerritoryState.Ready ||
-                territory.State == TerritoryDataFormat.TerritoryState.Active))
-                //隣接していたら戦闘ありのメニューを呼ぶ
-                ShowMenu(mEnemyMenuA);
-            else
-                //していなかったら戦闘なしのメニューを呼ぶ
-                ShowMenu(mEnemyMenuB);
+            //メニューを開く
+            ShowMenu(mAreaPrefab);
 
-            //フラグメニューを開けないようにする
-            mFieldController.FlagClickable = false;
+            //フラグメニューの２重起動防止
+            FieldController.FlagClickable = false;
+
+            //オーナーパネルをロック
+            FieldUIController.OwnerPanelLock = true;
         }
 
-        protected override void ShowMenu(GameObject menu)
+        private void ShowMenu(GameObject menu)
         {
-            base.ShowMenu(menu);
+            //描画先のキャンバス
+            var canvas = FieldUIController.CameraCanvas;
 
-            mInst.GetComponent<FlagMenu>().AreaID = AreaID;
+            //メニュープレハブを生成
+            mInstAreaWindow = Instantiate(menu);
+            mInstAreaWindow.transform.SetParent(canvas.transform, false);
+
+            var comp = mInstAreaWindow.GetComponent<AreaWindow>();
+            comp.AreaID = AreaID;
+            comp.FieldController = FieldController;
+            comp.FieldUIController = FieldUIController;
+            comp.NameWindow = mInstAreaName;
+            comp.Init();
+        }
+
+        //マウスがポップしたときのイベント
+        public void OnPointerEnter(PointerEventData e)
+        {
+            var game = Game.GetInstance();
+            
+            //ホバー音再生
+            game.SoundManager.PlaySE(SE.Hover);
+
+            if (FieldUIController.OwnerPanelLock == false)
+            {
+                FieldUIController.SelectedTerritory = mTerritoryID;
+                ShowAreaName();
+            }
+        }
+
+        //マウスが外れた時のイベント
+        public void OnPointerExit(PointerEventData e)
+        {
+            if (FieldUIController.SelectedTerritory == mTerritoryID &&
+                FieldUIController.OwnerPanelLock == false)
+            {
+                Destroy(mInstAreaName);
+                FieldUIController.SelectedTerritory = -1;
+            }
+        }
+
+        //AreaNameウィンドウを表示
+        private void ShowAreaName()
+        {
+            //描画先のキャンバス
+            var canvas = FieldUIController.CameraCanvas;
+
+            mInstAreaName = Instantiate(mAreaNamePrefab);
+            mInstAreaName.transform.SetParent(canvas.transform,false);
+
+            var comp = mInstAreaName.GetComponent<AreaName>();
+            comp.AreaID = AreaID;
+            comp.Init();
         }
     }
 }

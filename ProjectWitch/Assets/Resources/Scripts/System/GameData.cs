@@ -223,7 +223,7 @@ namespace GameData
             UserState_HP50,     //HP50%以下
             UserState_Poison,   //毒にかかった
             UserState_Death,    //死亡した
-            EnemyState_S10,     //カード使用側では内容のユニットの兵士数10%以下
+            EnemyState_S10,     //カード使用側ではないどれかのユニットの兵士数10%以下
             EnemyState_S50,     //50%以下
             EnemyState_HP10,    //HP10%以下
             EnemyState_HP50,    //HP50%以下
@@ -254,7 +254,7 @@ namespace GameData
 
     //地形補正データ(倍率指定)
     public class AreaBattleFactor
-    {
+    { 
         public float PAtk { get; set; }         //物理攻撃力
         public float MAtk { get; set; }         //魔法攻撃力
         public float PDef { get; set; }         //物理防御力
@@ -324,8 +324,8 @@ namespace GameData
         //領主名（英語）
         public string OwnerNameEng { get; set; }
 
-        //旗画像パス
-        public GameObject FlagPrefab { get; set; }
+        //旗画像名
+        public string FlagTexName { get; set; }
 
         //メイン領地
         public int MainArea { get; set; }
@@ -1181,14 +1181,7 @@ namespace GameData
                     terData.OwnerNameEng = data[2];
 
                     //プレハブのロード
-                    terData.FlagPrefab = (GameObject)Resources.Load("Prefabs/Field/Flag/" + data[3]);
-                    if (terData.FlagPrefab == null)
-                    {
-                        Debug.LogWarning(terData.ID.ToString() + ":" +
-                            terData.OwnerName + "領の旗プレハブが不明です。" +
-                            "Prefabs/Field/Flag/" + data[3] +
-                            "があることを確認してください。");
-                    }
+                    terData.FlagTexName = data[3];
 
                     //メイン領地の読み出し
                     terData.MainArea = int.Parse(data[4]);

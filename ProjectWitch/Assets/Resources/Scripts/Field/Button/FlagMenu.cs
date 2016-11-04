@@ -3,19 +3,21 @@ using System.Collections;
 
 namespace Field
 {
-    public class FlagMenu : MenuBase
+    public class FlagMenu : MonoBehaviour
     {
         //地点番号
         public int AreaID { get; set; }
 
         //field controller
         private FieldController mFieldController;
+        private FieldUIController mFieldUIController;
 
         void Start()
         {
             //フィールドUIコントローラを取得
             var obj = GameObject.FindWithTag("FieldController");
             mFieldController = obj.GetComponent<FieldController>();
+            mFieldUIController = mFieldController.FieldUIController;
         }
 
         //Update
@@ -99,9 +101,11 @@ namespace Field
         }
 
         //メニューを閉じる
-        public override void Close()
+        public void Close()
         {
             mFieldController.FlagClickable = true;
+            mFieldUIController.OwnerPanelLock = false;
+            mFieldUIController.SelectedTerritory = -1;
             Destroy(this.gameObject);
         }
 

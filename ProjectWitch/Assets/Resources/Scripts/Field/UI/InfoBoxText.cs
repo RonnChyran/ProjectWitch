@@ -3,60 +3,78 @@ using UnityEngine.UI;
 using System.Linq;
 using System.Collections;
 
-public class InfoBoxText : MonoBehaviour {
+namespace Field
+{
 
-    private Text mcText;
-    private bool isRunning = false;
+    public class InfoBoxText : MonoBehaviour
+    {
 
-	// Use this for initialization
-	void Start () {
-        mcText = GetComponent<Text>();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-        if (!isRunning)
-            StartCoroutine(_Update());
-	}
+        //各情報のテキストコンポーネント
+        [SerializeField]
+        private Text mcMana = null;
+        [SerializeField]
+        private Text mcSoldier = null;
+        [SerializeField]
+        private Text mcArea = null;
+        [SerializeField]
+        private Text mcUnit = null;
 
-    IEnumerator _Update()
-    { 
-        var game = Game.GetInstance();
+        private bool isRunning = false;
 
-        isRunning = true;
-
-        //表示内容を構成
-        var text = "";
-
-        //所持マナ
-        text += game.PlayerMana.ToString() + "\n";
-
-        //ユニット
-        var groupID = game.TerritoryData[0].GroupList[0];
-        var groupData = game.GroupData[groupID];
-        text += groupData.UnitList.Count.ToString() + "\n";
-
-        //所持領地
-        text += game.TerritoryData[0].AreaList.Count.ToString() + "/"
-            + (game.AreaData.Count - 1).ToString() + "\n";
-
-        //総兵力
-        var soldireNumList =
-            from p in groupData.UnitList
-            select game.UnitData[p].SoldierNum;
-
-        int sumSoldire = 0;
-        foreach (var soldireNum in soldireNumList)
+        // Use this for initialization
+        void Start()
         {
-            sumSoldire += soldireNum;
         }
 
-        text += sumSoldire.ToString() + "\n";
+        // Update is called once per frame
+        void Update()
+        {
+            if (!isRunning)
+                StartCoroutine(_Update());
+        }
 
+        IEnumerator _Update()
+        {
+            var game = Game.GetInstance();
 
-        mcText.text = text;
+            isRunning = true;
 
-        isRunning = false;
-        yield return new WaitForSeconds(1.0f);
+            //所持マナ
+            TextSetter(mcMana, game.PlayerMana.ToString());
+
+            //ユニット
+            var groupID = game.TerritoryData[0].GroupList[0];
+            var groupData = game.GroupData[groupID];
+            TextSetter(mcUnit, groupData.UnitList.Count.ToString());
+
+            //所持領地
+            TextSetter(mcArea,
+                game.TerritoryData[0].AreaList.Count.ToString() + "/"
+                + (game.AreaData.Count - 1).ToString());
+
+            //総兵力
+            var soldireNumList =
+                from p in groupData.UnitList
+                select game.UnitData[p].SoldierNum;
+
+            int sumSoldire = 0;
+            foreach (var soldireNum in soldireNumList)
+            {
+                sumSoldire += soldireNum;
+            }
+
+            TextSetter(mcSoldier, sumSoldire.ToString());
+
+            isRunning = false;
+            yield return new WaitForSeconds(1.0f);
+        }
+
+        private void TextSetter(Text comp, string str)
+        {
+            if (comp)
+                comp.text = str;
+            else
+                Debug.Log("テキストコンポーネントの接続が着れています");
+        }
     }
 }

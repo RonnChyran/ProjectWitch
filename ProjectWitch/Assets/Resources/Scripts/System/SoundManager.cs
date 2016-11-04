@@ -4,6 +4,9 @@ using System.Collections.Generic;
 //サウンドの種類
 public enum SoundType { BGM, SE, Voice }
 
+//よく使うSE
+public enum SE { Click, Cancel, Hover}
+
 //サウンド管理クラス
 public class SoundManager : MonoBehaviour {
 
@@ -30,7 +33,16 @@ public class SoundManager : MonoBehaviour {
             { SoundType.SE,     "SE" },
             { SoundType.Voice,  "Voice" }
         };
-    
+
+    //よく使うSEの対応表
+    private readonly Dictionary<SE, string> mSENameList
+        = new Dictionary<SE, string>()
+        {
+            {SE.Click, "040_click" },
+            {SE.Cancel, "041_cancel" },
+            {SE.Hover, "042_hover" }
+        };
+
     public void Start()
     {
         //エラーチェック
@@ -60,6 +72,7 @@ public class SoundManager : MonoBehaviour {
         mcVoice.volume = game.Config.VoiceVolume * master;
     }
 
+    //再生開始
     public void Play(string name, SoundType type)
     {
         if(!IsExist(name, type))
@@ -75,10 +88,11 @@ public class SoundManager : MonoBehaviour {
         source.cueSheet = mCueSheetList[type];
         source.cueName = name;
 
-        var inst = source.Play();
+        source.Play();
         
     }
 
+    //再生停止
     public void Stop(SoundType type)
     {
         var source = GetSource(type);
@@ -86,6 +100,7 @@ public class SoundManager : MonoBehaviour {
         source.Stop();
     }
 
+    //指定のタイプのソースが再生中かどうか
     public bool IsPlaying(SoundType type)
     {
         var source = GetSource(type);
@@ -93,6 +108,7 @@ public class SoundManager : MonoBehaviour {
         return source.status == CriAtomSource.Status.Playing;
     }
 
+    //キュー名を取得
     public string GetCueName(SoundType type)
     {
         var source = GetSource(type);
@@ -100,6 +116,15 @@ public class SoundManager : MonoBehaviour {
         return source.cueName;
     }
 
+    //---------------
+    //よく使うSEの専用再生
+    //---------------
+    public void PlaySE(SE SEType)
+    {
+        Play(mSENameList[SEType], SoundType.SE);
+    }
+
+    //指定のタイプのCriAtomSourceを取得
     private CriAtomSource GetSource(SoundType type)
     {
 
@@ -117,6 +142,7 @@ public class SoundManager : MonoBehaviour {
         return source;
     }
 
+    //指定のキュー名が存在するか
     private bool IsExist(string cueName, SoundType type)
     {
         CriAtomExAcb acb = null;
