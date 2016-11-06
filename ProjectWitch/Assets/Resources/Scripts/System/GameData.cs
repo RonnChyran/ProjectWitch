@@ -480,7 +480,7 @@ namespace GameData
             Active, //活動中
             Dead    //死亡
         }
-        public GroupState state = GroupState.Ready;
+        private GroupState state = GroupState.Ready;
         public GroupState State {
             get
             {
@@ -489,7 +489,7 @@ namespace GameData
                 if (state == GroupState.Ready)
                     if (BeginDominationFlagIndex == -1)
                         state = GroupState.Active;
-                    else if (game.SystemMemory.IsZero(BeginDominationFlagIndex))
+                    else if (!game.SystemMemory.IsZero(BeginDominationFlagIndex))
                         state = GroupState.Active;
 
                 return state;
@@ -512,7 +512,7 @@ namespace GameData
                     units = UnitList.RandomN(3);
                     break;
                 case ChoiseMethod.RandomAll:
-                    units = UnitList.RandomN(UnityEngine.Random.Range(1, 2));
+                    units = UnitList.RandomN(UnityEngine.Random.Range(1, 3));
                     break;
                 default:
                     break;

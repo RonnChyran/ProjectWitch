@@ -37,11 +37,15 @@ public class Game : MonoBehaviour
 
     #endregion
 
-    #region マネージャー
+    #region 外部システム
 
     [SerializeField]
     private SoundManager mSoundManager = null;
     public SoundManager SoundManager { get { return mSoundManager; } private set { } }
+
+    [SerializeField]
+    private DebugText mDebugMessage = null;
+    public DebugText DebugMessage { get { return mDebugMessage; } private set { } }
 
     #endregion
 

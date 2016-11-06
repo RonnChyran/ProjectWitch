@@ -11,12 +11,13 @@ namespace Field
 
         [SerializeField]
         private int mTerritoryID = 0;
+        public int TerritoryID { get { return mTerritoryID; } private set { } }
 
         [SerializeField]
         private float mSpeed = 0.0f;
 
-        [SerializeField]
-        private FieldUIController mcFUICtrl = null;
+        //状態変数（パネルが前に出ているかどうか）
+        public bool IsActive { get; set; }
 
         //内部変数
         private RectTransform mcRect;
@@ -34,8 +35,7 @@ namespace Field
             var targetX = basePosX;
 
             //選択されている領地が自分のとき
-            if (mcFUICtrl.SelectedTerritory == mTerritoryID ||
-                mcFUICtrl.ActiveTerritory == mTerritoryID)
+            if (IsActive)
             {
                 targetX += mBackPos;
             }

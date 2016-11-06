@@ -127,6 +127,47 @@ namespace Field
 
         }
 
+        //戦闘を呼び出す
+        public void CallBattle()
+        {
+            var game = Game.GetInstance();
+
+            //侵攻戦の開始
+            FieldController.DominationBattle(AreaID, game.AreaData[AreaID].Owner);
+
+            //メニューを閉じる
+            Close();
+        }
+
+        //臨時徴収を呼びだす
+        public void CallMana()
+        {
+            var game = Game.GetInstance();
+
+            //二重起動の防止
+            if (game.IsDialogShowd) return;
+
+            //取得するマナ量
+            var mana = game.AreaData[AreaID].Mana;
+
+            //表示する文字列の構成
+            var str = "地点：" + game.AreaData[AreaID].Name + "\n";
+            str += "現在の所持マナ：" + game.PlayerMana + "M\n";
+            str += "取得マナ：" + mana.ToString() + "M\n";
+            str += "取得後の所持マナ：" + (game.PlayerMana + mana).ToString() + "M\n";
+
+            game.ShowDialog("マナ収集", str);
+
+            //マナの増加処理
+            game.PlayerMana += mana;
+            game.AreaData[AreaID].Mana = 0;
+
+            //時間を進める
+            game.CurrentTime++;
+
+            //メニューを閉じる
+            Close();
+        }
 
         //ウィンドウを閉じる
         public void Close()

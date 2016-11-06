@@ -189,6 +189,10 @@ namespace Field
             var game = Game.GetInstance();
             var ter = game.TerritoryData[territory];
 
+#if DEBUG
+            game.DebugMessage.Push(ter.OwnerName, ter.State);
+#endif
+
             //コルーチン開始
             mIsCoroutineExec = true;
 
@@ -218,11 +222,12 @@ namespace Field
                     foreach (var group in ter.GroupList)
                     {
                         var groupData = game.GroupData[group];
-                        if (groupData.state != GroupDataFormat.GroupState.Active)
+                        if (groupData.State != GroupDataFormat.GroupState.Active)
                             continue;
 
                         //攻め込む領地
                         int targetArea = GetDominationTarget(territory, group);
+                        if (targetArea == -1) continue;
 
                         //攻めてきた演出
                         yield return StartCoroutine(DominationEffect(targetArea));
@@ -567,7 +572,7 @@ namespace Field
                         var nextArea = game.AreaData[route[i + 1]];
                         //次の領地がプレイヤーの領地かどうか
                         if (nextArea.Owner == 0)
-                            return i;
+                            return route[i + 1];
                     }
                 }
             }
@@ -619,6 +624,13 @@ namespace Field
             var groupIDs = game.TerritoryData[territory].GroupList;
             var groups = game.GroupData.GetFromIndex(groupIDs);
 
+#if DEBUG
+            foreach(var g in groups)
+            {
+                game.DebugMessage.Push(g.Name, g.State);
+            }
+#endif
+
             //その地域を防衛ラインに指定するグループをフィルタにかける
             groups = groups.Where(g => g.DominationRoute.Contains(area) == true).ToList();
 
@@ -626,7 +638,7 @@ namespace Field
             if (groups.Count == 0) return GroupDataFormat.GetDefaultID();
 
             //生きているグループをフィルタにかける
-            groups = groups.Where(g => g.state == GroupDataFormat.GroupState.Active).ToList();
+            groups = groups.Where(g => g.State == GroupDataFormat.GroupState.Active).ToList();
 
             //生きているグループがいなかったら自営団を出す
             if (groups.Count == 0) return GroupDataFormat.GetDefaultID();

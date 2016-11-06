@@ -1001,7 +1001,7 @@ MonoBehaviour:
   mCoe12: 2.5
   mCoe13: 1
   mCoe14: 1
-  mCoe15: 1
+  mCoe15: 100
   mCoe16: 0.1
   mCoe17: 0.2
   mCoe18: 1
@@ -2687,6 +2687,16 @@ Prefab:
     - target: {fileID: 430766, guid: faf8facd8e6695640af571b008a1ee2f, type: 2}
       propertyPath: m_RootOrder
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 224000011104597654, guid: faf8facd8e6695640af571b008a1ee2f,
+        type: 2}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224000011104597654, guid: faf8facd8e6695640af571b008a1ee2f,
+        type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: faf8facd8e6695640af571b008a1ee2f, type: 2}

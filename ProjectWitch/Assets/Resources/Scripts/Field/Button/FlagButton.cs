@@ -128,5 +128,6 @@ namespace Field
             comp.AreaID = AreaID;
             comp.Init();
         }
+
     }
 }
