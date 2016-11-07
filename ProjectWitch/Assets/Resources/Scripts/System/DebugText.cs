@@ -32,6 +32,8 @@ public class DebugText : MonoBehaviour
     //テキストを一行追加する
     public void Push(string str)
     {
+        if (!mcText) return;
+
         //行番号加算
         mRowNumber++;
         var inputStr = mRowNumber.ToString("x") + " : " + str;
