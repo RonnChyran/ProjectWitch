@@ -11,6 +11,7 @@ public class Game : MonoBehaviour
     #region 定数
 
     //シーン名
+    private const string cSceneName_Title       = "Title";
     private const string cSceneName_Battle      = "Battle";
     private const string cSceneName_PreBattle   = "PreBattle";
     private const string cSceneName_Field       = "Field";
@@ -19,16 +20,19 @@ public class Game : MonoBehaviour
     private const string cSceneName_Load        = "Load";
     private const string cSceneName_Talk        = "Talk";
     private const string cSceneName_Opening     = "Opening";
+    private const string cSceneName_Ending      = "Ending";
 
     //読み取り専用プロパティ
-    public string SceneName_Battle      { get { return cSceneName_Battle; } private set { } }
-    public string SceneName_PreBattle   { get { return cSceneName_PreBattle; } private set { } }
-    public string SceneName_Field       { get { return cSceneName_Field; } private set { } }
-    public string SceneName_FieldUI     { get { return cSceneName_FieldUI; }  private set { } }
-    public string SceneName_Save        { get { return cSceneName_Save; } private set { } }
-    public string SceneName_Load        { get { return cSceneName_Load; } private set { } }
-    public string SceneName_Talk        { get { return cSceneName_Talk; } private set { } }
-    public string SceneName_Opening     { get { return cSceneName_Opening; } private set { } }
+    public string SceneName_Title { get { return cSceneName_Title; } private set { } }
+    public string SceneName_Battle { get { return cSceneName_Battle; } private set { } }
+    public string SceneName_PreBattle { get { return cSceneName_PreBattle; } private set { } }
+    public string SceneName_Field { get { return cSceneName_Field; } private set { } }
+    public string SceneName_FieldUI { get { return cSceneName_FieldUI; } private set { } }
+    public string SceneName_Save { get { return cSceneName_Save; } private set { } }
+    public string SceneName_Load { get { return cSceneName_Load; } private set { } }
+    public string SceneName_Talk { get { return cSceneName_Talk; } private set { } }
+    public string SceneName_Opening { get { return cSceneName_Opening; } private set { } }
+    public string SceneName_Ending { get { return cSceneName_Ending; } private set { } }
 
     //毎ターンのマナ回復率
     private float mManaRecoveryRate = 0.1f; //10%
@@ -46,6 +50,9 @@ public class Game : MonoBehaviour
     [SerializeField]
     private DebugText mDebugMessage = null;
     public DebugText DebugMessage { get { return mDebugMessage; } private set { } }
+
+    [SerializeField]
+    private GameObject mNowLoadingPrefab = null;
 
     #endregion
 
@@ -101,6 +108,8 @@ public class Game : MonoBehaviour
     public BattleDataOut BattleOut { get; set; }
 
     public ScenarioDataIn ScenarioIn { get; set; }
+
+    public int EndingID { get; set; }
 
     #endregion
 
@@ -224,24 +233,60 @@ public class Game : MonoBehaviour
 
     }
 
+    //タイトルへ戻る
+    public IEnumerator CallTitle()
+    {
+        ShowNowLoading();
+        yield return null;
+
+        yield return SceneManager.LoadSceneAsync(cSceneName_Title);
+
+        HideNowLoading();
+    }
+
+    //エンディングを呼び出す
+    public IEnumerator CallEnding(int id)
+    {
+        ShowNowLoading();
+        yield return null;
+
+        EndingID = id;
+        SceneManager.LoadScene(cSceneName_Ending);
+
+        HideNowLoading();
+    }
+
     //フィールドの開始
-    public void CallField()
+    public IEnumerator CallField()
     {
-        SceneManager.LoadScene(cSceneName_Field);
-        SceneManager.LoadScene(cSceneName_FieldUI, LoadSceneMode.Additive);
+        ShowNowLoading();
+        yield return null;
+
+        SceneManager.LoadSceneAsync(cSceneName_Field);
+        var state = SceneManager.LoadSceneAsync(cSceneName_FieldUI, LoadSceneMode.Additive);
+        while (state.isDone == false) yield return null;
+
+        HideNowLoading();
     }
-    public Scene CallFieldUI()
+    public IEnumerator CallFieldUI()
     {
-        SceneManager.LoadScene(cSceneName_FieldUI, LoadSceneMode.Additive);
-        return SceneManager.GetSceneByName(cSceneName_FieldUI);
+        var state = SceneManager.LoadSceneAsync(cSceneName_FieldUI, LoadSceneMode.Additive);
+        while (state.isDone == false) yield return null;
+        yield return null;
     }
+
 
     //戦闘の開始
     public IEnumerator CallPreBattle()
     {
+
         if (UsePreBattle)
         {
+            ShowNowLoading();
+            yield return null;
+
             yield return SceneManager.LoadSceneAsync(cSceneName_PreBattle,LoadSceneMode.Additive);
+            HideNowLoading();
         }
         else
         {
@@ -253,13 +298,16 @@ public class Game : MonoBehaviour
 
     public IEnumerator CallBattle()
     {
+        ShowNowLoading();
+        yield return null;
+
         //戦闘情報の格納
         var time = (CurrentTime <= 2) ? CurrentTime : 2;
         BattleIn.TimeOfDay = time;
         
         SceneManager.UnloadScene(cSceneName_PreBattle);
         yield return SceneManager.LoadSceneAsync(cSceneName_Battle,LoadSceneMode.Additive);
-        yield return null;
+        HideNowLoading();
     }
 
     //スクリプトの開始
@@ -283,6 +331,20 @@ public class Game : MonoBehaviour
     {
         ShowDialog("じっそうしてないよ！", "");
         //SceneManager.LoadScene(cSceneName_Load);
+    }
+
+    //ローディング画面を表示
+    public void ShowNowLoading()
+    {
+        if (mNowLoadingPrefab)
+            mNowLoadingPrefab.SetActive(true);
+    }
+
+    //ローディング画面を非表示
+    public void HideNowLoading()
+    {
+        if (mNowLoadingPrefab)
+            mNowLoadingPrefab.SetActive(false);
     }
 
     //オートセーブする

@@ -87,7 +87,7 @@ namespace Field
             {
                 //現在の時間が0~2のとき
                 //プレイヤーのターン
-                mFieldUIController.ActiveTerritory = 0;
+                FieldUIController.ActiveTerritory = 0;
                 StartCoroutine(PlayerTurn());
             }
             else
@@ -106,7 +106,7 @@ namespace Field
                 //領地IDが存在する範囲なら領地イベントを実行
                 if (territory < game.TerritoryData.Count)
                 {
-                    mFieldUIController.ActiveTerritory = territory;
+                    FieldUIController.ActiveTerritory = territory;
                     StartCoroutine(EnemyTurn(territory));
                 }
                 else
@@ -312,10 +312,9 @@ namespace Field
             var game = Game.GetInstance();
 
             //フィールドUIを再ロード
-            yield return SceneManager.LoadSceneAsync(game.SceneName_FieldUI, LoadSceneMode.Additive);
+            yield return StartCoroutine(game.CallFieldUI());
 
-            //シーンの初期化を待つ
-            yield return new WaitForEndOfFrame();
+            yield return null;
 
             //領地の占領判定
             //オート戦闘の場合、占領判定はスクリプトで行う

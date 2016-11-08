@@ -46,7 +46,7 @@ public class Opening : MonoBehaviour {
 
         //スクリプトを実行したら終了
         //フィールドの呼び出し
-        game.CallField();
+        yield return StartCoroutine(game.CallField());
 
         yield break;
     }
