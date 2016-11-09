@@ -8,6 +8,7 @@ public class PreBattleController : MonoBehaviour {
         var game = Game.GetInstance();
 
         game.IsBattle = true;
+        game.HideNowLoading();
 	}
 	
 	// Update is called once per frame

@@ -31,10 +31,6 @@ namespace Field
         //コルーチンが動いているかどうか
         private bool mIsCoroutineExec = false;
 
-        //有効な領地
-        public int ActiveTerritory { get; set; }
-
-
         //メニューが開くかどうか
         public bool MenuClickable { get; set; }
         public bool FlagClickable { get; set; }
@@ -60,7 +56,7 @@ namespace Field
             {
                 //現在の時間が0~2のとき
                 //プレイヤーのターン
-                ActiveTerritory = 0;
+                FieldUIController.ActiveTerritory = 0;
                 StartCoroutine(PlayerTurn());
             }
             else
@@ -79,7 +75,7 @@ namespace Field
                 //領地IDが存在する範囲なら領地イベントを実行
                 if (territory < game.TerritoryData.Count)
                 {
-                    ActiveTerritory = territory;
+                    FieldUIController.ActiveTerritory = territory;
                     StartCoroutine(EnemyTurn(territory));
                 }
                 else
@@ -285,8 +281,9 @@ namespace Field
             var game = Game.GetInstance();
 
             //フィールドUIを再ロード
-            yield return StartCoroutine(game.CallFieldUI());
-
+            ShowUI();
+            yield return null;
+            game.HideNowLoading();
             yield return null;
 
             //領地の占領判定
@@ -361,10 +358,9 @@ namespace Field
             game.BattleIn.IsInvasion = invation;
 
             //戦闘呼び出し
+            HideUI();
             yield return StartCoroutine(game.CallPreBattle());
-            //FieldUIController = null;
-            //CameraController = null;
-            SceneManager.UnloadScene(game.SceneName_FieldUI);
+            
             yield return null;
 
             //戦闘終了まで待機
@@ -650,8 +646,16 @@ namespace Field
         }
 
         //UI再表示
-
+        private void ShowUI()
+        {
+            mUIObject.SetActive(true);
+        }
 
         //UI非表示
+        private void HideUI()
+        {
+            mUIObject.SetActive(false);
+        }
+
     }
 }

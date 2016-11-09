@@ -43,9 +43,9 @@ namespace Field
         //ベースへの参照
         private List<GameObject> mBases = new List<GameObject>();
 
-        //FieldController
-        public FieldController FieldController { get; set; }
 
+        //現在行動している領地
+        public int ActiveTerritory { get; set; }
         //現在選択している領地
         public int SelectedTerritory { get; set; }
         //オーナーパネルロックフラグ
@@ -62,11 +62,6 @@ namespace Field
 
             //道の描画
             AddRoad();
-
-            //フィールドコントローラに自身をセット
-            var fieldCtlr = GameObject.FindWithTag("FieldController");
-            FieldController = fieldCtlr.GetComponent<FieldController>();
-            FieldController.FieldUIController = this;
 
             //内部変数初期化
             SelectedTerritory = -1;

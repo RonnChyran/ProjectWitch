@@ -45,7 +45,7 @@ namespace Field
             {
                 //領地が防衛になっているとき
                 if (mcFUICtrl.SelectedTerritory == panel.TerritoryID &&
-                    mcFUICtrl.FieldController.ActiveTerritory != panel.TerritoryID)
+                    mcFUICtrl.ActiveTerritory != panel.TerritoryID)
                 {
                     panel.IsActive = true;
 
@@ -56,7 +56,7 @@ namespace Field
                     mDefenseIcon.transform.position = pos;
                 }
                 //領地が攻撃側になっているとき
-                else if (mcFUICtrl.FieldController.ActiveTerritory == panel.TerritoryID)
+                else if (mcFUICtrl.ActiveTerritory == panel.TerritoryID)
                 {
                     panel.IsActive = true;
 

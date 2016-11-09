@@ -277,7 +277,6 @@ public class Game : MonoBehaviour
             yield return null;
 
             yield return SceneManager.LoadSceneAsync(cSceneName_PreBattle,LoadSceneMode.Additive);
-            HideNowLoading();
         }
         else
         {
@@ -298,7 +297,6 @@ public class Game : MonoBehaviour
         
         SceneManager.UnloadScene(cSceneName_PreBattle);
         yield return SceneManager.LoadSceneAsync(cSceneName_Battle,LoadSceneMode.Additive);
-        HideNowLoading();
     }
 
     //スクリプトの開始
@@ -309,6 +307,8 @@ public class Game : MonoBehaviour
         ScenarioIn.NextA = e.NextA;
         ScenarioIn.NextB = e.NextB;
         SceneManager.LoadScene(cSceneName_Talk, LoadSceneMode.Additive);
+
+        HideNowLoading();
     }
 
     //セーブ画面を呼び出す

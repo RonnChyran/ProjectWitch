@@ -29,10 +29,7 @@ namespace Field
 
             //カメラを取得
             mCamera = Camera.main;
-
-            //フィールドコントローラに自身をセット
-            var fieldCtrl = GameObject.FindWithTag("FieldController");
-            fieldCtrl.GetComponent<FieldController>().CameraController = this;
+            
         }
 
         //変数入力

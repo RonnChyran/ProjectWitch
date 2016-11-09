@@ -9,6 +9,7 @@ public class BattleController : MonoBehaviour {
         var game = Game.GetInstance();
 
         game.IsBattle = true;
+        game.HideNowLoading();
 	}
 	
 	// Update is called once per frame
@@ -20,6 +21,7 @@ public class BattleController : MonoBehaviour {
     {
         var game = Game.GetInstance();
 
+        game.ShowNowLoading();
         game.IsBattle = false;
         SceneManager.UnloadScene(game.SceneName_Battle);
     }
