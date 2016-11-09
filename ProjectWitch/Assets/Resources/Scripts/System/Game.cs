@@ -15,7 +15,6 @@ public class Game : MonoBehaviour
     private const string cSceneName_Battle      = "Battle";
     private const string cSceneName_PreBattle   = "PreBattle";
     private const string cSceneName_Field       = "Field";
-    private const string cSceneName_FieldUI     = "FieldUI";
     private const string cSceneName_Save        = "Save";
     private const string cSceneName_Load        = "Load";
     private const string cSceneName_Talk        = "Talk";
@@ -27,7 +26,6 @@ public class Game : MonoBehaviour
     public string SceneName_Battle { get { return cSceneName_Battle; } private set { } }
     public string SceneName_PreBattle { get { return cSceneName_PreBattle; } private set { } }
     public string SceneName_Field { get { return cSceneName_Field; } private set { } }
-    public string SceneName_FieldUI { get { return cSceneName_FieldUI; } private set { } }
     public string SceneName_Save { get { return cSceneName_Save; } private set { } }
     public string SceneName_Load { get { return cSceneName_Load; } private set { } }
     public string SceneName_Talk { get { return cSceneName_Talk; } private set { } }
@@ -263,15 +261,8 @@ public class Game : MonoBehaviour
         yield return null;
 
         SceneManager.LoadSceneAsync(cSceneName_Field);
-        var state = SceneManager.LoadSceneAsync(cSceneName_FieldUI, LoadSceneMode.Additive);
-        while (state.isDone == false) yield return null;
 
         HideNowLoading();
-    }
-    public IEnumerator CallFieldUI()
-    {
-        var state = SceneManager.LoadSceneAsync(cSceneName_FieldUI, LoadSceneMode.Additive);
-        while (state.isDone == false) yield return null;
         yield return null;
     }
 

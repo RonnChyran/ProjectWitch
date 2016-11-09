@@ -12,55 +12,28 @@ namespace Field
 {
     public class FieldController : MonoBehaviour
     {
+        //UI部分のルートゲームオブジェクト
+        [SerializeField]
+        private GameObject mUIObject = null;
+
+        //FieldUIControllerのインスタンス
+        [SerializeField]
+        private FieldUIController mFieldUIController = null;
+        public FieldUIController FieldUIController { get { return mFieldUIController; } private set { } }
+
+        //CameraControllerのインスタンス
+        [SerializeField]
+        private CameraController mCameraController = null;
+        public CameraController CameraController { get { return mCameraController; } private set { } }
+
+
         //内部変数
         //コルーチンが動いているかどうか
         private bool mIsCoroutineExec = false;
 
-        //FieldUIControllerのインスタンス
-        private FieldUIController mFieldUIController;
-        public FieldUIController FieldUIController
-        {
-            get
-            {
-                //FieldUIControllerを取得済みか
-                if (!mFieldUIController)
-                {
-                    //フィールドＵＩコントローラを探す
-                    mFieldUIController = GameObject.FindGameObjectWithTag("FieldUIController").GetComponent<FieldUIController>();
+        //有効な領地
+        public int ActiveTerritory { get; set; }
 
-                    //見つからなかったら強制停止
-                    Debug.Assert(mFieldUIController, "FieldUIControllerが見つかりません");
-                }
-
-                return mFieldUIController;
-            }
-
-            set { mFieldUIController = value; }
-        }
-
-        //CameraControllerのインスタンス
-        private CameraController mCameraController;
-        public CameraController CameraController
-        {
-            get
-            {
-                //CameraControllerを取得済みか
-                if (!mCameraController)
-                {
-                    //フィールドＵＩコントローラを探す
-                    mCameraController = GameObject.FindGameObjectWithTag("CameraController").GetComponent<CameraController>();
-
-                    //見つからなかったら強制停止
-                    Debug.Assert(mCameraController, "CameraControllerが見つかりません");
-                }
-
-                return mCameraController;
-            }
-            set
-            {
-                mCameraController = value;
-            }
-        }
 
         //メニューが開くかどうか
         public bool MenuClickable { get; set; }
@@ -87,7 +60,7 @@ namespace Field
             {
                 //現在の時間が0~2のとき
                 //プレイヤーのターン
-                FieldUIController.ActiveTerritory = 0;
+                ActiveTerritory = 0;
                 StartCoroutine(PlayerTurn());
             }
             else
@@ -106,7 +79,7 @@ namespace Field
                 //領地IDが存在する範囲なら領地イベントを実行
                 if (territory < game.TerritoryData.Count)
                 {
-                    FieldUIController.ActiveTerritory = territory;
+                    ActiveTerritory = territory;
                     StartCoroutine(EnemyTurn(territory));
                 }
                 else
@@ -389,8 +362,8 @@ namespace Field
 
             //戦闘呼び出し
             yield return StartCoroutine(game.CallPreBattle());
-            FieldUIController = null;
-            CameraController = null;
+            //FieldUIController = null;
+            //CameraController = null;
             SceneManager.UnloadScene(game.SceneName_FieldUI);
             yield return null;
 
@@ -675,5 +648,10 @@ namespace Field
             var game = Game.GetInstance();
             game.SoundManager.Stop(SoundType.BGM);
         }
+
+        //UI再表示
+
+
+        //UI非表示
     }
 }

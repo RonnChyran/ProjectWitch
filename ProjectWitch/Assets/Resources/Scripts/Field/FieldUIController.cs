@@ -43,10 +43,11 @@ namespace Field
         //ベースへの参照
         private List<GameObject> mBases = new List<GameObject>();
 
+        //FieldController
+        public FieldController FieldController { get; set; }
+
         //現在選択している領地
         public int SelectedTerritory { get; set; }
-        //現在行動している領地
-        public int ActiveTerritory { get; set; }
         //オーナーパネルロックフラグ
         public bool OwnerPanelLock { get; set; }
 
@@ -64,11 +65,11 @@ namespace Field
 
             //フィールドコントローラに自身をセット
             var fieldCtlr = GameObject.FindWithTag("FieldController");
-            fieldCtlr.GetComponent<FieldController>().FieldUIController = this;
+            FieldController = fieldCtlr.GetComponent<FieldController>();
+            FieldController.FieldUIController = this;
 
             //内部変数初期化
             SelectedTerritory = -1;
-            ActiveTerritory = -1;
             OwnerPanelLock = false;
         }
 
