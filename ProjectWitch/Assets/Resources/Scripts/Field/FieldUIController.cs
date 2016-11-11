@@ -92,7 +92,7 @@ namespace Field
         }
 
         //拠点の設置
-        private void AreaPointReset()
+        public void AreaPointReset()
         {
             var game = Game.GetInstance();
             

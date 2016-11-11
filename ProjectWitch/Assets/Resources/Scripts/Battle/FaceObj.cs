@@ -96,7 +96,9 @@ namespace Battle
 			var image = gameObject.GetComponent<Image>();
 			image.sprite = Resources.Load<Sprite>("Textures/Face/640_fv_non");
 			HPText.gameObject.SetActive(false);
-		}
+
+            IsExsistUnit = false;
+        }
 
 		// 死亡設定
 		public void SetDead()
@@ -153,7 +155,6 @@ namespace Battle
 		// Use this for initialization
 		void Start()
 		{
-			IsExsistUnit = false;
 			BattleObj = GameObject.Find("/BattleObject").GetComponent<BattleObj>();
 			mSelectFlame.SetActive(false);
 		}

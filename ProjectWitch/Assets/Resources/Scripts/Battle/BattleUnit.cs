@@ -318,9 +318,6 @@ namespace Battle
                 * PositionCoe * mBattle.Coe5;
             result = CalcCorrectGroupDamage(result);
 
-#if DEBUG
-            mcDebugText.Push(UnitData.Name + " G PDamage", result);
-#endif
             return result;
 		}
 
@@ -332,10 +329,6 @@ namespace Battle
             var result = ((Leadership + GMAtk) * GetCorrectSoldierNum() * AreaCorMAtk + mBattle.Rand2)
                 *mBattle.Coe7;
             result = CalcCorrectGroupDamage(result);
-
-#if DEBUG
-            mcDebugText.Push(UnitData.Name + " G MDamage", result);
-#endif
             
             return result;
 		}
@@ -345,10 +338,6 @@ namespace Battle
 		{
             var result = (Leadership + GPDef) * mBattle.Coe9 * AreaCorPDef + mBattle.Rand3;
 
-#if DEBUG
-            mcDebugText.Push(UnitData.Name + " G PRegDamage", result);
-#endif
-
             return result;
         }
 
@@ -356,10 +345,6 @@ namespace Battle
 		private float GetGroupMagRedDamage()
 		{
             var result = (Leadership + GMDef) * mBattle.Coe11 * AreaCorMDef + mBattle.Rand4;
-
-#if DEBUG
-            mcDebugText.Push(UnitData.Name + " G MRegDamage", result);
-#endif
 
             return result;
         }
@@ -427,11 +412,6 @@ namespace Battle
                 sufMagDamage = System.Math.Max(magDamage * mBattle.Coe10 - GetMagRedDamage() * mBattle.Coe12, 0);
             }
             var result = sufPhyDamage + sufMagDamage;
-
-#if DEBUG
-            mcDebugText.Push(UnitData.Name + " G Damage", result);
-#endif
-
             return result;
         }
 
@@ -510,7 +490,7 @@ namespace Battle
 			var leader = (GameObject)Resources.Load("Prefabs/Battle/" + UnitData.BattleLeaderPrefabPath);
 			mLeaderObj = BattleData.Instantiate(leader, "leader", transform).gameObject;
 			mLeaderObj.transform.localPosition = new Vector3(System.Math.Abs(leaderPos.localPosition.x) *
-				(IsPlayer ? -1 : 1), leaderPos.localPosition.y, leaderPos.localPosition.z);
+				(IsPlayer ? -1 : 1), leader.transform.localPosition.y, leaderPos.localPosition.z);
 			mLeaderObj.transform.localScale = new Vector3(System.Math.Abs(mLeaderObj.transform.localScale.x) *
 				(IsPlayer ? -1 : 1), mLeaderObj.transform.localScale.y, mLeaderObj.transform.localScale.z);
 			// リーダーのアニメーター
@@ -782,9 +762,6 @@ namespace Battle
 		// Use this for initialization
 		void Start()
         {
-            if (!mDebugText)
-                mDebugText = GameObject.FindWithTag("DebugObject");
-            mcDebugText = mDebugText.GetComponent<DebugText>();
         }
 
 		// Update is called once per frame

@@ -55,6 +55,8 @@ namespace Scenario.WorkSpace
         private Transform mStandCGAnchor4 = null;
         [SerializeField]
         private Transform mStandCGAnchor5 = null;
+        [SerializeField]
+        private Transform mEventCGAnchor = null;
 
 		//立ち絵の位置用のアップデータ
 		private class CGAnimationUpdater : UpdaterFormat
@@ -218,6 +220,9 @@ namespace Scenario.WorkSpace
 					Vector3 position_prev = new Vector3(0.0f, 0.0f, 0.0f);
 					Vector3 position_next = new Vector3(0.0f, 0.0f, 0.0f);
 					switch (pos) {
+                    case "event":
+                        pos = "6";
+                        break;
 					case "right":
 						pos = "4";
 						break;
@@ -231,7 +236,11 @@ namespace Scenario.WorkSpace
 						break;
 					}
 					switch (pos) {
-					case "5":
+                    case "6":
+                        position_prev = new Vector3(x, 0.0f, 0.0f);
+                        position_next = new Vector3(mEventCGAnchor.localPosition.x, 0.0f, 0.0f);
+                        break;
+                    case "5":
 						position_prev = new Vector3(x, 0.0f, 0.0f);
 						position_next = new Vector3(mStandCGAnchor5.localPosition.x, 0.0f, 0.0f);
 						break;

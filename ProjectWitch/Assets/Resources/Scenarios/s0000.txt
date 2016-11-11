@@ -8,6 +8,7 @@
 [loadcg id=3 ref="007_cv_veronicaA"]
 [loadcg id=4 ref="027_cv_raisaA"]
 [loadcg id=5 ref="028_cv_niaA"]
+[loadcg id=6 ref="Event/700"]
 
 #チシャ
 [voice ref="000000"]
@@ -17,7 +18,7 @@
 ;明転
 ;BGM再生
 ;イベントＣＧ 001 寝起きのアリス
-[background ref = "Event/700"]
+[drawcg id=6 pos="event"]
 [bgm ref="003_alice2"]
 #アリス
 [voice ref="000002"]
@@ -58,6 +59,7 @@
 最後に帽子をかぶるとアリスは鏡の前でにやりと笑い、[n]
 鼻歌交じりに部屋を出ていった。[p]
 [filter name="fade" time="500"]
+[clearcg id=6]
 [background ref="1000"]
 
 ……………。[p]
@@ -198,7 +200,6 @@
 [cn]
 体が重く、頭はぼうっとしている。[p]
 
-[background ref="1002"]
 [filter name="clear" time="500"]
 
 #アリス
@@ -330,7 +331,7 @@
 [clearcg id=3]
 [drawcg id=3 pos="left"]
 [drawcg id=0 pos="right"]
-[background ref="1043"]
+[background ref="1042"]
 [bgm ref="014_velonica"]
 [filter name="clear" time="500"]
 

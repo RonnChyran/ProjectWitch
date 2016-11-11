@@ -5,7 +5,6 @@
 [loadcg id=2 ref="011_cv_werewolfA"]
 [loadcg id=3 ref="037_cv_soldier"]
 [background ref="1011"]
-[bgm ref="018_event3"]
 [drawcg id=1 pos="center"]
 
 ;アリス領　アッサム砦（夜）
@@ -46,6 +45,8 @@
 [moveto id=1 x=20 y=50 time=200]
 [clearcg id=3]
 [drawcg id=0 pos="4"]
+
+[bgm ref="021_event6"]
 #アリス
 [voice ref="010060"]
 クフフッ[n]
@@ -76,7 +77,6 @@
 …………。[p]
 [clearcg id=0]
 [background ref="1014"]
-[bgm ref="002_alice1"]
 [drawcg id=2 pos="2"]
 [drawcg id=0 pos="5"]
 [drawcg id=1 pos="1"]
@@ -147,3 +147,4 @@
 フン、領主はこの私だ。 絶対に譲らんぞ。 [p]
 
 [sys_memset index=109 value="1"]
+[change_area_owner area=9 owner=0]

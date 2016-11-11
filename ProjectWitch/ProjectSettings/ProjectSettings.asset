@@ -10,10 +10,10 @@ PlayerSettings:
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
-  companyName: DefaultCompany
-  productName: ProjectWitch
+  companyName: ProjectWitch
+  productName: "\u308F\u304C\u307E\u307E\u30A2\u30EA\u30B9\u3068\u767E\u65E5\u6226\u4E89"
   defaultCursor: {fileID: 2800000, guid: 64420a7f417fcec4e8583bcd16fa471a, type: 3}
-  cursorHotspot: {x: 85, y: 85}
+  cursorHotspot: {x: 32, y: 32}
   m_SplashScreenStyle: 0
   m_ShowUnitySplashScreen: 1
   m_VirtualRealitySplashScreen: {fileID: 0}
@@ -179,13 +179,13 @@ PlayerSettings:
   - m_BuildTarget: 
     m_Icons:
     - serializedVersion: 2
-      m_Icon: {fileID: 0}
+      m_Icon: {fileID: 2800000, guid: c344dabe575227c4fa782110fcd0d438, type: 3}
       m_Width: 128
       m_Height: 128
   - m_BuildTarget: Standalone
     m_Icons:
     - serializedVersion: 2
-      m_Icon: {fileID: 0}
+      m_Icon: {fileID: 2800000, guid: c344dabe575227c4fa782110fcd0d438, type: 3}
       m_Width: 1024
       m_Height: 1024
     - serializedVersion: 2
@@ -212,7 +212,10 @@ PlayerSettings:
       m_Icon: {fileID: 0}
       m_Width: 16
       m_Height: 16
-  m_BuildTargetBatching: []
+  m_BuildTargetBatching:
+  - m_BuildTarget: Standalone
+    m_StaticBatching: 0
+    m_DynamicBatching: 1
   m_BuildTargetGraphicsAPIs: []
   webPlayerTemplate: APPLICATION:Default
   m_TemplateCustomTags: {}

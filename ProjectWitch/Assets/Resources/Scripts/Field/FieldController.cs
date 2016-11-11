@@ -253,17 +253,20 @@ namespace Field
         {
             var game = Game.GetInstance();
 
-            //防衛戦を担当する敵グループを取得
-            var group = GetDefenseGroup(area, territory);
-
-            //グループからユニットをセット
-            SetEnemy(group, false);
-
             //戦闘前スクリプトの開始
             var eventlist = game.FieldEventData.Where(p => p.Timing == EventDataFormat.TimingType.PlayerBattle).ToList();
             eventlist = eventlist.Where(p => p.Area == area).ToList();
             yield return StartCoroutine(EventExecute(eventlist));
-            while (game.IsTalk) yield return null;            
+            while (game.IsTalk) yield return null;
+
+            if (!game.BattleIn.IsEvent)
+            {
+                //防衛戦を担当する敵グループを取得
+                var group = GetDefenseGroup(area, territory);
+
+                //グループからユニットをセット
+                SetEnemy(group, false);
+            }
 
             //先頭の開始
             yield return StartCoroutine(CallBattle(area, territory, true));
@@ -305,10 +308,17 @@ namespace Field
                 {
                     territory.RemoveUnit(unit);
                 }
+
+                //すべてのグループからユニットを除外
+                foreach(var group in game.GroupData)
+                {
+                    group.UnitList.Remove(unit);
+                }
             }
 
             //ユニットの捕獲処理
-            foreach(var unit in game.BattleOut.CapturedUnits)
+            var dist = game.BattleOut.CapturedUnits.Distinct().ToList();
+            foreach(var unit in dist)
             {
                 //敵領地のすべてのグループからユニットを除外
                 var territory = game.TerritoryData[game.BattleIn.EnemyTerritory];
@@ -317,6 +327,22 @@ namespace Field
                 //味方領地に追加
                 var groupID = game.TerritoryData[game.BattleIn.PlayerTerritory].GroupList[0];
                 game.GroupData[groupID].UnitList.Add(unit);
+            }
+
+            //ユニットの逃走処理
+            foreach(var unit in game.BattleOut.EscapedUnits)
+            {
+                //回復処理
+                var udata = game.UnitData[unit];
+                udata.HP = (int)(udata.MaxHP * 0.3f);
+                udata.SoldierNum = (int)(udata.MaxSoldierNum * 0.3f);
+            }
+
+            //グループの消滅処理
+            foreach(var group in game.GroupData)
+            {
+                if (group.UnitList.Count == 0)
+                    group.Kill();
             }
 
 
@@ -340,6 +366,9 @@ namespace Field
 
             }
             while (game.IsTalk) yield return null;
+
+            //UIの更新
+            FieldUIController.AreaPointReset();
 
             game.BattleIn.Reset();
             game.ScenarioIn.Reset();
