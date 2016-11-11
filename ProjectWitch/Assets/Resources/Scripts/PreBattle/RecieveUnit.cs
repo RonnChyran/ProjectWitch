@@ -72,12 +72,9 @@ namespace PreBattle
             else
             {
                 mName.text = game.UnitData[UnitID].Name;
-                mSoldier.text = "S:" + game.UnitData[UnitID].SoldierNum.ToString();
-                mHP.text = "H:" + game.UnitData[UnitID].HP.ToString();
+                mSoldier.text = "兵数 " + game.UnitData[UnitID].SoldierNum.ToString();
+                mHP.text = "HP " + game.UnitData[UnitID].HP.ToString();
             }
-
-            //BattleInを更新
-            game.BattleIn.PlayerUnits[Position] = UnitID;
         }
     }
 }

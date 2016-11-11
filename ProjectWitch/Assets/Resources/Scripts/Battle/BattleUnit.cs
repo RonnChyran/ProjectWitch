@@ -41,11 +41,6 @@ namespace Battle
 	// ユニットの全体操作クラス
 	public class BattleUnit : MonoBehaviour
 	{
-        //デバッグテキスト出力用
-        [SerializeField]
-        private GameObject mDebugText = null;
-        private DebugText mcDebugText = null;
-
         private readonly float OutDisplay = 7f;
 
 		private Game mGame;

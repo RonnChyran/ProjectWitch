@@ -85,8 +85,8 @@ namespace PreBattle
             else
             {
                 mName.text = game.UnitData[UnitID].Name;
-                mSoldier.text = "S:" + game.UnitData[UnitID].SoldierNum.ToString();
-                mHP.text = "H:" + game.UnitData[UnitID].HP.ToString();
+                mSoldier.text = "兵数 " + game.UnitData[UnitID].SoldierNum.ToString();
+                mHP.text = "HP " + game.UnitData[UnitID].HP.ToString();
 
                 //顔画像をロードしてセット
                 var sprite = Resources.Load<Sprite>("Textures/Face/" + game.UnitData[mUnitID].FaceIamgePath);

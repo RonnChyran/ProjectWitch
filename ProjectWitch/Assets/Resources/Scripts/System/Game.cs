@@ -41,14 +41,17 @@ public class Game : MonoBehaviour
 
     #region 外部システム
 
+    //サウンドマネージャ
     [SerializeField]
     private SoundManager mSoundManager = null;
     public SoundManager SoundManager { get { return mSoundManager; } private set { } }
 
+    //インゲームデバッグ出力
     [SerializeField]
     private DebugText mDebugMessage = null;
     public DebugText DebugMessage { get { return mDebugMessage; } private set { } }
 
+    //ローディング画面
     [SerializeField]
     private GameObject mNowLoadingPrefab = null;
 
@@ -212,6 +215,8 @@ public class Game : MonoBehaviour
 #endif
     }
 
+
+
     //ダイアログを表示
     public void ShowDialog(string caption, string message)
     {
@@ -250,8 +255,6 @@ public class Game : MonoBehaviour
 
         EndingID = id;
         SceneManager.LoadScene(cSceneName_Ending);
-
-        HideNowLoading();
     }
 
     //フィールドの開始
@@ -441,4 +444,7 @@ public class Game : MonoBehaviour
 
         }
     }
+    
+
+
 }

@@ -6,6 +6,9 @@ public class Ending : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
+        var game = Game.GetInstance();
+        game.HideNowLoading();
+
         StartCoroutine(CoEnding());
 
     }
@@ -21,10 +24,30 @@ public class Ending : MonoBehaviour {
 
         //イベントデータの設定
         var ev = new GameData.EventDataFormat();
-        ev.FileName = "s9991";
-        ev.NextA = -1;
-        ev.NextB = -1;
-
+        switch (id)
+        {
+            case 14:
+                ev.FileName = "s9994";
+                ev.NextA = -1;
+                ev.NextB = -1;
+                break;
+            case 15:
+                ev.FileName = "s9995";
+                ev.NextA = -1;
+                ev.NextB = -1;
+                break;
+            case 16:
+                ev.FileName = "s9996";
+                ev.NextA = -1;
+                ev.NextB = -1;
+                break;
+            default:
+                ev.FileName = "s9994";
+                ev.NextA = -1;
+                ev.NextB = -1;
+                break;
+        }
+        
         //スクリプト実行
         game.CallScript(ev);
         yield return null;

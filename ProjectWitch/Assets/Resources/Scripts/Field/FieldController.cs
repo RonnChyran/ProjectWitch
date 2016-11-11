@@ -341,10 +341,38 @@ namespace Field
             //グループの消滅処理
             foreach(var group in game.GroupData)
             {
+                //ユニットの残数が0なら消滅
                 if (group.UnitList.Count == 0)
                     group.Kill();
+
+
+                //死守領地がない場合は続行
+                if (group.DominationRoute.Count == 0) continue;
+
+                //稼働状態で、死守領地が落ちたら消滅
+                if(group.State == GroupDataFormat.GroupState.Active &&
+                    game.AreaData[group.DominationRoute[0]].Owner == game.BattleIn.PlayerTerritory)
+                {
+                    group.Kill();
+                }
             }
 
+            //自営軍の復活
+            var g = game.GroupData[GroupDataFormat.GetDefaultID()];
+            g.Rebirth();    //グループの復活
+            foreach (var unit in g.UnitList)
+            {
+                //ユニットの復活
+                game.UnitData[unit].Rebirth();
+            }
+
+            //アリスが死んでいたらゲームオーバー
+            if (game.UnitData[0].IsAlive == false)
+                StartCoroutine(game.CallEnding(14));
+
+            //アリスの館が落ちたらゲームオーバー
+            if (game.AreaData[1].Owner != 0)
+                StartCoroutine(game.CallEnding(15));
 
             //戦闘情報をリセット
             game.BattleIn.Reset();
@@ -371,6 +399,7 @@ namespace Field
             FieldUIController.AreaPointReset();
 
             game.BattleIn.Reset();
+            game.BattleOut.Reset();
             game.ScenarioIn.Reset();
 
             yield return null;

@@ -26,6 +26,12 @@ namespace Scenario.WorkSpace
 			}
 		}
 
+        public void StopBGM()
+        {
+            var game = Game.GetInstance();
+            game.SoundManager.Stop(SoundType.BGM);
+        }
+
 		//SE再生
 		public void PlaySE(string fileName, float volume)
 		{
@@ -80,7 +86,7 @@ namespace Scenario.WorkSpace
 			vm.AddCommandDelegater (
 				"StopBGM",
 				new CommandDelegater(false, 0, delegate(object[] arguments){
-					PlayBGM (null, 0);
+					StopBGM ();
 					return null;
 				}));
 			//SEを再生

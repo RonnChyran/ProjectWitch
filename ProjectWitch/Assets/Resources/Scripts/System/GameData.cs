@@ -112,6 +112,14 @@ namespace GameData
         //戦闘兵士プレハブ名
         public string BattleGroupPrefabPath { get; set; }
 
+        //死亡時セリフ
+        public string OnDeadSerif { get; set; }
+        //捕獲時セリフ
+        public string OnCapturedSerif { get; set; }
+        //逃走時セリフ
+        public string OnEscapedSerif { get; set; }
+        
+
         //コメント
         public string Comment { get; set; }
 
@@ -129,6 +137,22 @@ namespace GameData
         public int Leadership { get { return (int) (Lead0 + Lead100 / 100.0f * Level); } private set { } }  //指揮力
         public int Curative { get { return (int)(Cur0 + Cur100 / 100.0f * Level); } private set { } }       //回復力
         public int Agility { get { return (int)(Agi0 + Agi100 / 100.0f * Level); } private set { } }        //機動力
+
+        //死亡状態にする
+        public void Kill()
+        {
+            SoldierNum = 0;
+            HP = 0;
+            IsAlive = false;
+        }
+
+        //復活させる
+        public void Rebirth()
+        {
+            SoldierNum = MaxSoldierNum;
+            HP = MaxHP;
+            IsAlive = true;
+        }
     }
 
     //スキルデータ
@@ -531,6 +555,12 @@ namespace GameData
             state = GroupState.Dead;
         }
 
+        //復活させる
+        public void Rebirth()
+        {
+            state = GroupState.Active;
+        }
+
         //自営団のIDを取得
         public static int GetDefaultID()
         {
@@ -836,6 +866,14 @@ namespace GameData
         public List<int> CapturedUnits { get; set; }
         //逃走したユニット
         public List<int> EscapedUnits { get; set; }
+
+        //初期状態に戻す
+        public void Reset()
+        {
+            DeadUnits.Clear();
+            CapturedUnits.Clear();
+            EscapedUnits.Clear();
+        }
     }
 
     public class ScenarioDataIn

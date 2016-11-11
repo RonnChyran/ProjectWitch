@@ -85,6 +85,10 @@ namespace Scenario.WorkSpace
 		//	error	:エラーメッセージ
 		void CallEnding(int index, out string error)
 		{
+            var game = Game.GetInstance();
+
+            StartCoroutine(game.CallEnding(index));
+
 			error = null;
 
 		}
