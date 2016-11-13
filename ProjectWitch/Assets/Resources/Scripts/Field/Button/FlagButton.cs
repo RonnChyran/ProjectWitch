@@ -55,6 +55,7 @@ namespace Field
                 mcButton.interactable = false;
         }
 
+        //メニューを開く
         public void OpenMenu()
         {
             var game = Game.GetInstance();
@@ -67,11 +68,15 @@ namespace Field
 
             //フラグメニューの２重起動防止
             FieldController.FlagClickable = false;
+            
+            //メニュー操作無効
+            FieldController.MenuClickable = false;
 
             //オーナーパネルをロック
             FieldUIController.OwnerPanelLock = true;
         }
 
+        //メニューの表示処理
         private void ShowMenu(GameObject menu)
         {
             //描画先のキャンバス

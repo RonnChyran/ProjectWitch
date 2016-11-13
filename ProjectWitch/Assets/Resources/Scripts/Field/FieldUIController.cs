@@ -11,6 +11,14 @@ namespace Field
 
     public class FieldUIController : MonoBehaviour
     {
+        //コントローラ
+        [SerializeField]
+        private FieldController mFieldController = null;
+
+        //非表示にするUI
+        [SerializeField]
+        private Canvas mPanel = null;
+
         ////自動操作時のカメラスピード
         //[SerializeField]
         //private float mCameraSpeed = 1.0f;
@@ -43,7 +51,6 @@ namespace Field
         //ベースへの参照
         private List<GameObject> mBases = new List<GameObject>();
 
-
         //現在行動している領地
         public int ActiveTerritory { get; set; }
         //現在選択している領地
@@ -70,6 +77,15 @@ namespace Field
 
         void Update()
         {
+            if(mFieldController.MenuClickable)
+            {
+                if (Input.GetButtonDown("Cancel"))
+                {
+                    StartCoroutine(Game.GetInstance().CallMenu());
+                    HideUI();
+                    mFieldController.MenuClickable = false;
+                }
+            }
         }
 
         //エリアのハイライトエフェクト表示
@@ -200,6 +216,18 @@ namespace Field
             var inst = Instantiate(mLine);
             inst.transform.SetParent(mFlagCanvas.transform);
             inst.GetComponent<LineRenderer>().SetPositions(new Vector3[] { pointA, pointB });
+        }
+
+        //UIを表示
+        public void ShowUI()
+        {
+            mPanel.enabled = true;
+        }
+
+        //UIを隠す
+        public void HideUI()
+        {
+            mPanel.enabled = false;
         }
     }
 }

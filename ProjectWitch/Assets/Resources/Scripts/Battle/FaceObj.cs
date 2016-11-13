@@ -2,6 +2,8 @@
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System.Collections.Generic;
+using System.Linq; //iOSで動かないかも
 
 namespace Battle
 {
@@ -9,11 +11,27 @@ namespace Battle
 	public class FaceObj : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 	{
 		[SerializeField]
-		private GameObject mAttackButton = null, mDefenseButton = null, mCaptureButton = null, mSelectFlame = null;
+		private GameObject mAttackButton = null, mDefenseButton = null, mCaptureButton = null;
+		[SerializeField]
+		private GameObject mActionFlame = null, mSelectFlame = null;
+		[SerializeField]
+		private GameObject mNameText = null, mStateText = null;
+		[SerializeField]
+		private Transform mStatusContainer = null;
+		[SerializeField]
+		private GameObject mStatusUpDown = null, mStatusPoison = null, mStatusGuard = null, mStatusNoDamage = null;
+		[SerializeField]
+		private Sprite mSpriteStatusUp = null, mSpriteStatusDown = null,
+			mSpriteStatusLead = null, mSpriteStatusAgi = null, mSpriteStatusPhyAtk = null, mSpriteStatusPhyDef = null, mSpriteStatusMagAtk = null, mSpriteStatusMagDef = null;
 
 		private int mHP, mSoldierNum;
 		private Vector3 mBaseRectPos;
 		private Vector2 mBaseRectSize;
+		private List<float> mPreStatusDataUpDown;
+		private List<bool> mPreStatusDataOther;
+		private List<GameObject> Icons { get; set; }
+		private List<GameObject> PrefabStatusOthers { get; set; }
+		private List<Sprite> SpriteUpDownType { get; set; }
 
 		public BattleObj BattleObj { get; private set; }
 		public SkillButton AttackButton { get { return mAttackButton.GetComponent<SkillButton>(); } }
@@ -28,6 +46,9 @@ namespace Battle
 		public int Pos { get; private set; }
 		public bool IsPlayer { get; private set; }
 		public bool IsMoving { get; private set; }
+		// 音楽再生
+		public PlayMusic Music { get { return BattleObj.Music; } }
+
 
 		// ユニットを設定する
 		public void SetUnit(BattleUnit unit)
@@ -44,10 +65,73 @@ namespace Battle
 			LeaderHPText.text = Unit.DisplayHP.ToString();
 			SoldierNumText.text = Unit.DisplaySoldierNum.ToString();
 
+			mNameText.GetComponent<Text>().text = Unit.UnitData.Name;
+			mStateText.GetComponent<Text>().text = "";
+
 			AttackButton.Setup(this);
 			DefenseButton.Setup(this);
 			CaptureButton.Setup(this);
+			SetActionFlame(false);
 			IsExsistUnit = true;
+			Icons = new List<GameObject>();
+			PrefabStatusOthers = new List<GameObject>();
+			PrefabStatusOthers.Add(mStatusPoison);
+			PrefabStatusOthers.Add(mStatusGuard);
+			PrefabStatusOthers.Add(mStatusNoDamage);
+			SpriteUpDownType = new List<Sprite>();
+			SpriteUpDownType.Add(mSpriteStatusPhyAtk);
+			SpriteUpDownType.Add(mSpriteStatusPhyDef);
+			SpriteUpDownType.Add(mSpriteStatusMagAtk);
+			SpriteUpDownType.Add(mSpriteStatusMagDef);
+			SpriteUpDownType.Add(mSpriteStatusAgi);
+			SpriteUpDownType.Add(mSpriteStatusLead);
+
+			mPreStatusDataUpDown = Enumerable.Repeat<float>(0, 6).ToList();
+			mPreStatusDataOther = Enumerable.Repeat<bool>(false, 3).ToList();
+			SetStatusIcons();
+		}
+
+	// ステータスアイコンを設定する
+	public void SetStatusIcons()
+		{
+			for (int i = 0; i < mPreStatusDataUpDown.Count; i++)
+				mPreStatusDataUpDown[i] = Unit.GetStatusPercent(i);
+			for (int i = 0; i < mPreStatusDataOther.Count; i++)
+				mPreStatusDataOther[i] = Unit.GetStatusOtherFlag(i);
+
+			foreach (var icon in Icons)
+				Destroy(icon);
+			Icons.Clear();
+			int iconNum = 0;
+			for (int i = 0; i < mPreStatusDataOther.Count; i++)
+			{
+				if (mPreStatusDataOther[i])
+				{
+					var prefab = PrefabStatusOthers[i];
+					var icon = BattleData.Instantiate(prefab, prefab.name, mStatusContainer);
+					icon.localPosition = new Vector3(-95 + (iconNum % 4) * 65, 210 + (iconNum / 4) * 85, 0);
+					icon.localScale = PrefabStatusOthers[i].transform.localScale;
+					Icons.Add(icon.gameObject);
+					++iconNum;
+				}
+			}
+			for (int i = 0; i < mPreStatusDataUpDown.Count; i++)
+			{
+				if (mPreStatusDataUpDown[i] != 0)
+				{
+					var icon = BattleData.Instantiate(mStatusUpDown, mStatusUpDown.name, mStatusContainer);
+					icon.localPosition = new Vector3(-95 + (iconNum % 4) * 65, 210 + (iconNum / 4) * 85, 0);
+					icon.localScale = mStatusUpDown.transform.localScale;
+					var arrow = icon.FindChild("Arrow").GetComponent<Image>();
+					var type = icon.FindChild("Type").GetComponent<Image>();
+					var text = icon.FindChild("Text").GetComponent<Text>();
+					arrow.sprite = (mPreStatusDataUpDown[i] > 0 ? mSpriteStatusUp : mSpriteStatusDown);
+					type.sprite = SpriteUpDownType[i];
+					text.text = (int)mPreStatusDataUpDown[i] + "%";
+					Icons.Add(icon.gameObject);
+					++iconNum;
+				}
+			}
 		}
 
 		// 場所を設定する
@@ -89,22 +173,32 @@ namespace Battle
 				Unit.Position = Position.Rear;
 		}
 
-		// ユニットを設定する
+		// 空ユニットを設定する
 		public void SetNoneUnit()
 		{
 			Unit = null;
+			IsExsistUnit = false;
 			var image = gameObject.GetComponent<Image>();
 			image.sprite = Resources.Load<Sprite>("Textures/Face/640_fv_non");
 			HPText.gameObject.SetActive(false);
+			mNameText.GetComponent<Text>().text = "";
+			mStateText.GetComponent<Text>().text = "";
+		}
 
-            IsExsistUnit = false;
-        }
+		// 行動設定
+		public void SetActionFlame(bool action)
+		{
+			mActionFlame.SetActive(action);
+		}
 
 		// 死亡設定
 		public void SetDead()
 		{
 			var image = gameObject.GetComponent<Image>();
 			image.color = new Color(255 / 255.0f, 47 / 255.0f, 47 / 255.0f);
+			HPText.gameObject.SetActive(false);
+			mStateText.SetActive(true);
+			mStateText.GetComponent<Text>().text = "死亡";
 			IsExsistUnit = false;
 		}
 
@@ -114,6 +208,8 @@ namespace Battle
 			var image = gameObject.GetComponent<Image>();
 			image.color = new Color(47 / 255.0f, 47 / 255.0f, 255 / 255.0f);
 			HPText.gameObject.SetActive(false);
+			mStateText.SetActive(true);
+			mStateText.GetComponent<Text>().text = "捕獲";
 			IsExsistUnit = false;
 		}
 
@@ -123,6 +219,8 @@ namespace Battle
 			var image = gameObject.GetComponent<Image>();
 			image.color = new Color(47 / 255.0f, 47 / 255.0f, 47 / 255.0f);
 			HPText.gameObject.SetActive(false);
+			mStateText.SetActive(true);
+			mStateText.GetComponent<Text>().text = "敗走";
 			IsExsistUnit = false;
 		}
 
@@ -162,7 +260,7 @@ namespace Battle
 		// Update is called once per frame
 		void Update()
 		{
-			if (Unit == null)
+			if (!Unit)
 				return;
 			if (mHP != Unit.DisplayHP)
 			{
@@ -174,11 +272,33 @@ namespace Battle
 				mSoldierNum = Unit.DisplaySoldierNum;
 				SoldierNumText.text = Unit.DisplaySoldierNum.ToString();
 			}
+			// ステータスアイコン変更
+			bool statusChangeFlag = false;
+			for (int i = 0; i < mPreStatusDataUpDown.Count; i++)
+			{
+				if (mPreStatusDataUpDown[i] != Unit.GetStatusPercent(i))
+				{
+					statusChangeFlag = true;
+					break;
+				}
+			}
+			if (!statusChangeFlag)
+			{
+				for (int i = 0; i < mPreStatusDataOther.Count; i++)
+				{
+					if(mPreStatusDataOther[i]!= Unit.GetStatusOtherFlag(i))
+					{
+						statusChangeFlag = true;
+						break;
+					}
+				}
+			}
+			if (statusChangeFlag)
+				SetStatusIcons();
 		}
 
 		// マウスオーバーした時
 		public void OnPointerEnter(PointerEventData e) {
-
 			if (!BattleObj.IsPlayerSelectTime || !IsExsistUnit || Unit.UnitData.HP == 0)
 				return;
 			var turnUnit = BattleObj.TurnUnit;
@@ -241,9 +361,9 @@ namespace Battle
 		}
 
 		// 選択枠を非表示
-		public void HideSelectFlame()
+		public void SetSelectFlame(bool flag)
 		{
-			mSelectFlame.SetActive(false);
+			mSelectFlame.SetActive(flag);
 		}
 
 		public void SetAllFaceHide()

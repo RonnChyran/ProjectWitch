@@ -1,114 +1,98 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace Field
-{
-    public class FlagMenu : MonoBehaviour
-    {
-        //地点番号
-        public int AreaID { get; set; }
+//namespace Field
+//{
+//    public class FlagMenu : MonoBehaviour
+//    {
+//        //地点番号
+//        public int AreaID { get; set; }
 
-        //field controller
-        private FieldController mFieldController;
-        private FieldUIController mFieldUIController;
+//        //field controller
+//        private FieldController mFieldController;
+//        private FieldUIController mFieldUIController;
 
-        void Start()
-        {
-            //フィールドUIコントローラを取得
-            var obj = GameObject.FindWithTag("FieldController");
-            mFieldController = obj.GetComponent<FieldController>();
-            mFieldUIController = mFieldController.FieldUIController;
-        }
+//        void Start()
+//        {
+//            //フィールドUIコントローラを取得
+//            var obj = GameObject.FindWithTag("FieldController");
+//            mFieldController = obj.GetComponent<FieldController>();
+//            mFieldUIController = mFieldController.FieldUIController;
+//        }
 
-        //Update
-        void Update()
-        {
-            var game = Game.GetInstance();
+//        //Update
+//        void Update()
+//        {
+//            var game = Game.GetInstance();
 
-            //ダイアログが出ていたら何もしない
-            if (game.IsDialogShowd) return;
+//            //ダイアログが出ていたら何もしない
+//            if (game.IsDialogShowd) return;
 
-            if (Input.GetMouseButton(1))
-            {
-                Close();
-            }
-        }
+//            if (Input.GetButtonDown("Cancel"))
+//            {   
+//                //メニューをクリック可能に
+//                mFieldController.MenuClickable = true;
+//                Close();
+//            }
+//        }
 
-        //地点情報を表示
-        public void CallAreaInfo()
-        {
-            var game = Game.GetInstance();
+//        //戦闘開始
+//        public void CallBattle()
+//        {
+//            var game = Game.GetInstance();
 
-            //二重起動の防止
-            if (game.IsDialogShowd) return;
+//            //二重起動の防止
+//            if (game.IsDialogShowd) return;
 
-            //地点情報の読み出し
-            string areaInfo = "";
-            areaInfo += game.AreaData[AreaID].Name + "\n";
-            areaInfo += game.TerritoryData[game.AreaData[AreaID].Owner].OwnerName + "領\n";
-            areaInfo += "地点レベル：　" + game.AreaData[AreaID].Level.ToString() + "\n";
-            areaInfo += "所持マナ：　" + game.AreaData[AreaID].Mana.ToString() + "\n";
+//            //侵攻戦の開始
+//            mFieldController.DominationBattle(AreaID, game.AreaData[AreaID].Owner);
 
-            game.ShowDialog("地点情報", areaInfo);
+//            //メニューを閉じる
+//            Close();
+//        }
 
-            //メニューを閉じる
-            Close();
-        }
+//        //マナ集め
+//        public void CallManaGathering()
+//        {
+//            var game = Game.GetInstance();
 
-        //戦闘開始
-        public void CallBattle()
-        {
-            var game = Game.GetInstance();
+//            //二重起動の防止
+//            if (game.IsDialogShowd) return;
 
-            //二重起動の防止
-            if (game.IsDialogShowd) return;
+//            //取得するマナ量
+//            var mana = game.AreaData[AreaID].Mana;
 
-            //侵攻戦の開始
-            mFieldController.DominationBattle(AreaID, game.AreaData[AreaID].Owner);
+//            //表示する文字列の構成
+//            var str = "地点：" + game.AreaData[AreaID].Name +"\n";
+//            str += "現在の所持マナ：" + game.PlayerMana + "M\n";
+//            str += "取得マナ：" + mana.ToString() + "M\n";
+//            str += "取得後の所持マナ：" + (game.PlayerMana + mana).ToString() + "M\n";
 
-            //メニューを閉じる
-            Close();
-        }
+//            game.ShowDialog("マナ収集", str);
 
-        //マナ集め
-        public void CallManaGathering()
-        {
-            var game = Game.GetInstance();
+//            //マナの増加処理
+//            game.PlayerMana += mana;
+//            game.AreaData[AreaID].Mana = 0;
 
-            //二重起動の防止
-            if (game.IsDialogShowd) return;
+//            //時間を進める
+//            game.CurrentTime++;
+            
+//            //メニューをクリック可能に
+//            mFieldController.MenuClickable = true;
 
-            //取得するマナ量
-            var mana = game.AreaData[AreaID].Mana;
+//            //メニューを閉じる
+//            Close();
+//        }
 
-            //表示する文字列の構成
-            var str = "地点：" + game.AreaData[AreaID].Name +"\n";
-            str += "現在の所持マナ：" + game.PlayerMana + "M\n";
-            str += "取得マナ：" + mana.ToString() + "M\n";
-            str += "取得後の所持マナ：" + (game.PlayerMana + mana).ToString() + "M\n";
+//        //メニューを閉じる
+//        public void Close()
+//        {
+//            mFieldController.FlagClickable = true;
+//            mFieldUIController.OwnerPanelLock = false;
+//            mFieldUIController.SelectedTerritory = -1;
+//            Destroy(this.gameObject);
+//        }
 
-            game.ShowDialog("マナ収集", str);
-
-            //マナの増加処理
-            game.PlayerMana += mana;
-            game.AreaData[AreaID].Mana = 0;
-
-            //時間を進める
-            game.CurrentTime++;
-
-            //メニューを閉じる
-            Close();
-        }
-
-        //メニューを閉じる
-        public void Close()
-        {
-            mFieldController.FlagClickable = true;
-            mFieldUIController.OwnerPanelLock = false;
-            mFieldUIController.SelectedTerritory = -1;
-            Destroy(this.gameObject);
-        }
-
-    }
+//    }
     
-}
+//}

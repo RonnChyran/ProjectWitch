@@ -15,6 +15,7 @@ public class Game : MonoBehaviour
     private const string cSceneName_Battle      = "Battle";
     private const string cSceneName_PreBattle   = "PreBattle";
     private const string cSceneName_Field       = "Field";
+    private const string cSceneName_Menu        = "Menu";
     private const string cSceneName_Save        = "Save";
     private const string cSceneName_Load        = "Load";
     private const string cSceneName_Talk        = "Talk";
@@ -26,6 +27,7 @@ public class Game : MonoBehaviour
     public string SceneName_Battle { get { return cSceneName_Battle; } private set { } }
     public string SceneName_PreBattle { get { return cSceneName_PreBattle; } private set { } }
     public string SceneName_Field { get { return cSceneName_Field; } private set { } }
+    public string SceneName_Menu { get { return cSceneName_Menu; } private set { } }
     public string SceneName_Save { get { return cSceneName_Save; } private set { } }
     public string SceneName_Load { get { return cSceneName_Load; } private set { } }
     public string SceneName_Talk { get { return cSceneName_Talk; } private set { } }
@@ -269,6 +271,13 @@ public class Game : MonoBehaviour
         yield return null;
     }
 
+    //メニューの呼び出し
+    public IEnumerator CallMenu()
+    {
+        SceneManager.LoadSceneAsync(cSceneName_Menu, LoadSceneMode.Additive);
+
+        yield return null;
+    }
 
     //戦闘の開始
     public IEnumerator CallPreBattle()

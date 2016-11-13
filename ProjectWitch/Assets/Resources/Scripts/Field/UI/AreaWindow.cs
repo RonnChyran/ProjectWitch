@@ -73,6 +73,9 @@ namespace Field
                 //キャンセル音再生
                 game.SoundManager.PlaySE(SE.Cancel);
 
+                //メニューを開けるようにする
+                FieldController.MenuClickable = true;
+
                 Close();
             }
         }
@@ -164,6 +167,9 @@ namespace Field
 
             //時間を進める
             game.CurrentTime++;
+
+            //メニューを開けるようにする
+            FieldController.MenuClickable = true;
 
             //メニューを閉じる
             Close();

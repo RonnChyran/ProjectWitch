@@ -22,6 +22,13 @@ namespace GameData
         {
             Love = 0;
             IsAlive = true;
+            Experience = 32;
+        }
+
+        //コピーメソッド
+        public UnitDataFormat Clone()
+        {
+            return (UnitDataFormat)MemberwiseClone();
         }
 
         //ユニット名
@@ -780,6 +787,7 @@ namespace GameData
         public BattleDataIn()
         {
             Init();
+            BGM = "004_battle1";
         }
 
         public void Reset()

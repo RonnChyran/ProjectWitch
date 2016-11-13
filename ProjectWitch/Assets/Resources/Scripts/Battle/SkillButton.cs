@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 namespace Battle
 {
 	// スキルのボタン制御
-	public class SkillButton : MonoBehaviour
+	public class SkillButton : MonoBehaviour, IPointerEnterHandler
 	{
 		private Vector3 mBasePos;
 		private Vector2 mBaseSize;
@@ -39,6 +40,13 @@ namespace Battle
 		public void PushButton(int type)
 		{
 			BaseFace.BattleObj.PushSkillButton(BaseFace.Unit, type);
+		}
+
+		// マウスオーバーした時
+		public void OnPointerEnter(PointerEventData e)
+		{
+			// 音を鳴らす
+			BaseFace.Music.PlayOverSkillButton();
 		}
 
 		// Use this for initialization
