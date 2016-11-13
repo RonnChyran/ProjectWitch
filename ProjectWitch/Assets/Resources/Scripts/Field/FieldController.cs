@@ -139,14 +139,14 @@ namespace Field
                 game.RecoverUnit();
 
             }
-            
-            //時間が変化するまで待機
-            while (currentTime == game.CurrentTime) yield return null;
 
             //メニュー操作を有効にする
             MenuClickable = true;
             FlagClickable = true;
 
+            //時間が変化するまで待機
+            while (currentTime == game.CurrentTime) yield return null;
+            
             //コルーチン終了
             mIsCoroutineExec = false;
             yield return null;

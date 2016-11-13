@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.EventSystems;
 
-namespace PreBattle
+namespace PreBattleOld
 {
     public class RecieveCard : RecieveObject
     {

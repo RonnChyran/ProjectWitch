@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System.Collections;
 
-namespace PreBattle
+namespace PreBattleOld
 {
     public class RecieveUnit : RecieveObject
     {

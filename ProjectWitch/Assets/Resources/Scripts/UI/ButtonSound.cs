@@ -17,4 +17,11 @@ public class ButtonSound : MonoBehaviour, IPointerEnterHandler {
 
         game.SoundManager.PlaySE(SE.Click);
     }
+
+    public void OnClicked_Cancel()
+    {
+        var game = Game.GetInstance();
+
+        game.SoundManager.PlaySE(SE.Cancel);
+    }
 }

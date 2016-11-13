@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System.Collections;
 
-namespace PreBattle
+namespace PreBattleOld
 {
     public class DragObject : DragAndDropBase
     {

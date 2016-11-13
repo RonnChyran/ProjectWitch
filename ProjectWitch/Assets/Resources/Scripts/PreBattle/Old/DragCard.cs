@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 
-namespace PreBattle
+namespace PreBattleOld
 {
     public class DragCard : DragObject
     {

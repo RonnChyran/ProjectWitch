@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using System.Linq;
 
-namespace PreBattle
+namespace PreBattleOld
 {
     public class PreBattleButton : MonoBehaviour
     {
