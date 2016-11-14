@@ -634,7 +634,7 @@ RectTransform:
   m_Father: {fileID: 94717111}
   m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 3.4099731}
   m_SizeDelta: {x: 20, y: 31}
   m_Pivot: {x: 0.5, y: 0.11}
@@ -1792,7 +1792,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2125733122}
   m_HandleRect: {fileID: 2125733121}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -2040,7 +2040,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &284063545
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2188,6 +2188,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mPanel: {fileID: 1892047773}
   mLvUpWindow: {fileID: 1822485281}
+  mSoldierEditWindow: {fileID: 1224820495}
   mCharacterImagePath: Textures/Menu/Character/
   mName: {fileID: 1089543391}
   mLV: {fileID: 1566323550}
@@ -2696,6 +2697,7 @@ GameObject:
   - 222: {fileID: 516015664}
   - 114: {fileID: 516015663}
   - 114: {fileID: 516015662}
+  - 114: {fileID: 516015665}
   m_Layer: 5
   m_Name: submit
   m_TagString: Untagged
@@ -2759,7 +2761,29 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 516015663}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1224820495}
+        m_MethodName: Submit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 516015665}
+        m_MethodName: OnClicked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &516015663
@@ -2795,6 +2819,17 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 516015660}
+--- !u!114 &516015665
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 516015660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c382ec91e6056a4fb3242468a05a5a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &527908101
 GameObject:
   m_ObjectHideFlags: 0
@@ -3298,7 +3333,7 @@ RectTransform:
   m_Father: {fileID: 1491950318}
   m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 3.4099731}
   m_SizeDelta: {x: 20, y: 31}
   m_Pivot: {x: 0.5, y: 0.11}
@@ -3346,6 +3381,7 @@ GameObject:
   - 222: {fileID: 708235230}
   - 114: {fileID: 708235229}
   - 114: {fileID: 708235228}
+  - 114: {fileID: 708235231}
   m_Layer: 5
   m_Name: cancel
   m_TagString: Untagged
@@ -3409,7 +3445,29 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 708235229}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1224820495}
+        m_MethodName: Cancel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 708235231}
+        m_MethodName: OnClicked_Cancel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &708235229
@@ -3445,6 +3503,17 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 708235226}
+--- !u!114 &708235231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 708235226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c382ec91e6056a4fb3242468a05a5a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &736550766
 GameObject:
   m_ObjectHideFlags: 0
@@ -3942,7 +4011,7 @@ RectTransform:
   m_Father: {fileID: 816648905}
   m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -4288,7 +4357,7 @@ RectTransform:
   m_Father: {fileID: 1151414121}
   m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -4830,7 +4899,7 @@ RectTransform:
   m_Father: {fileID: 1277102729}
   m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 3.4099731}
   m_SizeDelta: {x: 20, y: 31}
   m_Pivot: {x: 0.5, y: 0.11}
@@ -5856,6 +5925,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 308e8eb2a7b787645b5651eb6b16187b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mPanel: {fileID: 284063544}
+  mArmyMenu: {fileID: 600664661}
+  mSliderHP: {fileID: 1793915173}
+  mSliderSoldier: {fileID: 117499945}
+  mSliderMaxSoldier: {fileID: 7561095}
+  mHPText: {fileID: 1332197778}
+  mSoldierText: {fileID: 966251228}
+  mMaxSoldierText: {fileID: 1410627257}
+  mHPCostText: {fileID: 1704528008}
+  mSoldierCostText: {fileID: 1792028351}
+  mSoldierMaxCostText: {fileID: 1527100425}
+  mRequiredManaText: {fileID: 946321018}
+  mCurrentManaText: {fileID: 1376661277}
+  mSubmitButton: {fileID: 516015662}
 --- !u!1 &1277102728
 GameObject:
   m_ObjectHideFlags: 0
@@ -8659,7 +8742,7 @@ RectTransform:
   m_Father: {fileID: 1421140394}
   m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}

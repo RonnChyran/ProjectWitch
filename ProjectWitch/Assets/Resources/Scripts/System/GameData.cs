@@ -22,7 +22,10 @@ namespace GameData
         {
             Love = 0;
             IsAlive = true;
-            Experience = 32;
+            Experience = 10;
+            SoldierCost = 2;
+            HPCost = 8;
+            SoldierLimitCost = 35;
         }
 
         //コピーメソッド
@@ -109,6 +112,15 @@ namespace GameData
 
         //AI番号
         public int AIID { get; set; }
+
+        //HP回復コスト
+        public int HPCost { get; set; }
+
+        //兵士回復コスト
+        public int SoldierCost { get; set; }
+
+        //最大兵士数成長コスト
+        public int SoldierLimitCost { get; set; }
 
         //立ち絵画像名
         public string StandImagePath { get; set; }
@@ -874,6 +886,8 @@ namespace GameData
         public List<int> CapturedUnits { get; set; }
         //逃走したユニット
         public List<int> EscapedUnits { get; set; }
+        //使用したカード
+        public List<int> UsedCards { get; set; }
 
         //初期状態に戻す
         public void Reset()

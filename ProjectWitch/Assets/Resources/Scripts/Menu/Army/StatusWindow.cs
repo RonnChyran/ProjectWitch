@@ -11,7 +11,8 @@ namespace Menu
         private GameObject mPanel = null;
         [SerializeField]
         private LvUpWindow mLvUpWindow = null;
-
+        [SerializeField]
+        private SoldierEditWindow mSoldierEditWindow = null;
 
 
         [Space(1)]
@@ -96,9 +97,6 @@ namespace Menu
         //プロパティ
         public int UnitID { get; set; }
 
-        //内部変数
-        private bool mLvUpIsEnable = false;
-
         // Use this for initialization
         void Start()
         {
@@ -127,7 +125,8 @@ namespace Menu
 
         public void OnClickSoldierEdit()
         {
-
+            mSoldierEditWindow.StatusWindow = this;
+            mSoldierEditWindow.Show(UnitID);
         }
 
         private void SetState()
