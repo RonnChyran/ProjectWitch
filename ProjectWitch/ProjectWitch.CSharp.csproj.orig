@@ -15,8 +15,13 @@
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
     <CompilerResponseFile></CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
-    <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
+<<<<<<< HEAD
+    <UnityBuildTarget>StandaloneOSXIntel64:27</UnityBuildTarget>
     <UnityVersion>5.4.0f3</UnityVersion>
+=======
+    <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
+    <UnityVersion>5.4.1f1</UnityVersion>
+>>>>>>> origin/battle
     <RootNamespace></RootNamespace>
     <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">4</LangVersion>
   </PropertyGroup>
@@ -28,10 +33,10 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
 <<<<<<< HEAD
-    <DefineConstants>DEBUG;TRACE;UNITY_5_3_OR_NEWER;UNITY_5_3_4;UNITY_5_3;UNITY_5;ENABLE_NEW_BUGREPORTER;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_FRAME_DEBUGGER;ENABLE_GENERICS;ENABLE_HOME_SCREEN;ENABLE_IMAGEEFFECTS;ENABLE_LIGHT_PROBES_LEGACY;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_PLUGIN_INSPECTOR;ENABLE_SHADOWS;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_SPRITE_POLYGON;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_UNET;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;INCLUDE_DYNAMIC_GI;INCLUDE_GI;INCLUDE_IL2CPP;INCLUDE_DIRECTX12;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;ENABLE_LOCALIZATION;ENABLE_ANDROID_ATLAS_ETC1_COMPRESSION;ENABLE_EDITOR_TESTS_RUNNER;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_SUBSTANCE;ENABLE_TEXTUREID_MAP;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_LOG_MIXED_STACKTRACE;ENABLE_UNITYWEBREQUEST;ENABLE_EVENT_QUEUE;ENABLE_CLUSTERINPUT;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;ENABLE_PROFILER;DEBUG;TRACE;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;UNITY_TEAM_LICENSE</DefineConstants>
+    <DefineConstants>DEBUG;TRACE;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_4_0;UNITY_5_4;UNITY_5;UNITY_64;ENABLE_NEW_BUGREPORTER;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_EDITOR_RETINA;ENABLE_RETINA_GUISTYLES;ENABLE_FRAME_DEBUGGER;ENABLE_GENERICS;ENABLE_HOME_SCREEN;ENABLE_IMAGEEFFECTS;ENABLE_LIGHT_PROBES_LEGACY;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_PLUGIN_INSPECTOR;ENABLE_SHADOWS;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_SPRITE_POLYGON;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_UNET;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;INCLUDE_DYNAMIC_GI;INCLUDE_GI;INCLUDE_IL2CPP;INCLUDE_DIRECTX12;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;INCLUDE_PUBNUB;ENABLE_LOCALIZATION;ENABLE_ANDROID_ATLAS_ETC1_COMPRESSION;ENABLE_EDITOR_TESTS_RUNNER;UNITY_STANDALONE_OSX;UNITY_STANDALONE;ENABLE_SUBSTANCE;ENABLE_GAMECENTER;ENABLE_TEXTUREID_MAP;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_UNITYWEBREQUEST;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;DEVELOPMENT_BUILD;ENABLE_PROFILER;DEBUG;TRACE;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;UNITY_TEAM_LICENSE;ENABLE_VSTU;CROSS_PLATFORM_INPUT</DefineConstants>
 =======
-    <DefineConstants>DEBUG;TRACE;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_4_0;UNITY_5_4;UNITY_5;ENABLE_NEW_BUGREPORTER;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_EDITOR_RETINA;ENABLE_RETINA_GUISTYLES;ENABLE_FRAME_DEBUGGER;ENABLE_GENERICS;ENABLE_HOME_SCREEN;ENABLE_IMAGEEFFECTS;ENABLE_LIGHT_PROBES_LEGACY;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_PLUGIN_INSPECTOR;ENABLE_SHADOWS;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_SPRITE_POLYGON;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_UNET;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;INCLUDE_DYNAMIC_GI;INCLUDE_GI;INCLUDE_IL2CPP;INCLUDE_DIRECTX12;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;INCLUDE_PUBNUB;ENABLE_LOCALIZATION;ENABLE_ANDROID_ATLAS_ETC1_COMPRESSION;ENABLE_EDITOR_TESTS_RUNNER;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_SUBSTANCE;ENABLE_TEXTUREID_MAP;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_UNITYWEBREQUEST;ENABLE_EVENT_QUEUE;ENABLE_CLUSTERINPUT;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;ENABLE_PROFILER;DEBUG;TRACE;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;UNITY_TEAM_LICENSE;ENABLE_VSTU;CROSS_PLATFORM_INPUT</DefineConstants>
->>>>>>> origin/master
+    <DefineConstants>DEBUG;TRACE;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_4_1;UNITY_5_4;UNITY_5;ENABLE_NEW_BUGREPORTER;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_EDITOR_RETINA;ENABLE_RETINA_GUISTYLES;ENABLE_FRAME_DEBUGGER;ENABLE_GENERICS;ENABLE_HOME_SCREEN;ENABLE_IMAGEEFFECTS;ENABLE_LIGHT_PROBES_LEGACY;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_PLUGIN_INSPECTOR;ENABLE_SHADOWS;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_SPRITE_POLYGON;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_UNET;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;INCLUDE_DYNAMIC_GI;INCLUDE_GI;INCLUDE_IL2CPP;INCLUDE_DIRECTX12;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;INCLUDE_PUBNUB;ENABLE_LOCALIZATION;ENABLE_ANDROID_ATLAS_ETC1_COMPRESSION;ENABLE_EDITOR_TESTS_RUNNER;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_SUBSTANCE;ENABLE_TEXTUREID_MAP;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_UNITYWEBREQUEST;ENABLE_EVENT_QUEUE;ENABLE_CLUSTERINPUT;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;ENABLE_PROFILER;DEBUG;TRACE;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;UNITY_TEAM_LICENSE;ENABLE_VSTU;CROSS_PLATFORM_INPUT</DefineConstants>
+>>>>>>> origin/battle
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -42,10 +47,10 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
 <<<<<<< HEAD
-    <DefineConstants>TRACE;UNITY_5_3_OR_NEWER;UNITY_5_3_4;UNITY_5_3;UNITY_5;ENABLE_NEW_BUGREPORTER;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_FRAME_DEBUGGER;ENABLE_GENERICS;ENABLE_HOME_SCREEN;ENABLE_IMAGEEFFECTS;ENABLE_LIGHT_PROBES_LEGACY;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_PLUGIN_INSPECTOR;ENABLE_SHADOWS;ENABLE_SINGLE_INSTANCE_BUILD_SETTING;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_SPRITE_POLYGON;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_UNET;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;INCLUDE_DYNAMIC_GI;INCLUDE_GI;INCLUDE_IL2CPP;INCLUDE_DIRECTX12;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;ENABLE_LOCALIZATION;ENABLE_ANDROID_ATLAS_ETC1_COMPRESSION;ENABLE_EDITOR_TESTS_RUNNER;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_SUBSTANCE;ENABLE_TEXTUREID_MAP;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_LOG_MIXED_STACKTRACE;ENABLE_UNITYWEBREQUEST;ENABLE_EVENT_QUEUE;ENABLE_CLUSTERINPUT;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;ENABLE_PROFILER;DEBUG;TRACE;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;UNITY_TEAM_LICENSE</DefineConstants>
+    <DefineConstants>TRACE;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_4_0;UNITY_5_4;UNITY_5;UNITY_64;ENABLE_NEW_BUGREPORTER;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_EDITOR_RETINA;ENABLE_RETINA_GUISTYLES;ENABLE_FRAME_DEBUGGER;ENABLE_GENERICS;ENABLE_HOME_SCREEN;ENABLE_IMAGEEFFECTS;ENABLE_LIGHT_PROBES_LEGACY;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_PLUGIN_INSPECTOR;ENABLE_SHADOWS;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_SPRITE_POLYGON;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_UNET;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;INCLUDE_DYNAMIC_GI;INCLUDE_GI;INCLUDE_IL2CPP;INCLUDE_DIRECTX12;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;INCLUDE_PUBNUB;ENABLE_LOCALIZATION;ENABLE_ANDROID_ATLAS_ETC1_COMPRESSION;ENABLE_EDITOR_TESTS_RUNNER;UNITY_STANDALONE_OSX;UNITY_STANDALONE;ENABLE_SUBSTANCE;ENABLE_GAMECENTER;ENABLE_TEXTUREID_MAP;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_UNITYWEBREQUEST;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;DEVELOPMENT_BUILD;ENABLE_PROFILER;DEBUG;TRACE;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;UNITY_TEAM_LICENSE;ENABLE_VSTU;CROSS_PLATFORM_INPUT</DefineConstants>
 =======
-    <DefineConstants>TRACE;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_4_0;UNITY_5_4;UNITY_5;ENABLE_NEW_BUGREPORTER;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_EDITOR_RETINA;ENABLE_RETINA_GUISTYLES;ENABLE_FRAME_DEBUGGER;ENABLE_GENERICS;ENABLE_HOME_SCREEN;ENABLE_IMAGEEFFECTS;ENABLE_LIGHT_PROBES_LEGACY;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_PLUGIN_INSPECTOR;ENABLE_SHADOWS;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_SPRITE_POLYGON;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_UNET;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;INCLUDE_DYNAMIC_GI;INCLUDE_GI;INCLUDE_IL2CPP;INCLUDE_DIRECTX12;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;INCLUDE_PUBNUB;ENABLE_LOCALIZATION;ENABLE_ANDROID_ATLAS_ETC1_COMPRESSION;ENABLE_EDITOR_TESTS_RUNNER;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_SUBSTANCE;ENABLE_TEXTUREID_MAP;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_UNITYWEBREQUEST;ENABLE_EVENT_QUEUE;ENABLE_CLUSTERINPUT;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;ENABLE_PROFILER;DEBUG;TRACE;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;UNITY_TEAM_LICENSE;ENABLE_VSTU;CROSS_PLATFORM_INPUT</DefineConstants>
->>>>>>> origin/master
+    <DefineConstants>TRACE;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_4_1;UNITY_5_4;UNITY_5;ENABLE_NEW_BUGREPORTER;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_EDITOR_RETINA;ENABLE_RETINA_GUISTYLES;ENABLE_FRAME_DEBUGGER;ENABLE_GENERICS;ENABLE_HOME_SCREEN;ENABLE_IMAGEEFFECTS;ENABLE_LIGHT_PROBES_LEGACY;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_PLUGIN_INSPECTOR;ENABLE_SHADOWS;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_SPRITE_POLYGON;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_UNET;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;INCLUDE_DYNAMIC_GI;INCLUDE_GI;INCLUDE_IL2CPP;INCLUDE_DIRECTX12;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;INCLUDE_PUBNUB;ENABLE_LOCALIZATION;ENABLE_ANDROID_ATLAS_ETC1_COMPRESSION;ENABLE_EDITOR_TESTS_RUNNER;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_SUBSTANCE;ENABLE_TEXTUREID_MAP;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_UNITYWEBREQUEST;ENABLE_EVENT_QUEUE;ENABLE_CLUSTERINPUT;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;ENABLE_PROFILER;DEBUG;TRACE;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;UNITY_TEAM_LICENSE;ENABLE_VSTU;CROSS_PLATFORM_INPUT</DefineConstants>
+>>>>>>> origin/battle
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
@@ -69,15 +74,16 @@
     <Reference Include="UnityEditor">
       <HintPath>Library\UnityAssemblies\UnityEditor.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEditor.iOS.Extensions.Xcode">
-      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Xcode.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEditor.iOS.Extensions.Common">
-      <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Common.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Resources\Effects\Battle\Scripts\FXController.cs" />
+    <ProjectReference Include="ProjectWitch.CSharp.Plugins.csproj">
+      <Project>{6BCDAE06-138F-30E6-F913-C8D243D0C347}</Project>
+      <Name>ProjectWitch.CSharp.Plugins</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Assets\MoviePlayer\Scripts\MobileMoviePlayer.cs" />
+    <Compile Include="Assets\MoviePlayer\Scripts\MovieTexturePlayer.cs" />
     <Compile Include="Assets\Resources\Effects\ImageEffects\Scripts\Antialiasing.cs" />
     <Compile Include="Assets\Resources\Effects\ImageEffects\Scripts\Bloom.cs" />
     <Compile Include="Assets\Resources\Effects\ImageEffects\Scripts\BloomAndFlares.cs" />
@@ -116,37 +122,110 @@
     <Compile Include="Assets\Resources\Effects\ImageEffects\Scripts\Twirl.cs" />
     <Compile Include="Assets\Resources\Effects\ImageEffects\Scripts\VignetteAndChromaticAberration.cs" />
     <Compile Include="Assets\Resources\Effects\ImageEffects\Scripts\Vortex.cs" />
-    <Compile Include="Assets\Resources\Scripts\Army\LeaderMenu.cs" />
+    <Compile Include="Assets\Resources\Scripts\Battle\BattleController.cs" />
+    <Compile Include="Assets\Resources\Scripts\Battle\BattleData.cs" />
     <Compile Include="Assets\Resources\Scripts\Battle\BattleDebugger.cs" />
     <Compile Include="Assets\Resources\Scripts\Battle\BattleInfo.cs" />
-    <Compile Include="Assets\Resources\Scripts\Common\ArmyJump.cs" />
+    <Compile Include="Assets\Resources\Scripts\Battle\BattleObj.cs" />
+    <Compile Include="Assets\Resources\Scripts\Battle\BattleRandom.cs" />
+    <Compile Include="Assets\Resources\Scripts\Battle\BattleStartUISetup.cs" />
+    <Compile Include="Assets\Resources\Scripts\Battle\BattleUnit.cs" />
+    <Compile Include="Assets\Resources\Scripts\Battle\CardStartUI.cs" />
+    <Compile Include="Assets\Resources\Scripts\Battle\DamageDisplay.cs" />
+    <Compile Include="Assets\Resources\Scripts\Battle\DebugText.cs" />
+    <Compile Include="Assets\Resources\Scripts\Battle\FaceObj.cs" />
+    <Compile Include="Assets\Resources\Scripts\Battle\MouseCover.cs" />
+    <Compile Include="Assets\Resources\Scripts\Battle\OrderController.cs" />
+    <Compile Include="Assets\Resources\Scripts\Battle\OrderDiplayObj.cs" />
+    <Compile Include="Assets\Resources\Scripts\Battle\PlayMusic.cs" />
+    <Compile Include="Assets\Resources\Scripts\Battle\SkillButton.cs" />
+    <Compile Include="Assets\Resources\Scripts\Battle\TurnNumDisplay.cs" />
+    <Compile Include="Assets\Resources\Scripts\CameraController.cs" />
+    <Compile Include="Assets\Resources\Scripts\Common\FXController.cs" />
     <Compile Include="Assets\Resources\Scripts\Common\MainCameraGetter.cs" />
+    <Compile Include="Assets\Resources\Scripts\Common\UIUVScroller.cs" />
+    <Compile Include="Assets\Resources\Scripts\Common\UVScroller.cs" />
+    <Compile Include="Assets\Resources\Scripts\Field\Button\FlagButton.cs" />
+    <Compile Include="Assets\Resources\Scripts\Field\Button\FlagMenu.cs" />
     <Compile Include="Assets\Resources\Scripts\Field\CameraController.cs" />
-    <Compile Include="Assets\Resources\Scripts\Field\FieldButton.cs" />
     <Compile Include="Assets\Resources\Scripts\Field\FieldController.cs" />
-    <Compile Include="Assets\Resources\Scripts\Field\FieldMenu.cs" />
-    <Compile Include="Assets\Resources\Scripts\Field\MapColor.cs" />
-    <Compile Include="Assets\Resources\Scripts\Field\TimeCounter.cs" />
-    <Compile Include="Assets\Resources\Scripts\Field\TurnCounter.cs" />
+    <Compile Include="Assets\Resources\Scripts\Field\FieldUIController.cs" />
+    <Compile Include="Assets\Resources\Scripts\Field\UI\ActionWindow.cs" />
+    <Compile Include="Assets\Resources\Scripts\Field\UI\AreaName.cs" />
+    <Compile Include="Assets\Resources\Scripts\Field\UI\AreaWindow.cs" />
+    <Compile Include="Assets\Resources\Scripts\Field\UI\InfoBoxText.cs" />
+    <Compile Include="Assets\Resources\Scripts\Field\UI\MapColor.cs" />
+    <Compile Include="Assets\Resources\Scripts\Field\UI\OwnerPanel.cs" />
+    <Compile Include="Assets\Resources\Scripts\Field\UI\TimeCounter.cs" />
+    <Compile Include="Assets\Resources\Scripts\Field\UI\TurnCounter.cs" />
+    <Compile Include="Assets\Resources\Scripts\Menu\Army\ArmyMenu.cs" />
+    <Compile Include="Assets\Resources\Scripts\Menu\Army\LvUpWindow.cs" />
+    <Compile Include="Assets\Resources\Scripts\Menu\Army\SoldierEditWindow.cs" />
+    <Compile Include="Assets\Resources\Scripts\Menu\Army\StatusWindow.cs" />
+    <Compile Include="Assets\Resources\Scripts\Menu\Army\Unit.cs" />
+    <Compile Include="Assets\Resources\Scripts\Menu\Army\UnitList.cs" />
+    <Compile Include="Assets\Resources\Scripts\Menu\MenuController.cs" />
+    <Compile Include="Assets\Resources\Scripts\Menu\Top\TopMenu.cs" />
+    <Compile Include="Assets\Resources\Scripts\Opening_Ending\Ending.cs" />
+    <Compile Include="Assets\Resources\Scripts\Opening_Ending\Opening.cs" />
+    <Compile Include="Assets\Resources\Scripts\PreBattle\BattleCard.cs" />
+    <Compile Include="Assets\Resources\Scripts\PreBattle\BattleUnit.cs" />
+    <Compile Include="Assets\Resources\Scripts\PreBattle\Card.cs" />
     <Compile Include="Assets\Resources\Scripts\PreBattle\CardList.cs" />
-    <Compile Include="Assets\Resources\Scripts\PreBattle\DragCard.cs" />
-    <Compile Include="Assets\Resources\Scripts\PreBattle\DragObject.cs" />
-    <Compile Include="Assets\Resources\Scripts\PreBattle\DragUnit.cs" />
-    <Compile Include="Assets\Resources\Scripts\PreBattle\PreBattleButton.cs" />
-    <Compile Include="Assets\Resources\Scripts\PreBattle\RecieveCard.cs" />
-    <Compile Include="Assets\Resources\Scripts\PreBattle\RecieveObject.cs" />
-    <Compile Include="Assets\Resources\Scripts\PreBattle\RecieveUnit.cs" />
+    <Compile Include="Assets\Resources\Scripts\PreBattle\GoToBattleButton.cs" />
+    <Compile Include="Assets\Resources\Scripts\PreBattle\Old\CardList.cs" />
+    <Compile Include="Assets\Resources\Scripts\PreBattle\Old\DragCard.cs" />
+    <Compile Include="Assets\Resources\Scripts\PreBattle\Old\DragObject.cs" />
+    <Compile Include="Assets\Resources\Scripts\PreBattle\Old\DragUnit.cs" />
+    <Compile Include="Assets\Resources\Scripts\PreBattle\Old\PreBattleButton.cs" />
+    <Compile Include="Assets\Resources\Scripts\PreBattle\Old\RecieveCard.cs" />
+    <Compile Include="Assets\Resources\Scripts\PreBattle\Old\RecieveObject.cs" />
+    <Compile Include="Assets\Resources\Scripts\PreBattle\Old\RecieveUnit.cs" />
+    <Compile Include="Assets\Resources\Scripts\PreBattle\Old\UnitList.cs" />
+    <Compile Include="Assets\Resources\Scripts\PreBattle\PreBattleController.cs" />
+    <Compile Include="Assets\Resources\Scripts\PreBattle\Unit.cs" />
     <Compile Include="Assets\Resources\Scripts\PreBattle\UnitList.cs" />
+    <Compile Include="Assets\Resources\Scripts\System\DebugText.cs" />
     <Compile Include="Assets\Resources\Scripts\System\Game.cs" />
     <Compile Include="Assets\Resources\Scripts\System\GameData.cs" />
+    <Compile Include="Assets\Resources\Scripts\System\GoTitleWindow.cs" />
+    <Compile Include="Assets\Resources\Scripts\System\QuitWindow.cs" />
+    <Compile Include="Assets\Resources\Scripts\System\SoundManager.cs" />
+    <Compile Include="Assets\Resources\Scripts\System\SoundTester.cs" />
+    <Compile Include="Assets\Resources\Scripts\Talk\Analyzer\CommandPatterns.cs" />
+    <Compile Include="Assets\Resources\Scripts\Talk\Analyzer\CompilerFormat.cs" />
+    <Compile Include="Assets\Resources\Scripts\Talk\Analyzer\StructureAnalyzer.cs" />
+    <Compile Include="Assets\Resources\Scripts\Talk\Analyzer\TagPattern.cs" />
+    <Compile Include="Assets\Resources\Scripts\Talk\Analyzer\WordAnalyzer.cs" />
+    <Compile Include="Assets\Resources\Scripts\Talk\CG&amp;SE\AnimationController.cs" />
+    <Compile Include="Assets\Resources\Scripts\Talk\CG&amp;SE\GraphicsCommand.cs" />
+    <Compile Include="Assets\Resources\Scripts\Talk\CG&amp;SE\GraphicsWorkSpace.cs" />
+    <Compile Include="Assets\Resources\Scripts\Talk\CG&amp;SE\SoundsCommand.cs" />
+    <Compile Include="Assets\Resources\Scripts\Talk\CG&amp;SE\SoundsWorkSpace.cs" />
+    <Compile Include="Assets\Resources\Scripts\Talk\CG&amp;SE\StandCGController.cs" />
+    <Compile Include="Assets\Resources\Scripts\Talk\Compiler.cs" />
+    <Compile Include="Assets\Resources\Scripts\Talk\System\OtherCommand.cs" />
+    <Compile Include="Assets\Resources\Scripts\Talk\System\SystemCommand.cs" />
+    <Compile Include="Assets\Resources\Scripts\Talk\TalkController.cs" />
+    <Compile Include="Assets\Resources\Scripts\Talk\Text\TextCommand.cs" />
+    <Compile Include="Assets\Resources\Scripts\Talk\Text\TextWorkSpace.cs" />
+    <Compile Include="Assets\Resources\Scripts\Talk\Whole\GameWorkSpace.cs" />
+    <Compile Include="Assets\Resources\Scripts\Talk\Whole\ScenarioWorkSpace.cs" />
+    <Compile Include="Assets\Resources\Scripts\Talk\Whole\VirtualMachine.cs" />
+    <Compile Include="Assets\Resources\Scripts\Title\EndButton.cs" />
     <Compile Include="Assets\Resources\Scripts\Title\LoadButton.cs" />
     <Compile Include="Assets\Resources\Scripts\Title\StartButton.cs" />
+    <Compile Include="Assets\Resources\Scripts\Title\TitleController.cs" />
+    <Compile Include="Assets\Resources\Scripts\UI\ButtonSound.cs" />
     <Compile Include="Assets\Resources\Scripts\UI\DialogWindow.cs" />
     <Compile Include="Assets\Resources\Scripts\Utility\DragAndDropBase.cs" />
+    <Compile Include="Assets\Resources\Scripts\Utility\Exception.cs" />
+    <Compile Include="Assets\Resources\Scripts\Utility\ExtensionMethod.cs" />
     <Compile Include="Assets\Resources\Scripts\Utility\Rotation.cs" />
     <Compile Include="Assets\Resources\Scripts\Utility\fitter.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\MoviePlayer\Readme.txt" />
     <None Include="Assets\Resources\Effects\GlassRefraction\Shaders\GlassStainedBumpDistort.shader" />
     <None Include="Assets\Resources\Effects\ImageEffects\Shaders\BlendModesOverlay.shader" />
     <None Include="Assets\Resources\Effects\ImageEffects\Shaders\BlurEffectConeTaps.shader" />
@@ -225,7 +304,27 @@
     <None Include="Assets\Resources\Effects\ToonShading\Shaders\ToonLit.shader" />
     <None Include="Assets\Resources\Effects\ToonShading\Shaders\ToonLitOutline.shader" />
     <None Include="Assets\Resources\Effects\Unlit\UnlitCastShadow.shader" />
-    <None Include="Assets\Resources\Senarios\testscript.txt" />
+    <None Include="Assets\Resources\Fonts\Field\fieldfont1.txt" />
+    <None Include="Assets\Resources\Scenarios\s0000.txt" />
+    <None Include="Assets\Resources\Scenarios\s0000_short.txt" />
+    <None Include="Assets\Resources\Scenarios\s0001.txt" />
+    <None Include="Assets\Resources\Scenarios\s0100.txt" />
+    <None Include="Assets\Resources\Scenarios\s0101.txt" />
+    <None Include="Assets\Resources\Scenarios\s0103.txt" />
+    <None Include="Assets\Resources\Scenarios\s0104.txt" />
+    <None Include="Assets\Resources\Scenarios\s0105.txt" />
+    <None Include="Assets\Resources\Scenarios\s0106.txt" />
+    <None Include="Assets\Resources\Scenarios\s0107.txt" />
+    <None Include="Assets\Resources\Scenarios\s0109.txt" />
+    <None Include="Assets\Resources\Scenarios\s0112.txt" />
+    <None Include="Assets\Resources\Scenarios\s0113.txt" />
+    <None Include="Assets\Resources\Scenarios\s0115.txt" />
+    <None Include="Assets\Resources\Scenarios\s9994.txt" />
+    <None Include="Assets\Resources\Scenarios\s9995.txt" />
+    <None Include="Assets\Resources\Scenarios\s9996.txt" />
+    <None Include="Assets\Resources\Scenarios\test.txt" />
+    <None Include="Assets\Resources\Scenarios\test_2.txt" />
+    <None Include="Assets\Resources\Scenarios\testscript.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>

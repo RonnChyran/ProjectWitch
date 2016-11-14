@@ -310,8 +310,10 @@ namespace Battle
         public bool IsDisplay { get; private set; }
         // 召喚ユニットかどうか
         public bool IsSummonUnit { get { return SummonDuration != -1; } }
-        // 捕獲されたかどうか
-        public bool IsCapture { get { return CaptureGauge == 100; } }
+		// 召喚ユニットが帰還したかどうか
+		public bool IsReturnSummonUnit { get; private set; }
+		// 捕獲されたかどうか
+		public bool IsCapture { get { return CaptureGauge == 100; } }
 
         #endregion
 
@@ -462,13 +464,13 @@ namespace Battle
         // 兵士回復量
         public float GetGroupCurativeAmount(SkillDataFormat skillData)
         {
-            return UnitData.MaxSoldierNum * skillData.Power * mBattle.Coe18;
+            return UnitData.MaxSoldierNum * skillData.Power * mBattle.Coe18 / 100.0f;
         }
 
         // HP回復量
         public float GetLeaderCurativeAmount(SkillDataFormat skillData)
         {
-            return MaxHP * skillData.Power * mBattle.Coe19;
+            return MaxHP * skillData.Power * mBattle.Coe19 / 100.0f;
         }
 
         // 毒ダメージ
@@ -592,6 +594,7 @@ namespace Battle
         // 召喚ユニットのセットアップ
         public void SetupSummon(SkillDataFormat skillData, bool isPlayer, BattleObj bo)
         {
+			IsReturnSummonUnit = false;
             Setup(skillData.SummonUnit, isPlayer, 0, bo, skillData.Duration);
         }
 
@@ -761,7 +764,7 @@ namespace Battle
         // 捕獲ダメージを受ける
         public void SufferCaptureDamage(float damage)
         {
-            CaptureGauge += damage / UnitData.HP;
+			CaptureGauge += damage / UnitData.HP * 100;
             if (CaptureGauge > 100)
                 CaptureGauge = 100;
         }
@@ -792,17 +795,18 @@ namespace Battle
                     SetDisplayState(false);
                     yield return mBattleObj.OrderController.DeadOut(blist);
                     (IsPlayer ? mBattleObj.PlayerSummonUnits : mBattleObj.EnemySummonUnits).Remove(this);
-                }
-            }
+					IsReturnSummonUnit = true;
+				}
+			}
             for (int i = Status.Count - 1; i >= 0; --i)
             {
                 if (Status[i].Duration != 0)
                 {
                     --Status[i].Duration;
                     if (Status[i].Duration <= 0)
-                        Status.Remove(Status[i]);
-                }
-            }
+						Status.Remove(Status[i]);
+				}
+			}
         }
 
         // Use this for initialization
