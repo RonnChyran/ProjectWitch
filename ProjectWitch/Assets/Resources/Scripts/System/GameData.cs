@@ -876,6 +876,7 @@ namespace GameData
             DeadUnits = new List<int>();
             CapturedUnits = new List<int>();
             EscapedUnits = new List<int>();
+            UsedCards = new List<int>();
         }
 
         //戦闘勝利フラグ
@@ -895,6 +896,7 @@ namespace GameData
             DeadUnits.Clear();
             CapturedUnits.Clear();
             EscapedUnits.Clear();
+            UsedCards.Clear();
         }
     }
 

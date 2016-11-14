@@ -283,20 +283,19 @@ namespace Field
         {
             var game = Game.GetInstance();
 
-            //フィールドUIを再ロード
-            ShowUI();
-            yield return null;
-            game.HideNowLoading();
-            yield return null;
-
             //領地の占領判定
             //オート戦闘の場合、占領判定はスクリプトで行う
             //侵攻戦で勝った場合 領地を占領する
-            if (game.BattleIn.IsInvasion && game.BattleOut.IsWin)
-                ChangeAreaOwner(game.BattleIn.AreaID, game.BattleIn.PlayerTerritory);
-            //防衛戦で負けた場合 領地を奪われる
-            else if (!game.BattleIn.IsInvasion && !game.BattleOut.IsWin)
-                ChangeAreaOwner(game.BattleIn.AreaID, game.BattleIn.EnemyTerritory);
+            if (!game.BattleIn.IsAuto)
+            {
+                if (game.BattleIn.IsInvasion && game.BattleOut.IsWin)
+                    ChangeAreaOwner(game.BattleIn.AreaID, game.BattleIn.PlayerTerritory);
+                //防衛戦で負けた場合 領地を奪われる
+                else if (!game.BattleIn.IsInvasion && !game.BattleOut.IsWin)
+                    ChangeAreaOwner(game.BattleIn.AreaID, game.BattleIn.EnemyTerritory);
+            }
+
+
 
             //ユニットの死亡処理
             foreach(var unit in game.BattleOut.DeadUnits)
@@ -338,6 +337,24 @@ namespace Field
                 udata.SoldierNum = (int)(udata.MaxSoldierNum * 0.3f);
             }
 
+            //経験値処理
+            var ex = 0; //取得経験値
+            if (game.BattleIn.IsInvasion)
+            {                                       //侵攻戦で
+                if (game.BattleOut.IsWin) ex = 3;   //勝った場合:3
+                else ex = 2;                        //負けた場合:2
+            }
+            else
+            {                                       //防衛戦で
+                if (game.BattleOut.IsWin) ex = 2;   //勝った場合:2
+                else ex = 1;                        //負けた場合:1
+            }
+            foreach(var unitID in game.BattleIn.PlayerUnits)
+            {
+                var unit = game.UnitData[unitID];
+                unit.Experience += ex;
+            }
+
             //グループの消滅処理
             foreach(var group in game.GroupData)
             {
@@ -354,6 +371,16 @@ namespace Field
                     game.AreaData[group.DominationRoute[0]].Owner == game.BattleIn.PlayerTerritory)
                 {
                     group.Kill();
+                }
+            }
+
+            //カードの処理(自軍のときのみ有効)
+            if (game.BattleIn.PlayerTerritory == 0)
+            {
+                foreach (var cardID in game.BattleOut.UsedCards)
+                {
+                    var group = game.GroupData[game.TerritoryData[0].GroupList[0]];
+                    group.CardList.Remove(cardID);
                 }
             }
 
@@ -394,6 +421,13 @@ namespace Field
 
             }
             while (game.IsTalk) yield return null;
+
+
+            //フィールドUIを再ロード
+            ShowUI();
+            yield return null;
+            game.HideNowLoading();
+            yield return null;
 
             //UIの更新
             FieldUIController.AreaPointReset();

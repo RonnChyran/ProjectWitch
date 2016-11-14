@@ -318,6 +318,8 @@ public class Game : MonoBehaviour
 
         ScenarioIn.NextA = e.NextA;
         ScenarioIn.NextB = e.NextB;
+
+        IsTalk = true;
         SceneManager.LoadScene(cSceneName_Talk, LoadSceneMode.Additive);
 
         HideNowLoading();
@@ -353,7 +355,6 @@ public class Game : MonoBehaviour
     //オートセーブする
     public void AutoSave()
     {
-        ShowDialog("オートセーブ", CurrentTurn.ToString() + "ターン目\nオートセーブしました。");
         Save(0); //0スロットはオートセーブ用スロット
     }
 
