@@ -260,14 +260,17 @@ namespace Scenario.WorkSpace
             //アニメーションコンポーネント
             private Animator mcTWindow;
             private Animator mcNWindow;
+            private Animator mcNText;
 
-            public ScriptBeginAnimator(float time, Animator cTWindow, Animator cNWindow)
+            public ScriptBeginAnimator(float time, Animator cTWindow, Animator cNWindow, Animator cNText)
             {
                 mTime = time;
                 mcTWindow = cTWindow;
                 mcNWindow = cNWindow;
+                mcNText = cNText;
                 mcTWindow.SetBool("IsBegin", true);
                 mcNWindow.SetBool("IsBegin", true);
+                mcNText.SetBool("IsBegin", true);
             }
 
             //初期化処理
@@ -298,9 +301,10 @@ namespace Scenario.WorkSpace
         {
             var cTWindow = mTWindow.GetComponent<Animator>();
             var cNWindow = mNWindow.GetComponent<Animator>();
+            var cNText = mNText.GetComponent<Animator>();
 
             //割り込みを登録
-            mSWS.SetUpdater(new ScriptBeginAnimator(mBeginTime,cTWindow,cNWindow));
+            mSWS.SetUpdater(new ScriptBeginAnimator(mBeginTime,cTWindow,cNWindow,cNText));
             Debug.Log("開始");
         }
 
@@ -310,6 +314,8 @@ namespace Scenario.WorkSpace
         private GameObject mTWindowBack = null;
         [SerializeField]
         private GameObject mNWindow = null;
+        [SerializeField]
+        private GameObject mNText = null;
 
         //スクリプト終了
         public void ScriptEnd()
@@ -317,10 +323,12 @@ namespace Scenario.WorkSpace
             var cTWindow = mTWindow.GetComponent<Animator>();
             var cTWindowBack = mTWindowBack.GetComponent<Animator>();
             var cNWindow = mNWindow.GetComponent<Animator>();
+            var cNText = mNText.GetComponent<Animator>();
 
             cTWindow.SetBool("IsEnd", true);
             cTWindowBack.SetBool("IsEnd", true);
             cNWindow.SetBool("IsEnd", true);
+            cNText.SetBool("IsEnd", true);
 
            StartCoroutine(mTalkController.GetComponent<TalkController>().EndScript());
         }
