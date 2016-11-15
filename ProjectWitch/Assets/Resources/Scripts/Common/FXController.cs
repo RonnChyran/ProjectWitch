@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
+using System.Collections;
 using System;
 
 //ＦＸ終了イベント用のイベントハンドラ
@@ -28,6 +29,9 @@ public class FXController : MonoBehaviour
     [SerializeField]
     public UnityEvent EndEvent=null;
 
+    //コルーチンが走っているかどうかのフラグ
+    private bool mCoIsRunning = false;
+
     // Use this for initialization
     void Start()
     {
@@ -48,10 +52,30 @@ public class FXController : MonoBehaviour
         //寿命管理
         mLifeTime -= Time.deltaTime;
 
-        if (mLifeTime < 0)
+        if (mLifeTime < 0 && mCoIsRunning==false)
         {
-            if(EndEvent != null)EndEvent.Invoke();
-            Destroy(this.gameObject);
+            StartCoroutine(Delete());
         }
+    }
+
+    private IEnumerator Delete()
+    {
+        mCoIsRunning = true;
+
+        if (EndEvent != null) EndEvent.Invoke();
+        for (float i = 0; i < 1.0f; i += 0.1f)
+        {
+            foreach (var partsys in mPartSystem)
+            {
+                var color = partsys.startColor;
+                color.a = Math.Max(0.0f, color.a - i);
+                partsys.startColor = color;
+            }
+            yield return null;
+        }
+
+
+        Destroy(this.gameObject);
+        yield return null;
     }
 }
