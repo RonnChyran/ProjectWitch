@@ -10,7 +10,7 @@ namespace Battle
 		[SerializeField]
 		private GameObject mPanel = null, mCardBack = null, mCardFront = null, mName = null, mExposition = null;
 		[SerializeField]
-		private float mCardMoveTime = 0.5f, mCardOpenTime = 0.5f, mWaitTime = 3.0f;
+		private float mCardMoveTime = 0.125f, mCardOpenTime = 0.125f, mWaitTime = 0.75f;
 
 		public BattleObj BattleObj { get; private set; }
 
@@ -43,14 +43,14 @@ namespace Battle
 				cardBackR.position += parPos;
 				cardBackR.sizeDelta += parSize;
 				panel.color += new Color(0, 0, 0, parPanelA);
-				yield return BattleObj.WaitTimer(parTime);
+				yield return BattleObj.WaitSeconds(parTime);
 			}
 			float parFillAmount = 1.0f / count;
 			parTime = mCardOpenTime / count;
 			for (int i = 0; i < count; i++)
 			{
 				cardFront.fillAmount += parFillAmount;
-				yield return BattleObj.WaitTimer(parTime);
+				yield return BattleObj.WaitSeconds(parTime);
 			}
 			name.text = card.Name;
 			exposition.text = card.Description;

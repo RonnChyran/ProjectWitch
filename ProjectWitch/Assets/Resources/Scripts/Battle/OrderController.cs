@@ -11,6 +11,11 @@ namespace Battle
 		// 表示させるオブジェクトのプレハブ
 		[SerializeField]
 		private GameObject mDisplayObject = null;
+		// オブジェクトの左右移動スピード
+		[SerializeField]
+		private float mMoveSpeedX = 1200f, mMoveSpeedY = 100f;
+		public float MoveSpeedX { get { return mMoveSpeedX; } }
+		public float MoveSpeedY { get { return mMoveSpeedY; } }
 		// 表示オブジェクト
 		private List<OrderDiplayObj> mOrderDiplayObj;
 		private BattleObj mBattleObj;
@@ -39,7 +44,7 @@ namespace Battle
 			var rect = dispObj.GetComponent<RectTransform>();
 			rect.SetParent(transform);
 			var orderDiplayObj = dispObj.GetComponent<OrderDiplayObj>();
-			orderDiplayObj.Setup(buttleUnit, mDisplayObject.GetComponent<RectTransform>());
+			orderDiplayObj.Setup(buttleUnit, mDisplayObject.GetComponent<RectTransform>(), this);
 			mOrderDiplayObj.Add(orderDiplayObj);
 
 			var back = dispObj.transform.FindChild("Back");
@@ -183,7 +188,7 @@ namespace Battle
 			var rect = dispObj.GetComponent<RectTransform>();
 			rect.SetParent(transform);
 			var plusUnitObj = dispObj.GetComponent<OrderDiplayObj>();
-			plusUnitObj.Setup(unit, mDisplayObject.GetComponent<RectTransform>());
+			plusUnitObj.Setup(unit, mDisplayObject.GetComponent<RectTransform>(), this);
 			plusUnitObj.BattleUnit.OrderValue = plusUnitObj.BattleUnit.GetActionOrderValue() - 100;
 			// 挿入
 			for (int i = 1; i < mOrderDiplayObj.Count; i++)

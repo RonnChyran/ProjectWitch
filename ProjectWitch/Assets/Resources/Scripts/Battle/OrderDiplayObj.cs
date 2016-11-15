@@ -19,13 +19,16 @@ namespace Battle
 		public int Pos { get; private set; }
 		// 自身の箱
 		public RectTransform Rect { get { return GetComponent<RectTransform>(); } }
+		// オーダーコントローラー
+		public OrderController OrderCtrl { get; private set; }
 
 		// セットアップ
-		public void Setup(BattleUnit battleUnit, RectTransform baseRect)
+		public void Setup(BattleUnit battleUnit, RectTransform baseRect, OrderController orderCtrl)
 		{
 			BattleUnit = battleUnit;
 			BattleObj = GameObject.Find("/BattleObject").GetComponent<BattleObj>();
 			mBaseRect = baseRect;
+			OrderCtrl = orderCtrl;
 
 			var child = transform.FindChild("Text").GetComponent<Text>();
 			child.text = BattleUnit.UnitData.Name;
@@ -39,7 +42,7 @@ namespace Battle
 		{
 			IsAnimation = true;
 			var targetPosX = mBaseRect.localPosition.x + mBaseRect.sizeDelta.x * pos;
-			float speedPerSec = 1200f * BattleObj.BattleSpeedMagni;
+			float speedPerSec = OrderCtrl.MoveSpeedX * BattleObj.BattleSpeedMagni;
 			while (pos < Pos ? Rect.localPosition.x > targetPosX : Rect.localPosition.x < targetPosX)
 			{
 				Rect.localPosition -= new Vector3(speedPerSec * Time.deltaTime * (pos < Pos ? 1 : -1), 0, 0);
@@ -71,7 +74,7 @@ namespace Battle
 		{
 			IsAnimation = true;
 			var targetPosY = mBaseRect.localPosition.y + mBaseRect.sizeDelta.y;
-			float speedPerSec = 100f * BattleObj.BattleSpeedMagni;
+			float speedPerSec = OrderCtrl.MoveSpeedY * BattleObj.BattleSpeedMagni;
 			while (Rect.localPosition.y < targetPosY)
 			{
 				Rect.localPosition += new Vector3(0, speedPerSec * Time.deltaTime, 0);
@@ -92,7 +95,7 @@ namespace Battle
 			IsAnimation = true;
 			Rect.localPosition = new Vector3(mBaseRect.localPosition.x + mBaseRect.sizeDelta.x * pos,
 				mBaseRect.localPosition.y + mBaseRect.sizeDelta.y, mBaseRect.localPosition.z);
-			float speedPerSec = 100f * BattleObj.BattleSpeedMagni;
+			float speedPerSec = OrderCtrl.MoveSpeedY * BattleObj.BattleSpeedMagni;
 			while (Rect.localPosition.y > mBaseRect.localPosition.y)
 			{
 				Rect.localPosition -= new Vector3(0, speedPerSec * Time.deltaTime, 0);
@@ -116,7 +119,7 @@ namespace Battle
 			IsAnimation = true;
 			var canvas = transform.parent.parent.GetComponent<CanvasScaler>();
 			var targetPosX = -(canvas.referenceResolution.x + mBaseRect.sizeDelta.x) / 2;
-			float speedPerSec = 1200f * BattleObj.BattleSpeedMagni;
+			float speedPerSec = OrderCtrl.MoveSpeedX * BattleObj.BattleSpeedMagni;
 			while (Rect.localPosition.x > targetPosX)
 			{
 				Rect.localPosition -= new Vector3(speedPerSec * Time.deltaTime, 0, 0);

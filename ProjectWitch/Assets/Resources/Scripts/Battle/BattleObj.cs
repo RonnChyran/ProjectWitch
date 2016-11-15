@@ -22,7 +22,7 @@ namespace Battle
 
 	public class BattleObj : MonoBehaviour
 	{
-		private Game mGame = null;
+		#region インスペクタ
 
 		// ユニットプレハブ
 		[SerializeField]
@@ -119,16 +119,35 @@ namespace Battle
 		[SerializeField]
 		public UnityEvent EndEvent = null;
 
+		#endregion
+
+		#region 参照データ
+
+		private Game mGame = null;
+
 		// 戦闘入力データ
 		public BattleDataIn BattleDataIn { get { return mGame.BattleIn; } }
 		// 戦闘出力データ
 		public BattleDataOut BattleDataOut { get { return mGame.BattleOut; } }
+		// 侵攻(true)か防衛(false)か
+		public bool IsInvasion { get { return BattleDataIn.IsInvasion; } }
+		// 音楽再生
+		public PlayMusic Music { get { return mMusic; } }
+		// 戦闘速度
+		public int BattleSpeed { get { return mGame.Config.BattleSpeed; } set { mGame.Config.BattleSpeed = value; } }
+		// 戦闘速度倍率
+		public float BattleSpeedMagni { get { return (float)System.Math.Pow(2.0f, BattleSpeed); } }
+		// ターン(行動)ユニット
+		public BattleUnit TurnUnit { get { return OrderController.TurnUnit; } }
+		// スキル参照ユニット(アリス)
+		public BattleUnit UnitAlice { get; private set; }
+
+		#endregion
+
 		// 味方データ
 		public List<BattleUnit> PlayerUnits { get; private set; }
 		// 敵データ
 		public List<BattleUnit> EnemyUnits { get; private set; }
-		// スキル参照ユニット(アリス)
-		public BattleUnit UnitAlice { get; private set; }
 		// 味方召喚ユニット
 		public List<BattleUnit> PlayerSummonUnits { get; private set; }
 		// 敵召喚ユニット
@@ -139,12 +158,17 @@ namespace Battle
 		public List<CardDataFormat> EnemyCards { get; private set; }
 		// 領地データ
 		public BattleArea Area { get; private set; }
-		// 侵攻(true)か防衛(false)か
-		public bool IsInvasion { get { return BattleDataIn.IsInvasion; } }
-		// 音楽再生
-		public PlayMusic Music { get { return mMusic; } }
 		// ターン数
 		public int TurnNum { get; set; }
+		// ダメージ量
+		public float DamageNum { get; private set; }
+		// 最終的な攻撃対象
+		public BattleUnit EndTargetUnit { get; private set; }
+		// エフェクトFXController
+		public FXController FXCtrl { get; private set; }
+
+		#region フラグ系
+		
 		// エフェクトが動作中である
 		public bool IsEffect { get; private set; }
 		// 戦闘が終了したがどうか
@@ -159,71 +183,19 @@ namespace Battle
 		public bool IsPlayerActionTime { get; private set; }
 		// ユニット増減中かどうか
 		public bool IsNowIncDec { get; private set; }
-		// 最終的な攻撃対象
-		public BattleUnit EndTargetUnit { get; private set; }
-		public float DamageNum { get; private set; }
 		// 撤退したかどうか
 		public bool IsEscape { get; private set; }
-		// 戦闘速度
-		public int BattleSpeed { get { return mGame.Config.BattleSpeed; } set { mGame.Config.BattleSpeed = value; } }
-		// 戦闘速度倍率
-		public float BattleSpeedMagni { get { return (float)System.Math.Pow(2.0f, BattleSpeed); } }
-		// エフェクトFXController
-		public FXController FXCtrl { get; private set; }
 
-		public BattleUnit TurnUnit { get { return OrderController.TurnUnit; } }
-
-		// 適当なデータを入れる関数
-		void SetTest()
-		{
-			var battleIn = mGame.BattleIn;
-
-			// エリア
-			battleIn.AreaID = 5;
-			var adf = mGame.AreaData[battleIn.AreaID];
-			adf.BattleFactor.PAtk =
-				adf.BattleFactor.MAtk =
-				adf.BattleFactor.PDef =
-				adf.BattleFactor.MDef =
-				adf.BattleFactor.Leadership =
-				adf.BattleFactor.Agility = 1;
+		#endregion
 
 
-			// キャラクター
-			var ud = mGame.UnitData[0];
-			ud.BattleGroupPrefabPath = "bv_devil";
-			mGame.SkillData[ud.LAtkSkill].Range = SkillDataFormat.SkillRange.All;
-			ud = mGame.UnitData[1];
-			ud.BattleLeaderPrefabPath = "bv_orivia";
-			ud.GUnitSize = 0;
-			ud.BattleGroupPrefabPath = "bv_magicleader";
-			ud = mGame.UnitData[6];
-			ud.BattleLeaderPrefabPath = "bv_orivia";
-			ud.BattleGroupPrefabPath = "bv_dragon";
-			ud.GUnitSize = 2;
-			ud = mGame.UnitData[7];
-			ud.BattleLeaderPrefabPath = "bv_alice";
-			ud.BattleGroupPrefabPath = "bv_dragon";
-			ud.GUnitSize = 2;
-
-			battleIn.PlayerUnits[0] = 1;
-			battleIn.PlayerUnits[1] = 0;
-			battleIn.EnemyUnits[0] = 7;
-			battleIn.EnemyUnits[1] = 6;
-
-			// 乱数はランダム
-			BattleRandom.IsFix = false;
-		}
 
 		// データのロード
 		void LoadData()
 		{
 			mGame = Game.GetInstance();
 
-			//			BattleSpeed = 2;
-			//			SetTest();
-			//BattleDataIn.PlayerCards[0] = 0;
-
+			// UIを非表示にセット
 			mEscapeConfUI.SetActive(false);
 			mConfigUI.SetActive(false);
 			mBattleWinUI.SetActive(false);
@@ -231,14 +203,18 @@ namespace Battle
 			mLastSerifUI.SetActive(false);
 			mMessageUI.SetActive(false);
 			mCardStartUI.SetActive(false);
+
+			// エリア(背景)セット
 			Area = new BattleArea(mBGParent);
 
+			// フラグ系セット
 			IsEffect = false;
 			IsBattleEnd = false;
 			IsEscape = false;
 			IsEndWaitTime = false;
 			IsWaitInputTime = false;
 
+			// 顔画像関連セット
 			print("顔グラ設定");
 			PlayerFaces = new List<FaceObj>();
 			PlayerFaces.Add(FaceP0);
@@ -261,9 +237,11 @@ namespace Battle
 			EnemyCardObjs.Add(mCardE1);
 			EnemyCardObjs.Add(mCardE2);
 
+			// カード用の参照ユニット(アリス)セット
 			UnitAlice = BattleData.Instantiate(mUnitPrefab, "", mTfPlayer).GetComponent<BattleUnit>();
 			UnitAlice.Setup(0, true, 0, this);
 
+			// ユニット初期化
 			print("プレイヤーユニット設定");
 			PlayerUnits = new List<BattleUnit>();
 			for (int i = 0; i < BattleDataIn.PlayerUnits.Count; ++i)
@@ -298,6 +276,10 @@ namespace Battle
 				EnemyUnits.Add(bu);
 				EnemyFaces[i].SetUnit(EnemyUnits[i]);
 			}
+			PlayerSummonUnits = new List<BattleUnit>();
+			EnemySummonUnits = new List<BattleUnit>();
+
+			// カード初期化
 			print("プレイヤーカード設定");
 			PlayerCards = new List<CardDataFormat>();
 			for (int i = 0; i < BattleDataIn.PlayerCards.Count; i++)
@@ -324,18 +306,18 @@ namespace Battle
 				EnemyCardObjs[i].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/Card/" + card.ImageBack);
 				EnemyCards.Add(card);
 			}
-			PlayerSummonUnits = new List<BattleUnit>();
-			EnemySummonUnits = new List<BattleUnit>();
 
+			// 戦闘ターン数取得
 			TurnNum = Area.AreaData.Time;
 
+			// 順番バー初期化
 			print("順番枠設定");
 			OrderController = mBehaviorOrder.GetComponent<OrderController>();
 			OrderController.Setup(this);
 			mTurnNumDisplay.GetComponent<TurnNumDisplay>().SetUp(this);
 
-			print("SkyBox設定");
 			// SkyBox設定
+			print("SkyBox設定");
 			if (BattleDataIn.TimeOfDay <= 1)
 			{
 				if (mSkyBoxDay)
@@ -357,8 +339,85 @@ namespace Battle
 			// BGM再生
 			mGame.SoundManager.Play(BattleDataIn.BGM, SoundType.BGM);
 
+			// 戦闘開始
 			StartCoroutine("CoBattleStart");
 		}
+
+		#region 汎用系(待機)
+		// 数秒待つコルーチン
+		private IEnumerator CoWaitSeconds(float seconds)
+		{
+			float time = 0;
+			while (true)
+			{
+				time += Time.deltaTime;
+				if (time >= seconds)
+					break;
+				yield return null;
+			}
+		}
+		public IEnumerator WaitSeconds(float seconds)
+		{
+			yield return StartCoroutine(CoWaitSeconds(seconds));
+		}
+
+		// 何か入力されるか、数秒経つまで待つコルーチン
+		private IEnumerator CoWaitInputOrSeconds(float seconds)
+		{
+			float time = 0;
+			IsWaitInputTime = true;
+			while (IsWaitInputTime)
+			{
+				time += Time.deltaTime;
+				if (time >= seconds)
+					IsWaitInputTime = false;
+				yield return null;
+			}
+		}
+		public IEnumerator WaitInputOrSeconds(float seconds)
+		{
+			yield return StartCoroutine(CoWaitInputOrSeconds(seconds));
+		}
+
+		// エフェクトを待つ
+		private IEnumerator CoWaitEffect()
+		{
+			while (IsEffect)
+				yield return null;
+		}
+
+		#endregion
+
+		// エフェクトを発生させる
+		private GameObject GenerateEffect(GameObject effectObj, string name)
+		{
+			// 生成
+			if (!effectObj)
+			{
+				print("エフェクトが存在しません");
+				return null;
+			}
+			var effect = BattleData.Instantiate(effectObj, name).gameObject;
+			effect.transform.parent = transform;
+			// コールバックセット
+			IsEffect = true;
+			FXCtrl = effect.GetComponent<FXController>();
+			FXCtrl.EndEvent.AddListener(EndEffect);
+			FXCtrl.PlaySpeed *= BattleSpeedMagni;
+			FXCtrl.LifeTime /= BattleSpeedMagni;
+			return effect;
+		}
+
+		private void GenerateEffect(string effectPath, bool isPlayer)
+		{
+			// 生成
+			print("Load：エフェクト　" + effectPath);
+			var obj = (GameObject)Resources.Load("Effects/Battle/Prefabs/" + effectPath);
+			var effect = GenerateEffect(obj, effectPath);
+			if (effect)
+				effect.transform.localScale = new Vector3((isPlayer ? -1 : 1), 1, 1);
+		}
+
 
 		// カードの発動チェック＆発動　checkCamp: 0=両方, -1=敵, 1=味方
 		private IEnumerator DoCardAction(CardDataFormat.CardTiming timeing, BattleUnit induceUnit, int checkCamp = 0)
@@ -434,26 +493,13 @@ namespace Battle
 				for (int i = 0; i < 5; i++)
 				{
 					flame.SetActive(!flame.activeSelf);
-					yield return WaitTimer(0.25f);
+					yield return WaitSeconds(0.06f);
 				}
 			}
 			mCardStartUI.SetActive(true);
 			yield return mCardStartUI.GetComponent<CardStartUI>().CardStart(card, cardObj);
 			print("Load：カード起動エフェクト");
-			if (mCardStartEffect == null)
-			{
-				print("エフェクトが存在しません");
-			}
-			else
-			{
-				var effect = BattleData.Instantiate(mCardStartEffect, "CardStartEffect").gameObject;
-				// コールバックセット
-				IsEffect = true;
-				var fxCtrl = effect.GetComponent<FXController>();
-				fxCtrl.EndEvent.AddListener(EndEffect);
-				fxCtrl.PlaySpeed *= BattleSpeedMagni;
-				fxCtrl.LifeTime /= BattleSpeedMagni;
-			}
+			GenerateEffect(mCardStartEffect, "CardStartEffect");
 			yield return StartCoroutine("CoWaitEffect");
 			mCardStartUI.SetActive(false);
 			yield return StartCoroutine(CoSkillAction(action, target, skill, isPlayer, true));
@@ -496,31 +542,6 @@ namespace Battle
 			}
 		}
 
-		// 数秒待つ
-		public IEnumerator WaitTimer(float seconds)
-		{
-			yield return new WaitForSeconds(seconds / BattleSpeedMagni);
-		}
-
-		// 何か入力されるか、数秒経つまで待つ
-		private IEnumerator CoWaitInputOrSeconds(float seconds)
-		{
-			float time = 0;
-			IsWaitInputTime = true;
-			while (IsWaitInputTime)
-			{
-				time += Time.deltaTime;
-				if (time >= seconds)
-					IsWaitInputTime = false;
-				yield return null;
-			}
-		}
-
-		public IEnumerator WaitInputOrSeconds(float seconds)
-		{
-			yield return StartCoroutine(CoWaitInputOrSeconds(seconds));
-		}
-
 		// 戦闘開始時のコルーチン
 		private IEnumerator CoBattleStart()
 		{
@@ -528,21 +549,7 @@ namespace Battle
 			mBattleStartUI.GetComponent<BattleStartUISetup>().Setup();
 			Music.PlayVS();
 			print("Load：戦闘開始エフェクト");
-			if (mBattleStartEffect == null)
-			{
-				print("エフェクトが存在しません");
-			}
-			else
-			{
-				var effect = BattleData.Instantiate(mBattleStartEffect, "BattleStartEffect").gameObject;
-				// コールバックセット
-				IsEffect = true;
-				var fxCtrl = effect.GetComponent<FXController>();
-				//				fxCtrl.EndEvent += EndEffect;
-				fxCtrl.EndEvent.AddListener(EndEffect);
-				fxCtrl.PlaySpeed *= BattleSpeedMagni;
-				fxCtrl.LifeTime /= BattleSpeedMagni;
-			}
+			GenerateEffect(mBattleStartEffect, "BattleStartEffect");
 			// エフェクトの終わるまで待つ
 			yield return StartCoroutine("CoWaitEffect");
 			yield return WaitInputOrSeconds(3);
@@ -556,7 +563,7 @@ namespace Battle
 		// AIの行動コルーチン
 		private IEnumerator CoAIAction()
 		{
-			yield return WaitTimer(0.5f);
+			yield return WaitSeconds(0.125f);
 			bool isAttack = BattleRandom.value < TurnUnit.AI.AttackRate;
 			var lSkillData = (isAttack ? TurnUnit.LAtkSkill : TurnUnit.LDefSkill);
 			BattleUnit targetUnit = null;
@@ -572,7 +579,7 @@ namespace Battle
 					TurnUnit.SetGroupAnimatorState(1);
 					bool isSlideOut = TurnUnit.LAtkSkill.Range == SkillDataFormat.SkillRange.All && targetUnit.Position != Position.Front;
 					yield return StartCoroutine(CoSoldierAttack(targetUnit, isSlideOut));
-					yield return WaitTimer(0.5f);
+					yield return WaitSeconds(0.125f);
 				}
 			}
 			else
@@ -633,36 +640,7 @@ namespace Battle
 			}
 			TurnUnit.SetLeaderAnimatorState(0);
 			TurnUnit.SetGroupAnimatorState(0);
-			yield return WaitTimer(0.5f);
-		}
-
-		// エフェクトを発生させる
-		private void GenerateEffect(string effectPath, bool isPlayer)
-		{
-			// 生成
-			print("Load：エフェクト　" + effectPath);
-			var obj = (GameObject)Resources.Load("Effects/Battle/Prefabs/" + effectPath);
-			if (obj == null)
-			{
-				print("エフェクトが存在しません");
-				return;
-			}
-			var effect = BattleData.Instantiate(obj, effectPath).gameObject;
-			effect.transform.localScale = new Vector3((isPlayer ? -1 : 1), 1, 1);
-			// コールバックセット
-			IsEffect = true;
-			FXCtrl = effect.GetComponent<FXController>();
-			//				fxCtrl.EndEvent += EndEffect;
-			FXCtrl.EndEvent.AddListener(EndEffect);
-			FXCtrl.PlaySpeed *= BattleSpeedMagni;
-			FXCtrl.LifeTime /= BattleSpeedMagni;
-		}
-
-		// エフェクトを待つ
-		private IEnumerator CoWaitEffect()
-		{
-			while (IsEffect)
-				yield return null;
+			yield return WaitSeconds(0.125f);
 		}
 
 		// ダメージを与えた時のコルーチン
@@ -672,7 +650,7 @@ namespace Battle
 			yield return target.SlideIn();
 			if (type == DamageType.Normal)
 				target.Face.SetSelectFlame(true);
-			yield return WaitTimer(0.2f);
+			yield return WaitSeconds(0.05f);
 			EndTargetUnit = null;
 
 			// ターゲットが庇われていた場合
@@ -701,7 +679,7 @@ namespace Battle
 			if (target.IsStateNoDamage)
 			{
 				// ダメージを受けない状態であるならば
-				while (FXCtrl.LifeTime >= 0.5)
+				while (FXCtrl && FXCtrl.LifeTime >= 0.5)
 					yield return null;
 				target.IsStateNoDamage = false;
 			}
@@ -720,16 +698,16 @@ namespace Battle
 				target.SufferDamage(DamageNum, toLeader);
 				var damageDisplay = (target.IsPlayer ? mDamageDisplayPlayer : mDamageDisplayEnemy).GetComponent<DamageDisplay>();
 				damageDisplay.Display(DamageNum, true);
-				while (FXCtrl.LifeTime >= 0.5)
+				while (FXCtrl && FXCtrl.LifeTime >= 0.5)
 					yield return null;
 				for (int i = 5; i >= 0; --i)
 				{
 					target.ApproachDisplay(i);
 					target.SetDisplaySoldier();
-					yield return WaitTimer(0.2f);
+					yield return WaitSeconds(0.05f);
 				}
-				yield return WaitTimer(0.2f);
-				damageDisplay.Hide();
+				yield return WaitSeconds(0.05f);
+				yield return damageDisplay.Hide();
 			}
 
 			// 庇い対象を無しにする
@@ -747,7 +725,7 @@ namespace Battle
 			// ターゲットをスライドインさせる、スライドしている間待機
 			yield return target.SlideIn();
 			target.Face.SetSelectFlame(true);
-			while (FXCtrl.LifeTime >= 0.5)
+			while (FXCtrl && FXCtrl.LifeTime >= 0.5)
 				yield return null;
 
 			var damageDisplay = (target.IsPlayer ? mDamageDisplayPlayer : mDamageDisplayEnemy).GetComponent<DamageDisplay>();
@@ -760,11 +738,11 @@ namespace Battle
 			{
 				target.ApproachDisplay(i);
 				target.SetDisplaySoldier();
-				yield return WaitTimer(0.2f);
+				yield return WaitSeconds(0.05f);
 			}
-			yield return WaitTimer(0.2f);
+			yield return WaitSeconds(0.05f);
 
-			damageDisplay.Hide();
+			yield return damageDisplay.Hide();
 			target.Face.SetSelectFlame(false);
 			IsNowIncDec = false;
 		}
@@ -969,7 +947,7 @@ namespace Battle
 			yield return StartCoroutine("CoWaitEffect");
 			while (IsNowIncDec)
 				yield return null;
-			yield return WaitTimer(0.2f);
+			yield return WaitSeconds(0.05f);
 			// ターゲットをスライドアウトさせる、スライドしている間待機
 			if (isSlideOut || target.UnitData.HP == 0)
 				yield return target.SlideOut();
@@ -1014,7 +992,7 @@ namespace Battle
 				// 召喚エフェクト?
 				yield return bu.SlideIn();
 				bu.SetDisplayState(true);
-				yield return WaitTimer(0.5f);
+				yield return WaitSeconds(0.125f);
 				// Orderに追加
 				yield return OrderController.PlusUnit(bu);
 				yield return bu.SlideOut();
@@ -1039,6 +1017,8 @@ namespace Battle
 				// ランダム効果の場合のダメージかどうか
 				bool isRandomDamage = (BattleRandom.value <= 0.5);
 				BattleUnit preUnit = null;
+				if (target != targetsList[0])
+					yield return target.SlideOut();
 				foreach (var unit in targetsList)
 				{
 					// ターンユニットと同じ陣営のユニットをスライドインさせる前に、ターンユニットをスライドアウトさせる
@@ -1167,7 +1147,7 @@ namespace Battle
 					yield return StartCoroutine("CoWaitEffect");
 					while (IsNowIncDec)
 						yield return null;
-					yield return WaitTimer(0.5f);
+					yield return WaitSeconds(0.125f);
 				}
 				// 以前のターゲットユニットをスライドアウトさせる
 				if (preUnit)
@@ -1187,7 +1167,7 @@ namespace Battle
 		{
 			// ターゲットをスライドインさせる、スライドしている間待機
 			yield return target.SlideIn();
-			yield return WaitTimer(0.5f);
+			yield return WaitSeconds(0.125f);
 
 			// ターゲットが庇われていた場合
 			foreach (var unit in (target.IsPlayer ? PlayerUnits : EnemyUnits))
@@ -1200,9 +1180,6 @@ namespace Battle
 					yield break;
 				}
 			}
-
-			// エフェクト
-			//			StartCoroutine("CoDoEffect", TurnUnit.GAtkSkill.EffectPath);
 
 			// 捕獲カウンターダメージ
 			if (!TurnUnit.IsSummonUnit && TurnUnit.Position == Position.Front)
@@ -1228,18 +1205,18 @@ namespace Battle
 				{
 					CaptureGauge.fillAmount = (preCaptureGauge + parCaptureGauge * i) / 100;
 					text.text = (int)(preCaptureGauge + parCaptureGauge * i) + "％";
-					yield return WaitTimer(0.2f / length);
+					yield return WaitSeconds(0.05f / length);
 				}
 				text.text = (int)target.CaptureGauge + "％";
 				CaptureGauge.fillAmount = target.CaptureGauge / 100;
-				yield return WaitTimer(0.2f);
+				yield return WaitSeconds(0.05f);
 			}
 
 			// エフェクト発生中は待つ
 			yield return StartCoroutine("CoWaitEffect");
 			while (IsNowIncDec)
 				yield return null;
-			yield return WaitTimer(0.2f);
+			yield return WaitSeconds(0.05f);
 			mCaptureGauge.SetActive(false);
 
 			// ターゲットをスライドアウトさせる、スライドしている間待機
@@ -1291,7 +1268,7 @@ namespace Battle
 					StartCoroutine("CoDoEffect", "毒ダメージエフェクトパス名");
 					// 毒状態なら毒ダメージを受ける
 					yield return StartCoroutine(DamageProcess(preTurnUnit, 0, 0, DamageType.Poison));
-					yield return WaitTimer(0.2f);
+					yield return WaitSeconds(0.05f);
 				}
 				bool isSummoneUnit = preTurnUnit.IsSummonUnit;
 				yield return preTurnUnit.TurnEnd();
@@ -1326,7 +1303,7 @@ namespace Battle
 		{
 			yield return DoCardAction(CardDataFormat.CardTiming.BattleEnd, null);
 			bool isWin;
-			if ((TurnNum == 0) || (PlayerUnits.Count == 0 && EnemyUnits.Count == 0))
+			if ((TurnNum == 0 && EnemyUnits.Count != 0) || (PlayerUnits.Count == 0 && EnemyUnits.Count == 0))
 				// 時間切れなら侵攻側が負け または 全滅引き分けなら侵攻側が負け
 				isWin = !IsInvasion;
 			else if (IsEscape)
@@ -1342,21 +1319,7 @@ namespace Battle
 				mBattleWinUI.SetActive(true);
 				print("WIN");
 				print("Load：戦闘勝利エフェクト");
-				if (mBattleWinEffect == null)
-				{
-					print("エフェクトが存在しません");
-				}
-				else
-				{
-					var effect = BattleData.Instantiate(mBattleWinEffect, "BattleWinEffect").gameObject;
-					// コールバックセット
-					IsEffect = true;
-					var fxCtrl = effect.GetComponent<FXController>();
-					//				fxCtrl.EndEvent += EndEffect;
-					fxCtrl.EndEvent.AddListener(EndEffect);
-					fxCtrl.PlaySpeed *= BattleSpeedMagni;
-					fxCtrl.LifeTime /= BattleSpeedMagni;
-				}
+				GenerateEffect(mBattleWinEffect, "BattleWinEffect");
 			}
 			else
 			{
@@ -1364,21 +1327,7 @@ namespace Battle
 				mBattleLoseUI.SetActive(true);
 				print("LOSE");
 				print("Load：戦闘敗北エフェクト");
-				if (mBattleLoseEffect == null)
-				{
-					print("エフェクトが存在しません");
-				}
-				else
-				{
-					var effect = BattleData.Instantiate(mBattleLoseEffect, "BattleLoseEffect").gameObject;
-					// コールバックセット
-					IsEffect = true;
-					var fxCtrl = effect.GetComponent<FXController>();
-					//				fxCtrl.EndEvent += EndEffect;
-					fxCtrl.EndEvent.AddListener(EndEffect);
-					fxCtrl.PlaySpeed *= BattleSpeedMagni;
-					fxCtrl.LifeTime /= BattleSpeedMagni;
-				}
+				GenerateEffect(mBattleLoseEffect, "BattleLoseEffect");
 			}
 			BattleDataOut.IsWin = isWin;
 
@@ -1406,7 +1355,7 @@ namespace Battle
 					TurnUnit.SetGroupAnimatorState(1);
 					bool isSlideOut = TurnUnit.LAtkSkill.Range == SkillDataFormat.SkillRange.All && target.Position != Position.Front;
 					yield return StartCoroutine(CoSoldierAttack(target, isSlideOut));
-					yield return WaitTimer(0.5f);
+					yield return WaitSeconds(0.125f);
 				}
 				if (!IsBattleEnd)
 				{
@@ -1433,7 +1382,7 @@ namespace Battle
 			}
 			TurnUnit.SetLeaderAnimatorState(0);
 			TurnUnit.SetGroupAnimatorState(0);
-			yield return WaitTimer(0.5f);
+			yield return WaitSeconds(0.125f);
 			IsPlayerActionTime = false;
 			yield return null;
 		}

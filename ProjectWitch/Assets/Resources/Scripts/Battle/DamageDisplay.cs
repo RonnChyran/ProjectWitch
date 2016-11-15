@@ -18,13 +18,13 @@ namespace Battle
 			Text.color = (isDamage ? mColorDamage : mColorHeal);
 			if (isDamage)
 			{
-				yield return BattleObj.WaitTimer(0.1f);
+				yield return BattleObj.WaitSeconds(0.025f);
 				transform.localPosition += new Vector3(0, 10, 0);
-				yield return BattleObj.WaitTimer(0.02f);
+				yield return BattleObj.WaitSeconds(0.005f);
 				for (int i = 0; i < 10; i++)
 				{
 					transform.localPosition -= new Vector3(0, 1, 0);
-					yield return BattleObj.WaitTimer(0.01f);
+					yield return BattleObj.WaitSeconds(0.0025f);
 				}
 			}
 			else
@@ -33,7 +33,7 @@ namespace Battle
 				for (int i = 0; i < 10; i++)
 				{
 					Text.color += new Color(0, 0, 0, 0.1f);
-					yield return BattleObj.WaitTimer(0.02f);
+					yield return BattleObj.WaitSeconds(0.005f);
 				}
 			}
 			yield return null;
@@ -53,17 +53,16 @@ namespace Battle
 			{
 				transform.localPosition -= new Vector3(0, 1, 0);
 				Text.color -= new Color(0, 0, 0, 0.05f);
-				yield return BattleObj.WaitTimer(0.01f);
+				yield return BattleObj.WaitSeconds(0.0025f);
 			}
 			gameObject.SetActive(false);
 			transform.localPosition += new Vector3(0, 10, 0);
-			yield return null;
 		}
 
-		public void Hide()
+		public IEnumerator Hide()
 		{
             if(gameObject.activeSelf)
-                StartCoroutine("CoHide");
+                yield return StartCoroutine("CoHide");
 		}
 
 		// Use this for initialization
