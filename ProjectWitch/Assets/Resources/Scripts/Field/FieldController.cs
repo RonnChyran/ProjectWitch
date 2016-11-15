@@ -351,6 +351,7 @@ namespace Field
             }
             foreach(var unitID in game.BattleIn.PlayerUnits)
             {
+                if (unitID < 0) continue;
                 var unit = game.UnitData[unitID];
                 unit.Experience += ex;
             }

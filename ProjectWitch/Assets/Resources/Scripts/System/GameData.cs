@@ -928,7 +928,7 @@ namespace GameData
             //ユニットデータに格納（0番目はキャプションなので読み飛ばす
             for(int i=1; i<rowData.Count; i++)
             {
-                if (rowData[i].Count != 42) continue;
+                if (rowData[i].Count != 45) continue;
 
                 //データの順番
                 //[0]ID         [1]名前       [2]レベル      [3]レベル成長限界          [4]HP
@@ -946,6 +946,9 @@ namespace GameData
                 //[37]立ち絵画像名     [38]顔アイコン画像    
                 //[39]戦闘リーダープレハブ名
                 //[40]戦闘兵士プレハブ名 [41]キャラ説明
+                //[42]死亡時セリフ
+                //[43]捕獲時セリフ
+                //[44]逃走時セリフ
                 var unit = new UnitDataFormat();
                 var data = rowData[i];
 
@@ -997,6 +1000,11 @@ namespace GameData
                     unit.BattleLeaderPrefabPath = data[39];
                     unit.BattleGroupPrefabPath = data[40];
                     unit.Comment = data[41];
+
+                    unit.OnDeadSerif = data[42];
+                    unit.OnCapturedSerif = data[43];
+                    unit.OnEscapedSerif = data[44];
+
                 }
                 catch(ArgumentNullException e)
                 {
