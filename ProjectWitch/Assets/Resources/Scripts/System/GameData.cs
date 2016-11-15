@@ -636,7 +636,7 @@ namespace GameData
             BGMVolume = 0.5f;
             SEVolume = 0.5f;
             VoiceVolume = 1.0f;
-            MasterVolume = 1.0f;
+            MasterVolume = 0.3f;
         }
 
         //解像度
