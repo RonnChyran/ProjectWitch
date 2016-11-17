@@ -50,7 +50,7 @@ namespace Battle
 		{
 			// 音を鳴らす
 			BaseFace.Music.PlayOverSkillButton();
-			BaseFace.BattleObj.MouseOverSkillButton(BaseFace.Unit, mType);
+			BaseFace.BattleObj.MouseOverSkillButton(mType);
 		}
 
 		// マウスが離されたとき
