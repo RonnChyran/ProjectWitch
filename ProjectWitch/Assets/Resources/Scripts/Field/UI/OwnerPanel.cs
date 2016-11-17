@@ -1,10 +1,14 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 namespace Field
 {
 
     public class OwnerPanel : MonoBehaviour {
+
+        [SerializeField]
+        private Text mActionCountText = null;
 
         [SerializeField]
         private float mBackPos = 0.0f;
@@ -40,6 +44,11 @@ namespace Field
                 targetX += mBackPos;
             }
             DeltaMove(targetX);
+
+            //テキスト更新
+            var game = Game.GetInstance();
+            var ter = game.TerritoryData[TerritoryID];
+            mActionCountText.text = ter.ActionCount.ToString();
         }
 
         //ほんのちょっとtargetPosに向かって進む

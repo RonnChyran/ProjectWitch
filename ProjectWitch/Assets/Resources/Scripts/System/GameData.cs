@@ -1011,6 +1011,8 @@ namespace GameData
                     unit.OnCapturedSerif = data[43];
                     unit.OnEscapedSerif = data[44];
 
+                    unit.IsAlive = true;
+
                 }
                 catch(ArgumentNullException e)
                 {
@@ -1540,7 +1542,7 @@ namespace GameData
             //データの代入
             for (int i = 1; i < rowData.Count; i++)
             {
-                if (rowData[i].Count != 19) continue;
+                if (rowData[i].Count != 20) continue;
 
 
                 //データの順番
@@ -1555,6 +1557,7 @@ namespace GameData
                 //[16]効果範囲 
                 //[17]効果対象
                 //[18]エフェクト名
+                //[19]説明
                 var data = rowData[i];
                 var skill = new SkillDataFormat();
 
@@ -1583,6 +1586,7 @@ namespace GameData
                     skill.Target = (SkillDataFormat.SkillTarget)Enum.ToObject(
                         typeof(SkillDataFormat.SkillTarget), int.Parse(data[17]));
                     skill.EffectPath = data[18];
+                    skill.Description = data[19];
                 }
                 catch (ArgumentNullException e)
                 {

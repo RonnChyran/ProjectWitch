@@ -304,10 +304,10 @@ public class Game : MonoBehaviour
         yield return null;
 
         //戦闘情報の格納
-        var time = (CurrentTime <= 2) ? CurrentTime : 2;
-        BattleIn.TimeOfDay = time;
+        //var time = (CurrentTime <= 2) ? CurrentTime : 2;
+        //BattleIn.TimeOfDay = time;
         
-        //BattleIn.TimeOfDay = CurrentTime;
+        BattleIn.TimeOfDay = CurrentTime;
 
         SceneManager.UnloadScene(cSceneName_PreBattle);
         yield return SceneManager.LoadSceneAsync(cSceneName_Battle,LoadSceneMode.Additive);

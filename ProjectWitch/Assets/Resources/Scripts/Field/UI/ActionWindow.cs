@@ -12,6 +12,7 @@ namespace Field
         //各領主パネルへの参照
         [SerializeField]
         private OwnerPanel[] mOwnerPanels = null;
+        
 
         //攻撃アイコン
         [SerializeField]
