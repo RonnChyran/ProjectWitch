@@ -15,7 +15,31 @@ public class BattleBeginEffect : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
+        var game = Game.GetInstance();
+        
+        var pter = game.TerritoryData[game.BattleIn.PlayerTerritory];
+        var eter = game.TerritoryData[game.BattleIn.EnemyTerritory];
+
+        mPlayerTerritoryName.text = pter.OwnerName + "軍";
+        mEnemyTerritoryName.text = eter.OwnerName + "軍";
+
+        var pUnitIDs = game.BattleIn.PlayerUnits;
+        var eUnitIDs = game.BattleIn.EnemyUnits;
+
+        var sum = 0;
+        foreach(var id in pUnitIDs)
+        {
+            if (id == -1) continue;
+            var unit = game.UnitData[id];
+
+            sum += unit.MaxSoldierNum;
+        }
+
+        foreach(var id in eUnitIDs)
+        {
+
+        }
+            
 	}
 	
 	// Update is called once per frame
