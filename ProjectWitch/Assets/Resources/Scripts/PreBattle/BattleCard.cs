@@ -94,6 +94,7 @@ namespace PreBattle
         public void OnClickedDetouchButton()
         {
             mController.CardList[mID] = -1;
+            mController.CardSetHistory.HistoryRemove(mID);
         }
 
     }

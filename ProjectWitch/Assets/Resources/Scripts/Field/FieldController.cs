@@ -243,6 +243,176 @@ namespace Field
             yield return null;
         }
 
+        //ターンの流れ動作
+        private IEnumerator TurnProcess()
+        {
+            var game = Game.GetInstance();
+            var currentTime = game.CurrentTime;
+
+            //行動数の更新
+            foreach(var ter in game.TerritoryData)
+            {
+                ter.ActionCount = 0;
+                if (ter.State != TerritoryDataFormat.TerritoryState.Active) continue;
+                foreach(var g in ter.GroupList)
+                {
+                    var gData = game.GroupData[g];
+                    if(gData.State == GroupDataFormat.GroupState.Active) ter.ActionCount++;
+                }
+            }
+
+            //フィールドのイベントデータを取得
+            var fieldEventData = game.FieldEventData;
+
+            #region Player Turn
+            FieldUIController.ActiveTerritory = 0;
+            var eventlist = fieldEventData.Where(p => p.Timing == EventDataFormat.TimingType.PlayerTurnBegin).ToList();
+
+            //ターンはじめイベントを実行
+            yield return EventExecute(eventlist);
+
+            //戦闘オンだったら戦闘開始
+            if (game.BattleIn.IsEvent)
+                yield return StartCoroutine(CallBattle(game.BattleIn.AreaID, 0, true));
+
+            //BGM再開
+            PlayBGM();
+
+            //一日の始まりのみの処理
+            if (currentTime == 0)
+            {
+                //二重起動防止
+                while (game.IsDialogShowd) yield return null;
+
+                //ターンはじめ表示
+                var settle = GetSettlement();
+                string str = game.CurrentTurn.ToString() + "日目\n" +
+                    "本日の収支：" + settle.ToString() + "M";
+                game.ShowDialog("収支報告", str);
+                while (game.IsDialogShowd) yield return null;
+
+                //収支加算
+                game.PlayerMana += settle;
+
+                //マナ回復
+                game.RecoverMana();
+
+                //兵数回復
+                game.RecoverUnit();
+
+            }
+
+            //メニュー操作を有効にする
+            MenuClickable = true;
+            FlagClickable = true;
+
+            //時間が変化するまで待機
+            while (currentTime == game.CurrentTime) yield return null;
+
+            //プレイヤーターン終了
+            yield return null;
+
+            #endregion
+
+            #region Enemy Turn
+
+            //メニュー操作を無効にする
+            MenuClickable = false;
+            FlagClickable = false;
+
+            //カメラ操作を無効にする
+            CameraController.IsPlayable = false;
+
+            //現在の時間が3~のとき
+            //敵のターン
+            var territory = game.CurrentTime - 2;   //領地ＩＤを求める
+
+            //領地IDが存在する範囲なら領地イベントを実行
+            if (territory < game.TerritoryData.Count)
+            {
+                FieldUIController.ActiveTerritory = territory;
+                StartCoroutine(EnemyTurn(territory));
+            }
+            else
+            {
+                //カメラ操作を有効にする
+                CameraController.IsPlayable = true;
+
+                //敵ターンが終了したので次のターンへ移行
+                game.CurrentTurn++;
+                game.CurrentTime = 0;
+
+                //オートセーブ
+                game.AutoSave();
+            }
+            
+            for(int i=1; i<game.TerritoryData.Count; i++)
+            {
+                var ter = game.TerritoryData[i];
+                
+#if DEBUG
+                game.DebugMessage.Push(ter.OwnerName, ter.State);
+#endif
+
+                //ダイアログが閉じるまで処理を進めない
+                while (game.IsDialogShowd) yield return null;
+
+                //フィールドのイベントデータを取得
+                eventlist = fieldEventData.Where(p => p.Timing == EventDataFormat.TimingType.EnemyTurnBegin).ToList();
+
+                //占領されている場合はスルー
+                if (ter.State != TerritoryDataFormat.TerritoryState.Dead)
+                {
+
+                    //各領地に設定されたイベントを抜き出す
+                    eventlist = eventlist.Where(p => p.Area == territory).ToList();
+
+                    //ターンはじめイベント開始
+                    yield return StartCoroutine(EventExecute(eventlist));
+
+                    //ターンはじめイベントで戦闘フラグが立った
+                    //戦闘開始
+
+                    //すでに交戦状態に入っている場合
+                    if (ter.State == TerritoryDataFormat.TerritoryState.Active)
+                    {
+                        foreach (var group in ter.GroupList)
+                        {
+                            var groupData = game.GroupData[group];
+                            if (groupData.State != GroupDataFormat.GroupState.Active)
+                                continue;
+
+                            //攻め込む領地
+                            int targetArea = GetDominationTarget(territory, group);
+                            if (targetArea == -1) continue;
+
+                            //攻めてきた演出
+                            yield return StartCoroutine(DominationEffect(targetArea));
+
+                            //敵ユニットのセット
+                            SetEnemy(group, true);
+
+                            //戦闘前スクリプトの開始
+                            eventlist = fieldEventData.Where(p => p.Timing == EventDataFormat.TimingType.EnemyBattle).ToList();
+                            eventlist = eventlist.Where(p => p.Area == targetArea).ToList();
+                            yield return StartCoroutine(EventExecute(eventlist));
+                            while (game.IsTalk) yield return null;
+
+                            //戦闘開始
+                            yield return StartCoroutine(CallBattle(targetArea, territory, false));
+
+                            //BGM再開
+                            PlayBGM();
+                        }
+                    }
+
+                }
+            }
+
+
+            yield return null;
+        }
+
         //侵攻戦の開始
         public void DominationBattle(int area, int territory)
         {

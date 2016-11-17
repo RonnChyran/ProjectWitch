@@ -10,6 +10,7 @@ namespace PreBattle
         //プロパティ
         public int CardID { get; set; }
         public PreBattleController Controller { get; set; }
+        public CardInfo CardInfo { get; set; }
 
         //子プレハブ
         [SerializeField]
@@ -103,6 +104,14 @@ namespace PreBattle
             }
 
             Controller.CardList[targetID] = CardID;
+            Controller.CardSetHistory.HistoryAdd(targetID);
+            Controller.CancelTargetIsUnit = false;
+        }
+
+        public void OnClicked_Info()
+        {
+            CardInfo.CardID = CardID;
+            CardInfo.Show();
         }
 
         private void SetRace(GameData.CardDataFormat card)

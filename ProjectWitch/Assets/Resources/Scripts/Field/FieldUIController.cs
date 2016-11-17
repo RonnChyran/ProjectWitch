@@ -52,6 +52,10 @@ namespace Field
         [SerializeField]
         private string mFlagTexFolderPath = null;
 
+        //アクションパネルへの参照
+        [SerializeField]
+        private ActionWindow mActionWindow = null;
+
         //ベースへの参照
         private List<GameObject> mBases = new List<GameObject>();
 
@@ -238,6 +242,12 @@ namespace Field
         public void HideUI()
         {
             mPanel.enabled = false;
+        }
+
+        //行動数表示パネルの更新
+        public void UpdateTerritoryPanel()
+        {
+
         }
     }
 }

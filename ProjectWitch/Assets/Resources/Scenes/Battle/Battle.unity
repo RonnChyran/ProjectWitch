@@ -1054,24 +1054,24 @@ MonoBehaviour:
   mCoe2: 0.25
   mCoe3: 0.5
   mCoe4: 0.25
-  mCoe5: 0.0005
-  mCoe6: 5
-  mCoe7: 0.0005
-  mCoe8: 2.5
-  mCoe9: 0.5
-  mCoe10: 5
-  mCoe11: 0.5
-  mCoe12: 2.5
-  mCoe13: 0.5
-  mCoe14: 0.5
+  mCoe5: 0.01
+  mCoe6: 0.5
+  mCoe7: 0.01
+  mCoe8: 0.5
+  mCoe9: 2
+  mCoe10: 0.25
+  mCoe11: 2
+  mCoe12: 0.25
+  mCoe13: 2
+  mCoe14: 2
   mCoe15: 1
   mCoe16: 0.1
-  mCoe17: 0.2
+  mCoe17: 1
   mCoe18: 1
   mCoe19: 1
   mCoe20: 1
-  mCoe21: 1
-  mCoe22: 1
+  mCoe21: 5
+  mCoe22: 5
   mCoe23: 1
   mCoe24: 1
   mCoe25: 1
@@ -5842,52 +5842,52 @@ Prefab:
     - target: {fileID: 114000012599233340, guid: 942477d124b96de45a0083cf505b7419,
         type: 2}
       propertyPath: mCoe5
-      value: 0.0005
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 114000012599233340, guid: 942477d124b96de45a0083cf505b7419,
         type: 2}
       propertyPath: mCoe6
-      value: 5
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 114000012599233340, guid: 942477d124b96de45a0083cf505b7419,
         type: 2}
       propertyPath: mCoe7
-      value: 0.0005
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 114000012599233340, guid: 942477d124b96de45a0083cf505b7419,
         type: 2}
       propertyPath: mCoe8
-      value: 2.5
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 114000012599233340, guid: 942477d124b96de45a0083cf505b7419,
         type: 2}
       propertyPath: mCoe9
-      value: 0.5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 114000012599233340, guid: 942477d124b96de45a0083cf505b7419,
         type: 2}
       propertyPath: mCoe10
-      value: 5
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 114000012599233340, guid: 942477d124b96de45a0083cf505b7419,
         type: 2}
       propertyPath: mCoe11
-      value: 0.5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 114000012599233340, guid: 942477d124b96de45a0083cf505b7419,
         type: 2}
       propertyPath: mCoe12
-      value: 2.5
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 114000012599233340, guid: 942477d124b96de45a0083cf505b7419,
         type: 2}
       propertyPath: mCoe13
-      value: 0.5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 114000012599233340, guid: 942477d124b96de45a0083cf505b7419,
         type: 2}
       propertyPath: mCoe14
-      value: 0.5
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 114000012599233340, guid: 942477d124b96de45a0083cf505b7419,
         type: 2}
@@ -5902,7 +5902,7 @@ Prefab:
     - target: {fileID: 114000012599233340, guid: 942477d124b96de45a0083cf505b7419,
         type: 2}
       propertyPath: mCoe17
-      value: 0.2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114000012599233340, guid: 942477d124b96de45a0083cf505b7419,
         type: 2}
@@ -5922,12 +5922,12 @@ Prefab:
     - target: {fileID: 114000012599233340, guid: 942477d124b96de45a0083cf505b7419,
         type: 2}
       propertyPath: mCoe21
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 114000012599233340, guid: 942477d124b96de45a0083cf505b7419,
         type: 2}
       propertyPath: mCoe22
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 114000012599233340, guid: 942477d124b96de45a0083cf505b7419,
         type: 2}

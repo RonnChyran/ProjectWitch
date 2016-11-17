@@ -307,6 +307,8 @@ public class Game : MonoBehaviour
         var time = (CurrentTime <= 2) ? CurrentTime : 2;
         BattleIn.TimeOfDay = time;
         
+        //BattleIn.TimeOfDay = CurrentTime;
+
         SceneManager.UnloadScene(cSceneName_PreBattle);
         yield return SceneManager.LoadSceneAsync(cSceneName_Battle,LoadSceneMode.Additive);
     }

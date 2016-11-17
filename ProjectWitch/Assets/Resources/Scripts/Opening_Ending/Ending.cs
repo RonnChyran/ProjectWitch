@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class Ending : MonoBehaviour {
@@ -52,6 +53,16 @@ public class Ending : MonoBehaviour {
         game.CallScript(ev);
         yield return null;
         while (game.IsTalk) yield return null;
+
+        //ムービーシーンの再生
+        switch(id)
+        {
+            case 16:
+                SceneManager.LoadScene("EndMovie0");
+                break;
+            default:
+                break;
+        }
 
         //スクリプトを実行したら終了
         //タイトルの呼び出し

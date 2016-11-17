@@ -129,6 +129,8 @@ namespace PreBattle
             }
 
             Controller.UnitList[targetID] = UnitID;
+            Controller.UnitSetHistory.HistoryAdd(targetID);
+            Controller.CancelTargetIsUnit = true;
         }
 
         private void SetRace(GameData.UnitDataFormat unit)

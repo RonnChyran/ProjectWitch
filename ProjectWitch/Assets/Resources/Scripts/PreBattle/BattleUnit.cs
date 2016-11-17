@@ -99,6 +99,7 @@ namespace PreBattle
         public void OnClickedDetouchButton()
         {
             mController.UnitList[mID] = -1;
+            mController.UnitSetHistory.HistoryRemove(mID);
         }
 
     }

@@ -18,6 +18,10 @@ namespace PreBattle
         [SerializeField]
         private PreBattleController mController = null;
 
+        //カード情報ウィンドウ
+        [SerializeField]
+        private CardInfo mCardInfo = null;
+
         // Use this for initialization
         void Start()
         {
@@ -43,6 +47,7 @@ namespace PreBattle
                 var cCard = inst.GetComponent<Card>();
                 cCard.CardID = cardid;
                 cCard.Controller = mController;
+                cCard.CardInfo = mCardInfo;
                 inst.transform.SetParent(mContentGroup.transform, false);
             }
         }
