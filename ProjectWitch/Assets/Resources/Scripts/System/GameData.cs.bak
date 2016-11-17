@@ -245,10 +245,16 @@ namespace GameData
         //視覚エフェクト
         public string EffectPath { get; set; }
 
+<<<<<<< HEAD
+        //説明
+        public string Description { get; set; }
+    }
+=======
 		//説明
 		public string Description { get; set; }
 
 	}
+>>>>>>> origin/battle
 
     //カードデータ
     public class CardDataFormat
@@ -407,7 +413,7 @@ namespace GameData
 
         //宣戦布告可能フラグの変数番号
         public int InvationableFlagIndex { get; set; }
-
+        
         //状態
         public enum TerritoryState
         {

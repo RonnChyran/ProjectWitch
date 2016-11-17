@@ -8,32 +8,48 @@ namespace Battle
 	{
 		[SerializeField]
 		private Color mColorDamage = new Color(1, 0, 0), mColorHeal = new Color(0, 1, 0);
+		[SerializeField]
+		private GameObject mImDamage = null, mImHeal = null;
 
 		public BattleObj BattleObj { get; private set; }
 		public Text Text { get { return gameObject.GetComponent<Text>(); } }
+		public Image UseImage { get; private set; }
+		public Vector3 DefaultPos { get; private set; }
+
+		public void Setup()
+		{
+			DefaultPos = transform.localPosition;
+		}
 
 		private IEnumerator CoDisplay(float num, bool isDamage)
 		{
 			Text.text = ((int)num).ToString();
 			Text.color = (isDamage ? mColorDamage : mColorHeal);
+			mImDamage.SetActive(false);
+			mImHeal.SetActive(false);
+			transform.localPosition = DefaultPos;
 			if (isDamage)
 			{
-				yield return BattleObj.WaitTimer(0.1f);
+				mImDamage.SetActive(true);
+				UseImage = mImDamage.GetComponent<Image>();
+				yield return BattleObj.WaitSeconds(0.025f);
 				transform.localPosition += new Vector3(0, 10, 0);
-				yield return BattleObj.WaitTimer(0.02f);
+				yield return BattleObj.WaitSeconds(0.005f);
 				for (int i = 0; i < 10; i++)
 				{
 					transform.localPosition -= new Vector3(0, 1, 0);
-					yield return BattleObj.WaitTimer(0.01f);
+					yield return BattleObj.WaitSeconds(0.0025f);
 				}
 			}
 			else
 			{
+				mImHeal.SetActive(true);
+				UseImage = mImHeal.GetComponent<Image>();
 				Text.color = new Color(Text.color.r, Text.color.g, Text.color.b, 0.0f);
 				for (int i = 0; i < 10; i++)
 				{
 					Text.color += new Color(0, 0, 0, 0.1f);
-					yield return BattleObj.WaitTimer(0.02f);
+					yield return BattleObj.WaitSeconds(0.005f);
 				}
 			}
 			yield return null;
@@ -53,17 +69,20 @@ namespace Battle
 			{
 				transform.localPosition -= new Vector3(0, 1, 0);
 				Text.color -= new Color(0, 0, 0, 0.05f);
-				yield return BattleObj.WaitTimer(0.01f);
+				UseImage.color -= new Color(0, 0, 0, 0.05f);
+				yield return BattleObj.WaitSeconds(0.0025f);
 			}
+			mImDamage.SetActive(false);
+			mImHeal.SetActive(false);
+			UseImage.color = new Color(1, 1, 1, 1);
 			gameObject.SetActive(false);
 			transform.localPosition += new Vector3(0, 10, 0);
-			yield return null;
 		}
 
-		public void Hide()
+		public IEnumerator Hide()
 		{
             if(gameObject.activeSelf)
-                StartCoroutine("CoHide");
+                yield return StartCoroutine("CoHide");
 		}
 
 		// Use this for initialization
