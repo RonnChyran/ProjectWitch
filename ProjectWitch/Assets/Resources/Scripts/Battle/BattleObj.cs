@@ -106,6 +106,9 @@ namespace Battle
 		// カード起動エフェクト
 		[SerializeField]
 		private GameObject mCardStartEffect = null;
+		// エフェクトUIの親オブジェクト
+		[SerializeField]
+		private GameObject mEffectParent = null;
 		// 背景の親オブジェクト
 		[SerializeField]
 		private GameObject mBGParent = null;
@@ -115,6 +118,12 @@ namespace Battle
 		// スキル説明文
 		[SerializeField]
 		private GameObject mDescription = null;
+		// スキルキャプション
+		[SerializeField]
+		private GameObject mSkillCaption = null;
+		// スキルキャプションスプライト
+		[SerializeField]
+		private Sprite mSC_Atk = null, mSC_Def = null;
 		// 音楽再生
 		[SerializeField]
 		private PlayMusic mMusic = null;
@@ -220,6 +229,7 @@ namespace Battle
 			HideDescription();
 			mDamageDisplayPlayer.GetComponent<DamageDisplay>().Setup();
 			mDamageDisplayEnemy.GetComponent<DamageDisplay>().Setup();
+			HideSkillCaption();
 
 			// エリア(背景)セット
 			Area = new BattleArea(mBGParent);
@@ -396,7 +406,7 @@ namespace Battle
 		#endregion
 
 		// エフェクトを発生させる
-		private GameObject GenerateEffect(GameObject effectObj, string name)
+		private GameObject GenerateEffect(GameObject effectObj, string name, bool isUI)
 		{
 			// 生成
 			if (!effectObj)
@@ -405,7 +415,12 @@ namespace Battle
 				return null;
 			}
 			var effect = BattleData.Instantiate(effectObj, name).gameObject;
-			effect.transform.parent = transform;
+			effect.transform.parent = mEffectParent.transform;
+			if (isUI)
+			{
+				effect.transform.localPosition = effectObj.transform.localPosition;
+				effect.transform.localScale = effectObj.transform.localScale;
+			}
 			// コールバックセット
 			IsEffect = true;
 			FXCtrl = effect.GetComponent<FXController>();
@@ -420,7 +435,7 @@ namespace Battle
 			// 生成
 			print("Load：エフェクト　" + effectPath);
 			var obj = (GameObject)Resources.Load("Effects/Battle/Prefabs/" + effectPath);
-			var effect = GenerateEffect(obj, effectPath);
+			var effect = GenerateEffect(obj, effectPath, false);
 			if (effect)
 				effect.transform.localScale = new Vector3((isPlayer ? -1 : 1), 1, 1);
 		}
@@ -495,7 +510,7 @@ namespace Battle
 			mCardStartUI.SetActive(true);
 			yield return mCardStartUI.GetComponent<CardStartUI>().CardStart(card.CardData, card.CardObj);
 			print("Load：カード起動エフェクト");
-			GenerateEffect(mCardStartEffect, "CardStartEffect");
+			GenerateEffect(mCardStartEffect, "CardStartEffect", true);
 			yield return StartCoroutine("CoWaitEffect");
 			mCardStartUI.SetActive(false);
 			yield return StartCoroutine(CoSkillAction(action, target, card.Skill, isPlayer, true));
@@ -544,13 +559,15 @@ namespace Battle
 		private IEnumerator CoBattleStart()
 		{
 			mBattleStartUI.SetActive(true);
-			mBattleStartUI.GetComponent<BattleStartUISetup>().Setup();
+			var bsUI = mBattleStartUI.GetComponent<BattleStartUISetup>();
+			if (bsUI)
+				bsUI.Setup();
 			Music.PlayVS();
 			print("Load：戦闘開始エフェクト");
-			GenerateEffect(mBattleStartEffect, "BattleStartEffect");
+			GenerateEffect(mBattleStartEffect, "BattleStartEffect", true);
 			// エフェクトの終わるまで待つ
 			yield return StartCoroutine("CoWaitEffect");
-			yield return WaitInputOrSeconds(3);
+			yield return WaitInputOrSeconds(1);
 			mBattleStartUI.SetActive(false);
 			// 戦闘開始時がタイミングのカード発動
 			yield return DoCardAction(CardDataFormat.CardTiming.BattleBegin, null);
@@ -634,11 +651,15 @@ namespace Battle
 			{
 				// リーダースキル発動
 				TurnUnit.SetLeaderAnimatorState(isAttack ? 1 : 2);
+				SetSkillCaption(lSkillData.Name, isAttack);
+				MouseOverSkillButton(isAttack ? 0 : 1);
 				yield return StartCoroutine(CoSkillAction(TurnUnit, targetUnit, lSkillData, TurnUnit.IsPlayer, false));
+				HideDescription();
 			}
 			TurnUnit.SetLeaderAnimatorState(0);
 			TurnUnit.SetGroupAnimatorState(0);
 			yield return WaitSeconds(0.125f);
+			HideSkillCaption();
 		}
 
 		// ダメージを与えた時のコルーチン
@@ -1017,7 +1038,7 @@ namespace Battle
 				// ランダム効果の場合のダメージかどうか
 				bool isRandomDamage = (BattleRandom.value <= 0.5);
 				BattleUnit preUnit = null;
-				if (target != targetsList[0])
+				if (target && target != targetsList[0])
 					yield return target.SlideOut();
 				foreach (var unit in targetsList)
 				{
@@ -1322,7 +1343,7 @@ namespace Battle
 				mBattleWinUI.SetActive(true);
 				print("WIN");
 				print("Load：戦闘勝利エフェクト");
-				GenerateEffect(mBattleWinEffect, "BattleWinEffect");
+				GenerateEffect(mBattleWinEffect, "BattleWinEffect", true);
 			}
 			else
 			{
@@ -1330,11 +1351,12 @@ namespace Battle
 				mBattleLoseUI.SetActive(true);
 				print("LOSE");
 				print("Load：戦闘敗北エフェクト");
-				GenerateEffect(mBattleLoseEffect, "BattleLoseEffect");
+				GenerateEffect(mBattleLoseEffect, "BattleLoseEffect", true);
 			}
 			BattleDataOut.IsWin = isWin;
 
-			yield return WaitInputOrSeconds(2);
+			// エフェクトの終わるまで待つ
+			yield return StartCoroutine("CoWaitEffect");
 			mMessageUI.SetActive(true);
 			mMessageUI.transform.FindChild("Text").GetComponent<Text>().text = (IsInvasion ? 2 : 1) + (isWin ? 1 : 0) + "ポイントの経験値を得た";
 			yield return WaitInputOrSeconds(2);
@@ -1363,6 +1385,7 @@ namespace Battle
 				if (!IsBattleEnd)
 				{
 					// リーダースキル発動
+					SetSkillCaption(TurnUnit.LAtkSkill.Name, true);
 					TurnUnit.SetLeaderAnimatorState(1);
 					yield return StartCoroutine(CoSkillAction(TurnUnit, target, TurnUnit.LAtkSkill, TurnUnit.IsPlayer, false));
 				}
@@ -1373,6 +1396,7 @@ namespace Battle
 				TurnUnit.SetGroupAnimatorState(2);
 				TurnUnit.IsDefense = true;
 				// リーダースキル発動
+				SetSkillCaption(TurnUnit.LDefSkill.Name, false);
 				TurnUnit.SetLeaderAnimatorState(2);
 				yield return StartCoroutine(CoSkillAction(TurnUnit, target, TurnUnit.LDefSkill, TurnUnit.IsPlayer, false));
 			}
@@ -1386,7 +1410,9 @@ namespace Battle
 			TurnUnit.SetLeaderAnimatorState(0);
 			TurnUnit.SetGroupAnimatorState(0);
 			yield return WaitSeconds(0.125f);
+			HideSkillCaption();
 			IsPlayerActionTime = false;
+			HideDescription();
 			yield return null;
 		}
 
@@ -1407,15 +1433,15 @@ namespace Battle
 		}
 
 		// スキル選択ボタンがマウスオーバーしたことを通知する関数
-		public void MouseOverSkillButton(BattleUnit target, int type)
+		public void MouseOverSkillButton(int type)
 		{
 			mDescription.SetActive(true);
-			var text = mDescription.transform.FindChild("Text").GetComponent<Text>();
+			var text = mDescription.GetComponent<Text>();
 			if (false) { }
 			else if (type == 0)
-				text.text = target.LAtkSkill.Description;
+				text.text = TurnUnit.LAtkSkill.Description;
 			else if (type == 1)
-				text.text = target.LDefSkill.Description;
+				text.text = TurnUnit.LDefSkill.Description;
 			else if (type == 2)
 				text.text = "対象を捕獲しようと試みる。";
 		}
@@ -1424,6 +1450,20 @@ namespace Battle
 		public void HideDescription()
 		{
 			mDescription.SetActive(false);
+		}
+
+		// スキルキャプション表示
+		public void SetSkillCaption(string skillName, bool isAttack)
+		{
+			mSkillCaption.GetComponent<Image>().sprite = (isAttack ? mSC_Atk : mSC_Def);
+			mSkillCaption.transform.FindChild("Text").GetComponent<Text>().text = skillName;
+			mSkillCaption.SetActive(true);
+		}
+
+		// スキルキャプション表示
+		public void HideSkillCaption()
+		{
+			mSkillCaption.SetActive(false);
 		}
 
 		// 撤退ボタンを押したときの関数
