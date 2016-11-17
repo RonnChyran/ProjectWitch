@@ -8,16 +8,30 @@ namespace Battle
 	{
 		[SerializeField]
 		private Color mColorDamage = new Color(1, 0, 0), mColorHeal = new Color(0, 1, 0);
+		[SerializeField]
+		private GameObject mImDamage = null, mImHeal = null;
 
 		public BattleObj BattleObj { get; private set; }
 		public Text Text { get { return gameObject.GetComponent<Text>(); } }
+		public Image UseImage { get; private set; }
+		public Vector3 DefaultPos { get; private set; }
+
+		public void Setup()
+		{
+			DefaultPos = transform.localPosition;
+		}
 
 		private IEnumerator CoDisplay(float num, bool isDamage)
 		{
 			Text.text = ((int)num).ToString();
 			Text.color = (isDamage ? mColorDamage : mColorHeal);
+			mImDamage.SetActive(false);
+			mImHeal.SetActive(false);
+			transform.localPosition = DefaultPos;
 			if (isDamage)
 			{
+				mImDamage.SetActive(true);
+				UseImage = mImDamage.GetComponent<Image>();
 				yield return BattleObj.WaitSeconds(0.025f);
 				transform.localPosition += new Vector3(0, 10, 0);
 				yield return BattleObj.WaitSeconds(0.005f);
@@ -29,6 +43,8 @@ namespace Battle
 			}
 			else
 			{
+				mImHeal.SetActive(true);
+				UseImage = mImHeal.GetComponent<Image>();
 				Text.color = new Color(Text.color.r, Text.color.g, Text.color.b, 0.0f);
 				for (int i = 0; i < 10; i++)
 				{
@@ -53,8 +69,12 @@ namespace Battle
 			{
 				transform.localPosition -= new Vector3(0, 1, 0);
 				Text.color -= new Color(0, 0, 0, 0.05f);
+				UseImage.color -= new Color(0, 0, 0, 0.05f);
 				yield return BattleObj.WaitSeconds(0.0025f);
 			}
+			mImDamage.SetActive(false);
+			mImHeal.SetActive(false);
+			UseImage.color = new Color(1, 1, 1, 1);
 			gameObject.SetActive(false);
 			transform.localPosition += new Vector3(0, 10, 0);
 		}

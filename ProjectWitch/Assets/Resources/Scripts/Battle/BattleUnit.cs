@@ -696,11 +696,13 @@ namespace Battle
 		public IEnumerator SlideIn()
 		{
 			yield return StartCoroutine("CoSlideIn");
+			mBattleObj.Bar.SetBar(this, 0, 0, 0);
 		}
 
 		public IEnumerator SlideOut()
 		{
 			yield return StartCoroutine("CoSlideOut");
+			mBattleObj.Bar.Hide(this);
 		}
 
 		// リーダーのアニメーターの表示をセットする

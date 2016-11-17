@@ -73,7 +73,7 @@ namespace Battle
 		private IEnumerator CoSlideUpOut()
 		{
 			IsAnimation = true;
-			var targetPosY = mBaseRect.localPosition.y + mBaseRect.sizeDelta.y;
+			var targetPosY = mBaseRect.localPosition.y + mBaseRect.sizeDelta.y * 1.5;
 			float speedPerSec = OrderCtrl.MoveSpeedY * BattleObj.BattleSpeedMagni;
 			while (Rect.localPosition.y < targetPosY)
 			{

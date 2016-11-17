@@ -62,6 +62,9 @@ namespace Battle
 		// 捕獲ゲージ
 		[SerializeField]
 		private GameObject mCaptureGauge = null;
+		// 捕獲ゲージ背面
+		[SerializeField]
+		private GameObject mCaptureGaugeBack = null;
 		public Image CaptureGauge { get { return (mCaptureGauge != null ? mCaptureGauge.GetComponent<Image>() : null); } }
 		// マウスカバー
 		[SerializeField]
@@ -106,6 +109,12 @@ namespace Battle
 		// 背景の親オブジェクト
 		[SerializeField]
 		private GameObject mBGParent = null;
+		// バー関連
+		[SerializeField]
+		private GameObject mBar = null;
+		// スキル説明文
+		[SerializeField]
+		private GameObject mDescription = null;
 		// 音楽再生
 		[SerializeField]
 		private PlayMusic mMusic = null;
@@ -139,6 +148,8 @@ namespace Battle
 		public float BattleSpeedMagni { get { return (float)System.Math.Pow(2.0f, BattleSpeed); } }
 		// ターン(行動)ユニット
 		public BattleUnit TurnUnit { get { return OrderController.TurnUnit; } }
+		// バーマネージャ
+		public HPBarManager Bar { get { return mBar.GetComponent<HPBarManager>(); } }
 		// スキル参照ユニット(アリス)
 		public BattleUnit UnitAlice { get; private set; }
 
@@ -153,9 +164,9 @@ namespace Battle
 		// 敵召喚ユニット
 		public List<BattleUnit> EnemySummonUnits { get; private set; }
 		// 味方カード
-		public List<CardDataFormat> PlayerCards { get; private set; }
+		public List<CardManager> PlayerCards { get; private set; }
 		// 敵カード
-		public List<CardDataFormat> EnemyCards { get; private set; }
+		public List<CardManager> EnemyCards { get; private set; }
 		// 領地データ
 		public BattleArea Area { get; private set; }
 		// ターン数
@@ -203,6 +214,12 @@ namespace Battle
 			mLastSerifUI.SetActive(false);
 			mMessageUI.SetActive(false);
 			mCardStartUI.SetActive(false);
+			mCaptureGauge.SetActive(false);
+			mCaptureGaugeBack.SetActive(false);
+			Bar.HideAll();
+			HideDescription();
+			mDamageDisplayPlayer.GetComponent<DamageDisplay>().Setup();
+			mDamageDisplayEnemy.GetComponent<DamageDisplay>().Setup();
 
 			// エリア(背景)セット
 			Area = new BattleArea(mBGParent);
@@ -281,29 +298,19 @@ namespace Battle
 
 			// カード初期化
 			print("プレイヤーカード設定");
-			PlayerCards = new List<CardDataFormat>();
+			PlayerCards = new List<CardManager>();
 			for (int i = 0; i < BattleDataIn.PlayerCards.Count; i++)
 			{
-				var id = BattleDataIn.PlayerCards[i];
-				PlayerCardObjs[i].SetActive(id != -1);
-				PlayerCardObjs[i].transform.FindChild("Flame").gameObject.SetActive(false);
-				if (id == -1)
-					continue;
-				var card = mGame.CardData[id];
-				PlayerCardObjs[i].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/Card/" + card.ImageBack);
+				var card = new CardManager();
+				card.Setup(BattleDataIn.PlayerCards[i], PlayerCardObjs[i]);
 				PlayerCards.Add(card);
 			}
 			print("エネミーカード設定");
-			EnemyCards = new List<CardDataFormat>();
+			EnemyCards = new List<CardManager>();
 			for (int i = 0; i < BattleDataIn.EnemyCards.Count; i++)
 			{
-				var id = BattleDataIn.EnemyCards[i];
-				EnemyCardObjs[i].SetActive(id != -1);
-				EnemyCardObjs[i].transform.FindChild("Flame").gameObject.SetActive(false);
-				if (id == -1)
-					continue;
-				var card = mGame.CardData[id];
-				EnemyCardObjs[i].GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/Card/" + card.ImageBack);
+				var card = new CardManager();
+				card.Setup(BattleDataIn.EnemyCards[i], EnemyCardObjs[i]);
 				EnemyCards.Add(card);
 			}
 
@@ -431,52 +438,41 @@ namespace Battle
 					for (int j = 0; j < cards.Count; j++)
 					{
 						var card = cards[j];
-						var cardObj = (isPlayer ? PlayerCardObjs : EnemyCardObjs)[j];
-						if (card.Timing == timeing)
+						if (card.CardData == null || !card.IsCanUse)
+							continue;
+						if (card.CardData.Timing == timeing)
 						{
 							if ((timeing == CardDataFormat.CardTiming.Rand80 && BattleRandom.value > 0.8f) ||
 								(timeing == CardDataFormat.CardTiming.Rand50 && BattleRandom.value > 0.5f) ||
 								(timeing == CardDataFormat.CardTiming.Rand20 && BattleRandom.value > 0.2f))
 								continue;
 							// カードスキル発動
-							SkillDataFormat skill = mGame.SkillData[card.SkillID];
 							BattleUnit action = (isPlayer ? PlayerUnits[0] : EnemyUnits[0]);            // 行動ユニットはその陣営の先頭ユニット
-							if (skill.Type == SkillDataFormat.SkillType.SoulSteal && induceUnit != null)// ソウルスティールなら行動ユニットは誘発ユニット
+							if (card.Skill.Type == SkillDataFormat.SkillType.SoulSteal && induceUnit != null)// ソウルスティールなら行動ユニットは誘発ユニット
 								action = induceUnit;
 
 							BattleUnit target = null;
-							if (skill.Range == SkillDataFormat.SkillRange.Single)                       // 対象が単体の時
+							if (card.Skill.Range == SkillDataFormat.SkillRange.Single)                       // 対象が単体の時
 							{
-								if (skill.Type == SkillDataFormat.SkillType.Heal && induceUnit != null) // 回復効果なら誘発ユニット
+								if (card.Skill.Type == SkillDataFormat.SkillType.Heal && induceUnit != null) // 回復効果なら誘発ユニット
 									target = induceUnit;
 								else                                                                    // それ以外ならランダム
 								{
 									List<BattleUnit> units = new List<BattleUnit>();
-									if (skill.Target == SkillDataFormat.SkillTarget.Enemy ||
-										skill.Target == SkillDataFormat.SkillTarget.EnemyLeader)        // 対象が敵の時
+									if (card.Skill.Target == SkillDataFormat.SkillTarget.Enemy ||
+										card.Skill.Target == SkillDataFormat.SkillTarget.EnemyLeader)        // 対象が敵の時
 									{
 										units = (isPlayer ? EnemyUnits : PlayerUnits);
 									}
-									else if (skill.Target == SkillDataFormat.SkillTarget.Player ||
-										skill.Target == SkillDataFormat.SkillTarget.PlayerLeader)       // 対象が味方の時
+									else if (card.Skill.Target == SkillDataFormat.SkillTarget.Player ||
+										card.Skill.Target == SkillDataFormat.SkillTarget.PlayerLeader)       // 対象が味方の時
 									{
 										units = (!isPlayer ? EnemyUnits : PlayerUnits);
 									}
 									target = units[BattleRandom.Range(0, units.Count - 1)];
 								}
 							}
-							yield return StartCoroutine(CoCardSkillAction(card, cardObj, action, target, skill, isPlayer));
-							// カード数消費(無限じゃない時)
-							if (card.Duration != -1)
-							{
-								card.Duration--;
-								if (card.Duration <= 0)
-								{
-									cards.Remove(card);
-									// 表示処理
-									cardObj.SetActive(false);
-								}
-							}
+							yield return StartCoroutine(CoCardSkillAction(card, action, target, isPlayer));
 						}
 					}
 				}
@@ -485,9 +481,9 @@ namespace Battle
 		}
 
 		// カード発動コルーチン
-		private IEnumerator CoCardSkillAction(CardDataFormat card, GameObject cardObj, BattleUnit action, BattleUnit target, SkillDataFormat skill, bool isPlayer)
+		private IEnumerator CoCardSkillAction(CardManager card, BattleUnit action, BattleUnit target, bool isPlayer)
 		{
-			var flame = cardObj.transform.FindChild("Flame").gameObject;
+			var flame = card.Flame;
 			if (flame)
 			{
 				for (int i = 0; i < 5; i++)
@@ -497,13 +493,15 @@ namespace Battle
 				}
 			}
 			mCardStartUI.SetActive(true);
-			yield return mCardStartUI.GetComponent<CardStartUI>().CardStart(card, cardObj);
+			yield return mCardStartUI.GetComponent<CardStartUI>().CardStart(card.CardData, card.CardObj);
 			print("Load：カード起動エフェクト");
 			GenerateEffect(mCardStartEffect, "CardStartEffect");
 			yield return StartCoroutine("CoWaitEffect");
 			mCardStartUI.SetActive(false);
-			yield return StartCoroutine(CoSkillAction(action, target, skill, isPlayer, true));
+			yield return StartCoroutine(CoSkillAction(action, target, card.Skill, isPlayer, true));
 			flame.SetActive(false);
+			// カード数消費(無限じゃない時)
+			card.SetUsedCard();
 			yield return StartCoroutine("CoCheckUnit");
 		}
 
@@ -649,7 +647,7 @@ namespace Battle
 			// ターゲットをスライドインさせる、スライドしている間待機
 			yield return target.SlideIn();
 			if (type == DamageType.Normal)
-				target.Face.SetSelectFlame(true);
+				target.Face.SetSelectArrow(true);
 			yield return WaitSeconds(0.05f);
 			EndTargetUnit = null;
 
@@ -663,7 +661,7 @@ namespace Battle
 						// ターゲットを戻す
 						yield return target.SlideOut();
 						if (type == DamageType.Normal)
-							target.Face.SetSelectFlame(false);
+							target.Face.SetSelectArrow(false);
 						yield return StartCoroutine(DamageProcess(unit, phyDamage, magDamage, type, toLeader, (originTarget == null ? target : originTarget)));
 						yield return unit.SlideOut();
 						yield return target.SlideIn();
@@ -704,6 +702,7 @@ namespace Battle
 				{
 					target.ApproachDisplay(i);
 					target.SetDisplaySoldier();
+					Bar.SetBar(target, 0, 0, 0);
 					yield return WaitSeconds(0.05f);
 				}
 				yield return WaitSeconds(0.05f);
@@ -713,7 +712,7 @@ namespace Battle
 			// 庇い対象を無しにする
 			target.GuardTarget = null;
 			if (type == DamageType.Normal)
-				target.Face.SetSelectFlame(false);
+				target.Face.SetSelectArrow(false);
 
 			IsNowIncDec = false;
 		}
@@ -724,7 +723,7 @@ namespace Battle
 			IsNowIncDec = true;
 			// ターゲットをスライドインさせる、スライドしている間待機
 			yield return target.SlideIn();
-			target.Face.SetSelectFlame(true);
+			target.Face.SetSelectArrow(true);
 			while (FXCtrl && FXCtrl.LifeTime >= 0.5)
 				yield return null;
 
@@ -738,12 +737,13 @@ namespace Battle
 			{
 				target.ApproachDisplay(i);
 				target.SetDisplaySoldier();
+				Bar.SetBar(target, 0, 0, 0);
 				yield return WaitSeconds(0.05f);
 			}
 			yield return WaitSeconds(0.05f);
 
 			yield return damageDisplay.Hide();
-			target.Face.SetSelectFlame(false);
+			target.Face.SetSelectArrow(false);
 			IsNowIncDec = false;
 		}
 
@@ -901,8 +901,8 @@ namespace Battle
 			mMessageUI.SetActive(false);
 			var imSerif = mLastSerifUI.transform.FindChild("Image");
 			var imMessage = mMessageUI.transform.FindChild("Image");
-			var text = mLastSerifUI.transform.FindChild("Text").GetComponent<Text>();
-			imSerif.localScale = new Vector3((unit.IsPlayer ? 1 : -1), 1, 1);
+			var text = imSerif.FindChild("Text").GetComponent<Text>();
+			imSerif.localPosition = new Vector3(unit.Face.transform.localPosition.x, imSerif.localPosition.y, imSerif.localPosition.z);
 			// 固有メッセージ表示
 			if (type == DeleteUnitType.Dead)
 				text.text = unit.UnitData.OnDeadSerif;
@@ -1028,12 +1028,12 @@ namespace Battle
 					if (preUnit != null)
 					{
 						yield return preUnit.SlideOut();
-						preUnit.Face.SetSelectFlame(false);
+						preUnit.Face.SetSelectArrow(false);
 					}
 					preUnit = unit;
 					// ターゲットユニットをスライドインさせる
 					yield return unit.SlideIn();
-					unit.Face.SetSelectFlame(true);
+					unit.Face.SetSelectArrow(true);
 					// エフェクト発生
 					GenerateEffect(skill.EffectPath, unit.IsPlayer);
 					// 与えるダメージ
@@ -1154,7 +1154,7 @@ namespace Battle
 				{
 					if (preUnit != actionUnit || (isCard && preUnit != TurnUnit))
 						yield return preUnit.SlideOut();
-					preUnit.Face.SetSelectFlame(false);
+					preUnit.Face.SetSelectArrow(false);
 				}
 			}
 			// ターンユニットがスライドアウトしている場合、スライドインさせる
@@ -1195,6 +1195,7 @@ namespace Battle
 				// 捕獲ダメージ処理
 				var preCaptureGauge = target.CaptureGauge;
 				mCaptureGauge.SetActive(true);
+				mCaptureGaugeBack.SetActive(true);
 				CaptureGauge.fillAmount = preCaptureGauge / 100;
 				target.SufferCaptureDamage(target.GetCaptureDamage(TurnUnit.IsExistSoldier ? TurnUnit.GetGroupPhyDamage() : TurnUnit.GetLeaderPhyDamage(),
 					TurnUnit.IsExistSoldier ? TurnUnit.GetGroupMagDamage() : TurnUnit.GetLeaderMagDamage()));
@@ -1205,6 +1206,7 @@ namespace Battle
 				{
 					CaptureGauge.fillAmount = (preCaptureGauge + parCaptureGauge * i) / 100;
 					text.text = (int)(preCaptureGauge + parCaptureGauge * i) + "％";
+					Bar.SetBar(target, 0, 0, 0, -parCaptureGauge * (length - i));
 					yield return WaitSeconds(0.05f / length);
 				}
 				text.text = (int)target.CaptureGauge + "％";
@@ -1218,6 +1220,7 @@ namespace Battle
 				yield return null;
 			yield return WaitSeconds(0.05f);
 			mCaptureGauge.SetActive(false);
+			mCaptureGaugeBack.SetActive(false);
 
 			// ターゲットをスライドアウトさせる、スライドしている間待機
 			yield return target.SlideOut();
@@ -1399,8 +1402,28 @@ namespace Battle
 			// スキルボタンを消す
 			PlayerUnits[0].Face.SetAllFaceHide();
 			Music.PlayClickSkillButton();
-			target.Face.SetSelectFlame(false);
+			target.Face.SetSelectArrow(false);
 			StartCoroutine(CoPlayerAction(target, type));
+		}
+
+		// スキル選択ボタンがマウスオーバーしたことを通知する関数
+		public void MouseOverSkillButton(BattleUnit target, int type)
+		{
+			mDescription.SetActive(true);
+			var text = mDescription.transform.FindChild("Text").GetComponent<Text>();
+			if (false) { }
+			else if (type == 0)
+				text.text = target.LAtkSkill.Description;
+			else if (type == 1)
+				text.text = target.LDefSkill.Description;
+			else if (type == 2)
+				text.text = "対象を捕獲しようと試みる。";
+		}
+
+		// 説明文を消す
+		public void HideDescription()
+		{
+			mDescription.SetActive(false);
 		}
 
 		// 撤退ボタンを押したときの関数

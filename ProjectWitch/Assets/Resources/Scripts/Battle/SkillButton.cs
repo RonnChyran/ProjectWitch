@@ -5,8 +5,11 @@ using UnityEngine.EventSystems;
 namespace Battle
 {
 	// スキルのボタン制御
-	public class SkillButton : MonoBehaviour, IPointerEnterHandler
+	public class SkillButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 	{
+		[SerializeField]
+		private int mType = 0;
+
 		private Vector3 mBasePos;
 		private Vector2 mBaseSize;
 
@@ -26,7 +29,7 @@ namespace Battle
 			var text = transform.FindChild("Text").GetComponent<Text>();
 			text.text = name;
 			gameObject.GetComponent<RectTransform>().localPosition = new Vector3(mBasePos.x,
-				mBasePos.y - mBaseSize.y * pos * 1.2f, mBasePos.z);
+				mBasePos.y + mBaseSize.y * pos * 1f, mBasePos.z);
 			gameObject.SetActive(true);
 		}
 
@@ -37,9 +40,9 @@ namespace Battle
 		}
 
 		// ボタンが押された時の動作
-		public void PushButton(int type)
+		public void PushButton()
 		{
-			BaseFace.BattleObj.PushSkillButton(BaseFace.Unit, type);
+			BaseFace.BattleObj.PushSkillButton(BaseFace.Unit, mType);
 		}
 
 		// マウスオーバーした時
@@ -47,6 +50,13 @@ namespace Battle
 		{
 			// 音を鳴らす
 			BaseFace.Music.PlayOverSkillButton();
+			BaseFace.BattleObj.MouseOverSkillButton(BaseFace.Unit, mType);
+		}
+
+		// マウスが離されたとき
+		public void OnPointerExit(PointerEventData e)
+		{
+			BaseFace.BattleObj.HideDescription();
 		}
 
 		// Use this for initialization

@@ -244,7 +244,11 @@ namespace GameData
 
         //視覚エフェクト
         public string EffectPath { get; set; }
-    }
+
+		//説明
+		public string Description { get; set; }
+
+	}
 
     //カードデータ
     public class CardDataFormat

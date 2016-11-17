@@ -10,12 +10,19 @@ namespace Battle
 	{
 		// 表示させるオブジェクトのプレハブ
 		[SerializeField]
-		private GameObject mDisplayObject = null;
+		private GameObject mDisplayObject = null, mImNextArrow = null;
+		// 表示スプライト
+		[SerializeField]
+		private Sprite mSpriteBannerPlayer = null, mSpriteBannerEnemy = null;
+		// 表示文字色
+		[SerializeField]
+		private Color mTextColorPlayer = new Color(1, 1, 1), mTextColorEnemy = new Color(0, 0, 0);
 		// オブジェクトの左右移動スピード
 		[SerializeField]
 		private float mMoveSpeedX = 1200f, mMoveSpeedY = 100f;
 		public float MoveSpeedX { get { return mMoveSpeedX; } }
 		public float MoveSpeedY { get { return mMoveSpeedY; } }
+		public int NextPos { get; private set; }
 		// 表示オブジェクト
 		private List<OrderDiplayObj> mOrderDiplayObj;
 		private BattleObj mBattleObj;
@@ -23,7 +30,7 @@ namespace Battle
 		public static int NextOrderValue { get; set; }
 		public BattleUnit TurnUnit { get { return (mOrderDiplayObj.Count != 0 ? mOrderDiplayObj[0].BattleUnit : null); } }
 		public List<OrderDiplayObj> OrderDiplayObj { get { return mOrderDiplayObj; } }
-
+		
 		// アニメーション中かどうか
 		public bool IsAnimation
 		{
@@ -47,15 +54,12 @@ namespace Battle
 			orderDiplayObj.Setup(buttleUnit, mDisplayObject.GetComponent<RectTransform>(), this);
 			mOrderDiplayObj.Add(orderDiplayObj);
 
-			var back = dispObj.transform.FindChild("Back");
-			if (back)
-			{
-				var image = back.GetComponent<Image>();
-				if (image)
-				{
-//					image.color = (orderDiplayObj.BattleUnit.IsPlayer ? new Color(0, 0, 1) : new Color(1, 0, 0));
-				}
-			}
+			var backImage = dispObj.transform.FindChild("Back").GetComponent<Image>();
+			if (backImage)
+				backImage.sprite = (orderDiplayObj.BattleUnit.IsPlayer ? mSpriteBannerPlayer : mSpriteBannerEnemy);
+			var text = dispObj.transform.FindChild("Text").GetComponent<Text>();
+			if (text)
+				text.color = (orderDiplayObj.BattleUnit.IsPlayer ? mTextColorPlayer: mTextColorEnemy);
 		}
 
 		// 各種セットアップ
@@ -77,6 +81,7 @@ namespace Battle
 				obo.BattleUnit.OrderValue = obo.BattleUnit.GetActionOrderValue() - 100;
 			mOrderDiplayObj.Sort((a, b) => a.BattleUnit.OrderValue - b.BattleUnit.OrderValue);
 			NextOrderValue = TurnUnit.GetActionOrderValue();
+			mImNextArrow.SetActive(false);
 			StartCoroutine("CoStartMove");
 		}
 
@@ -94,7 +99,56 @@ namespace Battle
 			}
 			while (IsAnimation)
 				yield return null;
+			mImNextArrow.SetActive(true);
+
+			SetNextPos();
+			var bRect = mOrderDiplayObj[NextPos].GetComponent<RectTransform>();
+			var rect = mImNextArrow.GetComponent<RectTransform>();
+			rect.localPosition = new Vector3(bRect.localPosition.x + bRect.sizeDelta.x / 2, rect.localPosition.y, rect.localPosition.z);
 		}
+
+		private IEnumerator CoMoveNextPos()
+		{
+			var nextPosNow = NextPos;
+			SetNextPos();
+			if (nextPosNow == NextPos)
+				yield break;
+			var bRect = mOrderDiplayObj[NextPos].GetComponent<RectTransform>();
+			var rect = mImNextArrow.GetComponent<RectTransform>();
+
+			var targetPosX = bRect.localPosition.x + bRect.sizeDelta.x / 2;
+			float speedPerSec = MoveSpeedX * mBattleObj.BattleSpeedMagni;
+			while (NextPos < nextPosNow ? rect.localPosition.x > targetPosX : rect.localPosition.x < targetPosX)
+			{
+				rect.localPosition -= new Vector3(speedPerSec * Time.deltaTime * (NextPos < nextPosNow ? 1 : -1), 0, 0);
+				yield return null;
+			}
+
+			rect.localPosition = new Vector3(targetPosX, rect.localPosition.y, rect.localPosition.z);
+			yield return null;
+		}
+
+		private IEnumerator MoveNextPos()
+		{
+			yield return StartCoroutine("CoMoveNextPos");
+		}
+
+		// 次の場所の矢印位置を計算
+		private void SetNextPos()
+		{
+			NextPos = mOrderDiplayObj.Count;
+			for (int i = 1; i < mOrderDiplayObj.Count; i++)
+			{
+				if (NextOrderValue < mOrderDiplayObj[i].BattleUnit.OrderValue)
+				{
+					NextPos = i;
+					break;
+				}
+			}
+			--NextPos;
+		}
+
+
 
 		// 戦闘不能時の移動コルーチン
 		private IEnumerator CoDeadOut(List<BattleUnit> units)
@@ -123,6 +177,7 @@ namespace Battle
 				mOrderDiplayObj[i].SlideToPos(i);
 			while (IsAnimation)
 				yield return null;
+			yield return MoveNextPos();
 		}
 
 		public IEnumerator DeadOut(List<BattleUnit> units)
@@ -173,6 +228,7 @@ namespace Battle
 			NextOrderValue = TurnUnit.GetActionOrderValue();
 			while (IsAnimation)
 				yield return null;
+			yield return MoveNextPos();
 		}
 
 		public IEnumerator TurnEnd()
@@ -216,6 +272,7 @@ namespace Battle
 			// スライドが終わるまで待機
 			while (IsAnimation)
 				yield return null;
+			yield return MoveNextPos();
 		}
 
 		public IEnumerator PlusUnit(BattleUnit unit)
@@ -279,6 +336,7 @@ namespace Battle
 				NextOrderValue = bu.OrderValue;
 				bu.OrderValue = tmp;
 			}
+			yield return MoveNextPos();
 		}
 
 		public IEnumerator DownOrderSingle(BattleUnit bu)
@@ -398,6 +456,7 @@ namespace Battle
 			}
 			while (IsAnimation)
 				yield return null;
+			yield return MoveNextPos();
 		}
 
 		public IEnumerator DownOrderAll(bool isPlayer)
