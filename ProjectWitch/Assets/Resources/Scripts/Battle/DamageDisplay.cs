@@ -6,8 +6,10 @@ namespace Battle
 {
 	public class DamageDisplay : MonoBehaviour
 	{
-		[SerializeField]
-		private Color mColorDamage = new Color(1, 0, 0), mColorHeal = new Color(0, 1, 0);
+        [SerializeField]
+        private Font mFontDamage = null;
+        [SerializeField]
+        private Font mFontHeal = null;
 		[SerializeField]
 		private GameObject mImDamage = null, mImHeal = null;
 
@@ -24,7 +26,7 @@ namespace Battle
 		private IEnumerator CoDisplay(float num, bool isDamage)
 		{
 			Text.text = ((int)num).ToString();
-			Text.color = (isDamage ? mColorDamage : mColorHeal);
+			Text.font = (isDamage ? mFontDamage : mFontHeal);
 			mImDamage.SetActive(false);
 			mImHeal.SetActive(false);
 			transform.localPosition = DefaultPos;
