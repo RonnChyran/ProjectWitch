@@ -1200,9 +1200,9 @@ MonoBehaviour:
   mCoe10: 0.25
   mCoe11: 2
   mCoe12: 0.25
-  mCoe13: 2
-  mCoe14: 2
-  mCoe15: 1
+  mCoe13: 2.5
+  mCoe14: 2.5
+  mCoe15: 0.5
   mCoe16: 1
   mCoe17: 1
   mCoe18: 1
@@ -1215,21 +1215,21 @@ MonoBehaviour:
   mCoe25: 1
   mCoe26: 1
   mRandMed1: 0
-  mRandAmp1: 0
+  mRandAmp1: 10
   mRandMed2: 0
-  mRandAmp2: 0
+  mRandAmp2: 10
   mRandMed3: 0
-  mRandAmp3: 0
+  mRandAmp3: 10
   mRandMed4: 0
-  mRandAmp4: 0
+  mRandAmp4: 10
   mRandMed5: 0
-  mRandAmp5: 0
+  mRandAmp5: 10
   mRandMed6: 0
-  mRandAmp6: 0
+  mRandAmp6: 10
   mRandMed7: 0
-  mRandAmp7: 0
+  mRandAmp7: 10
   mRandMed8: 0
-  mRandAmp8: 0
+  mRandAmp8: 10
   mRandMed9: 0
   mRandAmp9: 0
   mRandMed10: 0
@@ -9177,17 +9177,17 @@ Prefab:
     - target: {fileID: 114000012599233340, guid: 942477d124b96de45a0083cf505b7419,
         type: 2}
       propertyPath: mCoe13
-      value: 2
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 114000012599233340, guid: 942477d124b96de45a0083cf505b7419,
         type: 2}
       propertyPath: mCoe14
-      value: 2
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 114000012599233340, guid: 942477d124b96de45a0083cf505b7419,
         type: 2}
       propertyPath: mCoe15
-      value: 1
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 114000012599233340, guid: 942477d124b96de45a0083cf505b7419,
         type: 2}
@@ -9438,6 +9438,46 @@ Prefab:
       value: 
       objectReference: {fileID: 21300002, guid: 648a9e8e69d43d9448697fb47fdb88ad,
         type: 3}
+    - target: {fileID: 114000012599233340, guid: 942477d124b96de45a0083cf505b7419,
+        type: 2}
+      propertyPath: mRandAmp1
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000012599233340, guid: 942477d124b96de45a0083cf505b7419,
+        type: 2}
+      propertyPath: mRandAmp2
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000012599233340, guid: 942477d124b96de45a0083cf505b7419,
+        type: 2}
+      propertyPath: mRandAmp3
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000012599233340, guid: 942477d124b96de45a0083cf505b7419,
+        type: 2}
+      propertyPath: mRandAmp4
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000012599233340, guid: 942477d124b96de45a0083cf505b7419,
+        type: 2}
+      propertyPath: mRandAmp5
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000012599233340, guid: 942477d124b96de45a0083cf505b7419,
+        type: 2}
+      propertyPath: mRandAmp6
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000012599233340, guid: 942477d124b96de45a0083cf505b7419,
+        type: 2}
+      propertyPath: mRandAmp7
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000012599233340, guid: 942477d124b96de45a0083cf505b7419,
+        type: 2}
+      propertyPath: mRandAmp8
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 0}
   m_ParentPrefab: {fileID: 100100000, guid: 942477d124b96de45a0083cf505b7419, type: 2}
