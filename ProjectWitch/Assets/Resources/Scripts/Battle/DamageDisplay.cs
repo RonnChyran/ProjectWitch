@@ -38,9 +38,9 @@ namespace Battle
 				yield return BattleObj.WaitSeconds(0.025f);
 				transform.localPosition += new Vector3(0, 10, 0);
 				yield return BattleObj.WaitSeconds(0.005f);
-				for (int i = 0; i < 10; i++)
+				while (transform.localPosition.y > DefaultPos.y)
 				{
-					transform.localPosition -= new Vector3(0, 1, 0);
+					transform.localPosition -= new Vector3(0, 100 * Time.deltaTime, 0);
 					yield return BattleObj.WaitSeconds(0.0025f);
 				}
 			}
@@ -68,13 +68,15 @@ namespace Battle
 
 		private IEnumerator CoHide()
 		{
-			for (int i = 0; i < 20; i++)
+			var targetY = DefaultPos.y - 20;
+			while (transform.localPosition.y > targetY)
 			{
-				transform.localPosition -= new Vector3(0, 1, 0);
-				Text.color -= new Color(0, 0, 0, 0.05f);
-				UseImage.color -= new Color(0, 0, 0, 0.05f);
+				transform.localPosition -= new Vector3(0, 100 * Time.deltaTime, 0);
+				Text.color -= new Color(0, 0, 0, 5f * Time.deltaTime);
+				UseImage.color -= new Color(0, 0, 0, 5f * Time.deltaTime);
 				yield return BattleObj.WaitSeconds(0.0025f);
 			}
+
 			mImDamage.SetActive(false);
 			mImHeal.SetActive(false);
 			UseImage.color = new Color(1, 1, 1, 1);

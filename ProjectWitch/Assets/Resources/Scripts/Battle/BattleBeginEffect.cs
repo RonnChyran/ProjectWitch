@@ -34,14 +34,19 @@ public class BattleBeginEffect : MonoBehaviour {
 
             sum += unit.MaxSoldierNum;
         }
-
-        foreach(var id in eUnitIDs)
+		mPlayerSoldierSum.text = sum.ToString();
+		sum = 0;
+		foreach (var id in eUnitIDs)
         {
+			if (id == -1) continue;
+			var unit = game.UnitData[id];
 
-        }
-            
+			sum += unit.MaxSoldierNum;
+		}
+		mEnemySoldierSum.text = sum.ToString();
+
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
 	

@@ -16,8 +16,6 @@ namespace Battle
 
 		private IEnumerator CoCardStart(CardDataFormat card, GameObject cardObj)
 		{
-			int count = 50;
-			float parTime = mCardMoveTime / count;
 			var panel = mPanel.GetComponent<Image>();
 			var cardBack = mCardBack.GetComponent<Image>();
 			var cardFront = mCardFront.GetComponent<Image>();
@@ -26,8 +24,6 @@ namespace Battle
 			var cardObjR = cardObj.GetComponent<RectTransform>();
 			var name = mName.GetComponent<Text>();
 			var exposition = mExposition.GetComponent<Text>();
-			var parPanelA = panel.color.a / count;
-			panel.color = new Color(panel.color.r, panel.color.g, panel.color.b, 0);
 			name.text = "";
 			exposition.text = "";
 			cardBack.sprite = Resources.Load<Sprite>("Textures/Card/" + card.ImageBack);
@@ -36,22 +32,32 @@ namespace Battle
 			cardBackR.position = cardObjR.position;
 			cardBackR.localScale = cardObjR.localScale;
 			cardBackR.sizeDelta = cardObjR.sizeDelta;
-			var parPos = (cardFrontR.position - cardBackR.position) / count;
-			var parSize = (cardFrontR.sizeDelta - cardBackR.sizeDelta) / count;
-			for (int i = 0; i < count; i++)
+			float time = 0;
+			var parPos = (cardFrontR.position - cardBackR.position) / mCardMoveTime;
+			var parSize = (cardFrontR.sizeDelta - cardBackR.sizeDelta) / mCardMoveTime;
+			var panelColorA = panel.color.a;
+			var parColorA = panel.color.a / mCardMoveTime;
+			panel.color = new Color(panel.color.r, panel.color.g, panel.color.b, 0);
+			while (time < mCardMoveTime)
 			{
-				cardBackR.position += parPos;
-				cardBackR.sizeDelta += parSize;
-				panel.color += new Color(0, 0, 0, parPanelA);
-				yield return BattleObj.WaitSeconds(parTime);
+				cardBackR.position += parPos * Time.deltaTime;
+				cardBackR.sizeDelta += parSize * Time.deltaTime;
+				panel.color += new Color(0, 0, 0, parColorA * Time.deltaTime);
+				time += Time.deltaTime;
+				yield return null;
 			}
-			float parFillAmount = 1.0f / count;
-			parTime = mCardOpenTime / count;
-			for (int i = 0; i < count; i++)
+			cardBackR.position = cardFrontR.position;
+			cardBackR.sizeDelta = cardFrontR.sizeDelta;
+			panel.color = new Color(panel.color.r, panel.color.g, panel.color.b, panelColorA);
+
+			time = 0;
+			while(time < mCardMoveTime)
 			{
-				cardFront.fillAmount += parFillAmount;
-				yield return BattleObj.WaitSeconds(parTime);
+				cardFront.fillAmount += 1.0f / mCardOpenTime * Time.deltaTime;
+				time += Time.deltaTime;
+				yield return null;
 			}
+			cardFront.fillAmount = 1.0f;
 			name.text = card.Name;
 			exposition.text = card.Description;
 			yield return BattleObj.WaitInputOrSeconds(mWaitTime);
