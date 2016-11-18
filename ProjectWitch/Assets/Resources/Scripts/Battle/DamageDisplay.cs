@@ -27,6 +27,7 @@ namespace Battle
 		{
 			Text.text = ((int)num).ToString();
 			Text.font = (isDamage ? mFontDamage : mFontHeal);
+            Text.color = new Color(1, 1, 1);
 			mImDamage.SetActive(false);
 			mImHeal.SetActive(false);
 			transform.localPosition = DefaultPos;

@@ -21,7 +21,8 @@ public class Ending : MonoBehaviour {
         var game = Game.GetInstance();
 
         //実行するエンディングIDの取得
-        var id = game.EndingID;
+        //var id = game.EndingID;
+        var id = 16;
 
         //イベントデータの設定
         var ev = new GameData.EventDataFormat();
