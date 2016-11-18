@@ -5,16 +5,14 @@
 [loadcg id=1 ref="008_cv_kuroA"]
 [loadcg id=2 ref="009_cv_chishireA"]
 [loadcg id=3 ref="037_cv_soldier"]
+[loadcg id=4 ref="Event/701"]
 
 [if_alive unit=2]
 ;アリス領　アリスの館、地下の牢獄
 ;条件　メイジーを捕獲
 ;タイミング　戦闘後
-[background ref="1025"]
 [bgm ref="021_event6"]
-[drawcg id=0 pos="3"]
-[drawcg id=1 pos="4"]
-[drawcg id=2 pos="5"]
+[drawcg id=4 pos="event"]
 
 #アリス
 [voice ref="010100"]
@@ -30,9 +28,6 @@
 #クロ
 [voice ref="010104"]
 はっ。[p]
-[moveto id=1 x=10 y=50 time=500]
-[rotate id=1 angle=5 time=50]
-[rotate id=1 angle=-5 time=50]
 
 #メイジー
 [voice ref="010105"]
@@ -54,8 +49,6 @@
 #クロ
 [voice ref="010109"]
 はっ。[p]
-[rotate id=1 angle=5 time=50]
-[rotate id=1 angle=-5 time=50]
 
 #メイジー
 [voice ref="010110"]
