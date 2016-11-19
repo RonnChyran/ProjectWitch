@@ -211,10 +211,8 @@ public class Game : MonoBehaviour
             Debug.LogError("データがオーバーフローしました");
             return;
         }
-
-#if DEBUG
+        
         FirstLoad();
-#endif
     }
 
 
