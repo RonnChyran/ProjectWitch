@@ -8,7 +8,7 @@ public class StartButton : MonoBehaviour {
     {
         //初回用リソースをロード
         var game = Game.GetInstance();
-        game.FirstLoad();
+        game.Setup();
 
         //フィールドの呼び出し
         SceneManager.LoadScene(game.SceneName_Opening);

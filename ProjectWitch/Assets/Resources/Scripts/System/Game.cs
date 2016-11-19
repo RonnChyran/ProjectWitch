@@ -159,7 +159,7 @@ public class Game : MonoBehaviour
     }
 
     //初期化処理
-    void Setup()
+    public void Setup()
     {
         //制御変数初期化
         IsDialogShowd = false;
@@ -373,7 +373,7 @@ public class Game : MonoBehaviour
     }
 
     //タイトルで初めからを選択したときの初回ロード（既存データの読み出し
-    public void FirstLoad()
+    void FirstLoad()
     {
         //ユニットデータの読み出し
         UnitData = DataLoader.LoadUnitData(GamePath.Data + "unit_data");
