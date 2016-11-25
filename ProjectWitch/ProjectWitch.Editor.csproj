@@ -109,6 +109,9 @@
     <Reference Include="UnityEditor.iOS.Extensions.Common">
       <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Common.dll</HintPath>
     </Reference>
+    <Reference Include="Mono.CSharp">
+      <HintPath>Assets\uREPL\Plugins\Mono.CSharp.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="ProjectWitch.Plugins.csproj">
@@ -145,6 +148,7 @@
     <Compile Include="Assets\Editor\ImageEffects\SunShaftsEditor.cs" />
     <Compile Include="Assets\Editor\ImageEffects\TonemappingEditor.cs" />
     <Compile Include="Assets\Editor\ImageEffects\VignetteAndChromaticAberrationEditor.cs" />
+    <Compile Include="Assets\uREPL\Scripts\Editor\MainEditor.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\MoviePlayer\Readme.txt" />
@@ -251,6 +255,8 @@
     <None Include="Assets\Resources\Scenarios\test.txt" />
     <None Include="Assets\Resources\Scenarios\test_2.txt" />
     <None Include="Assets\Resources\Scenarios\testscript.txt" />
+    <None Include="Assets\uREPL\Resources\uREPL\Xmls\Help.txt" />
+    <None Include="Assets\uREPL\Resources\uREPL\Xmls\UnityEngineClasses.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

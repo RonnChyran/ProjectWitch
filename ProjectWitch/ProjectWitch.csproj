@@ -12,7 +12,7 @@
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
+    <TargetFrameworkProfile>Unity Full v3.5</TargetFrameworkProfile>
     <CompilerResponseFile></CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
@@ -66,6 +66,9 @@
     </Reference>
     <Reference Include="UnityEditor.iOS.Extensions.Common">
       <HintPath>Library\UnityAssemblies\UnityEditor.iOS.Extensions.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.CSharp">
+      <HintPath>Assets\uREPL\Plugins\Mono.CSharp.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -179,10 +182,10 @@
     <Compile Include="Assets\Resources\Scripts\PreBattle\PreBattleController.cs" />
     <Compile Include="Assets\Resources\Scripts\PreBattle\Unit.cs" />
     <Compile Include="Assets\Resources\Scripts\PreBattle\UnitList.cs" />
-    <Compile Include="Assets\Resources\Scripts\System\DebugText.cs" />
     <Compile Include="Assets\Resources\Scripts\System\Game.cs" />
     <Compile Include="Assets\Resources\Scripts\System\GameData.cs" />
     <Compile Include="Assets\Resources\Scripts\System\GoTitleWindow.cs" />
+    <Compile Include="Assets\Resources\Scripts\System\InGameConsole.cs" />
     <Compile Include="Assets\Resources\Scripts\System\QuitWindow.cs" />
     <Compile Include="Assets\Resources\Scripts\System\SoundManager.cs" />
     <Compile Include="Assets\Resources\Scripts\System\SoundTester.cs" />
@@ -219,6 +222,43 @@
     <Compile Include="Assets\Resources\Scripts\Utility\LetterSpacing.cs" />
     <Compile Include="Assets\Resources\Scripts\Utility\Rotation.cs" />
     <Compile Include="Assets\Resources\Scripts\Utility\fitter.cs" />
+    <Compile Include="Assets\uREPL\Examples\Scripts\FieldItemTest.cs" />
+    <Compile Include="Assets\uREPL\Scripts\Completions\CommandCompletion.cs" />
+    <Compile Include="Assets\uREPL\Scripts\Completions\GameObjectNameCompletion.cs" />
+    <Compile Include="Assets\uREPL\Scripts\Completions\GameObjectPathCompletion.cs" />
+    <Compile Include="Assets\uREPL\Scripts\Completions\MonoCompletion.cs" />
+    <Compile Include="Assets\uREPL\Scripts\Core\Command.cs" />
+    <Compile Include="Assets\uREPL\Scripts\Core\Completion.cs" />
+    <Compile Include="Assets\uREPL\Scripts\Core\CompletionPlugin.cs" />
+    <Compile Include="Assets\uREPL\Scripts\Core\Evaluator.cs" />
+    <Compile Include="Assets\uREPL\Scripts\Core\History.cs" />
+    <Compile Include="Assets\uREPL\Scripts\Core\Inspector.cs" />
+    <Compile Include="Assets\uREPL\Scripts\Core\Key.cs" />
+    <Compile Include="Assets\uREPL\Scripts\Core\Log.cs" />
+    <Compile Include="Assets\uREPL\Scripts\Core\Main.cs" />
+    <Compile Include="Assets\uREPL\Scripts\Core\Parameters.cs" />
+    <Compile Include="Assets\uREPL\Scripts\Core\Utility.cs" />
+    <Compile Include="Assets\uREPL\Scripts\Gui\FieldItems\BoolFieldItem.cs" />
+    <Compile Include="Assets\uREPL\Scripts\Gui\FieldItems\EnumFieldItem.cs" />
+    <Compile Include="Assets\uREPL\Scripts\Gui\FieldItems\FieldItem.cs" />
+    <Compile Include="Assets\uREPL\Scripts\Gui\FieldItems\GameObjectComponentItem.cs" />
+    <Compile Include="Assets\uREPL\Scripts\Gui\FieldItems\ReadonlyFieldItem.cs" />
+    <Compile Include="Assets\uREPL\Scripts\Gui\FieldItems\SingleFieldItem.cs" />
+    <Compile Include="Assets\uREPL\Scripts\Gui\FieldItems\Vector2FieldItem.cs" />
+    <Compile Include="Assets\uREPL\Scripts\Gui\FieldItems\Vector3FieldItem.cs" />
+    <Compile Include="Assets\uREPL\Scripts\Gui\FieldItems\Vector4FieldItem.cs" />
+    <Compile Include="Assets\uREPL\Scripts\Gui\OutputItems\ComponentItem.cs" />
+    <Compile Include="Assets\uREPL\Scripts\Gui\OutputItems\GameObjectItem.cs" />
+    <Compile Include="Assets\uREPL\Scripts\Gui\OutputItems\LogItem.cs" />
+    <Compile Include="Assets\uREPL\Scripts\Gui\OutputItems\ResultItem.cs" />
+    <Compile Include="Assets\uREPL\Scripts\Gui\Window\AnnotationView.cs" />
+    <Compile Include="Assets\uREPL\Scripts\Gui\Window\CommandInputField.cs" />
+    <Compile Include="Assets\uREPL\Scripts\Gui\Window\CommandView.cs" />
+    <Compile Include="Assets\uREPL\Scripts\Gui\Window\CompletionItem.cs" />
+    <Compile Include="Assets\uREPL\Scripts\Gui\Window\CompletionView.cs" />
+    <Compile Include="Assets\uREPL\Scripts\Gui\Window\KeyBinding.cs" />
+    <Compile Include="Assets\uREPL\Scripts\Gui\Window\OutputView.cs" />
+    <Compile Include="Assets\uREPL\Scripts\Gui\Window\Window.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\MoviePlayer\Readme.txt" />
@@ -325,6 +365,8 @@
     <None Include="Assets\Resources\Scenarios\test.txt" />
     <None Include="Assets\Resources\Scenarios\test_2.txt" />
     <None Include="Assets\Resources\Scenarios\testscript.txt" />
+    <None Include="Assets\uREPL\Resources\uREPL\Xmls\Help.txt" />
+    <None Include="Assets\uREPL\Resources\uREPL\Xmls\UnityEngineClasses.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

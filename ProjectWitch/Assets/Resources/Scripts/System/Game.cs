@@ -50,8 +50,8 @@ public class Game : MonoBehaviour
 
     //インゲームデバッグ出力
     [SerializeField]
-    private DebugText mDebugMessage = null;
-    public DebugText DebugMessage { get { return mDebugMessage; } private set { } }
+    private InGameConsole mDebugMessage = null;
+    public InGameConsole DebugMessage { get { return mDebugMessage; } private set { } }
 
     //ローディング画面
     [SerializeField]
