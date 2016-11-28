@@ -58,7 +58,7 @@ namespace ProjectWitch.PreBattle
             }
 
             var game = Game.GetInstance();
-            var unit = game.UnitData[unitID];
+            var unit = game.GameData.Unit[unitID];
 
             //ユニットのプレハブのデフォルト画像から抜き出す
             var unitprefab = Resources.Load<GameObject>(mBattlePrefabPath + unit.BattleLeaderPrefabPath);

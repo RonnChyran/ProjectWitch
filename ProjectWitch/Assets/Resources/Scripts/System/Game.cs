@@ -62,47 +62,11 @@ namespace ProjectWitch
 
         #region ゲームデータ関連
 
-        //プレイヤーのデータ
-        //ユニットデータ
-        public List<UnitDataFormat> UnitData { get; set; }
-        //スキルデータ
-        public List<SkillDataFormat> SkillData { get; set; }
-        //所持マナ
-        public int PlayerMana { get; set; }
-
-        //環境のデータ
-        //現在のターン数
-        public int CurrentTurn { get; set; }
-        //現在の時間数 0:朝 1:昼 2:夜 3~:敵ターン
-        public int CurrentTime { get; set; }
-        //土地データ
-        public List<AreaDataFormat> AreaData { get; set; }
-        //領地データ
-        public List<TerritoryDataFormat> TerritoryData { get; set; }
-        //グループデータ
-        public List<GroupDataFormat> GroupData { get; set; }
-        //フィールドのBGM
-        public string FieldBGM { get; set; }
-        //通常バトルのBGM
-        public string BattleBGM { get; set; }
-
-        //その他データ
-        //システム変数
-        public VirtualMemory SystemMemory { get; set; }
-        //コンフィグ
-        public ConfigDataFormat Config { get; set; }
-        //AIデータ
-        public List<AIDataFormat> AIData { get; set; }
-        //装備データ
-        public List<EquipmentDataFormat> EquipmentData { get; set; }
-        //カードデータ
-        public List<CardDataFormat> CardData { get; set; }
-        //イベントデータ
-        public List<EventDataFormat> FieldEventData { get; set; }
-        public List<EventDataFormat> TownEventData { get; set; }
-        public List<EventDataFormat> ArmyEventData { get; set; }
-
-
+        //実行中のゲーム内データ
+        public GameData GameData { get; set; }
+        
+        //アプリケーション全体のシステムデータ
+        public SystemData SystemData { get; set; }
 
         #endregion
 
@@ -167,56 +131,20 @@ namespace ProjectWitch
             IsBattle = false;
             IsTalk = false;
             UsePreBattle = true;
+            
+            //シーン間データの初期化
+            BattleIn = new BattleDataIn();
+            BattleOut = new BattleDataOut();
+            ScenarioIn = new ScenarioDataIn();
 
-            try
-            {
+            //ゲームデータ初期化
+            GameData = new GameData();
+            GameData.Reset();
 
-                //データ系の初期化
-                UnitData = new List<UnitDataFormat>();
-                SkillData = new List<SkillDataFormat>();
-                PlayerMana = 10000;
-
-                CurrentTime = 0; //朝から
-                CurrentTurn = 1;
-                FieldBGM = "002_alice1";
-                BattleBGM = "004_battle1";
-                AreaData = new List<AreaDataFormat>();
-                TerritoryData = new List<TerritoryDataFormat>();
-                GroupData = new List<GroupDataFormat>();
-
-                SystemMemory = new VirtualMemory();
-                SystemMemory[0] = "0";
-                Config = new ConfigDataFormat();
-                AIData = new List<AIDataFormat>();
-                EquipmentData = new List<EquipmentDataFormat>();
-                CardData = new List<CardDataFormat>();
-                FieldEventData = new List<EventDataFormat>();
-                TownEventData = new List<EventDataFormat>();
-                ArmyEventData = new List<EventDataFormat>();
-
-                //シーン間データの初期化
-                BattleIn = new BattleDataIn();
-                BattleOut = new BattleDataOut();
-                ScenarioIn = new ScenarioDataIn();
-
-                //あとセーブデータ読み込みなど
-
-            }
-            catch (InvalidCastException)
-            {
-                Debug.LogError("キャストミスです");
-                return;
-            }
-            catch (OverflowException)
-            {
-                Debug.LogError("データがオーバーフローしました");
-                return;
-            }
-
-            FirstLoad();
+            //システムデータ初期化
+            SystemData = new SystemData();
+            SystemData.Reset();
         }
-
-
 
         //ダイアログを表示
         public void ShowDialog(string caption, string message)
@@ -306,7 +234,7 @@ namespace ProjectWitch
             //var time = (CurrentTime <= 2) ? CurrentTime : 2;
             //BattleIn.TimeOfDay = time;
 
-            BattleIn.TimeOfDay = CurrentTime;
+            BattleIn.TimeOfDay = GameData.CurrentTime;
 
             SceneManager.UnloadScene(cSceneName_PreBattle);
             yield return SceneManager.LoadSceneAsync(cSceneName_Battle, LoadSceneMode.Additive);
@@ -371,40 +299,6 @@ namespace ProjectWitch
             ShowDialog("load", "ロード機能は実装されていません");
         }
 
-        //タイトルで初めからを選択したときの初回ロード（既存データの読み出し
-        void FirstLoad()
-        {
-            //ユニットデータの読み出し
-            UnitData = DataLoader.LoadUnitData(GamePath.Data + "unit_data");
-
-            //スキルデータの読み出し
-            SkillData = DataLoader.LoadSkillData(GamePath.Data + "skill_data");
-
-            //地点データの読み出し
-            AreaData = DataLoader.LoadAreaData(GamePath.Data + "area_data");
-
-            //領地データの読み出し
-            TerritoryData = DataLoader.LoadTerritoryData(GamePath.Data + "territory_data");
-
-            //グループデータの読み出し
-            GroupData = DataLoader.LoadGroupData(GamePath.Data + "group_data");
-
-            //AI
-            AIData = DataLoader.LoadAIData(GamePath.Data + "ai_data");
-
-            //装備
-            EquipmentData = DataLoader.LoadEquipmentData(GamePath.Data + "equipment_data");
-
-            //カード
-            CardData = DataLoader.LoadCardData(GamePath.Data + "card_data");
-
-            //イベントデータの読み出し
-            ArmyEventData = DataLoader.LoadEventData(GamePath.Data + "event_data_army");
-            FieldEventData = DataLoader.LoadEventData(GamePath.Data + "event_data_field");
-            TownEventData = DataLoader.LoadEventData(GamePath.Data + "event_data_town");
-
-        }
-
 
         //各コマンド
 
@@ -414,19 +308,19 @@ namespace ProjectWitch
         public void ChangeAreaOwner(int targetArea, int newOwner)
         {
             //領地データのエリア番号を移し替える
-            var oldOwner = AreaData[targetArea].Owner;
-            TerritoryData[oldOwner].AreaList.Remove(targetArea);
-            TerritoryData[newOwner].AreaList.Add(targetArea);
+            var oldOwner = GameData.Area[targetArea].Owner;
+            GameData.Territory[oldOwner].AreaList.Remove(targetArea);
+            GameData.Territory[newOwner].AreaList.Add(targetArea);
 
             //地点の領主番号を更新
-            AreaData[targetArea].Owner = newOwner;
+            GameData.Area[targetArea].Owner = newOwner;
 
         }
 
         //エリアのマナを回復量だけ回復
         public void RecoverMana()
         {
-            foreach (var area in AreaData)
+            foreach (var area in GameData.Area)
             {
                 //最大マナの10%回復
                 area.Mana += (int)((float)area.MaxMana * mManaRecoveryRate);
@@ -437,7 +331,7 @@ namespace ProjectWitch
         //ユニットを回復量だけ回復
         public void RecoverUnit()
         {
-            foreach (var unit in UnitData)
+            foreach (var unit in GameData.Unit)
             {
                 //死んでいたらスルー
                 if (!unit.IsAlive) continue;

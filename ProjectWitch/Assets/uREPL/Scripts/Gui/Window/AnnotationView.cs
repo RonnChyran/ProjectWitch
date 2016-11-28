@@ -13,7 +13,7 @@ public class AnnotationView : MonoBehaviour
 		set { description.text = value; }
 	}
 
-	private CompletionView completion_;
+	//private CompletionView completion_;
 }
 
 }

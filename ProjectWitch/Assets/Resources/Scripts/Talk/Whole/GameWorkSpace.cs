@@ -104,7 +104,7 @@ namespace ProjectWitch.Talk.WorkSpace
             {
                 try
                 {
-                    if (!game.UnitData[unitID].IsAlive)
+                    if (!game.GameData.Unit[unitID].IsAlive)
                         return false;
                 }
                 catch(ArgumentException e)
@@ -129,7 +129,7 @@ namespace ProjectWitch.Talk.WorkSpace
             {
                 try
                 {
-                    if (game.UnitData[unitID].IsAlive)
+                    if (game.GameData.Unit[unitID].IsAlive)
                         return false;
                 }
                 catch(ArgumentException e)
@@ -150,8 +150,8 @@ namespace ProjectWitch.Talk.WorkSpace
             var game = Game.GetInstance();
 
             //指定領地のユニットIDをすべて受け取る
-            var groupIDs = game.TerritoryData[territory].GroupList;
-            var groups = game.GroupData.GetFromIndex(groupIDs);
+            var groupIDs = game.GameData.Territory[territory].GroupList;
+            var groups = game.GameData.Group.GetFromIndex(groupIDs);
             var unitIDs = new List<int>();
             foreach (var group in groups)
                 unitIDs.AddRange(group.UnitList);
@@ -162,8 +162,8 @@ namespace ProjectWitch.Talk.WorkSpace
             {
                 try
                 {
-                    game.UnitData[unitID].HP = game.UnitData[unitID].MaxHP;
-                    game.UnitData[unitID].SoldierNum = game.UnitData[unitID].MaxSoldierNum;
+                    game.GameData.Unit[unitID].HP = game.GameData.Unit[unitID].MaxHP;
+                    game.GameData.Unit[unitID].SoldierNum = game.GameData.Unit[unitID].MaxSoldierNum;
                 }
                 catch(ArgumentException e)
                 {
@@ -187,8 +187,8 @@ namespace ProjectWitch.Talk.WorkSpace
             {
                 try
                 {
-                    game.UnitData[unitID].HP = game.UnitData[unitID].MaxHP;
-                    game.UnitData[unitID].SoldierNum = game.UnitData[unitID].MaxSoldierNum;
+                    game.GameData.Unit[unitID].HP = game.GameData.Unit[unitID].MaxHP;
+                    game.GameData.Unit[unitID].SoldierNum = game.GameData.Unit[unitID].MaxSoldierNum;
                 }
                 catch(ArgumentException e)
                 {
@@ -209,10 +209,10 @@ namespace ProjectWitch.Talk.WorkSpace
 
             foreach (var unitID in unitIDs)
             {
-                game.UnitData[unitID].IsAlive = false;
+                game.GameData.Unit[unitID].IsAlive = false;
 
                 //すべての領地からユニットを除外
-                foreach (var territory in game.TerritoryData)
+                foreach (var territory in game.GameData.Territory)
                 {
                     territory.RemoveUnit(unitID);
                 }
@@ -227,8 +227,8 @@ namespace ProjectWitch.Talk.WorkSpace
 		{
 			error = null;
             var game = Game.GetInstance();
-            var groupID = game.TerritoryData[0].GroupList[0];
-            var unitList = game.GroupData[groupID].UnitList;
+            var groupID = game.GameData.Territory[0].GroupList[0];
+            var unitList = game.GameData.Group[groupID].UnitList;
 
             foreach (var unitID in unitIDs)
             {
@@ -356,7 +356,7 @@ namespace ProjectWitch.Talk.WorkSpace
 					int index = Converter.ObjectToInt(arguments[0], out error);
 					if (error != null) return error;
 
-					VirtualMemory memory = Game.GetInstance().SystemMemory;
+					VirtualMemory memory = Game.GetInstance().GameData.Memory;
 					int count = memory.Count;
 					if (0 <= index && index<count){
 						arguments[1] = memory[index];
@@ -372,7 +372,7 @@ namespace ProjectWitch.Talk.WorkSpace
 					int index = Converter.ObjectToInt(arguments[0], out error);
 					if (error != null) return error;
 
-					VirtualMemory memory = Game.GetInstance().SystemMemory;
+					VirtualMemory memory = Game.GetInstance().GameData.Memory;
 					int count = memory.Count;
 					object value = arguments[1];
 					if (0 <= index && index<count){

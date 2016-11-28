@@ -60,7 +60,7 @@ namespace ProjectWitch.Battle
         // ユニットID
         public int UnitID { get; private set; }
 
-        public UnitDataFormat UnitData { get { return mGame.UnitData[UnitID]; } }
+        public UnitDataFormat UnitData { get { return mGame.GameData.Unit[UnitID]; } }
         // リーダーのAnimator
         public Animator LeaderAnimator { get; private set; }
         // 兵士のAnimator
@@ -68,15 +68,15 @@ namespace ProjectWitch.Battle
         // エリアデータ
         public BattleArea Area { get { return mBattleObj.Area; } }
         // リーダー攻撃スキル
-        public SkillDataFormat LAtkSkill { get { return mGame.SkillData[UnitData.LAtkSkill]; } }
+        public SkillDataFormat LAtkSkill { get { return mGame.GameData.Skill[UnitData.LAtkSkill]; } }
         // リーダー攻撃スキル
-        public SkillDataFormat LDefSkill { get { return mGame.SkillData[UnitData.LDefSkill]; } }
+        public SkillDataFormat LDefSkill { get { return mGame.GameData.Skill[UnitData.LDefSkill]; } }
         // 部下攻撃スキル
-        public SkillDataFormat GAtkSkill { get { return mGame.SkillData[UnitData.GAtkSkill]; } }
+        public SkillDataFormat GAtkSkill { get { return mGame.GameData.Skill[UnitData.GAtkSkill]; } }
         // AI
-        public AIDataFormat AI { get { return mGame.AIData[UnitData.AIID]; } }
+        public AIDataFormat AI { get { return mGame.GameData.AI[UnitData.AIID]; } }
         // 装備
-        public EquipmentDataFormat Equipment { get { return (UnitData.Equipment != -1 ? mGame.EquipmentData[UnitData.Equipment] : null); } }
+        public EquipmentDataFormat Equipment { get { return (UnitData.Equipment != -1 ? mGame.GameData.Equipment[UnitData.Equipment] : null); } }
         // 顔グラ
         public FaceObj Face { get; set; }
 

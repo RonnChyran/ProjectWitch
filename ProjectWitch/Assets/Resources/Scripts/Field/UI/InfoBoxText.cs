@@ -40,22 +40,22 @@ namespace ProjectWitch.Field
             isRunning = true;
 
             //所持マナ
-            TextSetter(mcMana, game.PlayerMana.ToString());
+            TextSetter(mcMana, game.GameData.PlayerMana.ToString());
 
             //ユニット
-            var groupID = game.TerritoryData[0].GroupList[0];
-            var groupData = game.GroupData[groupID];
+            var groupID = game.GameData.Territory[0].GroupList[0];
+            var groupData = game.GameData.Group[groupID];
             TextSetter(mcUnit, groupData.UnitList.Count.ToString());
 
             //所持領地
             TextSetter(mcArea,
-                game.TerritoryData[0].AreaList.Count.ToString() + "/"
-                + (game.AreaData.Count - 1).ToString());
+                game.GameData.Territory[0].AreaList.Count.ToString() + "/"
+                + (game.GameData.Area.Count - 1).ToString());
 
             //総兵力
             var soldireNumList =
                 from p in groupData.UnitList
-                select game.UnitData[p].SoldierNum;
+                select game.GameData.Unit[p].SoldierNum;
 
             int sumSoldire = 0;
             foreach (var soldireNum in soldireNumList)

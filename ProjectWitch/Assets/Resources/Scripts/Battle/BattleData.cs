@@ -166,7 +166,7 @@ namespace ProjectWitch.Battle
     {
         private Game mGame = null;
         public int AreaID { get { return mGame.BattleIn.AreaID; } }
-        public AreaDataFormat AreaData { get { return mGame.AreaData[AreaID]; } }
+        public AreaDataFormat AreaData { get { return mGame.GameData.Area[AreaID]; } }
         public AreaBattleFactor BattleFactor { get { return AreaData.BattleFactor; } }
         private GameObject mAreaObj;
 
@@ -175,7 +175,7 @@ namespace ProjectWitch.Battle
         {
             mGame = Game.GetInstance();
 
-            if (AreaID < 0 || AreaID >= mGame.AreaData.Count)
+            if (AreaID < 0 || AreaID >= mGame.GameData.Area.Count)
                 return;
             mAreaObj = (GameObject)Resources.Load("Prefabs/Background3D/" + AreaData.BackgroundName);
             var inst = MonoBehaviour.Instantiate(mAreaObj);

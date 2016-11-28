@@ -64,7 +64,7 @@ namespace ProjectWitch.PreBattle
                 mPanel.SetActive(true);
 
                 var game = Game.GetInstance();
-                var unit = game.UnitData[mController.UnitList[mID]];
+                var unit = game.GameData.Unit[mController.UnitList[mID]];
 
                 //表示の更新
                 mName.text = unit.Name;

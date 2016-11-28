@@ -8,7 +8,7 @@ namespace ProjectWitch
     {
 
         [SerializeField]
-        private Animator mAnimator;
+        private Animator mAnimator=null;
 
         //飛ばせるかどうか
         private bool isSkipable = false;

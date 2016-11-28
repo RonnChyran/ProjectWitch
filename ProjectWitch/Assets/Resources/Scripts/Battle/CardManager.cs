@@ -28,8 +28,8 @@ namespace ProjectWitch.Battle
                 CardData = null;
                 return;
             }
-            CardData = mGame.CardData[id];
-            Skill = mGame.SkillData[CardData.SkillID];
+            CardData = mGame.GameData.Card[id];
+            Skill = mGame.GameData.Skill[CardData.SkillID];
             Duration = CardData.Duration;
             CardObj.GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/Card/" + CardData.ImageBack);
             IsCanUse = true;

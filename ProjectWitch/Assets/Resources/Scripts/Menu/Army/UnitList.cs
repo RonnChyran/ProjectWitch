@@ -32,8 +32,8 @@ namespace ProjectWitch.Menu
         {
             var game = Game.GetInstance();
 
-            var territory = game.TerritoryData[0];
-            var group = game.GroupData[territory.GroupList[0]];
+            var territory = game.GameData.Territory[0];
+            var group = game.GameData.Group[territory.GroupList[0]];
             foreach(var unitid in group.UnitList)
             {
                 //コンテンツを追加

@@ -11,15 +11,196 @@ using ProjectWitch.Extention;
 namespace ProjectWitch
 {
     //プレイヤーデータ
-    public class PlayerData
+    [System.Xml.Serialization.XmlRoot("game_data")]
+    public class GameData
     {
+        //ユニットデータ
+        [System.Xml.Serialization.XmlElement("unit")]
+        public List<UnitDataFormat> Unit { get; set; }
+        //スキルデータ
+        [System.Xml.Serialization.XmlElement("skill")]
+        public List<SkillDataFormat> Skill { get; set; }
+        //土地データ
+        [System.Xml.Serialization.XmlElement("area")]
+        public List<AreaDataFormat> Area { get; set; }
+        //領地データ
+        [System.Xml.Serialization.XmlElement("territory")]
+        public List<TerritoryDataFormat> Territory { get; set; }
+        //グループデータ
+        [System.Xml.Serialization.XmlElement("group")]
+        public List<GroupDataFormat> Group { get; set; }
+        //AIデータ
+        [System.Xml.Serialization.XmlElement("ai")]
+        public List<AIDataFormat> AI { get; set; }
+        //装備データ
+        [System.Xml.Serialization.XmlElement("equipment")]
+        public List<EquipmentDataFormat> Equipment { get; set; }
+        //カードデータ
+        [System.Xml.Serialization.XmlElement("card")]
+        public List<CardDataFormat> Card { get; set; }
+        //イベントデータ
+        [System.Xml.Serialization.XmlElement("fevent")]
+        public List<EventDataFormat> FieldEvent { get; set; }
+        [System.Xml.Serialization.XmlElement("tevent")]
+        public List<EventDataFormat> TownEvent { get; set; }
 
+        //所持マナ
+        [System.Xml.Serialization.XmlElement("playermana")]
+        public int PlayerMana { get; set; }
+        //現在のターン数
+        [System.Xml.Serialization.XmlElement("current_turn")]
+        public int CurrentTurn { get; set; }
+        //現在の時間数 0:朝 1:昼 2:夜 3~:敵ターン
+        [System.Xml.Serialization.XmlElement("current_time")]
+        public int CurrentTime { get; set; }
+        //フィールドのBGM
+        [System.Xml.Serialization.XmlElement("field_bgm")]
+        public string FieldBGM { get; set; }
+        //通常バトルのBGM
+        [System.Xml.Serialization.XmlElement("battle_bgm")]
+        public string BattleBGM { get; set; }
+
+
+        //システム変数
+        [System.Xml.Serialization.XmlElement("memory")]
+        public VirtualMemory Memory { get; set; }
+
+        //データをリセットする
+        public void Reset()
+        {
+            try
+            {
+                //データ系の初期化
+                Unit = new List<UnitDataFormat>();
+                Skill = new List<SkillDataFormat>();
+                Area = new List<AreaDataFormat>();
+                Territory = new List<TerritoryDataFormat>();
+                Group = new List<GroupDataFormat>();
+                AI = new List<AIDataFormat>();
+                Equipment = new List<EquipmentDataFormat>();
+                Card = new List<CardDataFormat>();
+                FieldEvent = new List<EventDataFormat>();
+                TownEvent = new List<EventDataFormat>();
+                PlayerMana = 10000;
+
+                CurrentTime = 0; //朝から
+                CurrentTurn = 1;
+                FieldBGM = "002_alice1";
+                BattleBGM = "004_battle1";
+
+                Memory = new VirtualMemory(70000);
+                Memory[0] = "0";
+
+            }
+            catch (InvalidCastException)
+            {
+                Debug.LogError("キャストミスです");
+                return;
+            }
+            catch (OverflowException)
+            {
+                Debug.LogError("データがオーバーフローしました");
+                return;
+            }
+
+            //データロード
+
+            //ユニットデータの読み出し
+            Unit = DataLoader.LoadUnitData(GamePath.Data + "unit_data");
+
+            //スキルデータの読み出し
+            Skill = DataLoader.LoadSkillData(GamePath.Data + "skill_data");
+
+            //地点データの読み出し
+            Area = DataLoader.LoadAreaData(GamePath.Data + "area_data");
+
+            //領地データの読み出し
+            Territory = DataLoader.LoadTerritoryData(GamePath.Data + "territory_data");
+
+            //グループデータの読み出し
+            Group = DataLoader.LoadGroupData(GamePath.Data + "group_data");
+
+            //AI
+            AI = DataLoader.LoadAIData(GamePath.Data + "ai_data");
+
+            //装備
+            Equipment = DataLoader.LoadEquipmentData(GamePath.Data + "equipment_data");
+
+            //カード
+            Card = DataLoader.LoadCardData(GamePath.Data + "card_data");
+
+            //イベントデータの読み出し
+            FieldEvent = DataLoader.LoadEventData(GamePath.Data + "event_data_field");
+            TownEvent = DataLoader.LoadEventData(GamePath.Data + "event_data_town");
+
+        }
+
+        //データをセーブファイルに書き出す
+        public void Save(int slot)
+        {
+            FileIO.SaveXML(GamePath.GameDataSaveFilePath, this);
+        }
+
+        //データをセーブファイルから読み込む
+        public void Load(int slot)
+        {
+            var inst = new GameData();
+            FileIO.LoadXML(GamePath.GameDataSaveFilePath, out inst);
+            this.Copy(inst);
+        }
+
+        //引数に与えられたオブジェクトをコピーする
+        public void Copy(GameData inst)
+        {
+            Unit = inst.Unit;
+            Skill = inst.Skill;
+            Area = inst.Area;
+            Territory = inst.Territory;
+            Group = inst.Group;
+            AI = inst.AI;
+            Equipment = inst.Equipment;
+            Card = inst.Card;
+            FieldEvent = inst.FieldEvent;
+            TownEvent = inst.TownEvent;
+            PlayerMana = inst.PlayerMana;
+            CurrentTime = inst.CurrentTime;
+            CurrentTurn = inst.CurrentTurn;
+            FieldBGM = inst.FieldBGM;
+            BattleBGM = inst.BattleBGM;
+
+        }
     }
 
     //システムデータ
+    [System.Xml.Serialization.XmlRoot("system_data")]
     public class SystemData
     {
+        //コンフィグ
+        [System.Xml.Serialization.XmlElement("config")]
+        public ConfigDataFormat Config { get; set; }
 
+        //仮想メモリ(CGギャラリーの開放、周回フラグなどを含める)
+        [System.Xml.Serialization.XmlElement("memory")]
+        public VirtualMemory Memory { get; set; }
+
+        //データを初期化する
+        public void Reset()
+        {
+            Config = new ConfigDataFormat();
+            Memory = new VirtualMemory(1024);
+        }
+
+        //データをシステムファイルに書き出す
+        public void Save()
+        {
+
+        }
+
+        //データをシステムファイルから読み込む
+        public void Load()
+        {
+
+        }
     }
 
     //各種データ構造
@@ -46,112 +227,167 @@ namespace ProjectWitch
             return (UnitDataFormat)MemberwiseClone();
         }
 
+        //ID
+        [System.Xml.Serialization.XmlAttribute("id")]
+        public int ID { get; set; }
+
         //ユニット名
+        [System.Xml.Serialization.XmlElement("name")]
         public string Name { get; set; }
 
         //レベル
+        [System.Xml.Serialization.XmlElement("level")]
         public int Level { get; set; }
 
         //レベル成長限界
+        [System.Xml.Serialization.XmlElement("max_level")]
         public int MaxLevel { get; set; }
 
         //HP
+        [System.Xml.Serialization.XmlElement("hp")]
         public int HP { get; set; }
         //最大HP
         public int MaxHP { get { return (int)(HP0 + HP100 / 100.0f * Level); } private set { } }
+        [System.Xml.Serialization.XmlElement("hp0")]
         public int HP0 { get; set; }
+        [System.Xml.Serialization.XmlElement("hp100")]
         public int HP100 { get; set; }     //HP成長率
 
         //経験値
+        [System.Xml.Serialization.XmlElement("exp")]
         public int Experience { get; set; }
 
         //初期値
+        [System.Xml.Serialization.XmlElement("lpatk0")]
         public int LPAtk0 { get; set; }     //物理攻撃
+        [System.Xml.Serialization.XmlElement("lmatk0")]
         public int LMAtk0 { get; set; }     //魔法攻撃
+        [System.Xml.Serialization.XmlElement("lpdef0")]
         public int LPDef0 { get; set; }     //物理防御
+        [System.Xml.Serialization.XmlElement("lmdef0")]
         public int LMDef0 { get; set; }     //魔法防御
-                                            
+        
+        [System.Xml.Serialization.XmlElement("gpatk0")]
         public int GPAtk0 { get; set; }     //物理攻撃
+        [System.Xml.Serialization.XmlElement("gmatk0")]
         public int GMAtk0 { get; set; }     //魔法攻撃
+        [System.Xml.Serialization.XmlElement("gpdef0")]
         public int GPDef0 { get; set; }     //物理防御
+        [System.Xml.Serialization.XmlElement("gmdef0")]
         public int GMDef0 { get; set; }     //魔法防御
-
+        
+        [System.Xml.Serialization.XmlElement("lpatk100")]
         public int LPAtk100 { get; set; }   //物理攻撃Lv100時
+        [System.Xml.Serialization.XmlElement("lmatk100")]
         public int LMAtk100 { get; set; }   //魔法攻撃Lv100時
+        [System.Xml.Serialization.XmlElement("lpdef100")]
         public int LPDef100 { get; set; }   //物理防御Lv100時
+        [System.Xml.Serialization.XmlElement("lmdef100")]
         public int LMDef100 { get; set; }   //魔法防御Lv100時
-                                            
+        
+        [System.Xml.Serialization.XmlElement("gpatk100")]
         public int GPAtk100 { get; set; }   //物理攻撃Lv100時
+        [System.Xml.Serialization.XmlElement("gmatk100")]
         public int GMAtk100 { get; set; }   //魔法攻撃Lv100時
+        [System.Xml.Serialization.XmlElement("gpdef100")]
         public int GPDef100 { get; set; }   //物理防御Lv100時
+        [System.Xml.Serialization.XmlElement("gmdef100")]
         public int GMDef100 { get; set; }   //魔法防御Lv100時
 
         //指揮力
+        [System.Xml.Serialization.XmlElement("lead0")]
         public int Lead0    { get; set; }    //指揮力初期値
+        [System.Xml.Serialization.XmlElement("lead100")]
         public int Lead100  { get; set; }    //指揮力Lv100時
         //機動力
+        [System.Xml.Serialization.XmlElement("agi0")]
         public int Agi0     { get; set; }    //機動力初期値
+        [System.Xml.Serialization.XmlElement("agi100")]
         public int Agi100   { get; set; }    //機動力Lv100時
         //回復力
+        [System.Xml.Serialization.XmlElement("cur0")]
         public int Cur0     { get; set; }   //回復力初期値
+        [System.Xml.Serialization.XmlElement("cur100")]
         public int Cur100   { get; set; }   //回復力Lv100時
 
         //兵士数
+        [System.Xml.Serialization.XmlElement("soldier_num")]
         public int SoldierNum { get; set; }
+        [System.Xml.Serialization.XmlElement("max_soldier_num")]
         public int MaxSoldierNum { get; set; }
 
         //撤退するか死ぬか ture:死ぬ　false：撤退する（捕獲コマンドが無効
+        [System.Xml.Serialization.XmlElement("deathable")]
         public bool Deathable { get; set; }
 
         //生きているか
+        [System.Xml.Serialization.XmlElement("is_alive")]
         public bool IsAlive { get; set; }
 
         //好感度
+        [System.Xml.Serialization.XmlElement("love")]
         public int Love { get; set; }
 
         //リーダースキル
+        [System.Xml.Serialization.XmlElement("latk_skill")]
         public int LAtkSkill { get; set; }
+        [System.Xml.Serialization.XmlElement("ldef_skill")]
         public int LDefSkill { get; set; }
 
         //部下スキル
+        [System.Xml.Serialization.XmlElement("gatk_skill")]
         public int GAtkSkill { get; set; }
 
         //部下の大きさ（小:0 中:1 大:2 特大:3
+        [System.Xml.Serialization.XmlElement("gsize")]
         public int GUnitSize { get; set; }
 
         //装備ID
+        [System.Xml.Serialization.XmlElement("equip")]
         public int Equipment { get; set; }
 
         //AI番号
+        [System.Xml.Serialization.XmlElement("ai_id")]
         public int AIID { get; set; }
 
         //HP回復コスト
+        [System.Xml.Serialization.XmlElement("hp_cost")]
         public int HPCost { get; set; }
 
         //兵士回復コスト
+        [System.Xml.Serialization.XmlElement("soldier_cost")]
         public int SoldierCost { get; set; }
 
         //最大兵士数成長コスト
+        [System.Xml.Serialization.XmlElement("max_soldier_cost")]
         public int SoldierLimitCost { get; set; }
 
         //立ち絵画像名
+        [System.Xml.Serialization.XmlElement("stand_image")]
         public string StandImagePath { get; set; }
         //顔アイコン画像名
+        [System.Xml.Serialization.XmlElement("face_image")]
         public string FaceIamgePath { get; set; }
         //戦闘リーダープレハブ名
+        [System.Xml.Serialization.XmlElement("bl_prefab")]
         public string BattleLeaderPrefabPath { get; set; }
         //戦闘兵士プレハブ名
+        [System.Xml.Serialization.XmlElement("bg_prefab")]
         public string BattleGroupPrefabPath { get; set; }
 
         //死亡時セリフ
+        [System.Xml.Serialization.XmlElement("serif_dead")]
         public string OnDeadSerif { get; set; }
         //捕獲時セリフ
+        [System.Xml.Serialization.XmlElement("serif_captured")]
         public string OnCapturedSerif { get; set; }
         //逃走時セリフ
+        [System.Xml.Serialization.XmlElement("serif_escaped")]
         public string OnEscapedSerif { get; set; }
-        
+
 
         //コメント
+        [System.Xml.Serialization.XmlElement("serif_comment")]
         public string Comment { get; set; }
 
         //クエリ
@@ -395,7 +631,7 @@ namespace ProjectWitch
             get
             {
                 var game = Game.GetInstance();
-                var areadata = game.AreaData;
+                var areadata = game.GameData.Area;
 
                 //地域データから自分が所持している地点を探す
                 var list = new List<int>();
@@ -438,21 +674,21 @@ namespace ProjectWitch
                 {
                     if (InvationableFlagIndex == -1)
                         state = TerritoryState.Ready;
-                    else if (!game.SystemMemory.IsZero(InvationableFlagIndex))
+                    else if (!game.GameData.Memory.IsZero(InvationableFlagIndex))
                         state = TerritoryState.Ready;
                 }
                 if (state == TerritoryState.Ready)
                 {
                     if (ActiveFlagIndex == -1)
                         state = TerritoryState.Active;
-                    else if (!game.SystemMemory.IsZero(ActiveFlagIndex))
+                    else if (!game.GameData.Memory.IsZero(ActiveFlagIndex))
                         state = TerritoryState.Active;
                 }
                 if (state == TerritoryState.Active)
                 {
                     if (DeadFlagIndex == -1)
                         state = TerritoryState.Dead;
-                    else if (!game.SystemMemory.IsZero(DeadFlagIndex))
+                    else if (!game.GameData.Memory.IsZero(DeadFlagIndex))
                         state = TerritoryState.Dead;
                 }
                 return state;
@@ -470,7 +706,7 @@ namespace ProjectWitch
         public void RemoveUnit(int unit)
         {
             var game = Game.GetInstance();
-            var groups = game.GroupData.GetFromIndex(GroupList);
+            var groups = game.GameData.Group.GetFromIndex(GroupList);
 
             //すべてのグループからユニットを除外
             foreach (var group in groups)
@@ -551,7 +787,7 @@ namespace ProjectWitch
                 if (state == GroupState.Ready)
                     if (BeginDominationFlagIndex == -1)
                         state = GroupState.Active;
-                    else if (!game.SystemMemory.IsZero(BeginDominationFlagIndex))
+                    else if (!game.GameData.Memory.IsZero(BeginDominationFlagIndex))
                         state = GroupState.Active;
 
                 return state;
@@ -697,9 +933,9 @@ namespace ProjectWitch
             set { memory[index] = value; }
         }
 
-        public VirtualMemory()
+        public VirtualMemory(int num)
         {
-            memory = Enumerable.Repeat<string>("0", 70000).ToList();
+            memory = Enumerable.Repeat<string>("0", num).ToList();
         }
 
         //----------
@@ -824,7 +1060,7 @@ namespace ProjectWitch
         public void Reset()
         {
             Init();
-            BGM = Game.GetInstance().BattleBGM;
+            BGM = Game.GetInstance().GameData.BattleBGM;
         }
 
         void Init()
@@ -975,6 +1211,7 @@ namespace ProjectWitch
 
                 try
                 {
+                    unit.ID = int.Parse(data[0]);
                     unit.Name = data[1];
                     unit.Level = int.Parse(data[2]);
                     unit.MaxLevel = int.Parse(data[3]);
@@ -1715,6 +1952,9 @@ namespace ProjectWitch
     public class GamePath
     {
         public static readonly string Data = "Data/";
+
+        public static readonly string GameDataSaveFilePath = Application.dataPath + "/gsave.dat";
+        public static readonly string SystemDataSaveFilePath = Application.dataPath + "/ssave.dat";
     }
 
 }

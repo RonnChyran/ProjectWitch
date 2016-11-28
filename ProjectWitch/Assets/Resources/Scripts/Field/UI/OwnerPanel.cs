@@ -46,7 +46,7 @@ namespace ProjectWitch.Field
 
             //テキスト更新
             var game = Game.GetInstance();
-            var ter = game.TerritoryData[TerritoryID];
+            var ter = game.GameData.Territory[TerritoryID];
             mActionCountText.text = ter.ActionCount.ToString();
         }
 

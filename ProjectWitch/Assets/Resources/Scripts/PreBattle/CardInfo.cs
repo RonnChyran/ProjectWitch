@@ -24,9 +24,6 @@ namespace ProjectWitch.PreBattle
         private Text mTarget = null;
 
         [SerializeField]
-        private Text mScope = null;
-
-        [SerializeField]
         private Text mComment = null;
 
         //プロパティ
@@ -38,8 +35,8 @@ namespace ProjectWitch.PreBattle
 
             //テキストセット
             var game = Game.GetInstance();
-            var card = game.CardData[CardID];
-            var skill = game.SkillData[card.SkillID];
+            var card = game.GameData.Card[CardID];
+            var skill = game.GameData.Skill[card.SkillID];
 
             mName.text = card.Name;
             mSkill.text = skill.Name;

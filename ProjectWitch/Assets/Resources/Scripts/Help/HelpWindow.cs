@@ -23,8 +23,6 @@ namespace ProjectWitch.Help
 
         [Header("ボタン")]
         [SerializeField]
-        private Button mTopButton = null;
-        [SerializeField]
         private Button mNextButton = null;
         [SerializeField]
         private Button mPrevButton = null;

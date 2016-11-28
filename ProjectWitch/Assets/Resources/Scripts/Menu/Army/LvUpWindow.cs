@@ -54,8 +54,8 @@ namespace ProjectWitch.Menu
         public void Reset()
         {
             var game = Game.GetInstance();
-            mNewUnit = game.UnitData[UnitID].Clone();
-            var unit = game.UnitData[UnitID];
+            mNewUnit = game.GameData.Unit[UnitID].Clone();
+            var unit = game.GameData.Unit[UnitID];
 
             //上昇するレベルを計算
             int upLv = unit.Experience / mLvUpExperience;
@@ -88,12 +88,12 @@ namespace ProjectWitch.Menu
         {
             var game = Game.GetInstance();
 
-            //var unit = game.UnitData[UnitID];
+            //var unit = game.GameData.Unit[UnitID];
             //unit = mNewUnit;
-            game.UnitData[UnitID] = mNewUnit;
+            game.GameData.Unit[UnitID] = mNewUnit;
 
             //HP・兵数回復
-            game.UnitData[UnitID].Rebirth();
+            game.GameData.Unit[UnitID].Rebirth();
 
             StatusWindow.Reset();
 

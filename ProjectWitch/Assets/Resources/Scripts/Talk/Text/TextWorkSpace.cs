@@ -222,7 +222,7 @@ namespace ProjectWitch.Talk.WorkSpace
 		private float mSpeed = 30.0f;
 		protected void ResetSpeed()
 		{
-			mSpeed = Game.GetInstance ().Config.TextSpeed;
+			mSpeed = Game.GetInstance().SystemData.Config.TextSpeed;
 		}
 
 		public void SetCommandDelegaters(VirtualMachine vm)

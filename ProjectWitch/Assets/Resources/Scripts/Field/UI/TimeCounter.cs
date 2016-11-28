@@ -30,7 +30,7 @@ namespace ProjectWitch.Field
         {
             var game = Game.GetInstance();
 
-            switch(game.CurrentTime)
+            switch(game.GameData.CurrentTime)
             {
                 case 0:
                     mcImage.sprite = mMorningSp;

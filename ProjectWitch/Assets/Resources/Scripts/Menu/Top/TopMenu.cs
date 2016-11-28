@@ -50,19 +50,22 @@ namespace ProjectWitch.Menu
         //町へ行くをクリック
         public void OnClickTown()
         {
-
+            mTown.enabled = true;
+            mcCanvas.enabled = false;
         }
 
         //情報をクリック
         public void OnClickInfo()
         {
-
+            mInfo.enabled = true;
+            mcCanvas.enabled = false;
         }
 
         //システムをクリック
         public void OnClickSystem()
         {
-
+            mSystem.enabled = true;
+            mcCanvas.enabled = false;
         }
 
     }

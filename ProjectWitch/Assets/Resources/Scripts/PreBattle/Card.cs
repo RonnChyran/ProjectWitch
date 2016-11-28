@@ -58,7 +58,7 @@ namespace ProjectWitch.PreBattle
             mCoIsRunning = true;
 
             var game = Game.GetInstance();
-            var card = game.CardData[CardID];
+            var card = game.GameData.Card[CardID];
 
             //もし使用カードに含まれていたら、無効にして、位置を表示
             var battleID = Controller.CardList.IndexOf(CardID);
@@ -83,7 +83,7 @@ namespace ProjectWitch.PreBattle
 
             //テキストをセット
             mName.text = card.Name;
-            mSkillName.text = game.SkillData[card.SkillID].Name;
+            mSkillName.text = game.GameData.Skill[card.SkillID].Name;
             SetRace(card);
 
             yield return new WaitForSeconds(0.1f);
@@ -120,7 +120,7 @@ namespace ProjectWitch.PreBattle
             Color color;
 
             //スキルを取得
-            var skill = Game.GetInstance().SkillData[card.SkillID];
+            var skill = Game.GetInstance().GameData.Skill[card.SkillID];
 
             //リーダーのステータスから種を判断
             switch (skill.Type)

@@ -34,7 +34,7 @@ namespace ProjectWitch.Editor
 
             if (!EditorApplication.isPlaying) return;
             var game = Game.GetInstance();
-            var memoryList = game.SystemMemory;
+            var memoryList = game.GameData.Memory;
 
             mScrollPos = EditorGUILayout.BeginScrollView(mScrollPos, GUI.skin.box);
             {

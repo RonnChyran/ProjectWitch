@@ -68,7 +68,7 @@ namespace ProjectWitch.Menu
             mCoIsRunning = true;
 
             var game = Game.GetInstance();
-            var unit = game.UnitData[UnitID];
+            var unit = game.GameData.Unit[UnitID];
 
             //テキストをセット
             mName.text = unit.Name;

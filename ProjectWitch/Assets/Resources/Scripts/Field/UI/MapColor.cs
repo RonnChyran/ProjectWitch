@@ -22,7 +22,7 @@ namespace ProjectWitch.Field
         {
             var game = Game.GetInstance();
 
-            mCurrentTime = game.CurrentTime;
+            mCurrentTime = game.GameData.CurrentTime;
 
             //コンポーネントの取得
             mcSpriteRenderer = GetComponent<SpriteRenderer>();
@@ -49,9 +49,9 @@ namespace ProjectWitch.Field
 
             if (mLeapFactor > 1.0f) mLeapFactor = 1.0f;
 
-            if (mCurrentTime != game.CurrentTime)
+            if (mCurrentTime != game.GameData.CurrentTime)
             {
-                mCurrentTime = game.CurrentTime;
+                mCurrentTime = game.GameData.CurrentTime;
                 mLeapFactor = 0.0f;
             }
         }

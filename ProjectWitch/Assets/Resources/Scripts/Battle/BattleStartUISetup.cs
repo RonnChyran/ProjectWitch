@@ -20,8 +20,8 @@ namespace ProjectWitch.Battle
 		{
 			Game mGame = Game.GetInstance();
 			BattleDataIn battleDataIn = mGame.BattleIn;
-			TerritoryDataFormat playerTerritory = mGame.TerritoryData[battleDataIn.PlayerTerritory];
-			TerritoryDataFormat enemyTerritory = mGame.TerritoryData[battleDataIn.EnemyTerritory];
+			TerritoryDataFormat playerTerritory = mGame.GameData.Territory[battleDataIn.PlayerTerritory];
+			TerritoryDataFormat enemyTerritory = mGame.GameData.Territory[battleDataIn.EnemyTerritory];
 			Text text = PlayerText.GetComponent<Text>();
 			text.text = playerTerritory.OwnerName;
 			text = EnemyText.GetComponent<Text>();
@@ -34,7 +34,7 @@ namespace ProjectWitch.Battle
 					var id = (i == 0 ? battleDataIn.PlayerUnits[j] : battleDataIn.EnemyUnits[j]);
 					if (id == -1)
 						break;
-					UnitDataFormat unit = mGame.UnitData[id];
+					UnitDataFormat unit = mGame.GameData.Unit[id];
 					sNum += unit.SoldierNum;
 				}
 				text = (i == 0 ? PlayerNum : EnemyNum).GetComponent<Text>();

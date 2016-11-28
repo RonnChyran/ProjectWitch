@@ -58,14 +58,14 @@ namespace ProjectWitch.Field
             mIsCoroutineExec = true;
 
             var game = Game.GetInstance();
-            var currentTime = game.CurrentTime;
+            var currentTime = game.GameData.CurrentTime;
 
             //行動数の更新
-            game.TerritoryData[0].ActionCount = 3;
+            game.GameData.Territory[0].ActionCount = 3;
             UpdateActionCount();
 
             //フィールドのイベントデータを取得
-            var fieldEventData = game.FieldEventData;
+            var fieldEventData = game.GameData.FieldEvent;
 
 
             //プレイヤーターンの開始
@@ -83,13 +83,13 @@ namespace ProjectWitch.Field
 
                 //ターンはじめ表示
                 var settle = GetSettlement();
-                string str = game.CurrentTurn.ToString() + "日目\n" +
+                string str = game.GameData.CurrentTurn.ToString() + "日目\n" +
                     "本日の収支：" + settle.ToString() + "M";
                 game.ShowDialog("収支報告", str);
                 while (game.IsDialogShowd) yield return null;
 
                 //収支加算
-                game.PlayerMana += settle;
+                game.GameData.PlayerMana += settle;
 
                 //マナ回復
                 game.RecoverMana();
@@ -103,7 +103,7 @@ namespace ProjectWitch.Field
             for (int i = 0; i < 3; i++)
             {
                 //ターン数更新
-                game.TerritoryData[0].ActionCount = 3 - i;
+                game.GameData.Territory[0].ActionCount = 3 - i;
 
                 //ターンはじめイベントを実行
                 yield return EventExecute(eventlist);
@@ -120,14 +120,14 @@ namespace ProjectWitch.Field
                 FlagClickable = true;
 
                 //時間が変化するまで待機
-                while (currentTime == game.CurrentTime) yield return null;
+                while (currentTime == game.GameData.CurrentTime) yield return null;
 
-                currentTime = game.CurrentTime;
+                currentTime = game.GameData.CurrentTime;
 
                 //領地の行動数を更新
                 UpdateActionCount();
             }
-            game.TerritoryData[0].ActionCount = 0;
+            game.GameData.Territory[0].ActionCount = 0;
 
             //プレイヤーターン終了
             yield return null;
@@ -143,9 +143,9 @@ namespace ProjectWitch.Field
             //カメラ操作を無効にする
             CameraController.IsPlayable = false;
             
-            for(int i=1; i<game.TerritoryData.Count; i++)
+            for(int i=1; i<game.GameData.Territory.Count; i++)
             {
-                var ter = game.TerritoryData[i];
+                var ter = game.GameData.Territory[i];
 
                 //有効な領地を更新
                 FieldUIController.ActiveTerritory = i;
@@ -174,7 +174,7 @@ namespace ProjectWitch.Field
                     {
                         foreach (var group in ter.GroupList)
                         {
-                            var groupData = game.GroupData[group];
+                            var groupData = game.GameData.Group[group];
                             if (groupData.State != GroupDataFormat.GroupState.Active)
                                 continue;
 
@@ -217,8 +217,8 @@ namespace ProjectWitch.Field
             #endregion
 
             mCameraController.IsPlayable = true;
-            game.CurrentTime = 0;
-            game.CurrentTurn++;
+            game.GameData.CurrentTime = 0;
+            game.GameData.CurrentTurn++;
 
             mIsCoroutineExec = false;
 
@@ -236,7 +236,7 @@ namespace ProjectWitch.Field
             var game = Game.GetInstance();
 
             //戦闘前スクリプトの開始
-            var eventlist = game.FieldEventData.Where(p => p.Timing == EventDataFormat.TimingType.PlayerBattle).ToList();
+            var eventlist = game.GameData.FieldEvent.Where(p => p.Timing == EventDataFormat.TimingType.PlayerBattle).ToList();
             eventlist = eventlist.Where(p => p.Area == area).ToList();
             yield return StartCoroutine(EventExecute(eventlist));
             while (game.IsTalk) yield return null;
@@ -255,7 +255,7 @@ namespace ProjectWitch.Field
             yield return null;
 
             //時間を進める
-            game.CurrentTime++;
+            game.GameData.CurrentTime++;
             
 
         }
@@ -282,16 +282,16 @@ namespace ProjectWitch.Field
             //ユニットの死亡処理
             foreach(var unit in game.BattleOut.DeadUnits)
             {
-                game.UnitData[unit].IsAlive = false;
+                game.GameData.Unit[unit].IsAlive = false;
 
                 //すべての領地からユニットを除外
-                foreach(var territory in game.TerritoryData)
+                foreach(var territory in game.GameData.Territory)
                 {
                     territory.RemoveUnit(unit);
                 }
 
                 //すべてのグループからユニットを除外
-                foreach(var group in game.GroupData)
+                foreach(var group in game.GameData.Group)
                 {
                     group.UnitList.Remove(unit);
                 }
@@ -302,19 +302,19 @@ namespace ProjectWitch.Field
             foreach(var unit in dist)
             {
                 //敵領地のすべてのグループからユニットを除外
-                var territory = game.TerritoryData[game.BattleIn.EnemyTerritory];
+                var territory = game.GameData.Territory[game.BattleIn.EnemyTerritory];
                 territory.RemoveUnit(unit);
 
                 //味方領地に追加
-                var groupID = game.TerritoryData[game.BattleIn.PlayerTerritory].GroupList[0];
-                game.GroupData[groupID].UnitList.Add(unit);
+                var groupID = game.GameData.Territory[game.BattleIn.PlayerTerritory].GroupList[0];
+                game.GameData.Group[groupID].UnitList.Add(unit);
             }
 
             //ユニットの逃走処理
             foreach(var unit in game.BattleOut.EscapedUnits)
             {
                 //回復処理
-                var udata = game.UnitData[unit];
+                var udata = game.GameData.Unit[unit];
                 udata.HP = (int)(udata.MaxHP * 0.3f);
                 udata.SoldierNum = (int)(udata.MaxSoldierNum * 0.3f);
             }
@@ -334,12 +334,12 @@ namespace ProjectWitch.Field
             foreach(var unitID in game.BattleIn.PlayerUnits)
             {
                 if (unitID < 0) continue;
-                var unit = game.UnitData[unitID];
+                var unit = game.GameData.Unit[unitID];
                 unit.Experience += ex;
             }
 
             //グループの消滅処理
-            foreach(var group in game.GroupData)
+            foreach(var group in game.GameData.Group)
             {
                 //ユニットの残数が0なら消滅
                 if (group.UnitList.Count == 0)
@@ -351,7 +351,7 @@ namespace ProjectWitch.Field
 
                 //稼働状態で、死守領地が落ちたら消滅
                 if(group.State == GroupDataFormat.GroupState.Active &&
-                    game.AreaData[group.DominationRoute[0]].Owner == game.BattleIn.PlayerTerritory)
+                    game.GameData.Area[group.DominationRoute[0]].Owner == game.BattleIn.PlayerTerritory)
                 {
                     group.Kill();
                 }
@@ -362,28 +362,28 @@ namespace ProjectWitch.Field
             {
                 foreach (var cardID in game.BattleOut.UsedCards)
                 {
-                    var group = game.GroupData[game.TerritoryData[0].GroupList[0]];
+                    var group = game.GameData.Group[game.GameData.Territory[0].GroupList[0]];
                     group.CardList.Remove(cardID);
                 }
             }
 
             //自営軍の復活
-            var g = game.GroupData[GroupDataFormat.GetDefaultID()];
+            var g = game.GameData.Group[GroupDataFormat.GetDefaultID()];
             g.Rebirth();    //グループの復活
             foreach (var unit in g.UnitList)
             {
                 //ユニットの復活
-                game.UnitData[unit].Rebirth();
+                game.GameData.Unit[unit].Rebirth();
             }
 
             //アリスが死んでいたらゲームオーバー
-            if (game.UnitData[0].IsAlive == false)
+            if (game.GameData.Unit[0].IsAlive == false)
             {
                 StartCoroutine(game.CallEnding(14));
             }
 
             //アリスの館が落ちたらゲームオーバー
-            if (game.AreaData[1].Owner != 0)
+            if (game.GameData.Area[1].Owner != 0)
             {
                 StartCoroutine(game.CallEnding(15));
             }
@@ -396,14 +396,14 @@ namespace ProjectWitch.Field
             {
                 var exescript = game.ScenarioIn.NextA;
                 if(exescript>=0)
-                    game.CallScript(game.FieldEventData[exescript]);
+                    game.CallScript(game.GameData.FieldEvent[exescript]);
                 yield return null;
             }
             else                        //戦闘敗北時のスクリプト
             {
                 var exescript = game.ScenarioIn.NextB;
                 if(exescript>=0)
-                    game.CallScript(game.FieldEventData[exescript]);
+                    game.CallScript(game.GameData.FieldEvent[exescript]);
                 yield return null;
 
             }
@@ -463,14 +463,14 @@ namespace ProjectWitch.Field
                 foreach (int unit in eventlist[i].ActorA)
                 {
                     //ユニットが生きているか
-                    if (!game.UnitData[unit].IsAlive)
+                    if (!game.GameData.Unit[unit].IsAlive)
                     {
                         isEventEnable = false;
                         break;
                     }
 
                     //自領地にユニットが含まれているか
-                    var playerUnitList = game.GroupData[game.TerritoryData[0].GroupList[0]].UnitList;
+                    var playerUnitList = game.GameData.Group[game.GameData.Territory[0].GroupList[0]].UnitList;
                     if (playerUnitList.Contains(unit) == false)
                     {
                         //含まれていなかったらイベント棄却
@@ -486,16 +486,16 @@ namespace ProjectWitch.Field
                     isEventEnable = false;
 
                     //ユニットが生きているか
-                    if (!game.UnitData[unit].IsAlive) break;
+                    if (!game.GameData.Unit[unit].IsAlive) break;
 
                     //任意の領地にユニットが含まれているか
-                    for (int j = 1; j < game.TerritoryData.Count; j++)
+                    for (int j = 1; j < game.GameData.Territory.Count; j++)
                     {
                         //領地の所持するグループに所属するユニットから総当たりする
-                        var groupList = game.TerritoryData[j].GroupList;
+                        var groupList = game.GameData.Territory[j].GroupList;
                         foreach (var groupID in groupList)
                         {
-                            var group = game.GroupData[groupID];
+                            var group = game.GameData.Group[groupID];
                             if (group.UnitList.Contains(unit))
                             {
                                 isEventEnable = true;
@@ -517,7 +517,7 @@ namespace ProjectWitch.Field
                     {
                         if (eventlist[i].If_Val[j] != -1)  //条件なしの時If_Val == -1
                         {
-                            int src = int.Parse(game.SystemMemory[eventlist[i].If_Val[j]]);
+                            int src = int.Parse(game.GameData.Memory[eventlist[i].If_Val[j]]);
                             var imm = eventlist[i].If_Imm[j];
 
                             //演算結果用
@@ -584,14 +584,14 @@ namespace ProjectWitch.Field
             //計算方法：現在の所持領地の所持マナの平均の10%
 
             //現在の所持地点を取得
-            var areas = game.TerritoryData[0].AreaList;
+            var areas = game.GameData.Territory[0].AreaList;
 
             //領地がなかったら抜ける
             if (areas.Count == 0) return -1;
 
             //平均の算出
             var sum = 0;
-            foreach (var area in areas) sum += game.AreaData[area].Mana;
+            foreach (var area in areas) sum += game.GameData.Area[area].Mana;
             var ave = sum / areas.Count;
 
             //平均の10%を返す
@@ -603,7 +603,7 @@ namespace ProjectWitch.Field
         private int GetDominationTarget(int territory, int group)
         {
             var game = Game.GetInstance();
-            var route = game.GroupData[group].DominationRoute;
+            var route = game.GameData.Group[group].DominationRoute;
 
             try
             {
@@ -611,12 +611,12 @@ namespace ProjectWitch.Field
                 //その次の領地がプレイヤーの領地ならその領地をターゲットにする
                 for (int i = route.Count - 2; i >= 0; i--)
                 {
-                    var area = game.AreaData[route[i]];
+                    var area = game.GameData.Area[route[i]];
 
                     //終点から数えた一番最初の自領地を見つける
                     if (area.Owner == territory)
                     {
-                        var nextArea = game.AreaData[route[i + 1]];
+                        var nextArea = game.GameData.Area[route[i + 1]];
                         //次の領地がプレイヤーの領地かどうか
                         if (nextArea.Owner == 0)
                             return route[i + 1];
@@ -635,7 +635,7 @@ namespace ProjectWitch.Field
         private IEnumerator DominationEffect(int targetArea)
         {
             var game = Game.GetInstance();
-            var targetpos = game.AreaData[targetArea].Position;
+            var targetpos = game.GameData.Area[targetArea].Position;
 
             //カメラをその領地に移動
             yield return StartCoroutine(CameraController.MoveTo(targetpos));
@@ -649,7 +649,7 @@ namespace ProjectWitch.Field
         private void SetEnemy(int groupID, bool IsDomination)
         {
             var game = Game.GetInstance();
-            var group = game.GroupData[groupID];
+            var group = game.GameData.Group[groupID];
 
             //グループのユニットリストから3体取得
             var units = group.GetBattleUnits();
@@ -668,8 +668,8 @@ namespace ProjectWitch.Field
         {
             var game = Game.GetInstance();
 
-            var groupIDs = game.TerritoryData[territory].GroupList;
-            var groups = game.GroupData.GetFromIndex(groupIDs);
+            var groupIDs = game.GameData.Territory[territory].GroupList;
+            var groups = game.GameData.Group.GetFromIndex(groupIDs);
 
             //その地域を防衛ラインに指定するグループをフィルタにかける
             groups = groups.Where(g => g.DominationRoute.Contains(area) == true).ToList();
@@ -703,11 +703,11 @@ namespace ProjectWitch.Field
             var game = Game.GetInstance();
 
             //すでに再生済みなら無視する
-            if (game.SoundManager.GetCueName(SoundType.BGM).Equals(game.FieldBGM))
+            if (game.SoundManager.GetCueName(SoundType.BGM).Equals(game.GameData.FieldBGM))
                 return;
 
             //再生
-            game.SoundManager.Play(game.FieldBGM, SoundType.BGM);
+            game.SoundManager.Play(game.GameData.FieldBGM, SoundType.BGM);
         }
 
         //BGMの停止
@@ -734,14 +734,14 @@ namespace ProjectWitch.Field
         {
             var game = Game.GetInstance();
 
-            for (int i = 1; i < game.TerritoryData.Count; i++)
+            for (int i = 1; i < game.GameData.Territory.Count; i++)
             {
-                var ter = game.TerritoryData[i];
+                var ter = game.GameData.Territory[i];
                 ter.ActionCount = 0;
                 if (ter.State != TerritoryDataFormat.TerritoryState.Active) continue;
                 foreach (var g in ter.GroupList)
                 {
-                    var gData = game.GroupData[g];
+                    var gData = game.GameData.Group[g];
                     if (gData.State == GroupDataFormat.GroupState.Active) ter.ActionCount++;
                 }
             }

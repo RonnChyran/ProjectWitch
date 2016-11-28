@@ -60,7 +60,7 @@ namespace ProjectWitch.PreBattle
                 mPanel.SetActive(true);
 
                 var game = Game.GetInstance();
-                var card = game.CardData[mController.CardList[mID]];
+                var card = game.GameData.Card[mController.CardList[mID]];
 
                 //表示の更新
                 var sprite = Resources.Load<Sprite>(mCardImagePath + card.ImageBack);

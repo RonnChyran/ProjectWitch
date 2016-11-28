@@ -21,8 +21,8 @@ namespace ProjectWitch.Battle
         {
             var game = Game.GetInstance();
 
-            var pter = game.TerritoryData[game.BattleIn.PlayerTerritory];
-            var eter = game.TerritoryData[game.BattleIn.EnemyTerritory];
+            var pter = game.GameData.Territory[game.BattleIn.PlayerTerritory];
+            var eter = game.GameData.Territory[game.BattleIn.EnemyTerritory];
 
             mPlayerTerritoryName.text = pter.OwnerName + "軍";
             mEnemyTerritoryName.text = eter.OwnerName + "軍";
@@ -34,7 +34,7 @@ namespace ProjectWitch.Battle
             foreach (var id in pUnitIDs)
             {
                 if (id == -1) continue;
-                var unit = game.UnitData[id];
+                var unit = game.GameData.Unit[id];
 
                 sum += unit.MaxSoldierNum;
             }
@@ -43,7 +43,7 @@ namespace ProjectWitch.Battle
             foreach (var id in eUnitIDs)
             {
                 if (id == -1) continue;
-                var unit = game.UnitData[id];
+                var unit = game.GameData.Unit[id];
 
                 sum += unit.MaxSoldierNum;
             }

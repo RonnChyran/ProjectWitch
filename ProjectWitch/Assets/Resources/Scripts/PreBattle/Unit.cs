@@ -79,7 +79,7 @@ namespace ProjectWitch.PreBattle
             mCoIsRunning = true;
 
             var game = Game.GetInstance();
-            var unit = game.UnitData[UnitID];
+            var unit = game.GameData.Unit[UnitID];
 
             //もし出撃ユニットに含まれていたら、無効にして、位置を表示
             var battleID = Controller.UnitList.IndexOf(UnitID);

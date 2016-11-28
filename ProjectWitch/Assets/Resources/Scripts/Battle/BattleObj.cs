@@ -150,7 +150,7 @@ namespace ProjectWitch.Battle
         // 音楽再生
         public PlayMusic Music { get { return mMusic; } }
         // 戦闘速度
-        public int BattleSpeed { get { return mGame.Config.BattleSpeed; } set { mGame.Config.BattleSpeed = value; } }
+        public int BattleSpeed { get { return mGame.SystemData.Config.BattleSpeed; } set { mGame.SystemData.Config.BattleSpeed = value; } }
         // 戦闘速度倍率
         public float BattleSpeedMagni { get { return (float)System.Math.Pow(2.0f, BattleSpeed); } }
         // ターン(行動)ユニット

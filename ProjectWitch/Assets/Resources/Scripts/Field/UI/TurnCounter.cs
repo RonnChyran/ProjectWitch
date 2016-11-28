@@ -20,7 +20,7 @@ namespace ProjectWitch
         void Update()
         {
             var game = Game.GetInstance();
-            mcText.text = game.CurrentTurn.ToString();
+            mcText.text = game.GameData.CurrentTurn.ToString();
         }
     }
 }

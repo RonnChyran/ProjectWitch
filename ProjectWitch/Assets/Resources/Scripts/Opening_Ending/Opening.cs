@@ -91,14 +91,14 @@ namespace ProjectWitch
             {
                 var exescript = game.ScenarioIn.NextA;
                 if (exescript >= 0)
-                    game.CallScript(game.FieldEventData[exescript]);
+                    game.CallScript(game.GameData.FieldEvent[exescript]);
                 yield return null;
             }
             else                        //戦闘敗北時の
             {
                 var exescript = game.ScenarioIn.NextB;
                 if (exescript >= 0)
-                    game.CallScript(game.FieldEventData[exescript]);
+                    game.CallScript(game.GameData.FieldEvent[exescript]);
                 yield return null;
 
             }

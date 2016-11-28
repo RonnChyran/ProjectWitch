@@ -87,10 +87,10 @@ namespace ProjectWitch.Field
 
                 //areaデータ取得
                 if (AreaID == -1) throw new ProjectWitchException("エリアIDをセットしてください");
-                var area = game.AreaData[AreaID];
+                var area = game.GameData.Area[AreaID];
 
                 //テキストデータのセット
-                mcOwner.text = game.TerritoryData[area.Owner].OwnerName;
+                mcOwner.text = game.GameData.Territory[area.Owner].OwnerName;
                 mcLevel.text = area.Level.ToString();
                 mcTime.text = area.Time.ToString();
                 mcMana.text = area.Mana.ToString();
@@ -135,7 +135,7 @@ namespace ProjectWitch.Field
             var game = Game.GetInstance();
 
             //侵攻戦の開始
-            FieldController.DominationBattle(AreaID, game.AreaData[AreaID].Owner);
+            FieldController.DominationBattle(AreaID, game.GameData.Area[AreaID].Owner);
 
             //メニューを閉じる
             Close();
@@ -150,22 +150,22 @@ namespace ProjectWitch.Field
             if (game.IsDialogShowd) return;
 
             //取得するマナ量
-            var mana = game.AreaData[AreaID].Mana;
+            var mana = game.GameData.Area[AreaID].Mana;
 
             //表示する文字列の構成
-            var str = "地点：" + game.AreaData[AreaID].Name + "\n";
-            str += "現在の所持マナ：" + game.PlayerMana + "M\n";
+            var str = "地点：" + game.GameData.Area[AreaID].Name + "\n";
+            str += "現在の所持マナ：" + game.GameData.PlayerMana + "M\n";
             str += "取得マナ：" + mana.ToString() + "M\n";
-            str += "取得後の所持マナ：" + (game.PlayerMana + mana).ToString() + "M\n";
+            str += "取得後の所持マナ：" + (game.GameData.PlayerMana + mana).ToString() + "M\n";
 
             game.ShowDialog("マナ収集", str);
 
             //マナの増加処理
-            game.PlayerMana += mana;
-            game.AreaData[AreaID].Mana = 0;
+            game.GameData.PlayerMana += mana;
+            game.GameData.Area[AreaID].Mana = 0;
 
             //時間を進める
-            game.CurrentTime++;
+            game.GameData.CurrentTime++;
 
             //メニューを開けるようにする
             FieldController.MenuClickable = true;
@@ -202,7 +202,7 @@ namespace ProjectWitch.Field
                 bool isPossible = false;
                 foreach(var nextArea in nextAreas)
                 {
-                    var data = game.AreaData[nextArea];
+                    var data = game.GameData.Area[nextArea];
 
                     if (data.Owner == 0)
                     {
@@ -213,7 +213,7 @@ namespace ProjectWitch.Field
                 if (!isPossible) return;
 
                 //当該地域の領主が、自領地と交戦できる状態にあるか
-                var territory = game.TerritoryData[area.Owner];
+                var territory = game.GameData.Territory[area.Owner];
                 if (territory.State == TerritoryDataFormat.TerritoryState.Ready ||
                     territory.State == TerritoryDataFormat.TerritoryState.Active)
                     mDominationButton.SetActive(true);

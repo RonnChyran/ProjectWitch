@@ -37,7 +37,7 @@ namespace ProjectWitch.Field
         void Start()
         {
             var game = Game.GetInstance();
-            mTerritoryID = game.AreaData[AreaID].Owner;
+            mTerritoryID = game.GameData.Area[AreaID].Owner;
 
             var obj = GameObject.FindWithTag("FieldController");
             FieldController = obj.GetComponent<FieldController>();

@@ -73,7 +73,7 @@ namespace ProjectWitch.Menu
         void Reset()
         {
             var game = Game.GetInstance();
-            var unit = game.UnitData[UnitID];
+            var unit = game.GameData.Unit[UnitID];
 
             //スライダーの範囲を設定
             var hpmax = unit.MaxHP - unit.HP;
@@ -86,7 +86,7 @@ namespace ProjectWitch.Menu
             else mSliderSoldier.interactable = true;
             mSliderSoldier.maxValue = solMax;
 
-            var solLimit = game.PlayerMana / unit.SoldierLimitCost;
+            var solLimit = game.GameData.PlayerMana / unit.SoldierLimitCost;
             if (solLimit == 0) mSliderMaxSoldier.interactable = false;
             else mSliderMaxSoldier.interactable = true;
             mSliderMaxSoldier.maxValue = solLimit;
@@ -112,11 +112,11 @@ namespace ProjectWitch.Menu
             mMaxSoldierText.text = ((int)(mUpSoldierLimit + unit.MaxSoldierNum)).ToString();
 
             mRequiredManaText.text = mSumCost.ToString();
-            mCurrentManaText.text = game.PlayerMana.ToString();            
+            mCurrentManaText.text = game.GameData.PlayerMana.ToString();            
 
             
             //ボタンの有効無効か
-            if (mSumCost > game.PlayerMana)
+            if (mSumCost > game.GameData.PlayerMana)
                 mSubmitButton.interactable = false;
             else
                 mSubmitButton.interactable = true;
@@ -125,7 +125,7 @@ namespace ProjectWitch.Menu
         public void Submit()
         {
             var game = Game.GetInstance();
-            var unit = game.UnitData[UnitID];
+            var unit = game.GameData.Unit[UnitID];
 
             //ステータス上昇
             unit.HP += mUpHP;
@@ -133,7 +133,7 @@ namespace ProjectWitch.Menu
             unit.MaxSoldierNum += mUpSoldierLimit;
 
             //マナ減少
-            game.PlayerMana -= mSumCost;
+            game.GameData.PlayerMana -= mSumCost;
 
             StatusWindow.Reset();
             Close();

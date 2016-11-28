@@ -39,9 +39,9 @@ namespace ProjectWitch.PreBattle
             else
             {
                 var game = Game.GetInstance();
-                var unit = game.UnitData[UnitID];
-                var atkSkill = game.SkillData[unit.LAtkSkill];
-                var defSkill = game.SkillData[unit.LDefSkill];
+                var unit = game.GameData.Unit[UnitID];
+                var atkSkill = game.GameData.Skill[unit.LAtkSkill];
+                var defSkill = game.GameData.Skill[unit.LDefSkill];
 
                 mLv.text = "Lv." + unit.Level.ToString();
                 mName.text = unit.Name;

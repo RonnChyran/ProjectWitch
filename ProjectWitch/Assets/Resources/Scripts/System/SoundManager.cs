@@ -69,10 +69,10 @@ namespace ProjectWitch
             var game = Game.GetInstance();
 
             //ボリュームの同期
-            var master = game.Config.MasterVolume;
-            mcBGM.volume = game.Config.BGMVolume * master;
-            mcSE.volume = game.Config.SEVolume * master;
-            mcVoice.volume = game.Config.VoiceVolume * master;
+            var master = game.SystemData.Config.MasterVolume;
+            mcBGM.volume = game.SystemData.Config.BGMVolume * master;
+            mcSE.volume = game.SystemData.Config.SEVolume * master;
+            mcVoice.volume = game.SystemData.Config.VoiceVolume * master;
         }
 
         //再生開始

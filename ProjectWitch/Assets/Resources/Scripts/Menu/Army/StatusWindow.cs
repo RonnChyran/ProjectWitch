@@ -78,8 +78,6 @@ namespace ProjectWitch.Menu
         [Header("ボタン")]
         [SerializeField]
         private Button mLvUpButton = null;
-        [SerializeField]
-        private Button mSoldierEditButton = null;
 
         [Header("兵士ランク境界")]
         [Space(1)]
@@ -132,7 +130,7 @@ namespace ProjectWitch.Menu
         private void SetState()
         {
             var game = Game.GetInstance();
-            var unit = game.UnitData[UnitID];
+            var unit = game.GameData.Unit[UnitID];
 
             //mainwindow
             mName.text = unit.Name;
@@ -146,10 +144,10 @@ namespace ProjectWitch.Menu
             mLMDEF.text = unit.LeaderMDef.ToString();
             mLead.text = unit.Leadership.ToString();
             mAgi.text = unit.Agility.ToString();
-            mSkillAtk.text = game.SkillData[unit.LAtkSkill].Name;
-            mSkillDef.text = game.SkillData[unit.LDefSkill].Name;
+            mSkillAtk.text = game.GameData.Skill[unit.LAtkSkill].Name;
+            mSkillDef.text = game.GameData.Skill[unit.LDefSkill].Name;
             if (unit.Equipment != -1)
-                mEquipment.text = game.EquipmentData[unit.Equipment].Name;
+                mEquipment.text = game.GameData.Equipment[unit.Equipment].Name;
             else
                 mEquipment.text = "";
             mLove.text = unit.Love.ToString();

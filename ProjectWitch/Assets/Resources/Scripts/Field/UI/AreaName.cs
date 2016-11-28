@@ -27,7 +27,7 @@ namespace ProjectWitch.Field
 
             try
             {
-                var data = game.AreaData[AreaID];
+                var data = game.GameData.Area[AreaID];
 
                 if (mcText)
                     mcText.text = data.Name;

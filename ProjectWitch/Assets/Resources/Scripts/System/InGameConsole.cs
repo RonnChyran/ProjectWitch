@@ -48,6 +48,51 @@ namespace ProjectWitch
 
     public class InGameConsoleCommand
     {
+        //クラスのプロパティをすべて出力する
+        [uREPL.Command(name = "printproperty")]
+        public static void PrintProperty<T>(T obj)
+        {
+            string outStr = "";
+
+            Type t = typeof(T);
+            MemberInfo[] members = t.GetMembers
+                (BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+
+            foreach (var m in members)
+            {
+                if (m.MemberType.ToString().Equals("Property"))
+                {
+                    var pr = t.GetProperty(m.Name);
+                    outStr += String.Format("{0,20}", m.Name) + " : ";
+                    outStr += pr.GetValue(obj, null);
+                    outStr += "\n";
+                }
+
+            }
+            uREPL.Log.Output(outStr);
+        }
+
+        //クラスのプロパティをセットする
+        [uREPL.Command(name = "setproperty")]
+        public static void SetProperty<T>(T obj, string member, object value)
+        {
+            Type t = typeof(T);
+            MemberInfo[] members = t.GetMembers
+                (BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
+
+            foreach (var m in members)
+            {
+                if (m.Name.Equals(member))
+                {
+                    if (m.MemberType.ToString().Equals("Property"))
+                    {
+                        var pr = t.GetProperty(m.Name);
+                        pr.SetValue(obj, value, null);
+                    }
+                }
+            }
+        }
+
         //指定のリストの要素をすべて出力する
         [uREPL.Command(name = "printlistall")]
         public static void PrintListAll<T>(List<T> list)
@@ -92,110 +137,105 @@ namespace ProjectWitch
         [uREPL.Command(name = "printlist")]
         public static void PrintList<T>(List<T> list, int index)
         {
-            string outStr = "";
-
-            Type t = typeof(T);
-            MemberInfo[] members = t.GetMembers
-                (BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
-
-            foreach (var m in members)
-            {
-                if (m.MemberType.ToString().Equals("Property"))
-                {
-                    var pr = t.GetProperty(m.Name);
-                    outStr += String.Format("{0,20}", m.Name) + " : ";
-                    outStr += pr.GetValue(list[index], null);
-                    outStr += "\n";
-                }
-
-            }
-            uREPL.Log.Output(outStr);
+            PrintProperty(list[index]);
         }
 
         //指定のリストのインデックスで指定した要素のメンバを書き換える
         [uREPL.Command(name = "setlist")]
         public static void SetList<T>(List<T> list, int index, string member, object value)
         {
-            Type t = typeof(T);
-            MemberInfo[] members = t.GetMembers
-                (BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly);
-
-            foreach (var m in members)
-            {
-                if (m.Name.Equals(member))
-                {
-                    if (m.MemberType.ToString().Equals("Property"))
-                    {
-                        var pr = t.GetProperty(m.Name);
-                        pr.SetValue(list[index], value, null);
-                    }
-                }
-            }
+            SetProperty(list[index], member, value);
         }
 
         #region GameData
         //index番目の領地データを表示
         [uREPL.Command(name = "printterritory")]
-        public static void PrintTerritory(int index) { PrintList(Game.GetInstance().TerritoryData, index); }
+        public static void PrintTerritory(int index) { PrintList(Game.GetInstance().GameData.Territory, index); }
         //index番目の領地データの指定のメンバを変更
         [uREPL.Command(name = "setterritory")]
-        public static void SetTerritory(int index, string member, object value) { SetList(Game.GetInstance().TerritoryData, index, member, value); }
+        public static void SetTerritory(int index, string member, object value) { SetList(Game.GetInstance().GameData.Territory, index, member, value); }
 
         //index番目のグループデータを表示
         [uREPL.Command(name = "printgroup")]
-        public static void PrintGroup(int index) { PrintList(Game.GetInstance().GroupData, index); }
+        public static void PrintGroup(int index) { PrintList(Game.GetInstance().GameData.Group, index); }
         //index番目のグループデータの指定のメンバを変更
         [uREPL.Command(name = "setgroup")]
-        public static void SetGroup(int index, string member, object value) { SetList(Game.GetInstance().GroupData, index, member, value); }
+        public static void SetGroup(int index, string member, object value) { SetList(Game.GetInstance().GameData.Group, index, member, value); }
 
         //index番目のユニットデータを表示
         [uREPL.Command(name = "printunit")]
-        public static void PrintUnit(int index) { PrintList(Game.GetInstance().UnitData, index); }
+        public static void PrintUnit(int index) { PrintList(Game.GetInstance().GameData.Unit, index); }
         //index番目のユニットデータの指定のメンバを変更
         [uREPL.Command(name = "setunit")]
-        public static void SetUnit(int index, string member, object value) { SetList(Game.GetInstance().UnitData, index, member, value); }
+        public static void SetUnit(int index, string member, object value) { SetList(Game.GetInstance().GameData.Unit, index, member, value); }
 
         //index番目の地域データを表示
         [uREPL.Command(name = "printarea")]
-        public static void PrintArea(int index) { PrintList(Game.GetInstance().AreaData, index); }
+        public static void PrintArea(int index) { PrintList(Game.GetInstance().GameData.Area, index); }
         //index番目の地域データの指定のメンバを変更
         [uREPL.Command(name = "setarea")]
-        public static void SetArea(int index, string member, object value) { SetList(Game.GetInstance().AreaData, index, member, value); }
+        public static void SetArea(int index, string member, object value) { SetList(Game.GetInstance().GameData.Area, index, member, value); }
 
         //index番目のスキルデータを表示
         [uREPL.Command(name = "printskill")]
-        public static void PrintSkill(int index) { PrintList(Game.GetInstance().SkillData, index); }
+        public static void PrintSkill(int index) { PrintList(Game.GetInstance().GameData.Skill, index); }
         //index番目のスキルデータの指定のメンバを変更
         [uREPL.Command(name = "setskill")]
-        public static void SetSkill(int index, string member, object value) { SetList(Game.GetInstance().SkillData, index, member, value); }
+        public static void SetSkill(int index, string member, object value) { SetList(Game.GetInstance().GameData.Skill, index, member, value); }
 
         //index番目のカードデータを表示
         [uREPL.Command(name = "printcard")]
-        public static void PrintCard(int index) { PrintList(Game.GetInstance().CardData, index); }
+        public static void PrintCard(int index) { PrintList(Game.GetInstance().GameData.Card, index); }
         //index番目のカードデータの指定のメンバを変更
         [uREPL.Command(name = "setcard")]
-        public static void SetCard(int index, string member, object value) { SetList(Game.GetInstance().CardData, index, member, value); }
+        public static void SetCard(int index, string member, object value) { SetList(Game.GetInstance().GameData.Card, index, member, value); }
 
         //index番目の装備データを表示
         [uREPL.Command(name = "printequipment")]
-        public static void PrintEquipment(int index) { PrintList(Game.GetInstance().EquipmentData, index); }
+        public static void PrintEquipment(int index) { PrintList(Game.GetInstance().GameData.Equipment, index); }
         //index番目の装備データの指定のメンバを変更
         [uREPL.Command(name = "setequipment")]
-        public static void SetEquipment(int index, string member, object value) { SetList(Game.GetInstance().EquipmentData, index, member, value); }
+        public static void SetEquipment(int index, string member, object value) { SetList(Game.GetInstance().GameData.Equipment, index, member, value); }
 
         //index番目のAIデータを表示
         [uREPL.Command(name = "printai")]
-        public static void PrintAI(int index) { PrintList(Game.GetInstance().AIData, index); }
+        public static void PrintAI(int index) { PrintList(Game.GetInstance().GameData.AI, index); }
         //index番目のAIデータの指定のメンバを変更
         [uREPL.Command(name = "setai")]
-        public static void SetAI(int index, string member, object value) { SetList(Game.GetInstance().AIData, index, member, value); }
+        public static void SetAI(int index, string member, object value) { SetList(Game.GetInstance().GameData.AI, index, member, value); }
+
+        //index番目のゲームメモリを表示
+        [uREPL.Command(name = "printmemory")]
+        public static void PrintMemory(int index) { uREPL.Log.Output(Game.GetInstance().GameData.Memory[index].ToString()); }
+        //index番目のゲームメモリを書き換え
+        [uREPL.Command(name = "setmemory")]
+        public static void SetMemory(int index, object value) { Game.GetInstance().GameData.Memory[index] = value.ToString(); }
 
         //index番目のシステムメモリを表示
-        [uREPL.Command(name = "printmemory")]
-        public static void PrintMemory(int index) { uREPL.Log.Output(Game.GetInstance().SystemMemory[index].ToString()); }
+        [uREPL.Command(name = "printsysmemory")]
+        public static void PrintSysMemory(int index) { uREPL.Log.Output(Game.GetInstance().SystemData.Memory[index].ToString()); }
         //index番目のシステムメモリを書き換え
+        [uREPL.Command(name = "setsysmemory")]
+        public static void SetSysMemory(int index, object value) { Game.GetInstance().SystemData.Memory[index] = value.ToString(); }
+
+        //コンフィグ表示
+        [uREPL.Command(name = "printconfig")]
+        public static void PrintConfig(int index) { PrintProperty(Game.GetInstance().SystemData.Config); }
+        //index番目のゲームメモリを書き換え
         [uREPL.Command(name = "setmemory")]
-        public static void SetMemory(int index, object value) { Game.GetInstance().SystemMemory[index] = value.ToString(); }
+        public static void SetMemory(int index, string member, object value) { SetProperty(Game.GetInstance().SystemData.Config, member, value); }
+
+        //セーブ関連
+        [uREPL.Command(name = "save")]
+        public static void Save(int slot) { Game.GetInstance().GameData.Save(slot); }
+        [uREPL.Command(name ="load")]
+        public static void Load(int slot) { Game.GetInstance().GameData.Load(slot); }
+
+        //システムセーブ・ロード
+        [uREPL.Command(name = "syssave")]
+        public static void SysSave(int slot) { Game.GetInstance().SystemData.Save(); }
+        [uREPL.Command(name = "sysload")]
+        public static void SysLoad(int slot) { Game.GetInstance().SystemData.Load(); }
 
         #endregion
     }
