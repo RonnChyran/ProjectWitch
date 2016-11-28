@@ -1,36 +1,40 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class QuitWindow : MonoBehaviour {
-
-    //component
-    private Canvas mcCanvas = null;
-
-    void Start()
+namespace ProjectWitch
+{
+    public class QuitWindow : MonoBehaviour
     {
-        mcCanvas = GetComponent<Canvas>();
-    }
 
-    //終了時処理
-    void OnApplicationQuit()
-    {
-        if (mcCanvas.enabled == false)
+        //component
+        private Canvas mcCanvas = null;
+
+        void Start()
         {
-            Application.CancelQuit();
+            mcCanvas = GetComponent<Canvas>();
         }
 
-        mcCanvas.enabled = true;
-    }
+        //終了時処理
+        void OnApplicationQuit()
+        {
+            if (mcCanvas.enabled == false)
+            {
+                Application.CancelQuit();
+            }
 
-    //終了ボタン
-    public void OnExitClicked()
-    {
-        Application.Quit();
-    }
+            mcCanvas.enabled = true;
+        }
 
-    //キャンセルボタン
-    public void OnCancelClicked()
-    {
-        GetComponent<Canvas>().enabled = false;
+        //終了ボタン
+        public void OnExitClicked()
+        {
+            Application.Quit();
+        }
+
+        //キャンセルボタン
+        public void OnCancelClicked()
+        {
+            GetComponent<Canvas>().enabled = false;
+        }
     }
 }

@@ -2,9 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 
-using GameData;
-
-namespace Battle
+namespace ProjectWitch.Battle
 {
 	public class BattleStartUISetup : MonoBehaviour
 	{

@@ -10,9 +10,9 @@ using System.Collections.Generic;
 //参考にすっぞ
 //http://qiita.com/KDKTN/items/a151d8d003a62c7b2ca3
 
-using Scenario.Command;
+using ProjectWitch.Talk.Command;
 
-namespace Scenario.Compiler
+namespace ProjectWitch.Talk.Compiler
 {
 
 	//コンパイラ用のログ

@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 
-namespace Help
+namespace ProjectWitch.Help
 {
     public class TopMenu : MonoBehaviour
     {

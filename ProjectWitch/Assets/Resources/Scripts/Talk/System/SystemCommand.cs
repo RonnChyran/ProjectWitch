@@ -6,11 +6,11 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-using Scenario.Command;
-using Scenario.Pattern;
-using Scenario.WorkSpace;
+using ProjectWitch.Talk.Command;
+using ProjectWitch.Talk.Pattern;
+using ProjectWitch.Talk.WorkSpace;
 
-namespace Scenario.Compiler{
+namespace ProjectWitch.Talk.Compiler{
 	public class CreateCommandsOfSystem : Pattern_Component
 	{
 		//隠蔽

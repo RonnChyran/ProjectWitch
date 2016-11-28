@@ -1,9 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System;
-using GameData;
 
-namespace Field
+namespace ProjectWitch.Field
 {
     public class AreaWindow : MonoBehaviour
     {

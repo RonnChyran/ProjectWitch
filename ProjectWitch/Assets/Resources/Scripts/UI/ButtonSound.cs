@@ -2,26 +2,30 @@
 using UnityEngine.EventSystems;
 using System.Collections;
 
-public class ButtonSound : MonoBehaviour, IPointerEnterHandler {
-
-    public void OnPointerEnter(PointerEventData e)
+namespace ProjectWitch
+{
+    public class ButtonSound : MonoBehaviour, IPointerEnterHandler
     {
-        var game = Game.GetInstance();
 
-        game.SoundManager.PlaySE(SE.Hover);
-    }
+        public void OnPointerEnter(PointerEventData e)
+        {
+            var game = Game.GetInstance();
 
-    public void OnClicked()
-    {
-        var game = Game.GetInstance();
+            game.SoundManager.PlaySE(SE.Hover);
+        }
 
-        game.SoundManager.PlaySE(SE.Click);
-    }
+        public void OnClicked()
+        {
+            var game = Game.GetInstance();
 
-    public void OnClicked_Cancel()
-    {
-        var game = Game.GetInstance();
+            game.SoundManager.PlaySE(SE.Click);
+        }
 
-        game.SoundManager.PlaySE(SE.Cancel);
+        public void OnClicked_Cancel()
+        {
+            var game = Game.GetInstance();
+
+            game.SoundManager.PlaySE(SE.Cancel);
+        }
     }
 }

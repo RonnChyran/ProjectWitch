@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 
-namespace PreBattle
+namespace ProjectWitch.PreBattle
 {
     public class Unit : MonoBehaviour
     {
@@ -133,7 +133,7 @@ namespace PreBattle
             Controller.CancelTargetIsUnit = true;
         }
 
-        private void SetRace(GameData.UnitDataFormat unit)
+        private void SetRace(UnitDataFormat unit)
         {
             string text = "";
             Color color;
@@ -160,7 +160,7 @@ namespace PreBattle
             mRace.color = color;
         }
 
-        private void SetSoldierNum(GameData.UnitDataFormat unit)
+        private void SetSoldierNum(UnitDataFormat unit)
         {
             mSoldier.text = unit.SoldierNum.ToString();
 
@@ -184,7 +184,7 @@ namespace PreBattle
             }
         }
 
-        private void SetHP(GameData.UnitDataFormat unit)
+        private void SetHP(UnitDataFormat unit)
         {
             mHP.text = unit.HP.ToString();
 

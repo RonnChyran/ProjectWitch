@@ -10,10 +10,10 @@ using System; //Exception
 using System.Text.RegularExpressions;
 using UnityEngine.SceneManagement;
 
-using Scenario.Pattern;
-using Scenario.Command;
+using ProjectWitch.Talk.Pattern;
+using ProjectWitch.Talk.Command;
 
-namespace Scenario.WorkSpace
+namespace ProjectWitch.Talk.WorkSpace
 {
 	public class TextWorkSpace : MonoBehaviour
 	{

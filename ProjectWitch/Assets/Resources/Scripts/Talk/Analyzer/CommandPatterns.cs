@@ -9,9 +9,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-using Scenario.Compiler;
+using ProjectWitch.Talk.Compiler;
 
-namespace Scenario.Pattern
+namespace ProjectWitch.Talk.Pattern
 {
 	//パターン用の抽象クラス(コンポーネント)
 	abstract public class PatternFormat

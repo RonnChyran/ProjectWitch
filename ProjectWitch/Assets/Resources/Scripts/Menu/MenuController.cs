@@ -2,7 +2,7 @@
 using UnityEngine.SceneManagement;
 using System.Collections;
 
-namespace Menu
+namespace ProjectWitch.Menu
 {
     public class MenuController : MonoBehaviour
     {

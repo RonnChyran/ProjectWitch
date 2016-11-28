@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace PreBattle
+namespace ProjectWitch.PreBattle
 {
     public class PreBattleController : MonoBehaviour
     {

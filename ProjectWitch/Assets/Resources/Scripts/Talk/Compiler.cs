@@ -10,13 +10,13 @@ using System; //Exception
 using System.Text; //Encoding
 using System.Text.RegularExpressions;
 
-using Scenario;
-using Scenario.Pattern;
-using Scenario.Compiler;
-using Scenario.Command;
-using Scenario.WorkSpace;
+using ProjectWitch.Talk;
+using ProjectWitch.Talk.Pattern;
+using ProjectWitch.Talk.Compiler;
+using ProjectWitch.Talk.Command;
+using ProjectWitch.Talk.WorkSpace;
 
-namespace Scenario.Compiler
+namespace ProjectWitch.Talk.Compiler
 {
 	public class ScriptCompiler
 	{

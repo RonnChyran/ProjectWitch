@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace Menu
+namespace ProjectWitch.Menu
 {
     public class TopMenu : MonoBehaviour
     {

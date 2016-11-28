@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 
-namespace Field
+namespace ProjectWitch.Field
 {
     public class TimeCounter : MonoBehaviour
     {

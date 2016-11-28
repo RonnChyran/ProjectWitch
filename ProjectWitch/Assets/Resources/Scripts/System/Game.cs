@@ -4,457 +4,459 @@ using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using System;
 
-using GameData;
 
-public class Game : MonoBehaviour
+namespace ProjectWitch
 {
-    #region 定数
-
-    //シーン名
-    private const string cSceneName_Title       = "Title";
-    private const string cSceneName_Battle      = "Battle";
-    private const string cSceneName_PreBattle   = "PreBattle";
-    private const string cSceneName_Field       = "Field";
-    private const string cSceneName_Menu        = "Menu";
-    private const string cSceneName_Save        = "Save";
-    private const string cSceneName_Load        = "Load";
-    private const string cSceneName_Talk        = "Talk";
-    private const string cSceneName_Opening     = "Opening";
-    private const string cSceneName_Ending      = "Ending";
-
-    //読み取り専用プロパティ
-    public string SceneName_Title { get { return cSceneName_Title; } private set { } }
-    public string SceneName_Battle { get { return cSceneName_Battle; } private set { } }
-    public string SceneName_PreBattle { get { return cSceneName_PreBattle; } private set { } }
-    public string SceneName_Field { get { return cSceneName_Field; } private set { } }
-    public string SceneName_Menu { get { return cSceneName_Menu; } private set { } }
-    public string SceneName_Save { get { return cSceneName_Save; } private set { } }
-    public string SceneName_Load { get { return cSceneName_Load; } private set { } }
-    public string SceneName_Talk { get { return cSceneName_Talk; } private set { } }
-    public string SceneName_Opening { get { return cSceneName_Opening; } private set { } }
-    public string SceneName_Ending { get { return cSceneName_Ending; } private set { } }
-
-    //毎ターンのマナ回復率
-    private float mManaRecoveryRate = 0.1f; //10%
-    //毎ターンのHP回復率
-    private float mHPRecoveryRate = 0.2f; //20%
-
-    #endregion
-
-    #region 外部システム
-
-    //サウンドマネージャ
-    [SerializeField]
-    private SoundManager mSoundManager = null;
-    public SoundManager SoundManager { get { return mSoundManager; } private set { } }
-
-    //インゲームデバッグ出力
-    [SerializeField]
-    private InGameConsole mDebugMessage = null;
-    public InGameConsole DebugMessage { get { return mDebugMessage; } private set { } }
-
-    //ローディング画面
-    [SerializeField]
-    private GameObject mNowLoadingPrefab = null;
-
-    #endregion
-
-    #region ゲームデータ関連
-
-    //プレイヤーのデータ
-    //ユニットデータ
-    public List<UnitDataFormat> UnitData { get; set; }
-    //スキルデータ
-    public List<SkillDataFormat> SkillData { get; set; }
-    //所持マナ
-    public int PlayerMana { get; set; }
-
-    //環境のデータ
-    //現在のターン数
-    public int CurrentTurn { get; set; }
-    //現在の時間数 0:朝 1:昼 2:夜 3~:敵ターン
-    public int CurrentTime { get; set; }
-    //土地データ
-    public List<AreaDataFormat> AreaData { get; set; }
-    //領地データ
-    public List<TerritoryDataFormat> TerritoryData { get; set; }
-    //グループデータ
-    public List<GroupDataFormat> GroupData { get; set; }
-    //フィールドのBGM
-    public string FieldBGM { get; set; }
-    //通常バトルのBGM
-    public string BattleBGM { get; set; }
-
-    //その他データ
-    //システム変数
-    public VirtualMemory SystemMemory { get; set; }
-    //コンフィグ
-    public ConfigDataFormat Config { get; set; }
-    //AIデータ
-    public List<AIDataFormat> AIData { get; set; }
-    //装備データ
-    public List<EquipmentDataFormat> EquipmentData { get; set; }
-    //カードデータ
-    public List<CardDataFormat> CardData { get; set; }
-    //イベントデータ
-    public List<EventDataFormat> FieldEventData { get; set; }
-    public List<EventDataFormat> TownEventData { get; set; }
-    public List<EventDataFormat> ArmyEventData { get; set; }
-
-
-
-    #endregion
-
-    #region シーン間データ関連
-
-    public BattleDataIn BattleIn { get; set; }
-    public BattleDataOut BattleOut { get; set; }
-
-    public ScenarioDataIn ScenarioIn { get; set; }
-
-    public int EndingID { get; set; }
-
-    #endregion
-
-    #region 制御変数
-
-    //ダイアログが開いているか
-    public bool IsDialogShowd { get; set; }
-
-    //戦闘中かどうか
-    public bool IsBattle { get; set; }
-
-    //スクリプト実行中かどうか
-    public bool IsTalk { get; set; }
-
-    //編成画面から戦闘に入るかどうか
-    public bool UsePreBattle { get; set; }
-
-    #endregion
-
-    //Singleton
-    private static Game mInst;
-    public static Game GetInstance()
+    public class Game : MonoBehaviour
     {
-        if (mInst == null)
+        #region 定数
+
+        //シーン名
+        private const string cSceneName_Title = "Title";
+        private const string cSceneName_Battle = "Battle";
+        private const string cSceneName_PreBattle = "PreBattle";
+        private const string cSceneName_Field = "Field";
+        private const string cSceneName_Menu = "Menu";
+        private const string cSceneName_Save = "Save";
+        private const string cSceneName_Load = "Load";
+        private const string cSceneName_Talk = "Talk";
+        private const string cSceneName_Opening = "Opening";
+        private const string cSceneName_Ending = "Ending";
+
+        //読み取り専用プロパティ
+        public string SceneName_Title { get { return cSceneName_Title; } private set { } }
+        public string SceneName_Battle { get { return cSceneName_Battle; } private set { } }
+        public string SceneName_PreBattle { get { return cSceneName_PreBattle; } private set { } }
+        public string SceneName_Field { get { return cSceneName_Field; } private set { } }
+        public string SceneName_Menu { get { return cSceneName_Menu; } private set { } }
+        public string SceneName_Save { get { return cSceneName_Save; } private set { } }
+        public string SceneName_Load { get { return cSceneName_Load; } private set { } }
+        public string SceneName_Talk { get { return cSceneName_Talk; } private set { } }
+        public string SceneName_Opening { get { return cSceneName_Opening; } private set { } }
+        public string SceneName_Ending { get { return cSceneName_Ending; } private set { } }
+
+        //毎ターンのマナ回復率
+        private float mManaRecoveryRate = 0.1f; //10%
+                                                //毎ターンのHP回復率
+        private float mHPRecoveryRate = 0.2f; //20%
+
+        #endregion
+
+        #region 外部システム
+
+        //サウンドマネージャ
+        [SerializeField]
+        private SoundManager mSoundManager = null;
+        public SoundManager SoundManager { get { return mSoundManager; } private set { } }
+
+        //インゲームデバッグ出力
+        [SerializeField]
+        private InGameConsole mDebugMessage = null;
+        public InGameConsole DebugMessage { get { return mDebugMessage; } private set { } }
+
+        //ローディング画面
+        [SerializeField]
+        private GameObject mNowLoadingPrefab = null;
+
+        #endregion
+
+        #region ゲームデータ関連
+
+        //プレイヤーのデータ
+        //ユニットデータ
+        public List<UnitDataFormat> UnitData { get; set; }
+        //スキルデータ
+        public List<SkillDataFormat> SkillData { get; set; }
+        //所持マナ
+        public int PlayerMana { get; set; }
+
+        //環境のデータ
+        //現在のターン数
+        public int CurrentTurn { get; set; }
+        //現在の時間数 0:朝 1:昼 2:夜 3~:敵ターン
+        public int CurrentTime { get; set; }
+        //土地データ
+        public List<AreaDataFormat> AreaData { get; set; }
+        //領地データ
+        public List<TerritoryDataFormat> TerritoryData { get; set; }
+        //グループデータ
+        public List<GroupDataFormat> GroupData { get; set; }
+        //フィールドのBGM
+        public string FieldBGM { get; set; }
+        //通常バトルのBGM
+        public string BattleBGM { get; set; }
+
+        //その他データ
+        //システム変数
+        public VirtualMemory SystemMemory { get; set; }
+        //コンフィグ
+        public ConfigDataFormat Config { get; set; }
+        //AIデータ
+        public List<AIDataFormat> AIData { get; set; }
+        //装備データ
+        public List<EquipmentDataFormat> EquipmentData { get; set; }
+        //カードデータ
+        public List<CardDataFormat> CardData { get; set; }
+        //イベントデータ
+        public List<EventDataFormat> FieldEventData { get; set; }
+        public List<EventDataFormat> TownEventData { get; set; }
+        public List<EventDataFormat> ArmyEventData { get; set; }
+
+
+
+        #endregion
+
+        #region シーン間データ関連
+
+        public BattleDataIn BattleIn { get; set; }
+        public BattleDataOut BattleOut { get; set; }
+
+        public ScenarioDataIn ScenarioIn { get; set; }
+
+        public int EndingID { get; set; }
+
+        #endregion
+
+        #region 制御変数
+
+        //ダイアログが開いているか
+        public bool IsDialogShowd { get; set; }
+
+        //戦闘中かどうか
+        public bool IsBattle { get; set; }
+
+        //スクリプト実行中かどうか
+        public bool IsTalk { get; set; }
+
+        //編成画面から戦闘に入るかどうか
+        public bool UsePreBattle { get; set; }
+
+        #endregion
+
+        //Singleton
+        private static Game mInst;
+        public static Game GetInstance()
         {
-            GameObject gameObject = Resources.Load("Prefabs/System/Game") as GameObject;
-            mInst = Instantiate(gameObject).GetComponent<Game>();
+            if (mInst == null)
+            {
+                GameObject gameObject = Resources.Load("Prefabs/System/Game") as GameObject;
+                mInst = Instantiate(gameObject).GetComponent<Game>();
+            }
+            return mInst;
         }
-        return mInst;
-    }
-    void Awake()
-    {
-        DontDestroyOnLoad(this.gameObject);
-
-        if (mInst == null)
+        void Awake()
         {
-            this.Setup();
-            mInst = this;
+            DontDestroyOnLoad(this.gameObject);
+
+            if (mInst == null)
+            {
+                this.Setup();
+                mInst = this;
+            }
+            else if (mInst != this)
+            {
+                Destroy(this.gameObject);
+            }
         }
-        else if (mInst != this)
+
+        //初期化処理
+        public void Setup()
         {
-            Destroy(this.gameObject);
+            //制御変数初期化
+            IsDialogShowd = false;
+            IsBattle = false;
+            IsTalk = false;
+            UsePreBattle = true;
+
+            try
+            {
+
+                //データ系の初期化
+                UnitData = new List<UnitDataFormat>();
+                SkillData = new List<SkillDataFormat>();
+                PlayerMana = 10000;
+
+                CurrentTime = 0; //朝から
+                CurrentTurn = 1;
+                FieldBGM = "002_alice1";
+                BattleBGM = "004_battle1";
+                AreaData = new List<AreaDataFormat>();
+                TerritoryData = new List<TerritoryDataFormat>();
+                GroupData = new List<GroupDataFormat>();
+
+                SystemMemory = new VirtualMemory();
+                SystemMemory[0] = "0";
+                Config = new ConfigDataFormat();
+                AIData = new List<AIDataFormat>();
+                EquipmentData = new List<EquipmentDataFormat>();
+                CardData = new List<CardDataFormat>();
+                FieldEventData = new List<EventDataFormat>();
+                TownEventData = new List<EventDataFormat>();
+                ArmyEventData = new List<EventDataFormat>();
+
+                //シーン間データの初期化
+                BattleIn = new BattleDataIn();
+                BattleOut = new BattleDataOut();
+                ScenarioIn = new ScenarioDataIn();
+
+                //あとセーブデータ読み込みなど
+
+            }
+            catch (InvalidCastException)
+            {
+                Debug.LogError("キャストミスです");
+                return;
+            }
+            catch (OverflowException)
+            {
+                Debug.LogError("データがオーバーフローしました");
+                return;
+            }
+
+            FirstLoad();
         }
-    }
 
-    //初期化処理
-    public void Setup()
-    {
-        //制御変数初期化
-        IsDialogShowd = false;
-        IsBattle = false;
-        IsTalk = false;
-        UsePreBattle = true;
 
-        try
+
+        //ダイアログを表示
+        public void ShowDialog(string caption, string message)
         {
+            if (IsDialogShowd) return;
 
-            //データ系の初期化
-            UnitData = new List<UnitDataFormat>();
-            SkillData = new List<SkillDataFormat>();
-            PlayerMana = 10000;
+            GameObject prefab = (GameObject)Resources.Load("Prefabs/UI/dialog");
+            if (!prefab)
+                Debug.Log("ダイアログのプレハブが見つかりません");
 
-            CurrentTime = 0; //朝から
-            CurrentTurn = 1;
-            FieldBGM = "002_alice1";
-            BattleBGM = "004_battle1";
-            AreaData = new List<AreaDataFormat>();
-            TerritoryData = new List<TerritoryDataFormat>();
-            GroupData = new List<GroupDataFormat>();
+            //インスタンス化
+            var inst = Instantiate(prefab);
+            inst.GetComponent<DialogWindow>().Caption = caption;
+            inst.GetComponent<DialogWindow>().Text = message;
 
-            SystemMemory = new VirtualMemory();
-            SystemMemory[0] = "0";
-            Config = new ConfigDataFormat();
-            AIData = new List<AIDataFormat>();
-            EquipmentData = new List<EquipmentDataFormat>();
-            CardData = new List<CardDataFormat>();
-            FieldEventData = new List<EventDataFormat>();
-            TownEventData = new List<EventDataFormat>();
-            ArmyEventData = new List<EventDataFormat>();
-
-            //シーン間データの初期化
-            BattleIn = new BattleDataIn();
-            BattleOut = new BattleDataOut();
-            ScenarioIn = new ScenarioDataIn();
-
-            //あとセーブデータ読み込みなど
+            //ダイアログ表示
+            IsDialogShowd = true;
 
         }
-        catch(InvalidCastException)
-        {
-            Debug.LogError("キャストミスです");
-            return;
-        }
-        catch(OverflowException)
-        {
-            Debug.LogError("データがオーバーフローしました");
-            return;
-        }
-        
-        FirstLoad();
-    }
 
-
-
-    //ダイアログを表示
-    public void ShowDialog(string caption, string message)
-    {
-        if (IsDialogShowd) return;
-
-        GameObject prefab = (GameObject)Resources.Load("Prefabs/UI/dialog");
-        if (!prefab)
-            Debug.Log("ダイアログのプレハブが見つかりません");
-
-        //インスタンス化
-        var inst = Instantiate(prefab);
-        inst.GetComponent<DialogWindow>().Caption = caption;
-        inst.GetComponent<DialogWindow>().Text = message;
-
-        //ダイアログ表示
-        IsDialogShowd = true;
-
-    }
-
-    //タイトルへ戻る
-    public IEnumerator CallTitle()
-    {
-        ShowNowLoading();
-        yield return null;
-
-        yield return SceneManager.LoadSceneAsync(cSceneName_Title);
-
-        HideNowLoading();
-    }
-
-    //エンディングを呼び出す
-    public IEnumerator CallEnding(int id)
-    {
-        ShowNowLoading();
-        yield return null;
-
-        EndingID = id;
-        SceneManager.LoadScene(cSceneName_Ending);
-    }
-
-    //フィールドの開始
-    public IEnumerator CallField()
-    {
-        ShowNowLoading();
-        yield return null;
-
-        SceneManager.LoadSceneAsync(cSceneName_Field);
-
-        HideNowLoading();
-        yield return null;
-    }
-
-    //メニューの呼び出し
-    public IEnumerator CallMenu()
-    {
-        SceneManager.LoadSceneAsync(cSceneName_Menu, LoadSceneMode.Additive);
-
-        yield return null;
-    }
-
-    //戦闘の開始
-    public IEnumerator CallPreBattle()
-    {
-
-        if (UsePreBattle)
+        //タイトルへ戻る
+        public IEnumerator CallTitle()
         {
             ShowNowLoading();
             yield return null;
 
-            yield return SceneManager.LoadSceneAsync(cSceneName_PreBattle,LoadSceneMode.Additive);
+            yield return SceneManager.LoadSceneAsync(cSceneName_Title);
+
+            HideNowLoading();
         }
-        else
+
+        //エンディングを呼び出す
+        public IEnumerator CallEnding(int id)
         {
-            //戦闘準備画面を出さず直接戦闘
-            UsePreBattle = true;
-            yield return StartCoroutine(CallBattle());
+            ShowNowLoading();
+            yield return null;
+
+            EndingID = id;
+            SceneManager.LoadScene(cSceneName_Ending);
         }
-    }
 
-    public IEnumerator CallBattle()
-    {
-        ShowNowLoading();
-        yield return null;
-
-        //戦闘情報の格納
-        //var time = (CurrentTime <= 2) ? CurrentTime : 2;
-        //BattleIn.TimeOfDay = time;
-        
-        BattleIn.TimeOfDay = CurrentTime;
-
-        SceneManager.UnloadScene(cSceneName_PreBattle);
-        yield return SceneManager.LoadSceneAsync(cSceneName_Battle,LoadSceneMode.Additive);
-    }
-
-    //スクリプトの開始
-    public void CallScript(EventDataFormat e)
-    {
-        ScenarioIn.FileName = e.FileName;
-
-        ScenarioIn.NextA = e.NextA;
-        ScenarioIn.NextB = e.NextB;
-
-        IsTalk = true;
-        SceneManager.LoadScene(cSceneName_Talk, LoadSceneMode.Additive);
-
-        HideNowLoading();
-    }
-
-    //セーブ画面を呼び出す
-    public void CallSave()
-    {
-        SceneManager.LoadScene(cSceneName_Save);
-    }
-
-    //ロード画面を呼び出す
-    public void CallLoad()
-    {
-        ShowDialog("じっそうしてないよ！", "");
-        //SceneManager.LoadScene(cSceneName_Load);
-    }
-
-    //ローディング画面を表示
-    public void ShowNowLoading()
-    {
-        if (mNowLoadingPrefab)
-            mNowLoadingPrefab.SetActive(true);
-    }
-
-    //ローディング画面を非表示
-    public void HideNowLoading()
-    {
-        if (mNowLoadingPrefab)
-            mNowLoadingPrefab.SetActive(false);
-    }
-
-    //オートセーブする
-    public void AutoSave()
-    {
-        Save(0); //0スロットはオートセーブ用スロット
-    }
-
-    //現在の状態をセーブする
-    private void Save(int slot)
-    {
-        ShowDialog("save", "セーブ機能は実装されていません");
-    }
-
-    //スロット番号のセーブデータからデータを読み込む
-    private void Load(int slot)
-    {
-        ShowDialog("load", "ロード機能は実装されていません");
-    }
-
-    //タイトルで初めからを選択したときの初回ロード（既存データの読み出し
-    void FirstLoad()
-    {
-        //ユニットデータの読み出し
-        UnitData = DataLoader.LoadUnitData(GamePath.Data + "unit_data");
-
-        //スキルデータの読み出し
-        SkillData = DataLoader.LoadSkillData(GamePath.Data + "skill_data");
-
-        //地点データの読み出し
-        AreaData = DataLoader.LoadAreaData(GamePath.Data + "area_data");
-
-        //領地データの読み出し
-        TerritoryData = DataLoader.LoadTerritoryData(GamePath.Data + "territory_data");
-
-        //グループデータの読み出し
-        GroupData = DataLoader.LoadGroupData(GamePath.Data + "group_data");
-
-        //AI
-        AIData = DataLoader.LoadAIData(GamePath.Data + "ai_data");
-
-        //装備
-        EquipmentData = DataLoader.LoadEquipmentData(GamePath.Data + "equipment_data");
-
-        //カード
-        CardData = DataLoader.LoadCardData(GamePath.Data + "card_data");
-
-        //イベントデータの読み出し
-        ArmyEventData =     DataLoader.LoadEventData(GamePath.Data + "event_data_army");
-        FieldEventData =    DataLoader.LoadEventData(GamePath.Data + "event_data_field");
-        TownEventData =     DataLoader.LoadEventData(GamePath.Data + "event_data_town");
-
-    }
-
-
-    //各コマンド
-
-    //地点の領主を変更
-    //targetArea:変更する地点ＩＤ
-    //newOwner:新しい領主ID
-    public void ChangeAreaOwner(int targetArea, int newOwner)
-    {
-        //領地データのエリア番号を移し替える
-        var oldOwner = AreaData[targetArea].Owner;
-        TerritoryData[oldOwner].AreaList.Remove(targetArea);
-        TerritoryData[newOwner].AreaList.Add(targetArea);
-
-        //地点の領主番号を更新
-        AreaData[targetArea].Owner = newOwner;
-
-    }
-
-    //エリアのマナを回復量だけ回復
-    public void RecoverMana()
-    {
-        foreach(var area in AreaData)
+        //フィールドの開始
+        public IEnumerator CallField()
         {
-            //最大マナの10%回復
-            area.Mana += (int)((float)area.MaxMana * mManaRecoveryRate);
-            if (area.Mana > area.MaxMana) area.Mana = area.MaxMana;
-        }
-    }
+            ShowNowLoading();
+            yield return null;
 
-    //ユニットを回復量だけ回復
-    public void RecoverUnit()
-    {
-        foreach(var unit in UnitData)
+            SceneManager.LoadSceneAsync(cSceneName_Field);
+
+            HideNowLoading();
+            yield return null;
+        }
+
+        //メニューの呼び出し
+        public IEnumerator CallMenu()
         {
-            //死んでいたらスルー
-            if (!unit.IsAlive) continue;
+            SceneManager.LoadSceneAsync(cSceneName_Menu, LoadSceneMode.Additive);
 
-            //ユニットの回復量分兵士数を回復
-            //HPは固定比率回復
+            yield return null;
+        }
 
-            //HP回復
-            unit.HP += (int)((float)unit.MaxHP * mHPRecoveryRate);
-            if (unit.HP > unit.MaxHP) unit.HP = unit.MaxHP;
+        //戦闘の開始
+        public IEnumerator CallPreBattle()
+        {
 
-            //兵数回復
-            unit.SoldierNum += unit.Curative;
-            if (unit.SoldierNum > unit.MaxSoldierNum) unit.SoldierNum = unit.MaxSoldierNum;
+            if (UsePreBattle)
+            {
+                ShowNowLoading();
+                yield return null;
+
+                yield return SceneManager.LoadSceneAsync(cSceneName_PreBattle, LoadSceneMode.Additive);
+            }
+            else
+            {
+                //戦闘準備画面を出さず直接戦闘
+                UsePreBattle = true;
+                yield return StartCoroutine(CallBattle());
+            }
+        }
+
+        public IEnumerator CallBattle()
+        {
+            ShowNowLoading();
+            yield return null;
+
+            //戦闘情報の格納
+            //var time = (CurrentTime <= 2) ? CurrentTime : 2;
+            //BattleIn.TimeOfDay = time;
+
+            BattleIn.TimeOfDay = CurrentTime;
+
+            SceneManager.UnloadScene(cSceneName_PreBattle);
+            yield return SceneManager.LoadSceneAsync(cSceneName_Battle, LoadSceneMode.Additive);
+        }
+
+        //スクリプトの開始
+        public void CallScript(EventDataFormat e)
+        {
+            ScenarioIn.FileName = e.FileName;
+
+            ScenarioIn.NextA = e.NextA;
+            ScenarioIn.NextB = e.NextB;
+
+            IsTalk = true;
+            SceneManager.LoadScene(cSceneName_Talk, LoadSceneMode.Additive);
+
+            HideNowLoading();
+        }
+
+        //セーブ画面を呼び出す
+        public void CallSave()
+        {
+            SceneManager.LoadScene(cSceneName_Save);
+        }
+
+        //ロード画面を呼び出す
+        public void CallLoad()
+        {
+            ShowDialog("じっそうしてないよ！", "");
+            //SceneManager.LoadScene(cSceneName_Load);
+        }
+
+        //ローディング画面を表示
+        public void ShowNowLoading()
+        {
+            if (mNowLoadingPrefab)
+                mNowLoadingPrefab.SetActive(true);
+        }
+
+        //ローディング画面を非表示
+        public void HideNowLoading()
+        {
+            if (mNowLoadingPrefab)
+                mNowLoadingPrefab.SetActive(false);
+        }
+
+        //オートセーブする
+        public void AutoSave()
+        {
+            Save(0); //0スロットはオートセーブ用スロット
+        }
+
+        //現在の状態をセーブする
+        private void Save(int slot)
+        {
+            ShowDialog("save", "セーブ機能は実装されていません");
+        }
+
+        //スロット番号のセーブデータからデータを読み込む
+        private void Load(int slot)
+        {
+            ShowDialog("load", "ロード機能は実装されていません");
+        }
+
+        //タイトルで初めからを選択したときの初回ロード（既存データの読み出し
+        void FirstLoad()
+        {
+            //ユニットデータの読み出し
+            UnitData = DataLoader.LoadUnitData(GamePath.Data + "unit_data");
+
+            //スキルデータの読み出し
+            SkillData = DataLoader.LoadSkillData(GamePath.Data + "skill_data");
+
+            //地点データの読み出し
+            AreaData = DataLoader.LoadAreaData(GamePath.Data + "area_data");
+
+            //領地データの読み出し
+            TerritoryData = DataLoader.LoadTerritoryData(GamePath.Data + "territory_data");
+
+            //グループデータの読み出し
+            GroupData = DataLoader.LoadGroupData(GamePath.Data + "group_data");
+
+            //AI
+            AIData = DataLoader.LoadAIData(GamePath.Data + "ai_data");
+
+            //装備
+            EquipmentData = DataLoader.LoadEquipmentData(GamePath.Data + "equipment_data");
+
+            //カード
+            CardData = DataLoader.LoadCardData(GamePath.Data + "card_data");
+
+            //イベントデータの読み出し
+            ArmyEventData = DataLoader.LoadEventData(GamePath.Data + "event_data_army");
+            FieldEventData = DataLoader.LoadEventData(GamePath.Data + "event_data_field");
+            TownEventData = DataLoader.LoadEventData(GamePath.Data + "event_data_town");
 
         }
+
+
+        //各コマンド
+
+        //地点の領主を変更
+        //targetArea:変更する地点ＩＤ
+        //newOwner:新しい領主ID
+        public void ChangeAreaOwner(int targetArea, int newOwner)
+        {
+            //領地データのエリア番号を移し替える
+            var oldOwner = AreaData[targetArea].Owner;
+            TerritoryData[oldOwner].AreaList.Remove(targetArea);
+            TerritoryData[newOwner].AreaList.Add(targetArea);
+
+            //地点の領主番号を更新
+            AreaData[targetArea].Owner = newOwner;
+
+        }
+
+        //エリアのマナを回復量だけ回復
+        public void RecoverMana()
+        {
+            foreach (var area in AreaData)
+            {
+                //最大マナの10%回復
+                area.Mana += (int)((float)area.MaxMana * mManaRecoveryRate);
+                if (area.Mana > area.MaxMana) area.Mana = area.MaxMana;
+            }
+        }
+
+        //ユニットを回復量だけ回復
+        public void RecoverUnit()
+        {
+            foreach (var unit in UnitData)
+            {
+                //死んでいたらスルー
+                if (!unit.IsAlive) continue;
+
+                //ユニットの回復量分兵士数を回復
+                //HPは固定比率回復
+
+                //HP回復
+                unit.HP += (int)((float)unit.MaxHP * mHPRecoveryRate);
+                if (unit.HP > unit.MaxHP) unit.HP = unit.MaxHP;
+
+                //兵数回復
+                unit.SoldierNum += unit.Curative;
+                if (unit.SoldierNum > unit.MaxSoldierNum) unit.SoldierNum = unit.MaxSoldierNum;
+
+            }
+        }
+
+
+
     }
-    
-
-
 }

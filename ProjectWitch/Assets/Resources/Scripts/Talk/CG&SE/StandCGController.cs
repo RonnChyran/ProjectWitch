@@ -10,7 +10,7 @@ using System; //Exception
 using System.Text.RegularExpressions;
 using UnityEngine.SceneManagement;
 
-namespace Scenario
+namespace ProjectWitch.Talk
 {
     class StandCGController : MonoBehaviour
     {

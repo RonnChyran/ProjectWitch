@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 using System.Collections;
 
-namespace Menu
+namespace ProjectWitch.Menu
 {
     public class SoldierEditWindow : MonoBehaviour
     {

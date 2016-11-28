@@ -9,12 +9,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-using Scenario.Pattern;
-using Scenario.Command;
-using Scenario.Compiler;
+using ProjectWitch.Talk.Pattern;
+using ProjectWitch.Talk.Command;
+using ProjectWitch.Talk.Compiler;
 
 
-namespace Scenario.Compiler
+namespace ProjectWitch.Talk.Compiler
 {
 	//構文解析器
 	public class StructureAnalyzer

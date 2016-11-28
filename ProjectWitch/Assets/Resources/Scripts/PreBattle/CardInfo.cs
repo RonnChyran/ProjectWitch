@@ -2,9 +2,9 @@
 using UnityEngine.UI;
 using System.Collections;
 
-using GameData;
 
-namespace PreBattle
+
+namespace ProjectWitch.PreBattle
 {
     public class CardInfo : MonoBehaviour
     {

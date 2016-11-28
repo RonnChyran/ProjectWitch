@@ -9,11 +9,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-using Scenario.Compiler;
-using Scenario.Pattern;
-using Scenario.Command;
+using ProjectWitch.Talk.Compiler;
+using ProjectWitch.Talk.Pattern;
+using ProjectWitch.Talk.Command;
 
-namespace Scenario.Pattern
+namespace ProjectWitch.Talk.Pattern
 {
 	//タグのフォーマット
 	abstract public class Pattern_TagFormat : Pattern_CreateCommand

@@ -10,11 +10,11 @@ using System; //Exception
 using System.Text.RegularExpressions;
 using UnityEngine.SceneManagement;
 
-using Scenario.Pattern;
-using Scenario.Command;
-using Scenario.WorkSpace;
+using ProjectWitch.Talk.Pattern;
+using ProjectWitch.Talk.Command;
+using ProjectWitch.Talk.WorkSpace;
 
-namespace Scenario.Compiler{
+namespace ProjectWitch.Talk.Compiler{
 	//これをパターンに追加するとテキスト全般が追加されるよ
 	public class CreateCommandsOfText : Pattern_Component
 	{

@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using System;
 
-namespace Menu
+namespace ProjectWitch.Menu
 {
     public class LvUpWindow : MonoBehaviour
     {
@@ -43,7 +43,7 @@ namespace Menu
         public StatusWindow StatusWindow { get; set; }
 
         //内部変数
-        private GameData.UnitDataFormat mNewUnit = null;
+        private UnitDataFormat mNewUnit = null;
 
         // Use this for initialization
         void Start()

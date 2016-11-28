@@ -8,13 +8,13 @@ using System.Collections.Generic;
 using System; //Exception
 using System.Globalization;
 
-using Scenario;
-using Scenario.Pattern;
-using Scenario.Compiler;
-using Scenario.Command;
-using Scenario.WorkSpace;
+using ProjectWitch.Talk;
+using ProjectWitch.Talk.Pattern;
+using ProjectWitch.Talk.Compiler;
+using ProjectWitch.Talk.Command;
+using ProjectWitch.Talk.WorkSpace;
 
-namespace Scenario.Command
+namespace ProjectWitch.Talk.Command
 {
 	//仮想マシンコマンドの抽象クラス
 	abstract public class CommandFormat
@@ -58,7 +58,7 @@ namespace Scenario.Command
 	}
 }
 
-namespace Scenario.WorkSpace
+namespace ProjectWitch.Talk.WorkSpace
 {
 	//!IMPORTANT!
 	//拡張コマンド:操作の委譲をするやつ

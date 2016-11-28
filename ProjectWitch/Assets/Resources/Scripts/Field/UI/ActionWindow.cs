@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace Field
+namespace ProjectWitch.Field
 {
     public class ActionWindow : MonoBehaviour {
 

@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 
-namespace Menu
+namespace ProjectWitch.Menu
 {
     public class StatusWindow : MonoBehaviour
     {
@@ -183,7 +183,7 @@ namespace Menu
             }
         }
 
-        private void SetRank(GameData.UnitDataFormat unit)
+        private void SetRank(UnitDataFormat unit)
         {
             var power = unit.GPAtk100 + unit.GMAtk100;
 

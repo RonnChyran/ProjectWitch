@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Battle
+namespace ProjectWitch.Battle
 {
 	class BattleRandom
 	{

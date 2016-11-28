@@ -8,15 +8,14 @@ using UnityEngine;
 using System.Collections.Generic;
 using System;
 
-using GameData;
-using Scenario.Compiler;
-using Scenario.Command;
-using Scenario.WorkSpace;
+using ProjectWitch.Talk.Compiler;
+using ProjectWitch.Talk.Command;
+using ProjectWitch.Talk.WorkSpace;
 
-using Extention;
+using ProjectWitch.Extention;
 using System.Linq;
 
-namespace Scenario.WorkSpace
+namespace ProjectWitch.Talk.WorkSpace
 {
 	//シナリオ操作時のワークスペース
 	public class GameWorkSpace : MonoBehaviour

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
-namespace Battle
+namespace ProjectWitch.Battle
 {
 	// 行動順、およびその表示を管理するクラス
 	public class OrderController : MonoBehaviour

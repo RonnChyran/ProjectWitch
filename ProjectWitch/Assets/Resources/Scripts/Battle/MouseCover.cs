@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.EventSystems;
 
-namespace Battle
+namespace ProjectWitch.Battle
 {
 	public class MouseCover : MonoBehaviour, IPointerEnterHandler
 	{

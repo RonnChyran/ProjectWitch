@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using System.Collections.Generic;
 
-namespace Battle
+namespace ProjectWitch.Battle
 {
     public class DebugText : MonoBehaviour
     {

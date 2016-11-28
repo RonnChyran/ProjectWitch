@@ -7,11 +7,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-using Scenario.Compiler;
-using Scenario.Command;
-using Scenario.WorkSpace;
+using ProjectWitch.Talk.Compiler;
+using ProjectWitch.Talk.Command;
+using ProjectWitch.Talk.WorkSpace;
 
-namespace Scenario.WorkSpace
+namespace ProjectWitch.Talk.WorkSpace
 {
 	//シナリオ操作時のワークスペース
 	public class ScenarioWorkSpace : MonoBehaviour

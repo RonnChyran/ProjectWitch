@@ -8,11 +8,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-using Scenario.Pattern;
-using Scenario.Command;
-using Scenario.WorkSpace;
+using ProjectWitch.Talk.Pattern;
+using ProjectWitch.Talk.Command;
+using ProjectWitch.Talk.WorkSpace;
 
-namespace Scenario.Compiler{
+namespace ProjectWitch.Talk.Compiler{
 	//これをパターンに追加すると演出全般が追加されるよ
 	public class CreateCommandsOfGraphics : Pattern_Component
 	{

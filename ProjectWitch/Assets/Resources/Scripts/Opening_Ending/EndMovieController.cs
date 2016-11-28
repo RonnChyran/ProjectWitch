@@ -1,25 +1,28 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class EndMovieController : MonoBehaviour
+namespace ProjectWitch
 {
-    void Start()
+    public class EndMovieController : MonoBehaviour
     {
-        var game = Game.GetInstance();
-        game.HideNowLoading();
-    }
-    public void Update()
-    {
-        if(Input.GetButtonDown("Submit"))
+        void Start()
         {
-            End();
+            var game = Game.GetInstance();
+            game.HideNowLoading();
         }
-    }
+        public void Update()
+        {
+            if (Input.GetButtonDown("Submit"))
+            {
+                End();
+            }
+        }
 
-    public void End()
-    {
-        var game = Game.GetInstance();
+        public void End()
+        {
+            var game = Game.GetInstance();
 
-        StartCoroutine(game.CallTitle());
+            StartCoroutine(game.CallTitle());
+        }
     }
 }

@@ -6,10 +6,22 @@ using System.Collections.Generic;
 using System.Linq; //iOSで動かないかも
 
 using UnityEngine;
-using Extention;
+using ProjectWitch.Extention;
 
-namespace GameData
+namespace ProjectWitch
 {
+    //プレイヤーデータ
+    public class PlayerData
+    {
+
+    }
+
+    //システムデータ
+    public class SystemData
+    {
+
+    }
+
     //各種データ構造
 
     #region ゲームデータ系

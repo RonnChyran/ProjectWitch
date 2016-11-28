@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 
-namespace PreBattle
+namespace ProjectWitch.PreBattle
 {
     public class Card : MonoBehaviour
     {
@@ -114,7 +114,7 @@ namespace PreBattle
             CardInfo.Show();
         }
 
-        private void SetRace(GameData.CardDataFormat card)
+        private void SetRace(CardDataFormat card)
         {
             string text = "";
             Color color;
@@ -125,19 +125,19 @@ namespace PreBattle
             //リーダーのステータスから種を判断
             switch (skill.Type)
             {
-                case GameData.SkillDataFormat.SkillType.Damage:
+                case SkillDataFormat.SkillType.Damage:
                     text = "攻撃";
                     color = mRaceColor_Damage;
                     break;
-                case GameData.SkillDataFormat.SkillType.Heal:
+                case SkillDataFormat.SkillType.Heal:
                     text = "回復";
                     color = mRaceColor_Heal;
                     break;
-                case GameData.SkillDataFormat.SkillType.Summon:
+                case SkillDataFormat.SkillType.Summon:
                     text = "召喚";
                     color = mRaceColor_Summon;
                     break;
-                case GameData.SkillDataFormat.SkillType.Random:
+                case SkillDataFormat.SkillType.Random:
                     text = "不明";
                     color = mRaceColor_Random;
                     break;

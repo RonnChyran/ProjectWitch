@@ -3,9 +3,8 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.EventSystems;
-using GameData;
 
-namespace Field
+namespace ProjectWitch.Field
 {
     public class FlagButton : MonoBehaviour
         , IPointerEnterHandler

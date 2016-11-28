@@ -2,7 +2,7 @@
 using System.Collections;
 
 
-namespace Battle
+namespace ProjectWitch.Battle
 {
 	public class PlayMusic : MonoBehaviour
 	{

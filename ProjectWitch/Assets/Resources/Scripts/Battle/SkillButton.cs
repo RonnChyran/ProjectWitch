@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-namespace Battle
+namespace ProjectWitch.Battle
 {
 	// スキルのボタン制御
 	public class SkillButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler

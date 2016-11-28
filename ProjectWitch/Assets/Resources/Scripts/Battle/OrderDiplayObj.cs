@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 
-namespace Battle
+namespace ProjectWitch.Battle
 {
 	// 行動順の表示オブジェクト単体を管理するクラス
 	public class OrderDiplayObj : MonoBehaviour

@@ -1,11 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class EndButton : MonoBehaviour {
-    
-    public void OnClick()
+namespace ProjectWitch
+{
+    public class EndButton : MonoBehaviour
     {
-        Application.Quit();
 
+        public void OnClick()
+        {
+            Application.Quit();
+
+        }
     }
+
 }

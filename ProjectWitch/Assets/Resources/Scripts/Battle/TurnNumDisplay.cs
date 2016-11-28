@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine.UI;
 
-namespace Battle
+namespace ProjectWitch.Battle
 {
 	public class TurnNumDisplay : MonoBehaviour
 	{

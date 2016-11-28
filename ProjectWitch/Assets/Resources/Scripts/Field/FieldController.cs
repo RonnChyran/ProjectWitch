@@ -5,10 +5,10 @@ using System.Collections.Generic;
 using System.Collections;
 using System;
 
-using GameData;
-using Extention;
 
-namespace Field
+using ProjectWitch.Extention;
+
+namespace ProjectWitch.Field
 {
     public class FieldController : MonoBehaviour
     {

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace PreBattle
+namespace ProjectWitch.PreBattle
 {
     public class CardList : MonoBehaviour
     {

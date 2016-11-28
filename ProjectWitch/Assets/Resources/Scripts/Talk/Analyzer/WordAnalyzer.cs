@@ -9,9 +9,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
-using Scenario.Compiler;
+using ProjectWitch.Talk.Compiler;
 
-namespace Scenario.Compiler{
+namespace ProjectWitch.Talk.Compiler{
 	
 	//識別された字句の格納用
 	public class WordWithName{

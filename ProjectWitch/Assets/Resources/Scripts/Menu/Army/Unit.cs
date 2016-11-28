@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 
-namespace Menu
+namespace ProjectWitch.Menu
 {
     public class Unit : MonoBehaviour
     {
@@ -88,7 +88,7 @@ namespace Menu
             StatusWindow.Reset();
         }
 
-        private void SetRace(GameData.UnitDataFormat unit)
+        private void SetRace(UnitDataFormat unit)
         {
             string text = "";
             Color color;
@@ -115,7 +115,7 @@ namespace Menu
             mRace.color = color;
         }
 
-        private void SetSoldierNum(GameData.UnitDataFormat unit)
+        private void SetSoldierNum(UnitDataFormat unit)
         {
             mSoldier.text = unit.SoldierNum.ToString();
 
@@ -139,7 +139,7 @@ namespace Menu
             }
         }
 
-        private void SetHP(GameData.UnitDataFormat unit)
+        private void SetHP(UnitDataFormat unit)
         {
             mHP.text = unit.HP.ToString();
 

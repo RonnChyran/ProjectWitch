@@ -4,9 +4,7 @@ using System.Collections.Generic;
 using System.Collections;
 using UnityEngine.UI;
 
-using GameData;
-
-namespace Field
+namespace ProjectWitch.Field
 {
 
     public class FieldUIController : MonoBehaviour

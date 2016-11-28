@@ -3,22 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-public class ProjectWitchException : Exception
+namespace ProjectWitch
 {
-    public ProjectWitchException()
+    public class ProjectWitchException : Exception
     {
+        public ProjectWitchException()
+        {
 
-    }
+        }
 
-    public ProjectWitchException(string message)
-        : base(message)
-    {
+        public ProjectWitchException(string message)
+            : base(message)
+        {
 
-    }
+        }
 
-    public ProjectWitchException(string message, Exception inner)
-        : base(message, inner)
-    {
+        public ProjectWitchException(string message, Exception inner)
+            : base(message, inner)
+        {
 
+        }
     }
 }
