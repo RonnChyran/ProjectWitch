@@ -257,13 +257,15 @@ namespace ProjectWitch
         //セーブ画面を呼び出す
         public void CallSave()
         {
-            SceneManager.LoadScene(cSceneName_Save);
+            GameData.Save(0);
+            //SceneManager.LoadScene(cSceneName_Save);
         }
 
         //ロード画面を呼び出す
         public void CallLoad()
         {
-            ShowDialog("じっそうしてないよ！", "");
+            GameData.Load(0);
+            //ShowDialog("じっそうしてないよ！", "");
             //SceneManager.LoadScene(cSceneName_Load);
         }
 

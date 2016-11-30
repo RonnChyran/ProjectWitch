@@ -88,7 +88,7 @@ namespace ProjectWitch
                 FieldBGM = "002_alice1";
                 BattleBGM = "004_battle1";
 
-                Memory = new VirtualMemory(70000);
+                Memory = new VirtualMemory(20000);
                 Memory[0] = "0";
 
             }
@@ -193,13 +193,22 @@ namespace ProjectWitch
         //データをシステムファイルに書き出す
         public void Save()
         {
-
+            FileIO.SaveXML(GamePath.SystemDataSaveFilePath, this);
         }
 
         //データをシステムファイルから読み込む
         public void Load()
         {
+            var inst = new SystemData();
+            FileIO.LoadXML(GamePath.SystemDataSaveFilePath, out inst);
+            this.Copy(inst);
+        }
 
+        //コピーメソッド
+        public void Copy(SystemData inst)
+        {
+            Config = inst.Config;
+            Memory = inst.Memory;
         }
     }
 
@@ -391,18 +400,28 @@ namespace ProjectWitch
         public string Comment { get; set; }
 
         //クエリ
+        [System.Xml.Serialization.XmlIgnore]
         public int LeaderPAtk { get { return (int)(LPAtk0 + LPAtk100 / 100.0f * Level); } private set { } } //物理攻撃
+        [System.Xml.Serialization.XmlIgnore]
         public int LeaderMAtk { get { return (int)(LMAtk0 + LMAtk100 / 100.0f * Level); } private set { } } //魔法攻撃
+        [System.Xml.Serialization.XmlIgnore]
         public int LeaderPDef { get { return (int)(LPDef0 + LPDef100 / 100.0f * Level); } private set { } } //物理防御
+        [System.Xml.Serialization.XmlIgnore]
         public int LeaderMDef { get { return (int)(LMDef0 + LMDef100 / 100.0f * Level); } private set { } } //魔法防御
-                                            
+        
+        [System.Xml.Serialization.XmlIgnore]
         public int GroupPAtk { get { return (int)(GPAtk0 + GPAtk100 / 100.0f * Level); } private set { } }  //物理攻撃
+        [System.Xml.Serialization.XmlIgnore]
         public int GroupMAtk { get { return (int)(GMAtk0 + GMAtk100 / 100.0f * Level); } private set { } }  //魔法攻撃
+        [System.Xml.Serialization.XmlIgnore]
         public int GroupPDef { get { return (int)(GPDef0 + GPDef100 / 100.0f * Level); } private set { } }  //物理防御
+        [System.Xml.Serialization.XmlIgnore]
         public int GroupMDef { get { return (int)(GMDef0 + GMDef100 / 100.0f * Level); } private set { } }  //魔法防御
-
+        [System.Xml.Serialization.XmlIgnore]
         public int Leadership { get { return (int) (Lead0 + Lead100 / 100.0f * Level); } private set { } }  //指揮力
+        [System.Xml.Serialization.XmlIgnore]
         public int Curative { get { return (int)(Cur0 + Cur100 / 100.0f * Level); } private set { } }       //回復力
+        [System.Xml.Serialization.XmlIgnore]
         public int Agility { get { return (int)(Agi0 + Agi100 / 100.0f * Level); } private set { } }        //機動力
 
         //死亡状態にする
@@ -431,10 +450,16 @@ namespace ProjectWitch
             Attribute = Enumerable.Repeat<bool>(false, 3).ToList();
         }
 
+        //ID
+        [System.Xml.Serialization.XmlAttribute("id")]
+        public int ID { get; set; }
+
         //名前
+        [System.Xml.Serialization.XmlElement("name")]
         public string Name { get; set; }
 
         //威力
+        [System.Xml.Serialization.XmlElement("power")]
         public int Power { get; set; }
 
         //種類
@@ -453,20 +478,25 @@ namespace ProjectWitch
             StatusOff,      //10:ステータス取り消し
             Random          //11:ランダム
         };
+        [System.Xml.Serialization.XmlElement("type")]
         public SkillType Type { get; set; }
 
         //効果持続時間
+        [System.Xml.Serialization.XmlElement("duration")]
         public int Duration { get; set; }
 
         //ステ種類
         //[0]物功,[1]物防,[2]魔攻,[3]魔防,[4]機動,[5]指揮力,[6]地形補正
+        [System.Xml.Serialization.XmlElement("status")]
         public List<bool> Status { get; set; }
 
         //攻撃属性
         //[0]毒付与、[1]対ホムンクルス, [2]対ゾンビ
+        [System.Xml.Serialization.XmlElement("attribute")]
         public List<bool> Attribute { get; set; }
 
         //召喚用ユニット番号
+        [System.Xml.Serialization.XmlElement("summon_id")]
         public int SummonUnit { get; set; }
 
         //範囲
@@ -475,6 +505,7 @@ namespace ProjectWitch
             All=0,      //0:全員
             Single      //1:単体
         }
+        [System.Xml.Serialization.XmlElement("range")]
         public SkillRange Range { get; set; }
 
         //対象
@@ -488,12 +519,15 @@ namespace ProjectWitch
             EnemyAndPlayer, //5:敵味方両方
         }
         //[0]敵集団、[1]味方集団、[2]自分、[3]敵リーダー、[4]味方リーダー
+        [System.Xml.Serialization.XmlElement("target")]
         public SkillTarget Target { get; set; }
 
         //視覚エフェクト
+        [System.Xml.Serialization.XmlElement("effect_path")]
         public string EffectPath { get; set; }
 
 		//説明
+        [System.Xml.Serialization.XmlElement("description")]
 		public string Description { get; set; }
 
 	}
@@ -502,9 +536,11 @@ namespace ProjectWitch
     public class CardDataFormat
     {
         //ID
+        [System.Xml.Serialization.XmlAttribute("id")]
         public int ID { get; set; }
 
         //名前
+        [System.Xml.Serialization.XmlElement("name")]
         public string Name { get; set; }
 
         //タイミング
@@ -528,21 +564,27 @@ namespace ProjectWitch
             Rand50,             //50%で発動
             Rand20,             //20%で発動
         }
+        [System.Xml.Serialization.XmlElement("timing")]
         public CardTiming Timing { get; set; }
 
         //持続回数 (-1は無限)
+        [System.Xml.Serialization.XmlElement("duration")]
         public int Duration { get; set; }
 
         //スキルID
+        [System.Xml.Serialization.XmlElement("skill_id")]
         public int SkillID { get; set; }
 
         //画像表
+        [System.Xml.Serialization.XmlElement("image_front")]
         public string ImageFront { get; set; }
 
         //画像裏
+        [System.Xml.Serialization.XmlElement("image_back")]
         public string ImageBack { get; set; }
 
         //効果説明
+        [System.Xml.Serialization.XmlElement("description")]
         public string Description { get; set; }
 
     }
@@ -550,11 +592,17 @@ namespace ProjectWitch
     //地形補正データ(倍率指定)
     public class AreaBattleFactor
     { 
+        [System.Xml.Serialization.XmlElement("patk")]
         public float PAtk { get; set; }         //物理攻撃力
+        [System.Xml.Serialization.XmlElement("matk")]
         public float MAtk { get; set; }         //魔法攻撃力
+        [System.Xml.Serialization.XmlElement("pdef")]
         public float PDef { get; set; }         //物理防御力
+        [System.Xml.Serialization.XmlElement("mdef")]
         public float MDef { get; set; }         //魔法防御力
+        [System.Xml.Serialization.XmlElement("leadership")]
         public float Leadership { get; set; }   //指揮力
+        [System.Xml.Serialization.XmlElement("agility")]
         public float Agility { get; set; }      //機動力
     }
 
@@ -570,36 +618,47 @@ namespace ProjectWitch
         }
 
         //地点番号
+        [System.Xml.Serialization.XmlAttribute("id")]
         public int ID { get; set; }
 
         //地点名
+        [System.Xml.Serialization.XmlElement("name")]
         public string Name { get; set; }
 
         //座標
+        [System.Xml.Serialization.XmlElement("position")]
         public Vector2 Position { get; set; }
 
         //地点所有者 (TerritoryDataFormatのリストのインデックス
+        [System.Xml.Serialization.XmlElement("owner")]
         public int Owner { get; set; }
 
         //レベル
+        [System.Xml.Serialization.XmlElement("level")]
         public int Level { get; set; }
 
         //所有マナ
+        [System.Xml.Serialization.XmlElement("mana")]
         public int Mana { get; set; }
 
         //限界マナ
+        [System.Xml.Serialization.XmlElement("maxmana")]
         public int MaxMana { get; set; }
 
         //戦闘時間
+        [System.Xml.Serialization.XmlElement("time")]
         public int Time { get; set; }
 
         //地形補正
+        [System.Xml.Serialization.XmlElement("battle_factor")]
         public AreaBattleFactor BattleFactor { get; set; }
 
         //隣接地点
+        [System.Xml.Serialization.XmlElement("next_area")]
         public List<int> NextArea { get; set; }
 
         //背景プレハブパス
+        [System.Xml.Serialization.XmlElement("bg_name")]
         public string BackgroundName { get; set; }
     }
 
@@ -611,21 +670,27 @@ namespace ProjectWitch
         }
 
         //領主ID
+        [System.Xml.Serialization.XmlAttribute("id")]
         public int ID { get; set; }
 
         //領主名
+        [System.Xml.Serialization.XmlElement("owner_name")]
         public string OwnerName { get; set; }
 
         //領主名（英語）
+        [System.Xml.Serialization.XmlElement("owner_end_name")]
         public string OwnerNameEng { get; set; }
 
         //旗画像名
+        [System.Xml.Serialization.XmlElement("flag_tex_name")]
         public string FlagTexName { get; set; }
 
         //メイン領地
+        [System.Xml.Serialization.XmlElement("main_area")]
         public int MainArea { get; set; }
 
         //所有地点リスト
+        [System.Xml.Serialization.XmlIgnore]
         public List<int> AreaList
         {
             get
@@ -645,15 +710,19 @@ namespace ProjectWitch
         }
 
         //所持グループリスト
+        [System.Xml.Serialization.XmlElement("group_list")]
         public List<int> GroupList { get; set; }
 
         //占領済みフラグの変数番号
+        [System.Xml.Serialization.XmlElement("dead_flag_index")]
         public int DeadFlagIndex { get; set; }
 
         //交戦フラグの変数番号
+        [System.Xml.Serialization.XmlElement("active_flag_index")]
         public int ActiveFlagIndex { get; set; }
 
         //宣戦布告可能フラグの変数番号
+        [System.Xml.Serialization.XmlElement("invationable_flag_index")]
         public int InvationableFlagIndex { get; set; }
 
         //状態
@@ -664,6 +733,7 @@ namespace ProjectWitch
             Active,     //交戦中
             Dead        //占領済み
         }
+        [System.Xml.Serialization.XmlElement("state")]
         private TerritoryState state = TerritoryState.Prepare;
         public TerritoryState State {
             get
@@ -696,6 +766,7 @@ namespace ProjectWitch
             private set { } }
 
         //そのターンの行動数(アクションパネルの表示用
+        [System.Xml.Serialization.XmlElement("action_count")]
         public int ActionCount { get; set; }
 
         //---------
@@ -720,9 +791,11 @@ namespace ProjectWitch
     public class GroupDataFormat
     {
         //ID
+        [System.Xml.Serialization.XmlAttribute("id")]
         public int ID { get; set; }
 
         //グループ名
+        [System.Xml.Serialization.XmlElement("name")]
         public string Name { get; set; }
 
         //戦闘タイプ列挙
@@ -737,12 +810,15 @@ namespace ProjectWitch
         }
 
         //侵攻タイプ
+        [System.Xml.Serialization.XmlElement("domination_type")]
         public BattleType DominationType { get; set; }
 
         //防衛タイプ
+        [System.Xml.Serialization.XmlElement("defense_type")]
         public BattleType DefenseType { get; set; }
 
         //防衛優先度
+        [System.Xml.Serialization.XmlElement("defense_priority")]
         public int DefensePriority { get; set; }
 
         //リストの選択方法列挙
@@ -754,21 +830,27 @@ namespace ProjectWitch
         }
 
         //ユニットの選択方法
+        [System.Xml.Serialization.XmlElement("unit_choise_method")]
         public ChoiseMethod UnitChoiseMethod { get; set; }
 
         //カードの選択方法
+        [System.Xml.Serialization.XmlElement("card_choise_method")]
         public ChoiseMethod CardChoiseMethod { get; set; }
 
         //侵攻開始フラグ
+        [System.Xml.Serialization.XmlElement("begin_domination_flag_index")]
         public int BeginDominationFlagIndex { get; set; }
 
         //侵攻ルート
+        [System.Xml.Serialization.XmlElement("domination_route")]
         public List<int> DominationRoute { get; set; }
 
         //ユニットリスト
+        [System.Xml.Serialization.XmlElement("unit_list")]
         public List<int> UnitList { get; set; }
 
         //カードリスト
+        [System.Xml.Serialization.XmlElement("card_list")]
         public List<int> CardList { get; set; }
 
         //状態
@@ -779,6 +861,7 @@ namespace ProjectWitch
             Dead    //死亡
         }
         private GroupState state = GroupState.Ready;
+        [System.Xml.Serialization.XmlIgnore]
         public GroupState State {
             get
             {
@@ -845,38 +928,57 @@ namespace ProjectWitch
     //AIデータ
     public class AIDataFormat
     {
+        [System.Xml.Serialization.XmlElement("rate")]
         public float AttackRate { get; set; }
     }
 
     //装備データ
     public class EquipmentDataFormat
     {
+        //ID
+        [System.Xml.Serialization.XmlElement("id")]
+        public int ID { get; set; }
+
         //名前
+        [System.Xml.Serialization.XmlElement("name")]
         public string Name { get; set; }
 
         //最大HP
+        [System.Xml.Serialization.XmlElement("maxhp")]
         public int MaxHP { get; set; }
 
         //リーダー(Leader)
+        [System.Xml.Serialization.XmlElement("lpatk")]
         public int LeaderPAtk { get; set; } //物理攻撃
+        [System.Xml.Serialization.XmlElement("lmatk")]
         public int LeaderMAtk { get; set; } //魔法攻撃
+        [System.Xml.Serialization.XmlElement("lpdef")]
         public int LeaderPDef { get; set; } //物理防御
+        [System.Xml.Serialization.XmlElement("lmdef")]
         public int LeaderMDef { get; set; } //魔法防御
-        
+
         //集団(Group)
+        [System.Xml.Serialization.XmlElement("gpatk")]
         public int GroupPAtk { get; set; }  //物理攻撃
+        [System.Xml.Serialization.XmlElement("gmatk")]
         public int GroupMAtk { get; set; }  //魔法攻撃
+        [System.Xml.Serialization.XmlElement("gpdef")]
         public int GroupPDef { get; set; }  //物理防御
+        [System.Xml.Serialization.XmlElement("gmdef")]
         public int GroupMDef { get; set; }  //魔法防御
 
         //指揮力
+        [System.Xml.Serialization.XmlElement("leadership")]
         public int Leadership { get; set; }
         //機動力
+        [System.Xml.Serialization.XmlElement("agility")]
         public int Agility { get; set; }
         //回復力
+        [System.Xml.Serialization.XmlElement("curative")]
         public int Curative { get; set; }
 
         //説明
+        [System.Xml.Serialization.XmlElement("description")]
         public string Description { get; set; }
     }
 
@@ -895,8 +997,10 @@ namespace ProjectWitch
         }
 
         //解像度
+        [System.Xml.Serialization.XmlElement("resolution")]
         public Vector2 Resolution { get; set; }
         //フルスクリーンか否か
+        [System.Xml.Serialization.XmlElement("is_fullscreen")]
         public bool IsFullScreen { get; set; }
         //グラフィックの質
         public enum GraphicQualityEnum
@@ -904,38 +1008,51 @@ namespace ProjectWitch
             High = 0,
             Low = 1
         };
+        [System.Xml.Serialization.XmlElement("graphic_quality")]
         public GraphicQualityEnum GraphicQuality { get; set; }
 
         //全体の音量
+        [System.Xml.Serialization.XmlElement("master_volume")]
         public float MasterVolume { get; set; }
         //BGMの音量
+        [System.Xml.Serialization.XmlElement("bgm_volume")]
         public float BGMVolume { get; set; }
         //SEの音量
+        [System.Xml.Serialization.XmlElement("se_volume")]
         public float SEVolume { get; set; }
         //Voiceの音量
+        [System.Xml.Serialization.XmlElement("voice_volume")]
         public float VoiceVolume { get; set; }
 
         //戦闘の速さ
+        [System.Xml.Serialization.XmlElement("battle_speed")]
         public int BattleSpeed { get; set; }
 
         //テキストスピード
+        [System.Xml.Serialization.XmlElement("text_speed")]
         public float TextSpeed { get; set; }
     }
 
     //仮想メモリ
     public class VirtualMemory
     {
-        private List<string> memory;
-
+        //シリアライズ出力用のアクセスメンバ
+        [System.Xml.Serialization.XmlElement("data")]
+        public List<string> Data { get; set; }
+        
         public string this[int index]
         {
-            get { return memory[index]; }
-            set { memory[index] = value; }
+            get { return Data[index]; }
+            set { Data[index] = value; }
         }
 
         public VirtualMemory(int num)
         {
-            memory = Enumerable.Repeat<string>("0", num).ToList();
+            Data = Enumerable.Repeat<string>("0", num).ToList();
+        }
+        public VirtualMemory()
+        {
+            Data = Enumerable.Repeat<string>("0", 1).ToList();
         }
 
         //----------
@@ -945,16 +1062,17 @@ namespace ProjectWitch
         //指定したインデックスの値が、整数の0かどうか
         public bool IsZero(int index)
         {
-            var num = int.Parse(memory[index]);
+            var num = int.Parse(Data[index]);
             return (num == 0);
         }
 
         //配列サイズの取得
+        [System.Xml.Serialization.XmlIgnore]
         public int Count
         {
             get
             {
-                return memory.Count;
+                return Data.Count;
             }
             private set { }
         }
@@ -971,6 +1089,7 @@ namespace ProjectWitch
         }
 
         //スクリプトファイル名
+        [System.Xml.Serialization.XmlElement("file_name")]
         public string FileName { get; set; }
 
         //タイミング
@@ -979,20 +1098,26 @@ namespace ProjectWitch
             PlayerTurnBegin=0,
             EnemyTurnBegin,
             PlayerBattle,
-            EnemyBattle
+            EnemyBattle,
+            AfterBattle
         }
+        [System.Xml.Serialization.XmlElement("timing")]
         public TimingType Timing { get; set; }
 
         //場所
+        [System.Xml.Serialization.XmlElement("area")]
         public int Area { get; set; }
 
         //登場人物味方
+        [System.Xml.Serialization.XmlElement("actorA")]
         public List<int> ActorA { get; set; }
 
         //登場人物敵
+        [System.Xml.Serialization.XmlElement("actorB")]
         public List<int> ActorB { get; set; }
 
         //条件式に使う変数番号
+        [System.Xml.Serialization.XmlElement("if_val")]
         public List<int> If_Val { get; set; }
 
         //条件式に使う演算子
@@ -1005,16 +1130,19 @@ namespace ProjectWitch
             SmallerEqual,
             NotEqual
         }
-
+        [System.Xml.Serialization.XmlElement("if_ope")]
         public List<OperationType> If_Ope { get; set; }
 
         //条件式に使う即値
+        [System.Xml.Serialization.XmlElement("if_imm")]
         public List<int> If_Imm { get; set; }
 
         //次のスクリプトA
+        [System.Xml.Serialization.XmlElement("nextA")]
         public int NextA { get; set; }
 
         //次のスクリプトB
+        [System.Xml.Serialization.XmlElement("nextB")]
         public int NextB { get; set; }
         
     }
@@ -1022,6 +1150,7 @@ namespace ProjectWitch
     //イベントデータ用演算子の拡張メソッド
     public static class OperationTypeExt
     {
+        [System.Xml.Serialization.XmlElement("ope")]
         static string[] opeStr =
         {
                 "=",
@@ -1698,6 +1827,7 @@ namespace ProjectWitch
 
                 try
                 {
+                    equipData.ID = int.Parse(data[0]);
                     equipData.Name = data[1];
                     equipData.MaxHP = int.Parse(data[2]);
                     equipData.LeaderPAtk = int.Parse(data[3]);
@@ -1816,6 +1946,7 @@ namespace ProjectWitch
 
                 try
                 {
+                    skill.ID = int.Parse(data[0]);
                     skill.Name = data[1];
                     skill.Power = int.Parse(data[2]);
                     skill.Type = (SkillDataFormat.SkillType)Enum.ToObject(

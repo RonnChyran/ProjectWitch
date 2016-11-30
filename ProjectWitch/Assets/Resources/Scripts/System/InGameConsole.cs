@@ -233,9 +233,9 @@ namespace ProjectWitch
 
         //システムセーブ・ロード
         [uREPL.Command(name = "syssave")]
-        public static void SysSave(int slot) { Game.GetInstance().SystemData.Save(); }
+        public static void SysSave() { Game.GetInstance().SystemData.Save(); }
         [uREPL.Command(name = "sysload")]
-        public static void SysLoad(int slot) { Game.GetInstance().SystemData.Load(); }
+        public static void SysLoad() { Game.GetInstance().SystemData.Load(); }
 
         #endregion
     }
