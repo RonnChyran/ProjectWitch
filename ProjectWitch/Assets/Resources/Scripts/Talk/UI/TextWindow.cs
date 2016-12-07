@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
 
 namespace Talk
 {
@@ -48,12 +47,6 @@ namespace Talk
             mcAnimator = GetComponent<Animator>();
         }
 
-        // Update is called once per frame
-        void Update()
-        {
-
-        }
-
         //ウィンドウを表示
         void ShowWindow()
         {
@@ -63,6 +56,9 @@ namespace Talk
         //ウィンドウ全体を隠す
         void HideWindow()
         {
+            HideName();
+            HideFace();
+            HideNextIcon();
             mcAnimator.SetTrigger("Hide");
         }
 
@@ -75,6 +71,8 @@ namespace Talk
         //名前ウィンドウを表示
         void ShowName(string str)
         {
+            ShowWindow();
+
             mNameText.text = str;
 
             if(mName)
@@ -93,6 +91,8 @@ namespace Talk
         //顔グラを表示
         void ShowFace(string name)
         {
+            ShowWindow();
+
             //現在表示している顔グラを非表示にする
             if (mCurrentFace)
                 mCurrentFace.GetComponent<Animator>().SetTrigger("Destroy");
@@ -131,6 +131,8 @@ namespace Talk
         //ページ送りアイコンの表示
         void ShowNextIcon()
         {
+            ShowWindow();
+
             mNextIcon.SetActive(true);
         }
 

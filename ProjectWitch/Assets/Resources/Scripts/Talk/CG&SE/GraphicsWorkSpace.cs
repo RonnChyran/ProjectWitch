@@ -5,18 +5,10 @@
 
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections.Generic;
-using System; //Exception
-using System.Text.RegularExpressions;
-using UnityEngine.SceneManagement;
-
-using ProjectWitch.Talk.Pattern;
-using ProjectWitch.Talk.Command;
-using ProjectWitch.Talk.Compiler;
 
 namespace ProjectWitch.Talk.WorkSpace
 {
-	public class GraphicsWorkSpace : MonoBehaviour
+    public class GraphicsWorkSpace : MonoBehaviour
 	{
         [SerializeField]
         ScenarioWorkSpace mSWS = null;
@@ -204,18 +196,29 @@ namespace ProjectWitch.Talk.WorkSpace
 			//立ち絵を表示
 			vm.AddCommandDelegater(
 				"ShowCG",
-				new CommandDelegater(true, 4, delegate(object[] arguments){
+				new CommandDelegater(true, 9, delegate(object[] arguments){
 					string error;
 					int id = Converter.ObjectToInt(arguments[0], out error);
 					if (error != null) return error;
 					string pos = Converter.ObjectToString(arguments[1], out error);
 					if (error != null) return error;
-					string mode = Converter.ObjectToString(arguments[2], out error);
+                    string dir = Converter.ObjectToString(arguments[2], out error);
+                    if (error != null) return error;
+					string mode = Converter.ObjectToString(arguments[3], out error);
 					if (error != null) return error;
-					string layer = Converter.ObjectToString(arguments[3], out error);
-					if (error != null) return error;
+					string layer = Converter.ObjectToString(arguments[4], out error);
+                    if (error != null) return error;
+                    string posx = Converter.ObjectToString(arguments[5], out error);
+                    if (error != null) return error;
+                    string posy = Converter.ObjectToString(arguments[6], out error);
+                    if (error != null) return error;
+                    string posz = Converter.ObjectToString(arguments[7], out error);
+                    if (error != null) return error;
+                    string state = Converter.ObjectToString(arguments[8], out error);
+                    if (error != null) return error;
 
-					Rect canvasRect = CanvasRect;
+
+                    Rect canvasRect = CanvasRect;
 					float x = 1.5f * canvasRect.width;
 					Vector3 position_prev = new Vector3(0.0f, 0.0f, 0.0f);
 					Vector3 position_next = new Vector3(0.0f, 0.0f, 0.0f);
