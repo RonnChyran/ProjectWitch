@@ -11,6 +11,7 @@ using System.Text.RegularExpressions;
 using ProjectWitch.Talk.Pattern;
 using ProjectWitch.Talk.Command;
 using ProjectWitch.Talk.WorkSpace;
+using System;
 
 namespace ProjectWitch.Talk.Compiler{
 	//これをパターンに追加すると演出全般が追加されるよ
@@ -24,6 +25,7 @@ namespace ProjectWitch.Talk.Compiler{
 			patternList.Add (new CreateBackgroundCommand ());
 			patternList.Add (new CreateLoadCGCommand ());
 			patternList.Add (new CreateShowCGCommand ());
+            patternList.Add (new CreateChangeCGCommand());
 			patternList.Add (new CreateHideCGCommand ());
 
 			patternList.Add (new CreateMoveToCommand ());
@@ -134,6 +136,52 @@ namespace ProjectWitch.Talk.Compiler{
 			} else {
 				commandList.Add(new SetArgumentCommand ("back"));
 			}
+
+            if(arguments.ContainName("dir"))
+            {
+                commandList.Add(arguments.Get("dir"));
+            }
+            else
+            {
+                commandList.Add(new SetArgumentCommand("left"));
+            }
+
+            if(arguments.ContainName("posx"))
+            {
+                commandList.Add(arguments.Get("posx"));
+            }
+            else
+            {
+                commandList.Add(new SetArgumentCommand(""));
+            }
+
+            if(arguments.ContainName("posy"))
+            {
+                commandList.Add(arguments.Get("posy"));
+            }
+            else
+            {
+                commandList.Add(new SetArgumentCommand(""));
+            }
+
+            if (arguments.ContainName("posz"))
+            {
+                commandList.Add(arguments.Get("posz"));
+            }
+            else
+            {
+                commandList.Add(new SetArgumentCommand(""));
+            }
+
+            if(arguments.ContainName("state"))
+            {
+                commandList.Add(arguments.Get("state"));
+            }
+            else
+            {
+                commandList.Add(new SetArgumentCommand(""));
+            }
+
 			commandList.Add (new RunOrderCommand ("ShowCG"));
 			commandList.Add (new RunOrderCommand ("SetUpdater"));
 
@@ -179,6 +227,44 @@ namespace ProjectWitch.Talk.Compiler{
 			return commandList.GetArray ();
 		}
 	}
+
+    public class CreateChangeCGCommand : Pattern_TagFormat
+    {
+        protected override string TagName()
+        {
+            return "changecg";
+        }
+
+        protected override CommandFormat[] CreateCommand(ArgumentDictionary arguments, int line, int index)
+        {
+            var commandList = new CommandList();
+
+            if(arguments.ContainName("id"))
+            {
+                commandList.Add(arguments.Get("id"));
+            }
+            else
+            {
+                CompilerLog.Log(line, index, "id引数が不足しています");
+                return null;
+            }
+
+            if(arguments.ContainName("state"))
+            {
+                commandList.Add(arguments.Get("state"));
+            }
+            else
+            {
+                CompilerLog.Log(line, index, "state引数が不足しています");
+                return null;
+            }
+
+            commandList.Add(new RunOrderCommand("changecg"));
+            commandList.Add(new RunOrderCommand("SetUpdater"));
+
+            return commandList.GetArray();
+        }
+    }
 
 	//立ち絵移動
 	public class CreateMoveToCommand : Pattern_TagFormat
@@ -337,9 +423,25 @@ namespace ProjectWitch.Talk.Compiler{
 			}
 			if (arguments.ContainName ("size")) {
 				commandList.Add (arguments.Get ("size"));
+                commandList.Add(arguments.Get("size"));
 			} else {
-				CompilerLog.Log (line, index, "size引数が不足しています。");
-				return null;
+                //sx,sy指定の場合
+                if (arguments.ContainName("sx"))
+                {
+                    commandList.Add(arguments.Get("sx"));
+                }
+                else
+                {
+                    commandList.Add(new SetArgumentCommand("1.0"));
+                }
+                if (arguments.ContainName("sy"))
+                {
+                    commandList.Add(arguments.Get("sy"));
+                }
+                else
+                {
+                    commandList.Add(new SetArgumentCommand("1.0"));
+                }
 			}
 			if (arguments.ContainName ("time")) {
 				commandList.Add (arguments.Get ("time"));
@@ -348,7 +450,9 @@ namespace ProjectWitch.Talk.Compiler{
 				return null;
 			}
 
-			if (arguments.Count > 0) {
+
+
+            if (arguments.Count > 0) {
 				CompilerLog.Log(line, index, "無効な引数があります。");
 				return null;
 			}

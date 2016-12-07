@@ -298,37 +298,15 @@ namespace ProjectWitch.Talk.WorkSpace
         //スクリプト開始
         public void ScriptBegin()
         {
-            var cTWindow = mTWindow.GetComponent<Animator>();
-            var cNWindow = mNWindow.GetComponent<Animator>();
-            var cNText = mNText.GetComponent<Animator>();
 
             //割り込みを登録
-            mSWS.SetUpdater(new ScriptBeginAnimator(mBeginTime,cTWindow,cNWindow,cNText));
+            //mSWS.SetUpdater(new ScriptBeginAnimator(mBeginTime,cTWindow,cNWindow,cNText));
             Debug.Log("開始");
         }
-
-        [SerializeField]
-        private GameObject mTWindow = null;
-        [SerializeField]
-        private GameObject mTWindowBack = null;
-        [SerializeField]
-        private GameObject mNWindow = null;
-        [SerializeField]
-        private GameObject mNText = null;
-
+        
         //スクリプト終了
         public void ScriptEnd()
         {
-            var cTWindow = mTWindow.GetComponent<Animator>();
-            var cTWindowBack = mTWindowBack.GetComponent<Animator>();
-            var cNWindow = mNWindow.GetComponent<Animator>();
-            var cNText = mNText.GetComponent<Animator>();
-
-            cTWindow.SetBool("IsEnd", true);
-            cTWindowBack.SetBool("IsEnd", true);
-            cNWindow.SetBool("IsEnd", true);
-            cNText.SetBool("IsEnd", true);
-
            StartCoroutine(mTalkController.GetComponent<TalkController>().EndScript());
         }
 

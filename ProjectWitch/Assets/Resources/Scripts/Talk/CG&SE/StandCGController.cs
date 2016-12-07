@@ -17,9 +17,6 @@ namespace ProjectWitch.Talk
         //	立ち絵管理用の配列
         private GameObject[] mCGArray = new GameObject[16];
 
-        //立ち絵表示用のプレハブ
-        [SerializeField]
-        private GameObject mCGPrefab = null;
 
         public GameObject GetStandCG(int id, out string error)
         {
@@ -27,7 +24,8 @@ namespace ProjectWitch.Talk
 
             if (!(0 <= id && id < mCGArray.Length))
             {
-                error = "IDが許容範囲を超えています(" + id + ")";
+                error = "IDが許容範囲を超えています(" + id + ")" +
+                     " 0~" + mCGArray.Length.ToString() + "の範囲で指定してください";
                 return null;
             }
 
@@ -41,7 +39,8 @@ namespace ProjectWitch.Talk
 
             if (!(0 <= id && id < mCGArray.Length))
             {
-                error = "IDが許容範囲を超えています(" + id + ")";
+                error = "IDが許容範囲を超えています(" + id + ")"+
+                    " 0~" + mCGArray.Length.ToString() +"の範囲で指定してください";
                 return;
             }
             GameObject obj = mCGArray[id];
@@ -49,10 +48,14 @@ namespace ProjectWitch.Talk
             if (obj == null)
                 Destroy(obj);
 
-            obj = Instantiate(mCGPrefab) as GameObject;
+            //obj = Instantiate(mCGPrefab) as GameObject;
+            //obj.SetActive(false);
+            //obj.GetComponent<RawImage>().texture = Resources.Load(path) as Texture2D;
+            //obj.GetComponent<RawImage>().SetNativeSize();
+            //obj.transform.SetParent(this.transform);
+
+            obj = Instantiate(Resources.Load(path) as GameObject);
             obj.SetActive(false);
-            obj.GetComponent<RawImage>().texture = Resources.Load(path) as Texture2D;
-            obj.GetComponent<RawImage>().SetNativeSize();
             obj.transform.SetParent(this.transform);
 
             mCGArray[id] = obj;
@@ -75,12 +78,13 @@ namespace ProjectWitch.Talk
         }
 
         //立ち絵を表示
-        public void ShowStandCG(int id, bool isShowFront, out string error)
+        public void ShowStandCG(int id, bool isShowFront, string state, string dir, out string error)
         {
             error = null;
             if (!(0 <= id && id < mCGArray.Length))
             {
-                error = "IDが許容範囲を超えています(" + id + ")";
+                error = "IDが許容範囲を超えています(" + id + ")" +
+                    " 0~" + mCGArray.Length.ToString() + "の範囲で指定してください";
                 return;
             }
             GameObject obj = mCGArray[id];
@@ -90,6 +94,18 @@ namespace ProjectWitch.Talk
                 return;
             }
 
+            //表情の設定
+            obj.GetComponent<Animator>().Play(state);
+
+            //表示向きの設定
+            if(dir=="right")
+            {
+                var scale = obj.transform.localScale;
+                scale.x = -1;
+                obj.transform.localScale = scale;
+            }
+
+            //表示位置の設定
             if (!isShowFront)
                 obj.transform.SetAsFirstSibling();
             else
@@ -113,6 +129,28 @@ namespace ProjectWitch.Talk
                 return;
             }
             obj.SetActive(false);
+        }
+
+        //表情の変更
+        public void ChangeStandCG(int id, string state, out string error)
+        {
+            error = null;
+            if (!(0 <= id && id < mCGArray.Length))
+            {
+                error = "IDが許容範囲を超えています(" + id + ")" +
+                    " 0~" + mCGArray.Length.ToString() + "の範囲で指定してください";
+                return;
+            }
+            GameObject obj = mCGArray[id];
+            if (obj == null)
+            {
+                error = "ID=" + id + "の立ち絵が存在しません";
+                return;
+            }
+
+            //表情の設定
+            obj.GetComponent<Animator>().Play(state);
+
         }
 
         //位置の重複がないか検索

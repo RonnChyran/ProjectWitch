@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace Talk
+namespace ProjectWitch.Talk
 {
     public class TextWindow : MonoBehaviour
     {
@@ -41,20 +41,24 @@ namespace Talk
         //現在のフェイスオブジェクト
         private GameObject mCurrentFace = null;
 
+        //プロパティ
+        public string Name { get { return mNameText.text; } set { mNameText.text = value; } }
+        public string Message { get { return mMessageText.text; } set { mMessageText.text = value; } }
+
         // Use this for initialization
         void Start()
         {
-            mcAnimator = GetComponent<Animator>();
+            mcAnimator = mMessage.GetComponent<Animator>();
         }
 
         //ウィンドウを表示
-        void ShowWindow()
+        public void ShowWindow()
         {
             mcAnimator.SetTrigger("Show");
         }
 
         //ウィンドウ全体を隠す
-        void HideWindow()
+        public void HideWindow()
         {
             HideName();
             HideFace();
@@ -62,25 +66,19 @@ namespace Talk
             mcAnimator.SetTrigger("Hide");
         }
 
-        //メッセージテキストをセットする
-        void SetMessage(string str)
-        {
-            mMessageText.text = str;
-        }
-
         //名前ウィンドウを表示
-        void ShowName(string str)
+        public void ShowName()
         {
             ShowWindow();
 
-            mNameText.text = str;
+            mNameText.text = Name;
 
             if(mName)
                 mName.GetComponent<Animator>().SetTrigger("Show");
         }
 
         //名前ウィンドウを削除
-        void HideName()
+        public void HideName()
         {
             mNameText.text = "";
 
@@ -89,7 +87,7 @@ namespace Talk
         }
 
         //顔グラを表示
-        void ShowFace(string name)
+        public void ShowFace(string name)
         {
             ShowWindow();
 
@@ -113,7 +111,7 @@ namespace Talk
         }
 
         //顔グラを非表示
-        void HideFace()
+        public void HideFace()
         {
             if (mCurrentFace)
             {
@@ -123,13 +121,13 @@ namespace Talk
         }
 
         //顔グラの表情を変える
-        void ChangeStateFace(string stateName)
+        public void ChangeStateFace(string stateName)
         {
             mCurrentFace.GetComponent<Animator>().Play(stateName);
         }
 
         //ページ送りアイコンの表示
-        void ShowNextIcon()
+        public void ShowNextIcon()
         {
             ShowWindow();
 
@@ -137,7 +135,7 @@ namespace Talk
         }
 
         //ページ送りアイコンの非表示
-        void HideNextIcon()
+        public void HideNextIcon()
         {
             mNextIcon.SetActive(false);
         }

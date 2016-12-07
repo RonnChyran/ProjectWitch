@@ -5,6 +5,7 @@
 
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 namespace ProjectWitch.Talk.WorkSpace
 {
@@ -267,7 +268,34 @@ namespace ProjectWitch.Talk.WorkSpace
 						return "正しい位置を指定してください。";
 					}
 
-					bool isShowFront;
+                    //座標指定の場合
+                    if(posx != "")
+                    {
+                        int _posx = int.Parse(posx);
+                        var p = position_prev;
+                        var n = position_next;
+                        position_prev = new Vector3((_posx > 0) ? x : -x, p.y, p.z);
+                        position_next = new Vector3(_posx, n.y, n.z);
+                    }
+                    if (posy != "")
+                    {
+                        int _posy = int.Parse(posy);
+                        var p = position_prev;
+                        var n = position_next;
+                        position_prev = new Vector3(p.x, p.y, p.z);
+                        position_next = new Vector3(n.x, _posy, n.z);
+                    }
+                    if (posz != "")
+                    {
+                        int _posz = int.Parse(posz);
+                        var p = position_prev;
+                        var n = position_next;
+                        position_prev = new Vector3(p.x, p.y, p.z);
+                        position_next = new Vector3(n.x, n.y, _posz);
+                    }
+
+
+                    bool isShowFront;
 					switch (layer)
 					{
 					case "front":
@@ -281,7 +309,7 @@ namespace ProjectWitch.Talk.WorkSpace
 					}
 					position_next = mCGLayer.GetUnduplicatePosition(position_next);
 
-					mCGLayer.ShowStandCG(id, isShowFront, out error);
+					mCGLayer.ShowStandCG(id, isShowFront, state, dir, out error);
 					if (error != null) return error;
 
 					GameObject obj = mCGLayer.GetStandCG(id, out error);
@@ -317,10 +345,10 @@ namespace ProjectWitch.Talk.WorkSpace
 						return "正しいモードを指定してください。";
 					}
 
-					arguments[4] = updater;
+					arguments[9] = updater;
 					return error;
 				}));
-			//立ち絵を非表示
+            //立ち絵を非表示
 			vm.AddCommandDelegater(
 				"HideCG",
 				new CommandDelegater(true, 2, delegate(object[] arguments){
@@ -376,7 +404,24 @@ namespace ProjectWitch.Talk.WorkSpace
 					arguments[2] = updater;
 					return error;
 				}));
-			
+            //立ち絵表示変更
+            vm.AddCommandDelegater(
+                "changecg",
+                new CommandDelegater(false, 2, delegate (object[] arguments)
+                {
+                    string error=null;
+
+                    int id = Converter.ObjectToInt(arguments[0], out error);
+                    if (error != null) return error;
+                    string state = Converter.ObjectToString(arguments[1], out error);
+                    if (error != null) return error;
+
+                    mCGLayer.ChangeStandCG(id, state, out error);
+                    
+                    return error;
+                }));
+
+
 			//立ち絵の
 			//移動
 			vm.AddCommandDelegater (
@@ -473,27 +518,31 @@ namespace ProjectWitch.Talk.WorkSpace
 			//拡大
 			vm.AddCommandDelegater (
 				"scale",
-				new CommandDelegater (true, 3, delegate(object[] arguments) {
+				new CommandDelegater (true, 4, delegate(object[] arguments) {
 					string error;
 					int id = Converter.ObjectToInt(arguments[0], out error);
 					if (error != null) return error;
-					float scale = Converter.ObjectToFloat(arguments[1], out error);
+					float sx = Converter.ObjectToFloat(arguments[1], out error);
 					if (error != null) return error;
-					float time_ms = Converter.ObjectToInt(arguments[2], out error);
+                    float sy = Converter.ObjectToFloat(arguments[2], out error);
+                    if (error != null) return error;
+					float time_ms = Converter.ObjectToInt(arguments[3], out error);
 					if (error != null) return error;
 					float time = time_ms / 1000.0f;
 
-					GameObject obj = mCGLayer.GetStandCG(id, out error);
+
+                    GameObject obj = mCGLayer.GetStandCG(id, out error);
 					if (error != null) return error;
 
 					Transform trans = obj.transform;
 					Vector3 size_prev = trans.localScale;
 
 					UpdaterFormat transUpdater = new CGAnimationUpdater(time, delegate(float progress) {
-						float currScale = (1.0f - progress)  * 1.0f + progress * scale;
-						trans.localScale = Vector3.Scale(size_prev, new Vector3(currScale, currScale, 1.0f));
+						float currScaleX = (1.0f - progress)  * 1.0f + progress * sx;
+                        float currScaleY = (1.0f - progress) * 1.0f + progress * sy;
+                        trans.localScale = Vector3.Scale(size_prev, new Vector3(currScaleX, currScaleY, 1.0f));
 					});
-					arguments[3] = transUpdater;
+					arguments[4] = transUpdater;
 					return null;
 				}));
 			

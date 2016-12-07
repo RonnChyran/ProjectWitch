@@ -26,33 +26,38 @@ namespace ProjectWitch.Talk.WorkSpace
 		//名前ビューのオンオフ
 		protected void SetNameVisible(bool isVisible)
 		{
-			mNameVisible = isVisible;
-			RefreshVisibility();
+            if (isVisible)
+                mTextWindow.ShowName();
+            else
+                mTextWindow.HideName();
+
+			//RefreshVisibility();
 		}
 		//テキストウィンドウのオンオフ
 		protected void SetTextVisible(bool isVisible)
 		{
-			mTextVisible = isVisible;
-			RefreshVisibility ();
+            if (isVisible)
+                mTextWindow.ShowWindow();
+            else
+                mTextWindow.HideWindow();
+
+			//mTextVisible = isVisible;
+			//RefreshVisibility ();
 
 		}
 
-		private bool mNameVisible = true;
-		private bool mTextVisible = true;
-		private void RefreshVisibility()
-		{
-			mNameView.SetActive	(mNameVisible && mTextVisible);
-			mTextView.SetActive	(mTextVisible);
-			mTextBackground.SetActive (mTextVisible);
-		}
+		//private bool mNameVisible = true;
+		//private bool mTextVisible = true;
+		//private void RefreshVisibility()
+		//{
+		//	mNameView.SetActive	(mNameVisible && mTextVisible);
+		//	mTextView.SetActive	(mTextVisible);
+		//	mTextBackground.SetActive (mTextVisible);
+		//}
 
-		//テキスト、名前の背景
-		[SerializeField]
-		private GameObject mTextView = null;
+        //テキスト、名前の背景
         [SerializeField]
-        private GameObject mNameView = null;
-        [SerializeField]
-        private GameObject mTextBackground = null;
+        private TextWindow mTextWindow = null;
 
 		//テキストを指定速度で再生するアップデータ
 		public class TextWindowUpdater : UpdaterFormat
@@ -78,10 +83,7 @@ namespace ProjectWitch.Talk.WorkSpace
 			//これまでのテキストを取得
 			public override void Setup ()
 			{
-				mNameImage 	= mTWS.mNameView.GetComponent<RawImage> ();
-				mName 		= mTWS.mName;
-				mTextImage 	= mTWS.mTextView.GetComponent<RawImage> ();
-				mText	 	= mTWS.mText;
+                mTWS.SetTextVisible(mHidden);
 			}
 			//テキストを追加
 			public override void Update (float deltaTime)
@@ -92,54 +94,18 @@ namespace ProjectWitch.Talk.WorkSpace
 					SetActive (false);
 					return;
 				}
-
-				float progress = Mathf.Clamp (mTime, 0, mDuration)/mDuration; 
-				SetOpacity(GetOpacity (progress));
 			}
 			public override void Finish ()
 			{
-				SetOpacity(GetOpacity (1.0f));
-			}
-			private float GetOpacity (float progress)
-			{
-				if (mHidden)
-					return progress;
-				else
-					return 1.0f - progress;
-			}
-			private void SetOpacity (float opacity)
-			{
-				Color buf;
-				buf = mName.color;
-				buf.a = opacity;
-				mName.color = buf;
-
-				buf = mNameImage.color;
-				buf.a = opacity;
-				mNameImage.color = buf;
-
-				buf = mText.color;
-				buf.a = opacity;
-				mText.color = buf;
-
-				buf = mTextImage.color;
-				buf.a = opacity;
-				mTextImage.color = buf;
 			}
 		}
-
-        //テキストのNextアイコン
-        [SerializeField]
-        private GameObject mNextIcon = null;
 
 		//テキスト
 		protected string Text
 		{
-			get{return mText.text;}
-			set{mText.text = value;}
+			get{return mTextWindow.Message;}
+			set{mTextWindow.Message = value;}
 		}
-        [SerializeField]
-        private Text mText = null;
 		//テキストを指定速度で再生するアップデータ
 		public class TextUpdater : UpdaterFormat
 		{
@@ -195,12 +161,12 @@ namespace ProjectWitch.Talk.WorkSpace
 			}
 			public override void Setup ()
 			{
-				mTWS.mNextIcon.SetActive(true);
+				mTWS.mTextWindow.ShowNextIcon();
 				base.Setup ();
 			}
 			public override void Finish()
 			{
-				mTWS.mNextIcon.SetActive(false);
+				mTWS.mTextWindow.HideNextIcon();
 				mTWS.Text = "";
 				mTWS.ResetSpeed ();
 				base.Finish ();
@@ -210,11 +176,9 @@ namespace ProjectWitch.Talk.WorkSpace
 		//名前
 		public string Name
 		{
-			get{ return mName.text; }
-			set{ mName.text = value; }
+			get{ return mTextWindow.Name; }
+			set{ mTextWindow.Name = value; }
 		}
-		[SerializeField]
-		private Text mName = null;
 
 		//テキスト関連のプロパティ
 		//	速さ(文字/sec)
@@ -236,14 +200,14 @@ namespace ProjectWitch.Talk.WorkSpace
 			vm.AddCommandDelegater(
 				"InvisibleTextWindow",
 				new CommandDelegater(true, 0, delegate(object[] arguments){
-					UpdaterFormat updater = new TextWindowUpdater(true, 0.5f, this);
+					UpdaterFormat updater = new TextWindowUpdater(true, 0.15f, this);
 					arguments[0] = updater;
 					return null;
 				}));
 			vm.AddCommandDelegater(
 				"VisibleTextWindow",
 				new CommandDelegater(true, 0, delegate(object[] arguments){
-					UpdaterFormat updater = new TextWindowUpdater(false, 0.5f, this);
+					UpdaterFormat updater = new TextWindowUpdater(false, 0.15f, this);
 					arguments[0] = updater;
 					return null;
 				}));
