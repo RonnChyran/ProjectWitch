@@ -1,4 +1,8 @@
 ;ここはコメントになります
+
+[setskin ref="skin1"]
+[setskin ref="skin0"]
+
 [background ref = "1000"]
 [bgm ref = "000_title"]
 *main
@@ -10,20 +14,8 @@
 [drawcg id=1 posx="100" posy="100" state="1"]
 [drawcg id=2 pos="left" mode="fadein" state="2"]
 [p]
-[changecg id=0 state="1"]
-[changecg id=1 state="2"]
-[changecg id=2 state="0"]
-[scale id=0 sx=-1 time=10]
-[p]
-メッセージを非表示にします
-[p]
 [hide_message]
-[clearcg id=0]
-[clearcg id=1]
-[clearcg id=2]
-[show_message pos="bottom"]
-メッセージ再表示[p]
-[hide_message]
+[setskin ref="skin1"]
 [show_message pos="top"]
 [p]
 #name

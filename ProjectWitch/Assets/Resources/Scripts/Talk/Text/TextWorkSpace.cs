@@ -9,7 +9,21 @@ namespace ProjectWitch.Talk.WorkSpace
 {
 	public class TextWorkSpace : MonoBehaviour
 	{
-		void Start()
+        //テキストウィンドウマネージャ
+        [SerializeField]
+        private TextWindowManager mTextWindowManager = null;
+
+        //テキストウィンドウのアンカー
+        [SerializeField]
+        private GameObject mWindowAnchorTop = null;
+        [SerializeField]
+        private GameObject mWindowAnchorBottom = null;
+
+        //テキストウィンドウスキンフォルダへの参照
+        [SerializeField]
+        private string mWindowSkinFolderPath = "Prefabs/Talk/Skin/";
+
+        void Start()
 		{
 			ResetSpeed ();
 		}
@@ -19,18 +33,18 @@ namespace ProjectWitch.Talk.WorkSpace
 		protected void SetNameVisible(bool isVisible)
 		{
             if (isVisible)
-                mTextWindow.ShowName();
+                mTextWindowManager.Window.ShowName();
             else
-                mTextWindow.HideName();
+                mTextWindowManager.Window.HideName();
 
 		}
 		//テキストウィンドウのオンオフ
 		protected void SetTextVisible(bool isVisible)
 		{
             if (isVisible)
-                mTextWindow.ShowWindow();
+                mTextWindowManager.Window.ShowWindow();
             else
-                mTextWindow.HideWindow();
+                mTextWindowManager.Window.HideWindow();
 
 		}
 
@@ -39,23 +53,19 @@ namespace ProjectWitch.Talk.WorkSpace
         {
             if(pos=="top")
             {
-                mTextWindow.Position = mWindowAnchorTop.transform.localPosition;
+                mTextWindowManager.Window.Position = mWindowAnchorTop.transform.localPosition;
             }
             else
             {
-                mTextWindow.Position = mWindowAnchorBottom.transform.localPosition;
+                mTextWindowManager.Window.Position = mWindowAnchorBottom.transform.localPosition;
             }
         }
 
-        //テキスト、名前の背景
-        [SerializeField]
-        private TextWindow mTextWindow = null;
-
-        //テキストウィンドウのアンカー
-        [SerializeField]
-        private GameObject mWindowAnchorTop = null;
-        [SerializeField]
-        private GameObject mWindowAnchorBottom = null;
+        //テキストウィンドウのスキンを変更
+        protected void ChangeWindowSkin(string name)
+        {
+            mTextWindowManager.ChangeSkin(mWindowSkinFolderPath + name);
+        }
 
 		//テキストを指定速度で再生するアップデータ
 		public class TextWindowUpdater : UpdaterFormat
@@ -96,8 +106,8 @@ namespace ProjectWitch.Talk.WorkSpace
 		//テキスト
 		protected string Text
 		{
-			get{return mTextWindow.Message;}
-			set{mTextWindow.Message = value;}
+			get{return mTextWindowManager.Window.Message;}
+			set{mTextWindowManager.Window.Message = value;}
 		}
 		//テキストを指定速度で再生するアップデータ
 		public class TextUpdater : UpdaterFormat
@@ -154,12 +164,12 @@ namespace ProjectWitch.Talk.WorkSpace
 			}
 			public override void Setup ()
 			{
-				mTWS.mTextWindow.ShowNextIcon();
+				mTWS.mTextWindowManager.Window.ShowNextIcon();
 				base.Setup ();
 			}
 			public override void Finish()
 			{
-				mTWS.mTextWindow.HideNextIcon();
+				mTWS.mTextWindowManager.Window.HideNextIcon();
 				mTWS.Text = "";
 				mTWS.ResetSpeed ();
 				base.Finish ();
@@ -169,8 +179,8 @@ namespace ProjectWitch.Talk.WorkSpace
 		//名前
 		public string Name
 		{
-			get{ return mTextWindow.Name; }
-			set{ mTextWindow.Name = value; }
+			get{ return mTextWindowManager.Window.Name; }
+			set{ mTextWindowManager.Window.Name = value; }
 		}
 
 		//テキスト関連のプロパティ
@@ -184,6 +194,18 @@ namespace ProjectWitch.Talk.WorkSpace
 
 		public void SetCommandDelegaters(VirtualMachine vm)
 		{
+            vm.AddCommandDelegater(
+                "ChangeSkin",
+                new CommandDelegater(false, 1, delegate (object[] arguments){
+                    string error = null;
+
+                    var name = Converter.ObjectToString(arguments[0], out error);
+                    if (error != null) return error;
+
+                    ChangeWindowSkin(name);
+
+                    return null;
+                }));
 			vm.AddCommandDelegater(
 				"InvisibleName",
 				new CommandDelegater(false, 0, delegate(object[] arguments){

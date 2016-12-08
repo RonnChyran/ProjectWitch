@@ -33,8 +33,6 @@ namespace ProjectWitch.Talk
         [SerializeField]
         private GameObject mFaceParent = null;
 
-        //内部コンポーネント
-        private Animator mcAnimator = null;
 
         //内部変数
 
@@ -49,13 +47,12 @@ namespace ProjectWitch.Talk
         // Use this for initialization
         void Start()
         {
-            mcAnimator = mMessage.GetComponent<Animator>();
         }
 
         //ウィンドウを表示
         public void ShowWindow()
         {
-            mcAnimator.SetTrigger("Show");
+            mMessage.GetComponent<Animator>().SetTrigger("Show");
         }
 
         //ウィンドウ全体を隠す
@@ -64,7 +61,7 @@ namespace ProjectWitch.Talk
             HideName();
             HideFace();
             HideNextIcon();
-            mcAnimator.SetTrigger("Hide");
+            mMessage.GetComponent<Animator>().SetTrigger("Hide");
         }
 
         //名前ウィンドウを表示
