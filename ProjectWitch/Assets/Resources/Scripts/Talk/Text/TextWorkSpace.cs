@@ -3,6 +3,7 @@
 //summary	:テキストの作業場
 //=====================================
 
+using System;
 using UnityEngine;
 
 namespace ProjectWitch.Talk.WorkSpace
@@ -65,6 +66,18 @@ namespace ProjectWitch.Talk.WorkSpace
         protected void ChangeWindowSkin(string name)
         {
             mTextWindowManager.ChangeSkin(mWindowSkinFolderPath + name);
+        }
+
+        //顔グラの表示
+        protected void ShowFace(int id, string name)
+        {
+            //mTextWindowManager.Window.ShowFace(name);
+        }
+
+        //顔グラの非表示
+        protected void HideFace()
+        {
+            mTextWindowManager.Window.HideFace();
         }
 
 		//テキストを指定速度で再生するアップデータ
@@ -153,6 +166,41 @@ namespace ProjectWitch.Talk.WorkSpace
 			}
 		}
 
+        public class FaceUpdater : UpdaterFormat
+        {
+            private TextWorkSpace mTWS;
+            private bool mHidden;
+
+            private float mTime = 0.0f;
+            private float mDuration;
+
+            public FaceUpdater(bool hidden, float duration, TextWorkSpace tws)
+            {
+                mDuration = duration;
+                mHidden = hidden;
+                mTWS = tws;
+            }
+            //これまでのテキストを取得
+            public override void Setup()
+            {
+                mTWS.SetTextVisible(mHidden);
+            }
+            //テキストを追加
+            public override void Update(float deltaTime)
+            {
+                mTime += deltaTime;
+                if (mTime >= mDuration)
+                {
+                    SetActive(false);
+                    return;
+                }
+            }
+            public override void Finish()
+            {
+            }
+        }
+
+
 		//改ページコマンド
 		public class NewPageUpdater : WaitUpdater{
 			private TextWorkSpace mTWS;
@@ -233,6 +281,33 @@ namespace ProjectWitch.Talk.WorkSpace
 					arguments[0] = updater;
 					return null;
 				}));
+            vm.AddCommandDelegater(
+                "DrawFace",
+                new CommandDelegater(true, 1, delegate (object[] arguments)
+                {
+                    string error = null;
+
+                    var name = Converter.ObjectToString(arguments[0], out error);
+                    if (error != null) return error;
+
+                    //ShowFace(name);
+
+                    UpdaterFormat updater = new FaceUpdater(true, 0.15f, this);
+                    arguments[1] = updater;
+                    return error;
+                }));
+            vm.AddCommandDelegater(
+                "ClearFace",
+                new CommandDelegater(true, 1, delegate (object[] arguments)
+                {
+                    string error = null;
+
+                    HideFace();
+
+                    UpdaterFormat updater = new FaceUpdater(false, 0.15f, this);
+                    arguments[0] = updater;
+                    return error;
+                }));
 			vm.AddCommandDelegater(
 				"Name",
 				new CommandDelegater(false, 1, delegate(object[] arguments){

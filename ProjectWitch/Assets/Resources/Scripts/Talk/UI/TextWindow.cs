@@ -39,6 +39,9 @@ namespace ProjectWitch.Talk
         //現在のフェイスオブジェクト
         private GameObject mCurrentFace = null;
 
+        //フェイスオブジェクトの配列
+        private GameObject[] mFaces = new GameObject[16];
+
         //プロパティ
         public string Name { get { return mNameText.text; } set { mNameText.text = value; } }
         public string Message { get { return mMessageText.text; } set { mMessageText.text = value; } }
@@ -96,14 +99,10 @@ namespace ProjectWitch.Talk
             }
         }
 
-        //顔グラを表示
-        public void ShowFace(string name)
+        public void LoadFace(int id, string name)
         {
-            ShowWindow();
-
-            //現在表示している顔グラを非表示にする
-            if (mCurrentFace)
-                mCurrentFace.GetComponent<Animator>().SetTrigger("Destroy");
+            //IDの妥当性チェック
+            if (!FaceIdCheck(id)) return;
 
             //顔グラが有効なスキンかどうか判断
             if (mFaceParent == null) return;
@@ -112,12 +111,38 @@ namespace ProjectWitch.Talk
             var path = mFaceFolderPath + name;
             var resource = Resources.Load<GameObject>(path);
             var inst = Instantiate(resource);
-
-            //親のセット
             inst.transform.SetParent(mFaceParent.transform);
+            inst.SetActive(false);
+
+            //スロットが空いていなかったら古いものを開放する
+            if (mFaces[id])
+                Destroy(mFaces[id]);
+
+            mFaces[id] = inst;
+
+        }
+
+        //顔グラを表示
+        public void ShowFace(int id, string state)
+        {
+            //IDの妥当性チェック
+            if (!FaceIdCheck(id)) return;
+
+            //ロードされていなかったら表示しない
+            if (!mFaces[id]) return;
+
+            //ウィンドウを表示
+            ShowWindow();
+
+            //現在表示している顔グラを非表示にする
+            if (mCurrentFace)
+                mCurrentFace.GetComponent<Animator>().SetTrigger("Hide");
+
+            //表示
+            mFaces[id].GetComponent<Animator>().SetTrigger("Show");
 
             //現在の顔グラの参照をセット
-            mCurrentFace = inst;
+            mCurrentFace = mFaces[id];
         }
 
         //顔グラを非表示
@@ -125,7 +150,7 @@ namespace ProjectWitch.Talk
         {
             if (mCurrentFace)
             {
-                mCurrentFace.GetComponent<Animator>().SetTrigger("Destroy");
+                mCurrentFace.GetComponent<Animator>().SetTrigger("Hide");
                 mCurrentFace = null;
             }
         }
@@ -150,5 +175,21 @@ namespace ProjectWitch.Talk
             mNextIcon.SetActive(false);
         }
 
+        //faceidの妥当性をチェック
+        private bool FaceIdCheck(int id)
+        {
+            if (id < 0)
+            {
+                Debug.LogError("FaceIDが不正です");
+                return false;
+            }
+            if (id >= mFaces.Length)
+            {
+                Debug.LogError("FaceIDが範囲をオーバーしています");
+                return false;
+            }
+
+            return true;
+        }
     }
 }
