@@ -82,8 +82,14 @@
     <Reference Include="UnityEditor.Graphs">
       <HintPath>Library\UnityAssemblies\UnityEditor.Graphs.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor.Android.Extensions">
+      <HintPath>Library\UnityAssemblies\UnityEditor.Android.Extensions.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEditor.WindowsStandalone.Extensions">
       <HintPath>Library\UnityAssemblies\UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.OSXStandalone.Extensions">
+      <HintPath>Library\UnityAssemblies\UnityEditor.OSXStandalone.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="SyntaxTree.VisualStudio.Unity.Bridge">
       <HintPath>Library\UnityAssemblies\SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
@@ -232,8 +238,6 @@
     <None Include="Assets\Resources\Scenarios\s9995.txt" />
     <None Include="Assets\Resources\Scenarios\s9996.txt" />
     <None Include="Assets\Resources\Scenarios\test.txt" />
-    <None Include="Assets\Resources\Scenarios\test_2.txt" />
-    <None Include="Assets\Resources\Scenarios\testscript.txt" />
     <None Include="Assets\uREPL\Resources\uREPL\Xmls\Help.txt" />
     <None Include="Assets\uREPL\Resources\uREPL\Xmls\UnityEngineClasses.xml" />
   </ItemGroup>

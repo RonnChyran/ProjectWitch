@@ -107,12 +107,21 @@ namespace ProjectWitch.Talk.Compiler{
 		{
 			CommandList commandList = new CommandList ();
 
+            if(arguments.ContainName("pos"))
+            {
+                commandList.Add(arguments.Get("pos"));
+            }
+            else
+            {
+                commandList.Add(new SetArgumentCommand("bottom"));
+            }
+
 			if (arguments.Count > 0) {
 				CompilerLog.Log(line, index, "無効な引数があります。");
 				return null;
 			}
 
-			commandList.Add(new RunOrderCommand("InvisibleTextWindow"));
+			commandList.Add(new RunOrderCommand("ShowMessage"));
 			commandList.Add(new RunOrderCommand ("SetUpdater"));
 			return commandList.GetArray ();
 		}
@@ -132,7 +141,7 @@ namespace ProjectWitch.Talk.Compiler{
 				return null;
 			}
 
-			commandList.Add(new RunOrderCommand("VisibleTextWindow"));
+			commandList.Add(new RunOrderCommand("HideMessage"));
 			commandList.Add(new RunOrderCommand ("SetUpdater"));
 			return commandList.GetArray ();
 		}

@@ -191,6 +191,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mTextWindow: {fileID: 339831385}
+  mWindowAnchorTop: {fileID: 804894827}
+  mWindowAnchorBottom: {fileID: 702748091}
   mSpeed: 50
 --- !u!4 &257269877
 Transform:
@@ -307,6 +309,11 @@ Prefab:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: edce79147c4811844a40678b9f98e658, type: 2}
+    - target: {fileID: 95000013302844040, guid: 5a8df9856426c6843b0e3a4836439681,
+        type: 2}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 79dfae47d6ea8e245a90bcfb142f421a, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5a8df9856426c6843b0e3a4836439681, type: 2}
   m_IsPrefabParent: 0
@@ -348,6 +355,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 339831384}
+  - {fileID: 702748092}
+  - {fileID: 804894828}
   m_Father: {fileID: 1692446082}
   m_RootOrder: 3
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -398,10 +407,6 @@ MonoBehaviour:
   mTalkController: {fileID: 138172959}
   mSWS: {fileID: 1598866841}
   mBeginTime: 1.5
-  mTWindow: {fileID: 0}
-  mTWindowBack: {fileID: 0}
-  mNWindow: {fileID: 0}
-  mNText: {fileID: 0}
 --- !u!1 &568664199
 GameObject:
   m_ObjectHideFlags: 0
@@ -509,6 +514,39 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 678910708}
+--- !u!1 &702748091
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 224: {fileID: 702748092}
+  m_Layer: 5
+  m_Name: AnchorBottom
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &702748092
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 702748091}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Children: []
+  m_Father: {fileID: 374910085}
+  m_RootOrder: 1
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -381}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &740732055
 GameObject:
   m_ObjectHideFlags: 0
@@ -540,6 +578,39 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -400, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &804894827
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 224: {fileID: 804894828}
+  m_Layer: 5
+  m_Name: AnchorTop
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &804894828
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 804894827}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.0000001, y: 1.0000001, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Children: []
+  m_Father: {fileID: 374910085}
+  m_RootOrder: 2
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0.000027611, y: 302}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &894234679
@@ -716,7 +787,7 @@ RectTransform:
   m_RootOrder: 1
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.00012207241, y: 1.0000458}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1920, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1302679975
@@ -835,7 +906,7 @@ MonoBehaviour:
   mCanvas: {fileID: 1692446082}
   mBackgroundPath: Textures/Background2D/
   mBackgroundSprite: {fileID: 678910708}
-  mCGPath: Textures/Talk/Stand/
+  mCGPath: Prefabs/Talk/Stand/
   mCGLayer: {fileID: 1302679976}
   mStandCGAnchor1: {fileID: 1498179174}
   mStandCGAnchor2: {fileID: 740732056}

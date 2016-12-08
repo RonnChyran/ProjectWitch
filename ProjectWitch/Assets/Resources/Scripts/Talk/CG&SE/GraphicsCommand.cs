@@ -164,15 +164,6 @@ namespace ProjectWitch.Talk.Compiler{
                 commandList.Add(new SetArgumentCommand(""));
             }
 
-            if (arguments.ContainName("posz"))
-            {
-                commandList.Add(arguments.Get("posz"));
-            }
-            else
-            {
-                commandList.Add(new SetArgumentCommand(""));
-            }
-
             if(arguments.ContainName("state"))
             {
                 commandList.Add(arguments.Get("state"));
@@ -259,8 +250,7 @@ namespace ProjectWitch.Talk.Compiler{
                 return null;
             }
 
-            commandList.Add(new RunOrderCommand("changecg"));
-            commandList.Add(new RunOrderCommand("SetUpdater"));
+            commandList.Add(new RunOrderCommand("ChangeCG"));
 
             return commandList.GetArray();
         }

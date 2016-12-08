@@ -44,6 +44,7 @@ namespace ProjectWitch.Talk
         //プロパティ
         public string Name { get { return mNameText.text; } set { mNameText.text = value; } }
         public string Message { get { return mMessageText.text; } set { mMessageText.text = value; } }
+        public Vector3 Position { get { return transform.localPosition; } set { transform.localPosition = value;} }
 
         // Use this for initialization
         void Start()
@@ -73,8 +74,14 @@ namespace ProjectWitch.Talk
 
             mNameText.text = Name;
 
-            if(mName)
-                mName.GetComponent<Animator>().SetTrigger("Show");
+            if (mName)
+            {
+                var anim = mName.GetComponent<Animator>();
+                var info = anim.GetCurrentAnimatorStateInfo(0);
+                //現在表示されていなかったら表示する
+                if(info.fullPathHash == Animator.StringToHash("Base Layer.hide"))
+                    mName.GetComponent<Animator>().SetTrigger("Show");
+            }
         }
 
         //名前ウィンドウを削除
@@ -82,8 +89,14 @@ namespace ProjectWitch.Talk
         {
             mNameText.text = "";
 
-            if(mName)
-                mName.GetComponent<Animator>().SetTrigger("Hide");
+            if (mName)
+            {
+                var anim = mName.GetComponent<Animator>();
+                var info = anim.GetCurrentAnimatorStateInfo(0);
+                //現在表示されていたら隠す
+                if(info.fullPathHash == Animator.StringToHash("Base Layer.show"))
+                    mName.GetComponent<Animator>().SetTrigger("Hide");
+            }
         }
 
         //顔グラを表示

@@ -4,14 +4,6 @@
 //=====================================
 
 using UnityEngine;
-using UnityEngine.UI;
-using System.Collections.Generic;
-using System; //Exception
-using System.Text.RegularExpressions;
-using UnityEngine.SceneManagement;
-
-using ProjectWitch.Talk.Pattern;
-using ProjectWitch.Talk.Command;
 
 namespace ProjectWitch.Talk.WorkSpace
 {
@@ -31,7 +23,6 @@ namespace ProjectWitch.Talk.WorkSpace
             else
                 mTextWindow.HideName();
 
-			//RefreshVisibility();
 		}
 		//テキストウィンドウのオンオフ
 		protected void SetTextVisible(bool isVisible)
@@ -41,34 +32,36 @@ namespace ProjectWitch.Talk.WorkSpace
             else
                 mTextWindow.HideWindow();
 
-			//mTextVisible = isVisible;
-			//RefreshVisibility ();
-
 		}
 
-		//private bool mNameVisible = true;
-		//private bool mTextVisible = true;
-		//private void RefreshVisibility()
-		//{
-		//	mNameView.SetActive	(mNameVisible && mTextVisible);
-		//	mTextView.SetActive	(mTextVisible);
-		//	mTextBackground.SetActive (mTextVisible);
-		//}
+        //テキストウィンドウの位置変更
+        protected void SetTextWindowPos(string pos)
+        {
+            if(pos=="top")
+            {
+                mTextWindow.Position = mWindowAnchorTop.transform.localPosition;
+            }
+            else
+            {
+                mTextWindow.Position = mWindowAnchorBottom.transform.localPosition;
+            }
+        }
 
         //テキスト、名前の背景
         [SerializeField]
         private TextWindow mTextWindow = null;
+
+        //テキストウィンドウのアンカー
+        [SerializeField]
+        private GameObject mWindowAnchorTop = null;
+        [SerializeField]
+        private GameObject mWindowAnchorBottom = null;
 
 		//テキストを指定速度で再生するアップデータ
 		public class TextWindowUpdater : UpdaterFormat
 		{
 			private TextWorkSpace mTWS;
 			private bool mHidden;
-
-			private RawImage mNameImage;
-			private Text mName;
-			private RawImage mTextImage;
-			private Text mText;
 
 			private float mTime = 0.0f;
 			private float mDuration;
@@ -198,14 +191,21 @@ namespace ProjectWitch.Talk.WorkSpace
 					return null;
 				}));
 			vm.AddCommandDelegater(
-				"InvisibleTextWindow",
-				new CommandDelegater(true, 0, delegate(object[] arguments){
-					UpdaterFormat updater = new TextWindowUpdater(true, 0.15f, this);
-					arguments[0] = updater;
-					return null;
+				"ShowMessage",
+				new CommandDelegater(true, 1, delegate(object[] arguments){
+                    string error = null;
+
+                    var pos = Converter.ObjectToString(arguments[0], out error);
+                    if (error != null) return error;
+
+                    SetTextWindowPos(pos);
+
+                    UpdaterFormat updater = new TextWindowUpdater(true, 0.15f, this);
+					arguments[1] = updater;
+					return error;
 				}));
 			vm.AddCommandDelegater(
-				"VisibleTextWindow",
+				"HideMessage",
 				new CommandDelegater(true, 0, delegate(object[] arguments){
 					UpdaterFormat updater = new TextWindowUpdater(false, 0.15f, this);
 					arguments[0] = updater;

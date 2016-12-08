@@ -197,32 +197,32 @@ namespace ProjectWitch.Talk.WorkSpace
 			//立ち絵を表示
 			vm.AddCommandDelegater(
 				"ShowCG",
-				new CommandDelegater(true, 9, delegate(object[] arguments){
+				new CommandDelegater(true, 8, delegate(object[] arguments){
 					string error;
 					int id = Converter.ObjectToInt(arguments[0], out error);
 					if (error != null) return error;
 					string pos = Converter.ObjectToString(arguments[1], out error);
 					if (error != null) return error;
-                    string dir = Converter.ObjectToString(arguments[2], out error);
-                    if (error != null) return error;
-					string mode = Converter.ObjectToString(arguments[3], out error);
+					string mode = Converter.ObjectToString(arguments[2], out error);
 					if (error != null) return error;
-					string layer = Converter.ObjectToString(arguments[4], out error);
+					string layer = Converter.ObjectToString(arguments[3], out error);
+                    if (error != null) return error;
+                    string dir = Converter.ObjectToString(arguments[4], out error);
                     if (error != null) return error;
                     string posx = Converter.ObjectToString(arguments[5], out error);
                     if (error != null) return error;
                     string posy = Converter.ObjectToString(arguments[6], out error);
                     if (error != null) return error;
-                    string posz = Converter.ObjectToString(arguments[7], out error);
-                    if (error != null) return error;
-                    string state = Converter.ObjectToString(arguments[8], out error);
+                    var state = Converter.ObjectToString(arguments[7], out error);
                     if (error != null) return error;
 
+                    GameObject obj = mCGLayer.GetStandCG(id, out error);
+                    if (error != null) return error;
 
                     Rect canvasRect = CanvasRect;
 					float x = 1.5f * canvasRect.width;
-					Vector3 position_prev = new Vector3(0.0f, 0.0f, 0.0f);
-					Vector3 position_next = new Vector3(0.0f, 0.0f, 0.0f);
+					Vector3 position_prev = obj.transform.localPosition;
+					Vector3 position_next = obj.transform.localPosition;
 					switch (pos) {
                     case "event":
                         pos = "6";
@@ -241,29 +241,29 @@ namespace ProjectWitch.Talk.WorkSpace
 					}
 					switch (pos) {
                     case "6":
-                        position_prev = new Vector3(x, 0.0f, 0.0f);
-                        position_next = new Vector3(mEventCGAnchor.localPosition.x, 0.0f, 0.0f);
+                        position_prev = new Vector3(x, position_prev.y, position_prev.z);
+                        position_next = new Vector3(mEventCGAnchor.localPosition.x, position_next.y, position_next.z);
                         break;
                     case "5":
-						position_prev = new Vector3(x, 0.0f, 0.0f);
-						position_next = new Vector3(mStandCGAnchor5.localPosition.x, 0.0f, 0.0f);
+						position_prev = new Vector3(x, position_prev.y, position_prev.z);
+						position_next = new Vector3(mStandCGAnchor5.localPosition.x, position_next.y, position_next.z);
 						break;
 					case "4":
-						position_prev = new Vector3(x, 0.0f, 0.0f);
-						position_next = new Vector3(mStandCGAnchor4.localPosition.x, 0.0f, 0.0f);
-						break;
+						position_prev = new Vector3(x, position_prev.y, position_prev.z);
+                            position_next = new Vector3(mStandCGAnchor4.localPosition.x, position_next.y, position_next.z);
+                            break;
 					case "3":
-						position_prev = new Vector3(x, 0.0f, 0.0f);
-						position_next = new Vector3(mStandCGAnchor3.localPosition.x, 0.0f, 0.0f);
-						break;
+						position_prev = new Vector3(x, position_prev.y, position_prev.z);
+                            position_next = new Vector3(mStandCGAnchor3.localPosition.x, position_next.y, position_next.z);
+                            break;
 					case "2":
-						position_prev = new Vector3(-x, 0.0f, 0.0f);
-						position_next = new Vector3(mStandCGAnchor2.localPosition.x, 0.0f, 0.0f);
-						break;
+						position_prev = new Vector3(-x, position_prev.y, position_prev.z);
+                            position_next = new Vector3(mStandCGAnchor2.localPosition.x, position_next.y, position_next.z);
+                            break;
 					case "1":
-						position_prev = new Vector3(-x, 0.0f, 0.0f);
-						position_next = new Vector3(mStandCGAnchor1.localPosition.x, 0.0f, 0.0f);
-						break;
+						position_prev = new Vector3(-x, position_prev.y, position_prev.z);
+                            position_next = new Vector3(mStandCGAnchor1.localPosition.x, position_next.y, position_next.z);
+                            break;
 					default:
 						return "正しい位置を指定してください。";
 					}
@@ -285,14 +285,6 @@ namespace ProjectWitch.Talk.WorkSpace
                         position_prev = new Vector3(p.x, p.y, p.z);
                         position_next = new Vector3(n.x, _posy, n.z);
                     }
-                    if (posz != "")
-                    {
-                        int _posz = int.Parse(posz);
-                        var p = position_prev;
-                        var n = position_next;
-                        position_prev = new Vector3(p.x, p.y, p.z);
-                        position_next = new Vector3(n.x, n.y, _posz);
-                    }
 
 
                     bool isShowFront;
@@ -305,14 +297,11 @@ namespace ProjectWitch.Talk.WorkSpace
 						isShowFront = false;
 						break;
 					default:
-						return "正しいモードを指定してください。";
+						return "正しいレイヤーを指定してください。";
 					}
 					position_next = mCGLayer.GetUnduplicatePosition(position_next);
 
 					mCGLayer.ShowStandCG(id, isShowFront, state, dir, out error);
-					if (error != null) return error;
-
-					GameObject obj = mCGLayer.GetStandCG(id, out error);
 					if (error != null) return error;
 
 					float time = 0.5f;
@@ -345,7 +334,7 @@ namespace ProjectWitch.Talk.WorkSpace
 						return "正しいモードを指定してください。";
 					}
 
-					arguments[9] = updater;
+					arguments[8] = updater;
 					return error;
 				}));
             //立ち絵を非表示
@@ -406,14 +395,14 @@ namespace ProjectWitch.Talk.WorkSpace
 				}));
             //立ち絵表示変更
             vm.AddCommandDelegater(
-                "changecg",
+                "ChangeCG",
                 new CommandDelegater(false, 2, delegate (object[] arguments)
                 {
                     string error=null;
 
                     int id = Converter.ObjectToInt(arguments[0], out error);
                     if (error != null) return error;
-                    string state = Converter.ObjectToString(arguments[1], out error);
+                    var state = Converter.ObjectToString(arguments[1], out error);
                     if (error != null) return error;
 
                     mCGLayer.ChangeStandCG(id, state, out error);

@@ -54,9 +54,19 @@ namespace ProjectWitch.Talk
             //obj.GetComponent<RawImage>().SetNativeSize();
             //obj.transform.SetParent(this.transform);
 
-            obj = Instantiate(Resources.Load(path) as GameObject);
+            //立ち絵ロード
+            var res = Resources.Load(path) as GameObject;
+            if(res == null)
+            {
+                error = "立ち絵画像が見つかりませんでした。" + path +
+                    "が存在するか確認してください。";
+                return;
+            }
+
+            //立ち絵のセット（非表示）
+            obj = Instantiate(res);
             obj.SetActive(false);
-            obj.transform.SetParent(this.transform);
+            obj.transform.SetParent(this.transform,false);
 
             mCGArray[id] = obj;
         }
@@ -94,9 +104,6 @@ namespace ProjectWitch.Talk
                 return;
             }
 
-            //表情の設定
-            obj.GetComponent<Animator>().Play(state);
-
             //表示向きの設定
             if(dir=="right")
             {
@@ -111,6 +118,10 @@ namespace ProjectWitch.Talk
             else
                 obj.transform.SetAsLastSibling();
             obj.SetActive(true);
+
+            //表情の設定
+            if (state != "")
+                obj.GetComponent<Animator>().Play(state);
         }
 
         //立ち絵を非表示
