@@ -32,6 +32,12 @@ namespace ProjectWitch.Talk.Compiler{
 			patternList.Add (new CreateShowTextWindowCommand ());
 			patternList.Add (new CreateHideTextWindowCommand ());
 			patternList.Add (new CreateTextSpeedCommand ());
+
+            patternList.Add(new CreateLoadFaceCommand());
+            patternList.Add(new CreateDrawFaceCommand());
+            patternList.Add(new CreateClearFaceCommand());
+            patternList.Add(new CreateChangeFaceCommand());
+
 			mPatternList = patternList;
 		}
 	}
@@ -132,6 +138,8 @@ namespace ProjectWitch.Talk.Compiler{
 
 
     }
+
+
 	//テキストウィンドウを表示
 	public class CreateShowTextWindowCommand : Pattern_TagFormat
 	{
@@ -181,8 +189,150 @@ namespace ProjectWitch.Talk.Compiler{
 			return commandList.GetArray ();
 		}
 	}
-	//テキスト表示コマンド
-	public class CreateTextCommand : Pattern_CreateCommand
+    
+    //顔グラロード
+    public class CreateLoadFaceCommand : Pattern_TagFormat
+    {
+        protected override string TagName()
+        {
+            return "loadfg";
+        }
+        protected override CommandFormat[] CreateCommand(ArgumentDictionary arguments, int line ,int index)
+        {
+            CommandList commandList = new CommandList();
+
+            if (arguments.ContainName("id"))
+            {
+                commandList.Add(arguments.Get("id"));
+            }
+            else
+            {
+                CompilerLog.Log("引数idが足りません。");
+                return null;
+            }
+
+            if (arguments.ContainName("ref"))
+            {
+                commandList.Add(arguments.Get("ref"));
+            }
+            else
+            {
+                CompilerLog.Log("引数refが足りません");
+                return null;
+            }
+
+            
+            if (arguments.Count > 0)
+            {
+                CompilerLog.Log(line, index, "無効な引数があります");
+                return null;
+            }
+
+            commandList.Add(new RunOrderCommand("LoadFace"));
+
+            return commandList.GetArray();
+        }
+    }
+    //顔グラ表示
+    public class CreateDrawFaceCommand : Pattern_TagFormat
+    {
+        protected override string TagName()
+        {
+            return "drawfg";
+        }
+        protected override CommandFormat[] CreateCommand(ArgumentDictionary arguments, int line, int index)
+        {
+            CommandList commandList = new CommandList();
+
+            if (arguments.ContainName("id"))
+            {
+                commandList.Add(arguments.Get("id"));
+            }
+            else
+            {
+                CompilerLog.Log("引数idが足りません。");
+                return null;
+            }
+
+            if (arguments.ContainName("state"))
+            {
+                commandList.Add(arguments.Get("state"));
+            }
+            else
+            {
+                commandList.Add(new SetArgumentCommand(""));
+            }
+
+
+            if (arguments.Count > 0)
+            {
+                CompilerLog.Log(line, index, "無効な引数があります");
+                return null;
+            }
+
+            commandList.Add(new RunOrderCommand("DrawFace"));
+
+            return commandList.GetArray();
+        }
+    }
+    //顔グラ非表示
+    public class CreateClearFaceCommand : Pattern_TagFormat
+    {
+        protected override string TagName()
+        {
+            return "clearfg";
+        }
+        protected override CommandFormat[] CreateCommand(ArgumentDictionary arguments, int line, int index)
+        {
+            CommandList commandList = new CommandList();
+
+            if (arguments.Count > 0)
+            {
+                CompilerLog.Log(line, index, "無効な引数があります");
+                return null;
+            }
+
+            commandList.Add(new RunOrderCommand("ClearFace"));
+
+            return commandList.GetArray();
+        }
+    }
+    //顔ぐら表情変更
+    public class CreateChangeFaceCommand : Pattern_TagFormat
+    {
+        protected override string TagName()
+        {
+            return "changefg";
+        }
+        protected override CommandFormat[] CreateCommand(ArgumentDictionary arguments, int line, int index)
+        {
+            CommandList commandList = new CommandList();
+
+            if(arguments.ContainName("state"))
+            {
+                commandList.Add(arguments.Get("state"));
+            }
+            else
+            {
+                CompilerLog.Log("引数stateが必要です。");
+                return null;
+            }
+
+            if (arguments.Count > 0)
+            {
+                CompilerLog.Log(line, index, "無効な引数があります");
+                return null;
+            }
+
+            commandList.Add(new RunOrderCommand("ChangeFace"));
+
+            return commandList.GetArray();
+        }
+    }
+
+
+    //テキスト表示コマンド
+    public class CreateTextCommand : Pattern_CreateCommand
 	{
 		public override Result Match(WordWithName[] wordList , int currIndex){
 			string text = "";

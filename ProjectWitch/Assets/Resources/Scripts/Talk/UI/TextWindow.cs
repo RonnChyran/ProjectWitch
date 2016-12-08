@@ -80,7 +80,7 @@ namespace ProjectWitch.Talk
                 var info = anim.GetCurrentAnimatorStateInfo(0);
                 //現在表示されていなかったら表示する
                 if(info.fullPathHash == Animator.StringToHash("Base Layer.hide"))
-                    mName.GetComponent<Animator>().SetTrigger("Show");
+                    anim.SetTrigger("Show");
             }
         }
 
@@ -95,7 +95,7 @@ namespace ProjectWitch.Talk
                 var info = anim.GetCurrentAnimatorStateInfo(0);
                 //現在表示されていたら隠す
                 if(info.fullPathHash == Animator.StringToHash("Base Layer.show"))
-                    mName.GetComponent<Animator>().SetTrigger("Hide");
+                    anim.SetTrigger("Hide");
             }
         }
 
@@ -111,8 +111,7 @@ namespace ProjectWitch.Talk
             var path = mFaceFolderPath + name;
             var resource = Resources.Load<GameObject>(path);
             var inst = Instantiate(resource);
-            inst.transform.SetParent(mFaceParent.transform);
-            inst.SetActive(false);
+            inst.transform.SetParent(mFaceParent.transform, false);
 
             //スロットが空いていなかったら古いものを開放する
             if (mFaces[id])
@@ -134,15 +133,25 @@ namespace ProjectWitch.Talk
             //ウィンドウを表示
             ShowWindow();
 
-            //現在表示している顔グラを非表示にする
-            if (mCurrentFace)
-                mCurrentFace.GetComponent<Animator>().SetTrigger("Hide");
+            //現在表示している顔グラを非表示にする(違う場合)
+            //一緒の場合は表情だけ変更し終了
+            if (mFaces[id] != mCurrentFace)
+            {
+                HideFace();
 
-            //表示
-            mFaces[id].GetComponent<Animator>().SetTrigger("Show");
+                //表示
+                var anim = mFaces[id].GetComponent<Animator>();
+                var info = anim.GetCurrentAnimatorStateInfo(0);
+                if (info.fullPathHash == Animator.StringToHash("Base Layer.hide"))
+                    mFaces[id].GetComponent<Animator>().SetTrigger("Show");
 
-            //現在の顔グラの参照をセット
-            mCurrentFace = mFaces[id];
+                //現在の顔グラの参照をセット
+                mCurrentFace = mFaces[id];
+            }
+            
+            //表情のセット
+            ChangeStateFace(state);
+
         }
 
         //顔グラを非表示
@@ -150,15 +159,19 @@ namespace ProjectWitch.Talk
         {
             if (mCurrentFace)
             {
-                mCurrentFace.GetComponent<Animator>().SetTrigger("Hide");
-                mCurrentFace = null;
+                var anim = mCurrentFace.GetComponent<Animator>();
+                var info = anim.GetCurrentAnimatorStateInfo(0);
+                //現在表示されていたら隠す
+                if (info.fullPathHash == Animator.StringToHash("Base Layer.show"))
+                    anim.SetTrigger("Hide");
             }
         }
 
         //顔グラの表情を変える
         public void ChangeStateFace(string stateName)
         {
-            mCurrentFace.GetComponent<Animator>().Play(stateName);
+            if(mCurrentFace && stateName != "")
+                mCurrentFace.GetComponent<Animator>().Play(stateName);
         }
 
         //ページ送りアイコンの表示

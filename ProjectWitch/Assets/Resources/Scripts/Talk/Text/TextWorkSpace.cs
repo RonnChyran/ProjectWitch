@@ -68,16 +68,28 @@ namespace ProjectWitch.Talk.WorkSpace
             mTextWindowManager.ChangeSkin(mWindowSkinFolderPath + name);
         }
 
+        //顔グラのロード
+        protected void LoadFace(int id, string name)
+        {
+            mTextWindowManager.Window.LoadFace(id, name);
+        }
+
         //顔グラの表示
         protected void ShowFace(int id, string name)
         {
-            //mTextWindowManager.Window.ShowFace(name);
+            mTextWindowManager.Window.ShowFace(id, name);
         }
 
         //顔グラの非表示
         protected void HideFace()
         {
             mTextWindowManager.Window.HideFace();
+        }
+
+        //顔グラ変更
+        protected void ChangeFace(string state)
+        {
+            mTextWindowManager.Window.ChangeStateFace(state);
         }
 
 		//テキストを指定速度で再生するアップデータ
@@ -183,7 +195,6 @@ namespace ProjectWitch.Talk.WorkSpace
             //これまでのテキストを取得
             public override void Setup()
             {
-                mTWS.SetTextVisible(mHidden);
             }
             //テキストを追加
             public override void Update(float deltaTime)
@@ -282,18 +293,33 @@ namespace ProjectWitch.Talk.WorkSpace
 					return null;
 				}));
             vm.AddCommandDelegater(
-                "DrawFace",
-                new CommandDelegater(true, 1, delegate (object[] arguments)
+                "LoadFace",
+                new CommandDelegater(false, 2, delegate (object[] arguments)
                 {
                     string error = null;
 
-                    var name = Converter.ObjectToString(arguments[0], out error);
+                    var id = Converter.ObjectToInt(arguments[0], out error);
+                    var name = Converter.ObjectToString(arguments[1], out error);
                     if (error != null) return error;
 
-                    //ShowFace(name);
+                    LoadFace(id, name);
 
-                    UpdaterFormat updater = new FaceUpdater(true, 0.15f, this);
-                    arguments[1] = updater;
+                    return error;
+                }));
+            vm.AddCommandDelegater(
+                "DrawFace",
+                new CommandDelegater(true, 2, delegate (object[] arguments)
+                {
+                    string error = null;
+
+                    var id = Converter.ObjectToInt(arguments[0], out error);
+                    var state = Converter.ObjectToString(arguments[1], out error);
+                    if (error != null) return error;
+
+                    ShowFace(id, state);
+
+                    UpdaterFormat updater = new FaceUpdater(true, 0.05f, this);
+                    arguments[2] = updater;
                     return error;
                 }));
             vm.AddCommandDelegater(
@@ -304,8 +330,21 @@ namespace ProjectWitch.Talk.WorkSpace
 
                     HideFace();
 
-                    UpdaterFormat updater = new FaceUpdater(false, 0.15f, this);
+                    UpdaterFormat updater = new FaceUpdater(false, 0.05f, this);
                     arguments[0] = updater;
+                    return error;
+                }));
+            vm.AddCommandDelegater(
+                "ChangeFace",
+                new CommandDelegater(false, 1, delegate (object[] arguments)
+                {
+                    string error = null;
+
+                    var state = Converter.ObjectToString(arguments[0], out error);
+                    if (error != null) return error;
+
+                    ChangeFace(state);
+
                     return error;
                 }));
 			vm.AddCommandDelegater(
