@@ -3561,7 +3561,6 @@ MonoBehaviour:
   mLine: {fileID: 105904, guid: 68a842dc7b518954f8e25a43796615a1, type: 2}
   mBasePrefab: {fileID: 157614, guid: 359cefb0b09ad3e4d99a2103aab53626, type: 2}
   mFlagTexFolderPath: Textures/Field/Flag/
-  mActionWindow: {fileID: 0}
 --- !u!4 &1680660969
 Transform:
   m_ObjectHideFlags: 0
@@ -4127,6 +4126,34 @@ MonoBehaviour:
   mBackPos: 30
   mTerritoryID: 4
   mSpeed: 100
+--- !u!1 &1803515746
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1803515747}
+  m_Layer: 0
+  m_Name: TalkCommandHelper
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1803515747
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1803515746}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 339.97336, y: 183.44162, z: -2.375}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
 --- !u!1 &1824088781
 GameObject:
   m_ObjectHideFlags: 0
@@ -4912,7 +4939,6 @@ MonoBehaviour:
   - {fileID: 1000013414407482, guid: d5901817fba44224bafb7e29a2c277c0, type: 2}
   - {fileID: 1000012482304262, guid: 77c907a0f9de6c840a92eb90bcf219c3, type: 2}
   - {fileID: 1000011122824544, guid: f30c67943088c014ab06e21e1fb6fe05, type: 2}
-  mTopButton: {fileID: 1435162401}
   mNextButton: {fileID: 1702776782}
   mPrevButton: {fileID: 1679666183}
   mPageNum: {fileID: 1848684472}
