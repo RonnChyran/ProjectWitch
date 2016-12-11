@@ -8,7 +8,10 @@ using System.Collections.Generic;
 
 using ProjectWitch.Talk.Command;
 using ProjectWitch.Talk.Pattern;
-using ProjectWitch.Talk.WorkSpace;namespace ProjectWitch.Talk.Compiler{
+using ProjectWitch.Talk.WorkSpace;
+using System;
+
+namespace ProjectWitch.Talk.Compiler{
 	public class CreateCommandsOfOther : Pattern_Component
 	{
 		//隠蔽
@@ -29,6 +32,7 @@ using ProjectWitch.Talk.WorkSpace;namespace ProjectWitch.Talk.Compiler{
 			patternList.Add (new CreateKillUnitCommand ());
 			patternList.Add (new CreateEmployUnitCommand ());
 			patternList.Add (new CreateChangeAreaOwnerCommand ());
+            patternList.Add(new CreateWaitTimerCommand());
 			mPatternList = patternList;
 		}
 	}
@@ -395,4 +399,39 @@ using ProjectWitch.Talk.WorkSpace;namespace ProjectWitch.Talk.Compiler{
 			return commandList.GetArray ();
 		}
 	}
+
+    //ウェイトタイマー
+    public class CreateWaitTimerCommand : Pattern_TagFormat
+    {
+        protected override string TagName()
+        {
+            return "wait";
+        }
+
+        protected override CommandFormat[] CreateCommand(ArgumentDictionary arguments, int line, int index)
+        {
+            CommandList commandList = new CommandList();
+
+            if(arguments.ContainName("time"))
+            {
+                commandList.Add(arguments.Get("time"));
+            }
+            else
+            {
+                CompilerLog.Log(line, index, "引数timeが不足しています。");
+                return null;
+            }
+
+            commandList.Add(new RunOrderCommand("WaitTimer"));
+            commandList.Add(new RunOrderCommand("SetUpdater"));
+
+            if(arguments.Count > 0)
+            {
+                CompilerLog.Log(line, index, "無効な引数があります。");
+                return null;
+            }
+            return commandList.GetArray();
+        }
+    }
+
 }

@@ -4,10 +4,10 @@
 ;条件：　初回戦闘後戦闘に敗北した　かつ　アリス、クロが生存している
 ;タイミング：　侵攻戦戦闘後、防衛戦戦闘後
 
-[loadcg id=0 ref="000_cv_aliceA"]
+[loadcg id=0 ref="alice"]
 [background ref="1008"]
 [bgm ref="017_event2"]
-[drawcg id=0 pos="right"]
+[drawcg id=0 pos="right" state="1"]
 
 #アリス
 [voice ref="010016"]

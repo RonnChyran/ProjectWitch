@@ -4,12 +4,12 @@
 ;条件　なし
 ;タイミング　■場面6の続き
 ;データロード
-[loadcg id=0 ref="000_cv_aliceA"]
-[loadcg id=1 ref="009_cv_chishireA"]
+[loadcg id=0 ref="alice"]
+[loadcg id=1 ref="chishire"]
 [background ref="1000"]
 [bgm ref="003_alice2"]
 [drawcg id=0 pos="right"]
-[drawcg id=1 pos="left"]
+[drawcg id=1 pos="left" dir="right"]
 
 #チシャ
 [voice ref="010031"]

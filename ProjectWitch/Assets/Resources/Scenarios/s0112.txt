@@ -4,14 +4,14 @@
 ;条件　ニルギリ砦に侵攻
 ;タイミング　戦闘前
 ;メモ　ワーウルフの首を見て、兵士の士気が低下している ワーウルフの首を見せつけられたメイジー軍の士気は、 すでに落ちるところまで落ちており、 逃亡する兵士まで現れる始末だった。
-[loadcg id=0 ref="000_cv_aliceA"]
-[loadcg id=1 ref="008_cv_kuroA"]
-[loadcg id=2 ref="010_cv_meisieA"]
-[loadcg id=3 ref="037_cv_soldier"]
+[loadcg id=0 ref="alice"]
+[loadcg id=1 ref="kuro"]
+[loadcg id=2 ref="meisie"]
+[loadcg id=3 ref="soldier"]
 [background ref="1014"]
 [bgm ref="017_event2"]
 [drawcg id=2 pos="center"]
-[drawcg id=3 pos="1"]
+[drawcg id=3 pos="1" dir="right"]
 
 #メイジー
 [voice ref="010079"]
@@ -41,7 +41,7 @@
 ;場面転換
 [background ref="1008"]
 [drawcg id=0 pos="right"]
-[drawcg id=1 pos="left"]
+[drawcg id=1 pos="left" dir="right"]
 [filter name="clear" time=500]
 #クロ
 [voice ref="010086"]

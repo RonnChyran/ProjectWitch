@@ -5,14 +5,14 @@
 ;タイミング：　侵攻戦戦闘後、防衛戦戦闘後
 
 ;リソースロード
-[loadcg id=0 ref="000_cv_aliceA"]
-[loadcg id=1 ref="008_cv_kuroA"]
-[loadcg id=2 ref="010_cv_meisieA"]
-[loadcg id=3 ref="011_cv_werewolfA"]
+[loadcg id=0 ref="alice"]
+[loadcg id=1 ref="kuro"]
+[loadcg id=2 ref="meisie"]
+[loadcg id=3 ref="werewolf"]
 [background ref="1008"]
 [bgm ref="021_event6"]
 [drawcg id=0 pos="right"]
-[drawcg id=1 pos="left"]
+[drawcg id=1 pos="left" dir="right"]
 
 #アリス
 [voice ref="010006"]
@@ -34,7 +34,7 @@
 
 ;リソースロード
 [drawcg id=2 pos="right"]
-[drawcg id=3 pos="left"]
+[drawcg id=3 pos="left" dir="right"]
 [filter name="clear" time=500]
 [bgm ref="017_event2"]
 #ワーウルフ

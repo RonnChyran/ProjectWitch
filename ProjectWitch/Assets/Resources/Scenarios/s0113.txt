@@ -1,10 +1,10 @@
 ;script 113
 
 ;リソースロード
-[loadcg id=0 ref="000_cv_aliceA"]
-[loadcg id=1 ref="008_cv_kuroA"]
-[loadcg id=2 ref="009_cv_chishireA"]
-[loadcg id=3 ref="037_cv_soldier"]
+[loadcg id=0 ref="alice"]
+[loadcg id=1 ref="kuro"]
+[loadcg id=2 ref="chishire"]
+[loadcg id=3 ref="soldier"]
 [loadcg id=4 ref="Event/701"]
 
 [if_alive unit=2]
@@ -65,7 +65,7 @@
 ;タイミング　戦闘後
 [background ref="1014"]
 [bgm ref="019_event4"]
-[drawcg id=1 pos="2"]
+[drawcg id=1 pos="2" dir="right"]
 [drawcg id=0 pos="5"]
 [drawcg id=3 pos="3"]
 

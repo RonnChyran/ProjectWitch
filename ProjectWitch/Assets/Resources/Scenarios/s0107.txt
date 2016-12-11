@@ -4,15 +4,15 @@
 ;条件　なし
 ;タイミング　■場面7のつづき アッサム砦西、高台。 アリスはアッサム砦を崖の上から一望しながら、いつもの笑みを浮かべていた。
 ;リソースロード
-[loadcg id=0 ref="000_cv_aliceA"]
-[loadcg id=1 ref="008_cv_kuroA"]
-[loadcg id=2 ref="011_cv_werewolfA"]
-[loadcg id=3 ref="037_cv_soldier"]
-[loadcg id=4 ref="037_cv_soldier"]
+[loadcg id=0 ref="alice"]
+[loadcg id=1 ref="kuro"]
+[loadcg id=2 ref="werewolf"]
+[loadcg id=3 ref="soldier"]
+[loadcg id=4 ref="soldier"]
 [background ref="1008"]
 [bgm ref="018_event3"]
-[drawcg id=0 pos="right"]
-[drawcg id=1 pos="left"]
+[drawcg id=0 pos="right" state="1"]
+[drawcg id=1 pos="left" dir="right"]
 
 #アリス
 [voice ref="010040"]

@@ -26,6 +26,10 @@ namespace ProjectWitch.Field
         private CameraController mCameraController = null;
         public CameraController CameraController { get { return mCameraController; } private set { } }
 
+        //Talkシーン用のヘルパーコマンド
+        [SerializeField]
+        private TalkCommandHelper mTalkCommandHelper = null;
+        public TalkCommandHelper TalkCommandHelper { get{ return mTalkCommandHelper; } private set { } }
 
         //内部変数
         //コルーチンが動いているかどうか
@@ -105,6 +109,9 @@ namespace ProjectWitch.Field
                 //ターン数更新
                 game.GameData.Territory[0].ActionCount = 3 - i;
 
+                //カメラ操作を無効にする
+                CameraController.IsPlayable = false;
+
                 //ターンはじめイベントを実行
                 yield return EventExecute(eventlist);
 
@@ -118,6 +125,9 @@ namespace ProjectWitch.Field
                 //メニュー操作を有効にする
                 MenuClickable = true;
                 FlagClickable = true;
+
+                //カメラ操作を有効にする
+                CameraController.IsPlayable = true;
 
                 //時間が変化するまで待機
                 while (currentTime == game.GameData.CurrentTime) yield return null;

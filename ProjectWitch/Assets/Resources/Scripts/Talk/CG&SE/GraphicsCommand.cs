@@ -6,12 +6,9 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
 
 using ProjectWitch.Talk.Pattern;
 using ProjectWitch.Talk.Command;
-using ProjectWitch.Talk.WorkSpace;
-using System;
 
 namespace ProjectWitch.Talk.Compiler{
 	//これをパターンに追加すると演出全般が追加されるよ
@@ -276,14 +273,12 @@ namespace ProjectWitch.Talk.Compiler{
 			if (arguments.ContainName ("x")) {
 				commandList.Add (arguments.Get ("x"));
 			} else {
-				CompilerLog.Log (line, index, "x引数が不足しています。");
-				return null;
+                commandList.Add(new SetArgumentCommand(""));
 			}
 			if (arguments.ContainName ("y")) {
 				commandList.Add (arguments.Get ("y"));
 			} else {
-				CompilerLog.Log (line, index, "id引数が不足しています。");
-				return null;
+                commandList.Add(new SetArgumentCommand(""));
 			}
 			if (arguments.ContainName ("time")) {
 				commandList.Add (arguments.Get ("time"));
@@ -324,15 +319,13 @@ namespace ProjectWitch.Talk.Compiler{
 			if (arguments.ContainName ("x")) {
 				commandList.Add (arguments.Get ("x"));
 			} else {
-				CompilerLog.Log (line, index, "x引数が不足しています。");
-				return null;
+                commandList.Add(new SetArgumentCommand("0"));
 			}
 			if (arguments.ContainName ("y")) {
 				commandList.Add (arguments.Get ("y"));
 			} else {
-				CompilerLog.Log (line, index, "id引数が不足しています。");
-				return null;
-			}
+                commandList.Add(new SetArgumentCommand("0"));
+            }
 			if (arguments.ContainName ("time")) {
 				commandList.Add (arguments.Get ("time"));
 			} else {

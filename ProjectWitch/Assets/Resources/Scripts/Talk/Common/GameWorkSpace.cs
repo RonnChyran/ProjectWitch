@@ -253,23 +253,13 @@ namespace ProjectWitch.Talk.WorkSpace
         private class ScriptBeginAnimator : PauseUpdater
         {
             //継続時間
-            float mTime = 2.0f;
+            float mTime = 0.0f;
             //現在の時間
             private float mCurrentTime = 0.0f;
-            //アニメーションコンポーネント
-            private Animator mcTWindow;
-            private Animator mcNWindow;
-            private Animator mcNText;
 
-            public ScriptBeginAnimator(float time, Animator cTWindow, Animator cNWindow, Animator cNText)
+            public ScriptBeginAnimator(float time)
             {
                 mTime = time;
-                mcTWindow = cTWindow;
-                mcNWindow = cNWindow;
-                mcNText = cNText;
-                mcTWindow.SetBool("IsBegin", true);
-                mcNWindow.SetBool("IsBegin", true);
-                mcNText.SetBool("IsBegin", true);
             }
 
             //初期化処理
@@ -292,15 +282,42 @@ namespace ProjectWitch.Talk.WorkSpace
             }
         }
 
+        //タイマーウェイトのアップデータ
+        private class TimerWaitUpdater : PauseUpdater
+        {
+            float mTime = 0.0f;
+
+            private TimerWaitUpdater() { }
+            public TimerWaitUpdater(float time)
+            {
+                mTime = time;
+            }
+
+            public override void Setup()
+            {
+            }
+
+            public override void Update(float deltaTime)
+            {
+                mTime -= deltaTime;
+                if (mTime <= 0.0f)
+                    SetActive(false);
+            }
+
+            public override void Finish()
+            {
+            }
+        }
+
+
         [SerializeField]
-        private float mBeginTime = 2.0f;
+        private float mBeginTime = 0.0f;
 
         //スクリプト開始
         public void ScriptBegin()
         {
-
             //割り込みを登録
-            //mSWS.SetUpdater(new ScriptBeginAnimator(mBeginTime,cTWindow,cNWindow,cNText));
+            mSWS.SetUpdater(new ScriptBeginAnimator(mBeginTime));
             Debug.Log("開始");
         }
         
@@ -536,12 +553,26 @@ namespace ProjectWitch.Talk.WorkSpace
             vm.AddCommandDelegater(
                 "ChangeAreaOwner",
                 new CommandDelegater(false, 2, delegate (object[] arguments) {
-                    string error;
+                    string error = null;
                     int area = Converter.ObjectToInt(arguments[0], out error);
                     if (error != null) return error;
                     int owner = Converter.ObjectToInt(arguments[1], out error);
                     if (error != null) return error;
                     ChangeAreaOwner(area, owner, out error);
+                    return error;
+                }));
+
+            //指定秒数だけウェイトを挟む
+            vm.AddCommandDelegater(
+                "WaitTimer",
+                new CommandDelegater(true, 1, delegate (object[] arguments)
+                {
+                    string error = null;
+                    var millisec = Converter.ObjectToInt(arguments[0], out error);
+                    if (error != null) return error;
+
+                    arguments[1] = new TimerWaitUpdater((float)millisec / 1000.0f);
+
                     return error;
                 }));
         }

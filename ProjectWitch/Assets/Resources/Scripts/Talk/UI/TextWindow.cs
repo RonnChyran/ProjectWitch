@@ -55,7 +55,11 @@ namespace ProjectWitch.Talk
         //ウィンドウを表示
         public void ShowWindow()
         {
-            mMessage.GetComponent<Animator>().SetTrigger("Show");
+            var anim = mMessage.GetComponent<Animator>();
+            var info = anim.GetCurrentAnimatorStateInfo(0);
+            //現在表示されていなかったら表示する
+            if (info.fullPathHash == Animator.StringToHash("Base Layer.hide"))
+                mMessage.GetComponent<Animator>().SetTrigger("Show");
         }
 
         //ウィンドウ全体を隠す
@@ -64,7 +68,12 @@ namespace ProjectWitch.Talk
             HideName();
             HideFace();
             HideNextIcon();
-            mMessage.GetComponent<Animator>().SetTrigger("Hide");
+
+            var anim = mMessage.GetComponent<Animator>();
+            var info = anim.GetCurrentAnimatorStateInfo(0);
+            //現在表示されていなかったら表示する
+            if (info.fullPathHash == Animator.StringToHash("Base Layer.show"))
+                mMessage.GetComponent<Animator>().SetTrigger("Hide");
         }
 
         //名前ウィンドウを表示

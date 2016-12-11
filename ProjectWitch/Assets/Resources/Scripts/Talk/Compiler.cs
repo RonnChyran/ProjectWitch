@@ -61,6 +61,7 @@ namespace ProjectWitch.Talk.Compiler
 			patternList.Add (new CreateCommandsOfSound ());
 			patternList.Add (new CreateCommandsOfSystem ());
 			patternList.Add (new CreateCommandsOfOther ());
+            patternList.Add(new CreateCommandsOfField());
 			patternList.Add (new ErrorTagPattern ());
 
 			PatternFormat pattern = new Pattern_Component (patternList);

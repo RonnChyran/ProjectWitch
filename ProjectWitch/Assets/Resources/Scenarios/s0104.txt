@@ -1,8 +1,8 @@
 ﻿;script 104
 ;データロード
-[loadcg id=0 ref="000_cv_aliceA"]
-[loadcg id=1 ref="008_cv_kuroA"]
-[loadcg id=2 ref="011_cv_werewolfA"]
+[loadcg id=0 ref="alice"]
+[loadcg id=1 ref="kuro"]
+[loadcg id=2 ref="werewolf"]
 [background ref="1013"]
 [bgm ref="018_event3"]
 [drawcg id=2 pos="3"]
@@ -13,7 +13,7 @@
 [clearcg id=2]
 [background ref="1008"]
 [drawcg id=0 pos="right"]
-[drawcg id=1 pos="left"]
+[drawcg id=1 pos="left" dir="right"]
 
 #アリス
 [voice ref="010018"]

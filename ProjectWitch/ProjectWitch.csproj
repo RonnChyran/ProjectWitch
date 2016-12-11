@@ -196,6 +196,8 @@
     <Compile Include="Assets\Resources\Scripts\Talk\Common\ScenarioWorkSpace.cs" />
     <Compile Include="Assets\Resources\Scripts\Talk\Common\VirtualMachine.cs" />
     <Compile Include="Assets\Resources\Scripts\Talk\Compiler.cs" />
+    <Compile Include="Assets\Resources\Scripts\Talk\Field\FieldCommand.cs" />
+    <Compile Include="Assets\Resources\Scripts\Talk\Field\FieldWorkSpace.cs" />
     <Compile Include="Assets\Resources\Scripts\Talk\System\OtherCommand.cs" />
     <Compile Include="Assets\Resources\Scripts\Talk\System\SystemCommand.cs" />
     <Compile Include="Assets\Resources\Scripts\Talk\TalkController.cs" />
@@ -342,7 +344,6 @@
     <None Include="Assets\Resources\Fonts\Battle\battleD.txt" />
     <None Include="Assets\Resources\Fonts\Field\fieldfont1.txt" />
     <None Include="Assets\Resources\Scenarios\s0000.txt" />
-    <None Include="Assets\Resources\Scenarios\s0000_short.txt" />
     <None Include="Assets\Resources\Scenarios\s0001.txt" />
     <None Include="Assets\Resources\Scenarios\s0100.txt" />
     <None Include="Assets\Resources\Scenarios\s0101.txt" />
@@ -355,11 +356,11 @@
     <None Include="Assets\Resources\Scenarios\s0112.txt" />
     <None Include="Assets\Resources\Scenarios\s0113.txt" />
     <None Include="Assets\Resources\Scenarios\s0115.txt" />
+    <None Include="Assets\Resources\Scenarios\s9800.txt" />
     <None Include="Assets\Resources\Scenarios\s9994.txt" />
     <None Include="Assets\Resources\Scenarios\s9995.txt" />
     <None Include="Assets\Resources\Scenarios\s9996.txt" />
     <None Include="Assets\Resources\Scenarios\test.txt" />
-    <None Include="Assets\Resources\Scenarios\tutorial000.txt" />
     <None Include="Assets\uREPL\Resources\uREPL\Xmls\Help.txt" />
     <None Include="Assets\uREPL\Resources\uREPL\Xmls\UnityEngineClasses.xml" />
   </ItemGroup>

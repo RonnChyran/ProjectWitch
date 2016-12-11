@@ -1523,6 +1523,7 @@ MonoBehaviour:
   mUIObject: {fileID: 1824088781}
   mFieldUIController: {fileID: 1680660968}
   mCameraController: {fileID: 1737240088}
+  mTalkCommandHelper: {fileID: 1803515748}
 --- !u!4 &946525116
 Transform:
   m_ObjectHideFlags: 0
@@ -4134,6 +4135,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 1803515747}
+  - 114: {fileID: 1803515748}
   m_Layer: 0
   m_Name: TalkCommandHelper
   m_TagString: Untagged
@@ -4154,6 +4156,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
+--- !u!114 &1803515748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1803515746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85d0dc8022a28714da3aec850e0f1f76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mFieldController: {fileID: 946525115}
+  mAreaWindow: {fileID: 1000013053250180, guid: 141cbc9374ca37c42b48dde5f4e04093,
+    type: 2}
+  mAreaNameWindow: {fileID: 1000011992281112, guid: 85cb3ac6a0abd404e97a95f42a8e44bd,
+    type: 2}
+  mCursor: {fileID: 1000012369957726, guid: cf73ce80faed22e47a9ef46676d6f406, type: 2}
 --- !u!1 &1824088781
 GameObject:
   m_ObjectHideFlags: 0

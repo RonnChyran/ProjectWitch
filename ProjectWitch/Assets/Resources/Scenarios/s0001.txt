@@ -1,15 +1,15 @@
 ﻿;script 001
 
 ;キャラロード
-[loadcg id=0 ref="000_cv_aliceA"]
-[loadcg id=1 ref="007_cv_veronicaA"]
-[loadcg id=2 ref="028_cv_niaA"]
-[loadcg id=3 ref="009_cv_chishireA"]
-[loadcg id=4 ref="008_cv_kuroA"]
+[loadcg id=0 ref="alice"]
+[loadcg id=1 ref="veronica"]
+[loadcg id=2 ref="nia"]
+[loadcg id=3 ref="chishire"]
+[loadcg id=4 ref="kuro"]
 
 
 [drawcg id=0 pos="right"]
-[drawcg id=1 pos="left"]
+[drawcg id=1 pos="left" dir="right"]
 [bgm ref="017_event2"]
 [background ref="1025"]
 
@@ -86,7 +86,7 @@
 ちょっと思いついたことがあるんだが……。[p]
 [filter name="fade" time="500"]
 [clearcg id=1]
-[drawcg id=1 pos="right"]
+[drawcg id=1 pos="right" dir="left"]
 [moveto id=1 x=90 y=50 time=0]
 [move id=0 x=10 y=0 time=0]
 [cn]
@@ -96,7 +96,7 @@
 [voice ref="000139"]
 いてえっ！！　いてえよぉーーーー！！！！[n]
 うおーーー！！　いてててて！！！！[p]
-[drawcg id=2 pos="1"]
+[drawcg id=2 pos="1" dir="right"]
 #ニア
 [voice ref="000140"]
 ちょっとちょっと、騒がしいよぉー？[p]
@@ -169,7 +169,7 @@
 [cn]
 疑った割に、ニアはあっさりと牢の扉を開けた。[p]
 #アリス
-[moveto id=0 x=50 y=45 time=400]
+[moveto id=0 x=50 time=400]
 [voice ref="000156"]
 うー、悪いな。[p]
 #ニア
@@ -207,9 +207,9 @@
 #ヴェロニカ
 [voice ref="000165"]
 ええ、わかってますよ。[p]
-[moveto id=1 x=0 y=50 time=300]
+[moveto id=1 x=0 time=300]
 [clearcg id=1]
-[moveto id=0 x=0 y=50 time=300]
+[moveto id=0 x=0 time=300]
 [clearcg id=0]
 [filter name="fade" time="500"]
 
@@ -286,8 +286,8 @@
 ;場面転換
 [bgm ref="003_alice2"]
 [drawcg id=0 pos="5"]
-[drawcg id=3 pos="2"]
-[drawcg id=4 pos="1"]
+[drawcg id=3 pos="2" dir="right"]
+[drawcg id=4 pos="1" dir="right"]
 [background ref="1000"]
 [filter name="clear" time="500"]
 

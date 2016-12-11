@@ -1,9 +1,9 @@
 ;script 0109
 
-[loadcg id=0 ref="000_cv_aliceA"]
-[loadcg id=1 ref="008_cv_kuroA"]
-[loadcg id=2 ref="011_cv_werewolfA"]
-[loadcg id=3 ref="037_cv_soldier"]
+[loadcg id=0 ref="alice"]
+[loadcg id=1 ref="kuro"]
+[loadcg id=2 ref="werewolf"]
+[loadcg id=3 ref="soldier"]
 [background ref="1011"]
 [drawcg id=1 pos="center"]
 
@@ -17,7 +17,7 @@
 [clearcg id=1]
 [cn]
 …………。[p]
-[drawcg id=2 pos="2"]
+[drawcg id=2 pos="2" dir="right"]
 [drawcg id=3 pos="4"]
 [background ref="1013"]
 [filter name="clear" time=500]
@@ -77,9 +77,9 @@
 …………。[p]
 [clearcg id=0]
 [background ref="1014"]
-[drawcg id=2 pos="2"]
+[drawcg id=2 pos="2" dir="right"]
 [drawcg id=0 pos="5"]
-[drawcg id=1 pos="1"]
+[drawcg id=1 pos="1" dir="right"]
 [filter name="clear" time=500]
 
 #クロ
@@ -123,7 +123,7 @@
 #アリス
 [voice ref="010074"]
 そんなこと、あの世でババアに聞きな。[p]
-[moveto id=0 x=50 y=50 time=500]
+[moveto id=0 x=50 time=500]
 [rotate id=0 angle=5 time=50]
 [rotate id=0 angle=-5 time=50]
 ;アリス、ワーウルフにとどめを刺す

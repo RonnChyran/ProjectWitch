@@ -36,6 +36,7 @@ namespace ProjectWitch.Talk.WorkSpace
 			mGraphicsWorkSpace.SetCommandDelegaters (vm);
 			mSoundsWorkSpace.SetCommandDelegaters (vm);
 			mGameWorkSpace.SetCommandDelegaters (vm);
+            mFieldWorkSpace.SetCommandDelegaters(vm);
 
             vm.AddNotification("scriptBegin", new NotifyMethod(mGameWorkSpace.ScriptBegin));
 			vm.AddNotification ("scriptEnd", new NotifyMethod(mGameWorkSpace.ScriptEnd));
@@ -141,6 +142,10 @@ namespace ProjectWitch.Talk.WorkSpace
         //ゲームシステム関係のフィールド
         [SerializeField]
         private GameWorkSpace mGameWorkSpace = null;
+
+        //フィールドとの連携関係
+        [SerializeField]
+        private FieldWorkSpace mFieldWorkSpace = null;
 
         [SerializeField]
         //次の会話をスキップする前にこの時間分だけ待つ

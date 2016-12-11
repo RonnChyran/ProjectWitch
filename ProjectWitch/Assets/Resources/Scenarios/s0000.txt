@@ -64,7 +64,8 @@
 
 ……………。[p]
 [filter name="clear" time="500"]
-[drawcg id=1 pos="left"]
+[drawcg id=1 pos="left" dir="right"]
+[drawcg id=0 pos="5"]
 
 #チシャ
 [voice ref="000012"]
@@ -73,7 +74,6 @@
 [voice ref="000013"]
 正午に街で昼食をとりそのあと館に戻って、[n]
 本年度の予算会議となっております。[p]
-[drawcg id=0 pos="5"]
 #アリス
 [voice ref="000014"]
 おう、じゃあ全部キャンセルで。[p]
@@ -94,7 +94,7 @@
 
 [moveto id=1 x=50 y=50 time=100]
 [se ref="046_door"]
-[drawcg id=2 pos="left" mode="slidein"]
+[drawcg id=2 pos="left" mode="slidein" dir="right"]
 #メイジー
 [voice ref="000019"]
 姉さん！！　ちょっとこれどういうこと！！[p]
@@ -218,7 +218,7 @@
 うちの屋敷……じゃないし。[n]
 うーん、町へ行ってから露店を散策して、そのあと会議で……。[n]
 あれ、覚えてないぞ……。[p]
-[drawcg id=3 pos="left"]
+[drawcg id=3 pos="left" dir="right"]
 
 #？？？
 [voice ref="000045"]
@@ -380,16 +380,17 @@
 [voice ref="000075"]
 ライザ！　ニア！[n]
 あなたたち！！[p]
-[moveto id=0 x=90 y=50 time=100]
-[moveto id=3 x=70 y=50 time=200]
+[moveto id=0 x=90 time=100]
+[moveto id=3 x=70 time=200]
+[scale id=3 sx=-1 time=0]
 
 [bgm ref="015_raizania"]
-[drawcg id=4 pos="2"]
+[drawcg id=4 pos="2" dir="right"]
 [moveto id=4 x=35 y=50 time=200]
 #ライザ
 [voice ref="000076"]
 キヒヒッ！　ざまあないなぁヴェロニカ！[p]
-[drawcg id=5 pos="2"]
+[drawcg id=5 pos="2" dir="right" layer="front"]
 [moveto id=5 x=10 y=50 time=200]
 #ニア
 [voice ref="000077"]
@@ -593,6 +594,7 @@
 [voice ref="000120"]
 いいぜ、かかって来いよ。[n]
 キヒヒッ！　格の違いってのを見せてやるぜ、三流魔女！！[p]
+[hide_message]
 ;戦闘開始
 
 [battle_unit_in p0=294 p1=-1 p2=-1 e0=295 e1=-1 e2=-1]

@@ -419,23 +419,29 @@ namespace ProjectWitch.Talk.WorkSpace
 					string error;
 					int id = Converter.ObjectToInt(arguments[0], out error);
 					if (error != null) return error;
-					float x_per = Converter.ObjectToFloat(arguments[1], out error);
+					var x_per = Converter.ObjectToString(arguments[1], out error);
 					if (error != null) return error;
-					float y_per = Converter.ObjectToFloat(arguments[2], out error);
+					var y_per = Converter.ObjectToString(arguments[2], out error);
 					if (error != null) return error;
 					float time_ms = Converter.ObjectToInt(arguments[3], out error);
 					if (error != null) return error;
 
-					Rect canvasRect = CanvasRect;
-					float x = (x_per/100.0f) * canvasRect.width;
-					float y = (y_per/100.0f) * canvasRect.height;
-					float time = time_ms / 1000.0f;
-
 					GameObject obj = mCGLayer.GetStandCG(id, out error);
 					if (error != null) return error;
 
-					Transform trans = obj.transform;
-					Vector3 position_prev = trans.localPosition;
+                    Rect canvasRect = CanvasRect;
+                    float x,y = 0.0f;
+
+                    Transform trans = obj.transform;
+                    Vector3 position_prev = trans.localPosition;
+
+                    if (x_per != "") x = (int.Parse(x_per) / 100.0f) * canvasRect.width;
+                    else x = position_prev.x - canvasRect.x;
+                    if (y_per != "") y = (int.Parse(y_per) / 100.0f) * canvasRect.height;
+                    else y = position_prev.y - canvasRect.y;
+
+                    float time = time_ms / 1000.0f;
+                    
 					Vector3 position_next = new Vector3(x, y, 0.0f) + new Vector3(canvasRect.x, canvasRect.y, 0.0f);
 
 					UpdaterFormat transUpdater = new CGAnimationUpdater(time, delegate(float progress) {

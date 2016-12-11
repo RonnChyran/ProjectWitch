@@ -82,8 +82,14 @@
     <Reference Include="UnityEditor.Graphs">
       <HintPath>Library\UnityAssemblies\UnityEditor.Graphs.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor.Android.Extensions">
+      <HintPath>Library\UnityAssemblies\UnityEditor.Android.Extensions.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEditor.WindowsStandalone.Extensions">
       <HintPath>Library\UnityAssemblies\UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.OSXStandalone.Extensions">
+      <HintPath>Library\UnityAssemblies\UnityEditor.OSXStandalone.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="SyntaxTree.VisualStudio.Unity.Bridge">
       <HintPath>Library\UnityAssemblies\SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
@@ -215,7 +221,6 @@
     <None Include="Assets\Resources\Fonts\Battle\battleD.txt" />
     <None Include="Assets\Resources\Fonts\Field\fieldfont1.txt" />
     <None Include="Assets\Resources\Scenarios\s0000.txt" />
-    <None Include="Assets\Resources\Scenarios\s0000_short.txt" />
     <None Include="Assets\Resources\Scenarios\s0001.txt" />
     <None Include="Assets\Resources\Scenarios\s0100.txt" />
     <None Include="Assets\Resources\Scenarios\s0101.txt" />
@@ -228,11 +233,11 @@
     <None Include="Assets\Resources\Scenarios\s0112.txt" />
     <None Include="Assets\Resources\Scenarios\s0113.txt" />
     <None Include="Assets\Resources\Scenarios\s0115.txt" />
+    <None Include="Assets\Resources\Scenarios\s9800.txt" />
     <None Include="Assets\Resources\Scenarios\s9994.txt" />
     <None Include="Assets\Resources\Scenarios\s9995.txt" />
     <None Include="Assets\Resources\Scenarios\s9996.txt" />
     <None Include="Assets\Resources\Scenarios\test.txt" />
-    <None Include="Assets\Resources\Scenarios\tutorial000.txt" />
     <None Include="Assets\uREPL\Resources\uREPL\Xmls\Help.txt" />
     <None Include="Assets\uREPL\Resources\uREPL\Xmls\UnityEngineClasses.xml" />
   </ItemGroup>

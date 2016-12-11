@@ -4,12 +4,12 @@
 ;条件　■場面5の後の戦闘で敗北する　かつ　アリス、クロが生存している
 ;タイミング　戦闘後
 ;データロード
-[loadcg id=0 ref="000_cv_aliceA"]
-[loadcg id=1 ref="008_cv_kuroA"]
+[loadcg id=0 ref="alice"]
+[loadcg id=1 ref="kuro"]
 [background ref="1011"]
 [bgm ref="017_event2"]
-[drawcg id=0 pos="right"]
-[drawcg id=1 pos="left"]
+[drawcg id=0 pos="right" state="2"]
+[drawcg id=1 pos="left" dir="right"]
 ;拠点に設置された魔導砲にコテンパンにやられる。
 
 #クロ
