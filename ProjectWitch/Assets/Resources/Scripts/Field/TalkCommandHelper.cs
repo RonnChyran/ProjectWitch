@@ -99,7 +99,7 @@ namespace ProjectWitch.Field
             
             HideAccentCursor();
             mInstCursor = Instantiate(mCursor);
-            mInstCursor.transform.SetParent(canvas.transform);
+            mInstCursor.transform.SetParent(canvas.transform, false);
 
             //位置の調整
             var rect = canvas.GetComponent<RectTransform>().rect;
