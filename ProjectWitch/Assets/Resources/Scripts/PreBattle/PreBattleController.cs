@@ -36,6 +36,10 @@ namespace ProjectWitch.PreBattle
 
             game.IsBattle = true;
             game.HideNowLoading();
+
+            //チュートリアルだった場合
+            if (game.BattleIn.IsTutorial)
+                StartTutorial();
         }
 
         // Update is called once per frame
@@ -144,6 +148,12 @@ namespace ProjectWitch.PreBattle
                 CardSetHistory.HistoryRemove(CardSetHistory[count - 1]);
                 game.SoundManager.PlaySE(SE.Cancel);
             }
+        }
+
+        //チュートリアル開始
+        private void StartTutorial()
+        {
+
         }
     }
 

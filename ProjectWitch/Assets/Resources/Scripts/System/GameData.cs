@@ -1251,6 +1251,9 @@ namespace ProjectWitch
 
         //敵の戦闘タイプ
         public GroupDataFormat.BattleType EnemyBattleType { get; set; }
+        
+        //チュートリアルフラグ
+        public bool IsTutorial { get; set; }
     }
 
     public class BattleDataOut

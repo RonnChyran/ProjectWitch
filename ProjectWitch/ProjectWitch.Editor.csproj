@@ -82,8 +82,14 @@
     <Reference Include="UnityEditor.Graphs">
       <HintPath>Library\UnityAssemblies\UnityEditor.Graphs.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEditor.Android.Extensions">
+      <HintPath>Library\UnityAssemblies\UnityEditor.Android.Extensions.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEditor.WindowsStandalone.Extensions">
       <HintPath>Library\UnityAssemblies\UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.OSXStandalone.Extensions">
+      <HintPath>Library\UnityAssemblies\UnityEditor.OSXStandalone.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="SyntaxTree.VisualStudio.Unity.Bridge">
       <HintPath>Library\UnityAssemblies\SyntaxTree.VisualStudio.Unity.Bridge.dll</HintPath>
@@ -228,6 +234,7 @@
     <None Include="Assets\Resources\Scenarios\s0113.txt" />
     <None Include="Assets\Resources\Scenarios\s0115.txt" />
     <None Include="Assets\Resources\Scenarios\s9800.txt" />
+    <None Include="Assets\Resources\Scenarios\s9801.txt" />
     <None Include="Assets\Resources\Scenarios\s9994.txt" />
     <None Include="Assets\Resources\Scenarios\s9995.txt" />
     <None Include="Assets\Resources\Scenarios\s9996.txt" />
