@@ -7,6 +7,14 @@ namespace ProjectWitch.PreBattle
 {
     public class PreBattleController : MonoBehaviour
     {
+        //チュートリアルのシナリオ名
+        [SerializeField]
+        private string mTutorialScenarioName = "s9801";
+
+        //コマンドヘルパーの参照
+        [SerializeField]
+        private TalkCommandHelper mTalkCommandHelper = null;
+        public TalkCommandHelper TalkCommandHelper { get { return mTalkCommandHelper; } private set { } }
 
         //ユニットID
         public List<int> UnitList { get; set; }
@@ -153,7 +161,11 @@ namespace ProjectWitch.PreBattle
         //チュートリアル開始
         private void StartTutorial()
         {
+            var game = Game.GetInstance();
 
+            EventDataFormat e = new EventDataFormat();
+            e.FileName = mTutorialScenarioName;
+            game.CallScript(e);
         }
     }
 

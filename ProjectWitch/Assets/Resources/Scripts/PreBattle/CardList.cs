@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 namespace ProjectWitch.PreBattle
 {
@@ -22,9 +22,13 @@ namespace ProjectWitch.PreBattle
         [SerializeField]
         private CardInfo mCardInfo = null;
 
+        //カードコンポーネントリスト
+        public List<Card> CardComponentList { get; set; }
+
         // Use this for initialization
         void Start()
         {
+            CardComponentList = new List<Card>();
             CardSet();
         }
 
@@ -49,6 +53,8 @@ namespace ProjectWitch.PreBattle
                 cCard.Controller = mController;
                 cCard.CardInfo = mCardInfo;
                 inst.transform.SetParent(mContentGroup.transform, false);
+
+                CardComponentList.Add(cCard);
             }
         }
     }

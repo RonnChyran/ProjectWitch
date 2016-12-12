@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 namespace ProjectWitch.PreBattle
 {
@@ -16,17 +16,14 @@ namespace ProjectWitch.PreBattle
         [SerializeField]
         private PreBattleController mController = null;
 
+        //プロパティ
+        public List<Unit> UnitComponentList { get; set; }
 
         // Use this for initialization
         void Start()
         {
+            UnitComponentList = new List<Unit>();
             UnitSet();
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-
         }
 
         //リストにコンテンツをセットする
@@ -44,6 +41,8 @@ namespace ProjectWitch.PreBattle
                 cUnit.UnitID = unitid;
                 cUnit.Controller = mController;
                 inst.transform.SetParent(mContentGroup.transform, false);
+
+                UnitComponentList.Add(cUnit);
             }
         }
     }

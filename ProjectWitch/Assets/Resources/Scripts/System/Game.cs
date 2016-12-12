@@ -54,6 +54,11 @@ namespace ProjectWitch
         private InGameConsole mDebugMessage = null;
         public InGameConsole DebugMessage { get { return mDebugMessage; } private set { } }
 
+        //Talkシーンのコマンド
+        [SerializeField]
+        private TalkCommandHelper mTalkCommand = null;
+        public TalkCommandHelper TalkCommand { get { return mTalkCommand; } private set { } }
+
         //ローディング画面
         [SerializeField]
         private GameObject mNowLoadingPrefab = null;

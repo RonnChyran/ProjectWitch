@@ -15,19 +15,12 @@ namespace ProjectWitch.Field
         [SerializeField]
         private GameObject mAreaNameWindow = null;
 
-        //強調カーソルのプレハブ
-        [SerializeField]
-        private GameObject mCursor = null;
-
         //ある処理が終了したときに呼び出されるメソッド
         public delegate void EndCallBack();
 
         //エリアウィンドウのインスタンス
         GameObject mInstAreaWindow = null;
         GameObject mInstAreaName = null;
-
-        //強調カーソルのインスタンス
-        GameObject mInstCursor = null;
 
         //指定エリアの位置にカメラを移動させてハイライトする
         public void HilightArea(int area, EndCallBack callback)
@@ -78,43 +71,28 @@ namespace ProjectWitch.Field
             }
         }
 
-        //カーソルの非表示
-        public void HideCursor()
+        //エリアウィンドウから戦闘を呼び出す
+        public void CallBattleFromAreaWindow()
         {
-            Cursor.visible = false;
-        }
+            if(mInstAreaWindow)
+            {
+                var game = Game.GetInstance();
+                var cAreaWindow = mInstAreaWindow.GetComponent<AreaWindow>();
 
-        //カーソルの表示
-        public void ShowCursor()
-        {
-            Cursor.visible = true;
-        }
+                //味方の領地かどうかチェック
+                if (game.GameData.Area[cAreaWindow.AreaID].Owner == 0)
+                {
+                    Debug.LogWarning(cAreaWindow.AreaID + "番の領地は味方の領地です。攻め込むことはできません。");
+                    return;
+                }
 
-        //強調カーソルの表示
-        //pos:0~100% 左上を0とした画面に対する相対位置
-        public void ShowAccentCursor(Vector2 pos)
-        {
-            //描画先のキャンバス
-            var canvas = mFieldController.FieldUIController.CameraCanvas;
-            
-            HideAccentCursor();
-            mInstCursor = Instantiate(mCursor);
-            mInstCursor.transform.SetParent(canvas.transform, false);
-
-            //位置の調整
-            var rect = canvas.GetComponent<RectTransform>().rect;
-            var adjustPos = new Vector3(0.0f,0.0f);
-            adjustPos.x = pos.x / 100.0f * rect.width;
-            adjustPos.y = pos.y / 100.0f * rect.height;
-            adjustPos = adjustPos + new Vector3(rect.x, rect.y);
-
-            mInstCursor.transform.localPosition = adjustPos;
-        }
-
-        //強調カーソルの非表示
-        public void HideAccentCursor()
-        {
-            if (mInstCursor) Destroy(mInstCursor);
+                //バトルの呼び出し（侵攻戦）
+                cAreaWindow.CallBattle();
+            }
+            else
+            {
+                Debug.LogWarning("CallBattleFromAreaWindowを呼び出せません。先にOpenAreaWindowを実行してください。");
+            }
         }
 
         //コルーチン
