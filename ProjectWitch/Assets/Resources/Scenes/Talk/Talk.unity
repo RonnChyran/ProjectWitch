@@ -966,106 +966,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 948367717}
---- !u!1001 &1220749180
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 908596403}
-    m_Modifications:
-    - target: {fileID: 224000012804609976, guid: 981fdd8516ddd804d8e82816b6ac2536,
-        type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224000012804609976, guid: 981fdd8516ddd804d8e82816b6ac2536,
-        type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224000012804609976, guid: 981fdd8516ddd804d8e82816b6ac2536,
-        type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224000012804609976, guid: 981fdd8516ddd804d8e82816b6ac2536,
-        type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224000012804609976, guid: 981fdd8516ddd804d8e82816b6ac2536,
-        type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224000012804609976, guid: 981fdd8516ddd804d8e82816b6ac2536,
-        type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 224000012804609976, guid: 981fdd8516ddd804d8e82816b6ac2536,
-        type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 224000012804609976, guid: 981fdd8516ddd804d8e82816b6ac2536,
-        type: 2}
-      propertyPath: m_RootOrder
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 224000012804609976, guid: 981fdd8516ddd804d8e82816b6ac2536,
-        type: 2}
-      propertyPath: m_AnchoredPosition.x
-      value: -345.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 224000012804609976, guid: 981fdd8516ddd804d8e82816b6ac2536,
-        type: 2}
-      propertyPath: m_AnchoredPosition.y
-      value: -303.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 224000012804609976, guid: 981fdd8516ddd804d8e82816b6ac2536,
-        type: 2}
-      propertyPath: m_SizeDelta.x
-      value: 494
-      objectReference: {fileID: 0}
-    - target: {fileID: 224000012804609976, guid: 981fdd8516ddd804d8e82816b6ac2536,
-        type: 2}
-      propertyPath: m_SizeDelta.y
-      value: 411
-      objectReference: {fileID: 0}
-    - target: {fileID: 224000012804609976, guid: 981fdd8516ddd804d8e82816b6ac2536,
-        type: 2}
-      propertyPath: m_AnchorMin.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 224000012804609976, guid: 981fdd8516ddd804d8e82816b6ac2536,
-        type: 2}
-      propertyPath: m_AnchorMin.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 224000012804609976, guid: 981fdd8516ddd804d8e82816b6ac2536,
-        type: 2}
-      propertyPath: m_AnchorMax.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 224000012804609976, guid: 981fdd8516ddd804d8e82816b6ac2536,
-        type: 2}
-      propertyPath: m_AnchorMax.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 224000012804609976, guid: 981fdd8516ddd804d8e82816b6ac2536,
-        type: 2}
-      propertyPath: m_Pivot.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 224000012804609976, guid: 981fdd8516ddd804d8e82816b6ac2536,
-        type: 2}
-      propertyPath: m_Pivot.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: 981fdd8516ddd804d8e82816b6ac2536, type: 2}
-  m_IsPrefabParent: 0
 --- !u!1 &1248126378
 GameObject:
   m_ObjectHideFlags: 0
@@ -1518,7 +1418,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 11
+  m_SortingOrder: 12
   m_TargetDisplay: 0
 --- !u!224 &1692446082
 RectTransform:

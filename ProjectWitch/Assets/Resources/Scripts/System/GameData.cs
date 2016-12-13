@@ -1217,6 +1217,8 @@ namespace ProjectWitch
             EnemyUnits[1] = 301;
             EnemyUnits[2] = 302;
 
+            IsTutorial = false;
+
         }
 
         //ユニットデータ

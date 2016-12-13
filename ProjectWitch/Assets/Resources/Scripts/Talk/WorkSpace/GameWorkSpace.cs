@@ -615,6 +615,14 @@ namespace ProjectWitch.Talk.WorkSpace
                     return null;
                 }));
 
+            vm.AddCommandDelegater(
+                "EnableBattleTutorial",
+                new CommandDelegater(false, 0, delegate (object[] arguments)
+                {
+                    Game.GetInstance().TalkCommand.EnableBattleTutorial();
+                    return null;
+                }));
+
         }
     }
 }

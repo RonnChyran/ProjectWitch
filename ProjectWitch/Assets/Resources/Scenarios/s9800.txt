@@ -1,4 +1,6 @@
 [setskin ref="skin1"]
+[skip_enable enable=0]
+
 [loadfg id=0 ref="alice"]
 [loadfg id=1 ref="chishire"]
 
@@ -55,14 +57,15 @@
 [drawfg id=1]
 #チシャ
 では、まずメイジー様の旗を選択してください。[p]
+
 [hide_cursor]
 [show_accentcursor x=52 y=48]
 [wait time=1000]
-[se ref="040_click"]
 [hide_accentcursor]
 [field_open_areawindow id=4]
 [hide_message]
 [wait time=500]
+
 [show_message pos="top"]
 [drawfg id=0 state="0"]
 #アリス
@@ -77,7 +80,8 @@
 [se ref="040_click"]
 [hide_accentcursor]
 [show_cursor]
-[field_callbattle_areawindow]
 
 [hide_message]
 [sys_memset index=9800 value=1]
+[battle_tutorial_enabled]
+[field_callbattle_areawindow]

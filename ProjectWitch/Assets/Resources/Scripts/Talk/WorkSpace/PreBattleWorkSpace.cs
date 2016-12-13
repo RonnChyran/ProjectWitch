@@ -68,7 +68,7 @@ namespace ProjectWitch.Talk.WorkSpace
 
                     if (!PreBattleCommand)
                     {
-                        error = "[prebattle_setunit]が実行できません。フィールドがロードされているシーンで実行してください。";
+                        error = "[prebattle_setunit]が実行できません。prebattleがロードされているシーンで実行してください。";
                         return error;
                     }
 
@@ -87,7 +87,7 @@ namespace ProjectWitch.Talk.WorkSpace
 
                     if (!PreBattleCommand)
                     {
-                        error = "[prebattle_removeunit]が実行できません。フィールドがロードされているシーンで実行してください。";
+                        error = "[prebattle_removeunit]が実行できません。prebattleがロードされているシーンで実行してください。";
                         return error;
                     }
 
@@ -107,7 +107,7 @@ namespace ProjectWitch.Talk.WorkSpace
 
                     if (!PreBattleCommand)
                     {
-                        error = "[prebattle_setcard]が実行できません。フィールドがロードされているシーンで実行してください。";
+                        error = "[prebattle_setcard]が実行できません。prebattleがロードされているシーンで実行してください。";
                         return error;
                     }
 
@@ -126,7 +126,7 @@ namespace ProjectWitch.Talk.WorkSpace
 
                     if (!PreBattleCommand)
                     {
-                        error = "[prebattle_removecard]が実行できません。フィールドがロードされているシーンで実行してください。";
+                        error = "[prebattle_removecard]が実行できません。prebattleがロードされているシーンで実行してください。";
                         return error;
                     }
 
@@ -143,7 +143,7 @@ namespace ProjectWitch.Talk.WorkSpace
                     string error = null;
                     if(!PreBattleCommand)
                     {
-                        error = "[prebattle_callbattle]が実行できません。フィールドがロードされているシーンで実行してください。";
+                        error = "[prebattle_callbattle]が実行できません。prebattleがロードされているシーンで実行してください。";
                         return error;
                     }
 

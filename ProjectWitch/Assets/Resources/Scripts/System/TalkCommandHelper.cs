@@ -45,6 +45,10 @@ namespace ProjectWitch
             mInstCursor = Instantiate(mCursor);
             mInstCursor.transform.SetParent(mCanvas.transform, false);
 
+            //なぜか再アクティブしないと描画されないことがある（Unityのバグか？)
+            mInstCursor.SetActive(false);
+            mInstCursor.SetActive(true);
+
             //位置の調整
             var rect = mCanvas.GetComponent<RectTransform>().rect;
             var adjustPos = new Vector3(0.0f, 0.0f);

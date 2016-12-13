@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using ProjectWitch.Talk.Command;
 using ProjectWitch.Talk.Pattern;
 using ProjectWitch.Talk.WorkSpace;
+using System;
 
 namespace ProjectWitch.Talk.Compiler{
 	public class CreateCommandsOfSystem : Pattern_Component
@@ -31,6 +32,9 @@ namespace ProjectWitch.Talk.Compiler{
 			patternList.Add (new CreateElifCommand ());
 			patternList.Add (new CreateElseCommand ());
 			patternList.Add (new CreateEndifCommand ());
+
+            patternList.Add(new CreateSkipEnableCommand());
+
 			mPatternList = patternList;
 		}
 	}
@@ -552,8 +556,42 @@ namespace ProjectWitch.Talk.Compiler{
 				return null;
 			}
 
+
 			return commandList.GetArray ();
 		}
 	}
+
+    //スキップの禁止
+    public class CreateSkipEnableCommand : Pattern_TagFormat
+    {
+        protected override string TagName()
+        {
+            return "skip_enable";
+        }
+
+        protected override CommandFormat[] CreateCommand(ArgumentDictionary arguments, int line, int index)
+        {
+            CommandList commandList = new CommandList();
+
+            if(arguments.ContainName("enable"))
+            {
+                commandList.Add(arguments.Get("enable"));
+            }
+            else
+            {
+                commandList.Add(new SetArgumentCommand("1"));
+            }
+
+            if (arguments.Count > 0)
+            {
+                CompilerLog.Log(line, index, "無効な引数があります。");
+                return null;
+            }
+            
+            commandList.Add(new RunOrderCommand("SkipEnable"));
+
+            return commandList.GetArray();
+        }
+    }
 
 }

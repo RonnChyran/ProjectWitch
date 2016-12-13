@@ -56,6 +56,9 @@ namespace ProjectWitch.Talk.WorkSpace
         [SerializeField]
         //自動遷移モードフラグ
         private bool mAutoMode;
+
+        //スキップ禁止フラグ
+        private bool mSkipIsEnable = true;
         
 
         //コマンドを読み込む
@@ -92,7 +95,9 @@ namespace ProjectWitch.Talk.WorkSpace
 			bool isNext = Input.GetButtonDown("TalkNext");
 			stepNextFlag |= (mouseWheel<0 || isNext);
 
-			bool skipFlag = Input.GetButton("TalkSkip");
+            bool skipFlag = false;
+            if(mSkipIsEnable)
+                skipFlag = Input.GetButton("TalkSkip");
 			if (Updater is WaitUpdater)
 			{
 				if ((Updater as WaitUpdater).Time < mSkipWaitDuration)
@@ -202,6 +207,22 @@ namespace ProjectWitch.Talk.WorkSpace
 					SceneManager.UnloadScene (name);
 					return null;
 				}));
+
+            //スキップの禁止処理
+            vm.AddCommandDelegater(
+                "SkipEnable",
+                new CommandDelegater(false, 1, delegate (object[] arguments)
+                {
+                    string error = null;
+                    var flag = Converter.ObjectToInt(arguments[0], out error);
+
+                    if (flag == 0)
+                        mSkipIsEnable = false;
+                    else
+                        mSkipIsEnable = true;
+
+                    return error;
+                }));
 		}
 	}
 

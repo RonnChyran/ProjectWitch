@@ -1,4 +1,6 @@
 [setskin ref="skin1"]
+[skip_enable enable=0]
+
 [loadfg id=0 ref="alice"]
 [loadfg id=1 ref="chishire"]
 
@@ -12,10 +14,11 @@
 [drawfg id=1]
 #チシャ
 だ、ダメですよ！　領地を防衛する兵を残しておかないと…。[p]
-戦場の広さもありますから、一度の先頭に出せるのは３つのユニットまでです。[p]
+戦場の広さもありますから、一度の戦闘に出せるのは３つのユニットまでです。[p]
 [drawfg id=0 state="0"]
 #アリス
 ちぇっ……選べってか。[p]
+;出撃ユニットハイライト
 この、前衛、中衛、後衛ってのは何か意味があるのか？[p]
 [drawfg id=1]
 #チシャ
@@ -31,12 +34,40 @@
 [drawfg id=0 state="0"]
 #アリス
 で、どうやって配置するんだ？[p]
+[hide_message]
+[show_message pos="top"]
 [drawfg id=1]
 #チシャ
 はい、ユニットの配置は、このユニットリストから、任意のユニットを選択することで配置できます。[p]
-選択した順に前衛、中衛、後衛と詰めて配置されますので注意してください。[p]
+選択した順に前衛、
+[wait time=500]
+[prebattle_setunit index=1]
+中衛、
+[wait time=500]
+[prebattle_setunit index=2]
+後衛
+[wait time=500]
+[prebattle_setunit index=0]
+と詰めて配置されますので注意してください。[p]
+
+[prebattle_removeunit index=2]
+[se ref="041_cancel"]
 もし、間違って配置してしまった場合は、右クリックをするか…。[p]
+
+[hide_message]
+[show_message pos="bottom"]
+[hide_cursor]
+[show_accentcursor x=75 y=80]
+[wait time=1000]
+[drawfg id=1]
 この出撃ユニットリストから、外したいユニットを選択してください[p]
+[prebattle_removeunit index=1]
+[hide_accentcursor]
+[show_cursor]
+[hide_message]
+[show_message pos="top"]
+
+;カードリストハイライト
 [drawfg id=0 state="0"]
 #アリス
 隣にあるカードってのは？[p]
@@ -58,9 +89,27 @@
 #チシャ
 ええ、ですから使いどころを考えてくださいね。[p]
 カードもユニットと同じように設定できます。[p]
+
+[se ref="040_click"]
+[prebattle_setcard index=0]
+[wait time=500]
+
+[hide_message]
+[show_message pos="bottom"]
+
 [drawfg id=0 state="1"]
 #アリス
 よし、やっと戦闘だな。[p]
 [drawfg id=1]
 #チシャ
 はい！　では、出撃しましょう。[p]
+[hide_message]
+
+[hide_cursor]
+[show_accentcursor x=90 y=50]
+[wait time=1000]
+[se ref="040_click"]
+
+[hide_accentcursor]
+[show_cursor]
+[prebattle_callbattle]
