@@ -31,6 +31,10 @@ namespace ProjectWitch.Talk.WorkSpace
 		//背景の不透明度(最初の段階で1にする)
 		private bool mNeedsToFadeBackGround = true;
 
+        //ゲームオブジェクトのマネージャ
+        [SerializeField]
+        private GameObjectManager mGameObjectManager = null;
+
         //立ち絵のパス
         [SerializeField]
         private string mCGPath = null;
@@ -308,31 +312,33 @@ namespace ProjectWitch.Talk.WorkSpace
 					UpdaterFormat updater = null;
 					switch (mode)
 					{
-					case "slidein":
-						{
-							Transform trans = obj.transform;
-							trans.localPosition = position_prev;
-							updater = new CGAnimationUpdater(time, delegate(float progress) {
-								trans.localPosition = position_prev * (1.0f - progress) + position_next * progress;
-							});
-						}
-						break;
+                        case "slidein":
+                            {
+                                Transform trans = obj.transform;
+                                trans.localPosition = position_prev;
+                                updater = new CGAnimationUpdater(time, delegate (float progress)
+                                {
+                                    trans.localPosition = position_prev * (1.0f - progress) + position_next * progress;
+                                });
+                            }
+                            break;
 
-					case "fadein":
-						{
-							Transform trans = obj.transform;
-							trans.localPosition = position_next;
-							RawImage image = obj.GetComponent<RawImage> ();
-							updater = new CGAnimationUpdater(time, delegate(float progress) {
-								Color cp = image.color;
-								image.color = new Color(cp.r, cp.g, cp.b, progress);
-							});
-						}
-						break;
+                        case "fadein":
+                            {
+                                Transform trans = obj.transform;
+                                trans.localPosition = position_next;
+                                RawImage image = obj.GetComponent<RawImage>();
+                                updater = new CGAnimationUpdater(time, delegate (float progress)
+                                {
+                                    Color cp = image.color;
+                                    image.color = new Color(cp.r, cp.g, cp.b, progress);
+                                });
+                            }
+                            break;
 
-					default:
-						return "正しいモードを指定してください。";
-					}
+                        default:
+                            return "正しいモードを指定してください。";
+                    }
 
 					arguments[8] = updater;
 					return error;
@@ -365,34 +371,35 @@ namespace ProjectWitch.Talk.WorkSpace
 					UpdaterFormat updater = null;
 					switch (mode)
 					{
-					case "slideout":
-						{
-							updater = new CGAnimationUpdater(time, delegate(float progress) {
-								trans.localPosition = position_prev * (1.0f - progress) + position_next * progress;
-								if (progress>0.99)
-									mCGLayer.HideStandCG(id, out error);
-							});
-						}
-						break;
+                        case "slideout":
+                            {
+                                updater = new CGAnimationUpdater(time, delegate (float progress)
+                                {
+                                    trans.localPosition = position_prev * (1.0f - progress) + position_next * progress;
+                                    if (progress > 0.99)
+                                        mCGLayer.HideStandCG(id, out error);
+                                });
+                            }
+                            break;
 
-					case "fadeout":
-						{
-							RawImage image = obj.GetComponent<RawImage> ();
-							Color cp = image.color;
-							updater = new CGAnimationUpdater(time, delegate(float progress) {
-								image.color = new Color(cp.r, cp.g, cp.b, (1.0f - progress) * cp.a);
-								if (progress>0.99)
-									mCGLayer.HideStandCG(id, out error); 
-							});
-						}
-						break;
-
-					default:
-						return "正しいモードを指定してください。";
-					}
-					arguments[2] = updater;
-					return error;
-				}));
+                        case "fadeout":
+                            {
+                                RawImage image = obj.GetComponent<RawImage>();
+                                Color cp = image.color;
+                                updater = new CGAnimationUpdater(time, delegate (float progress)
+                                {
+                                    image.color = new Color(cp.r, cp.g, cp.b, (1.0f - progress) * cp.a);
+                                    if (progress > 0.99)
+                                        mCGLayer.HideStandCG(id, out error);
+                                });
+                            }
+                            break;
+                        default:
+                            return "正しいモードを指定してください。";
+                    }
+                    arguments[2] = updater;
+                    return error;
+                }));
             //立ち絵表示変更
             vm.AddCommandDelegater(
                 "ChangeCG",
@@ -410,10 +417,52 @@ namespace ProjectWitch.Talk.WorkSpace
                     return error;
                 }));
 
+            //ゲームオブジェクトの生成
+            vm.AddCommandDelegater(
+                "CreateGameObject",
+                new CommandDelegater(false, 4, delegate (object[] arguments)
+                {
+                    string error = null;
 
-			//立ち絵の
-			//移動
-			vm.AddCommandDelegater (
+                    var id = Converter.ObjectToInt(arguments[0], out error);
+                    if (error != null) return error;
+
+                    var path = Converter.ObjectToString(arguments[1], out error);
+                    if (error != null) return error;
+
+                    var x = Converter.ObjectToFloat(arguments[2], out error);
+                    if (error != null) return error;
+
+                    var y = Converter.ObjectToFloat(arguments[3], out error);
+                    if (error != null) return error;
+
+                    mGameObjectManager.CreateGameObject(id, path, new Vector2(x, y), out error);
+                    if (error != null) return error;
+
+                    return error;
+                }));
+
+            //ゲームオブジェクトの削除
+            vm.AddCommandDelegater(
+                "DeleteGameObject",
+                new CommandDelegater(false, 1, delegate (object[] arguments)
+                {
+                    string error = null;
+
+                    var id = Converter.ObjectToInt(arguments[0], out error);
+                    if (error != null) return error;
+
+                    mGameObjectManager.DeleteGameObject(id, out error);
+                    if (error != null) return error;
+
+                    return error;
+                }));
+
+
+
+            //立ち絵の
+            //移動
+            vm.AddCommandDelegater (
 				"moveTo",
 				new CommandDelegater (true, 4, delegate(object[] arguments) {
 					string error;

@@ -447,7 +447,7 @@ RectTransform:
   - {fileID: 804894828}
   - {fileID: 908596403}
   m_Father: {fileID: 1692446082}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0.9999752}
@@ -927,7 +927,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 1692446082}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
@@ -1034,7 +1034,7 @@ RectTransform:
   - {fileID: 35582007}
   - {fileID: 1248126379}
   m_Father: {fileID: 1692446082}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
@@ -1086,7 +1086,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 1692446082}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
@@ -1156,6 +1156,7 @@ MonoBehaviour:
   mCanvas: {fileID: 1692446082}
   mBackgroundPath: Textures/Background2D/
   mBackgroundSprite: {fileID: 678910708}
+  mGameObjectManager: {fileID: 2115040512}
   mCGPath: Prefabs/Talk/Stand/
   mCGLayer: {fileID: 1302679976}
   mStandCGAnchor1: {fileID: 1498179174}
@@ -1345,7 +1346,7 @@ Transform:
   - {fileID: 779825453}
   - {fileID: 210509527}
   m_Father: {fileID: 1692446082}
-  m_RootOrder: 5
+  m_RootOrder: 6
 --- !u!1 &1692446078
 GameObject:
   m_ObjectHideFlags: 0
@@ -1432,6 +1433,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 678910709}
+  - {fileID: 2115040511}
   - {fileID: 1302679974}
   - {fileID: 948367718}
   - {fileID: 374910085}
@@ -1577,3 +1579,50 @@ RectTransform:
   m_AnchoredPosition: {x: 300, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &2115040510
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 224: {fileID: 2115040511}
+  - 114: {fileID: 2115040512}
+  m_Layer: 5
+  m_Name: gameobjects
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2115040511
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2115040510}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Children: []
+  m_Father: {fileID: 1692446082}
+  m_RootOrder: 1
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2115040512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2115040510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a1ea6093b98fa844b823ad69b36029a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mGameObjectPath: Prefabs/Talk/GameObject/
+  mGameObjectParent: {fileID: 2115040510}

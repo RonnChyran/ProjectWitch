@@ -147,17 +147,18 @@ namespace ProjectWitch.Talk
             if (mFaces[id] != mCurrentFace)
             {
                 HideFace();
-
-                //表示
-                var anim = mFaces[id].GetComponent<Animator>();
-                var info = anim.GetCurrentAnimatorStateInfo(0);
-                if (info.fullPathHash == Animator.StringToHash("Base Layer.hide"))
-                    mFaces[id].GetComponent<Animator>().SetTrigger("Show");
-
-                //現在の顔グラの参照をセット
-                mCurrentFace = mFaces[id];
             }
-            
+
+            //表示
+            var anim = mFaces[id].GetComponent<Animator>();
+            var info = anim.GetCurrentAnimatorStateInfo(0);
+            if (info.fullPathHash == Animator.StringToHash("Base Layer.hide"))
+                mFaces[id].GetComponent<Animator>().SetTrigger("Show");
+
+            //現在の顔グラの参照をセット
+            mCurrentFace = mFaces[id];
+
+
             //表情のセット
             ChangeStateFace(state);
 

@@ -34,40 +34,63 @@
 [drawfg id=0 state="0"]
 #アリス
 で、どうやって配置するんだ？[p]
+
+[create_gameobject id=0 ref="Tutorial/prebattle_unitlist_hilight"]
+
 [hide_message]
 [show_message pos="top"]
 [drawfg id=1]
 #チシャ
 はい、ユニットの配置は、このユニットリストから、任意のユニットを選択することで配置できます。[p]
-選択した順に前衛、
-[wait time=500]
-[prebattle_setunit index=1]
-中衛、
-[wait time=500]
-[prebattle_setunit index=2]
-後衛
-[wait time=500]
-[prebattle_setunit index=0]
-と詰めて配置されますので注意してください。[p]
+選択した順に前衛、中衛、後衛と、詰めて配置されますので注意してください。[p]
 
-[prebattle_removeunit index=2]
-[se ref="041_cancel"]
+[wait time=500]
+[se ref="040_click"]
+[prebattle_setunit index=1]
+[wait time=500]
+[se ref="040_click"]
+[prebattle_setunit index=2]
+[wait time=500]
+[se ref="040_click"]
+[prebattle_setunit index=0]
+[wait time=500]
+
+[delete_gameobject id=0]
+[wait time=500]
+
 もし、間違って配置してしまった場合は、右クリックをするか…。[p]
 
+[se ref="041_cancel"]
+[prebattle_removeunit index=2]
+[wait time=1000]
+
 [hide_message]
+[wait time=1000]
+
+[create_gameobject id=0 ref="Tutorial/prebattle_battleunit_hilight"]
+[wait time=200]
+
 [show_message pos="bottom"]
 [hide_cursor]
 [show_accentcursor x=75 y=80]
-[wait time=1000]
 [drawfg id=1]
 この出撃ユニットリストから、外したいユニットを選択してください[p]
+[se ref = "041_cancel"]
 [prebattle_removeunit index=1]
+[wait time=500]
 [hide_accentcursor]
 [show_cursor]
 [hide_message]
+
+[delete_gameobject id=0]
+[wait time=500]
+
 [show_message pos="top"]
 
 ;カードリストハイライト
+[create_gameobject id=0 ref="Tutorial/prebattle_cardlist_hilight"]
+[wait time=200]
+
 [drawfg id=0 state="0"]
 #アリス
 隣にあるカードってのは？[p]
@@ -93,6 +116,8 @@
 [se ref="040_click"]
 [prebattle_setcard index=0]
 [wait time=500]
+[delete_gameobject id=0]
+[wait time=500]
 
 [hide_message]
 [show_message pos="bottom"]
@@ -106,7 +131,14 @@
 [hide_message]
 
 [hide_cursor]
-[show_accentcursor x=90 y=50]
+
+[wait time=500]
+[se ref="040_click"]
+[prebattle_setunit index=2]
+[wait time=500]
+[se ref="040_click"]
+[prebattle_setunit index=0]
+[show_accentcursor x=95 y=30]
 [wait time=1000]
 [se ref="040_click"]
 

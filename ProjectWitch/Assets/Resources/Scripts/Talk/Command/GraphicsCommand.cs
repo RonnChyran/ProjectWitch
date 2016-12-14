@@ -9,6 +9,7 @@ using System.Collections.Generic;
 
 using ProjectWitch.Talk.Pattern;
 using ProjectWitch.Talk.Command;
+using System;
 
 namespace ProjectWitch.Talk.Compiler{
 	//これをパターンに追加すると演出全般が追加されるよ
@@ -24,6 +25,9 @@ namespace ProjectWitch.Talk.Compiler{
 			patternList.Add (new CreateShowCGCommand ());
             patternList.Add (new CreateChangeCGCommand());
 			patternList.Add (new CreateHideCGCommand ());
+
+            patternList.Add(new CreateCreateGameObject());
+            patternList.Add(new CreateDeleteGameObject());
 
 			patternList.Add (new CreateMoveToCommand ());
 			patternList.Add (new CreateMoveCommand ());
@@ -253,8 +257,104 @@ namespace ProjectWitch.Talk.Compiler{
         }
     }
 
-	//立ち絵移動
-	public class CreateMoveToCommand : Pattern_TagFormat
+    //ゲームオブジェクトの生成
+    public class CreateCreateGameObject : Pattern_TagFormat
+    {
+        protected override string TagName()
+        {
+            return "create_gameobject"; 
+        }
+
+        protected override CommandFormat[] CreateCommand(ArgumentDictionary arguments, int line, int index)
+        {
+            CommandList commandList = new CommandList();
+
+            if(arguments.ContainName("id"))
+            {
+                commandList.Add(arguments.Get("id"));
+            }
+            else
+            {
+                CompilerLog.Log(line, index, "id引数が不足しています。");
+                return null;
+            }
+            if(arguments.ContainName("ref"))
+            {
+                commandList.Add(arguments.Get("ref"));
+            }
+            else
+            {
+                CompilerLog.Log(line, index, "引数refが不足しています。");
+                return null;
+            }
+            if(arguments.ContainName("x"))
+            {
+                commandList.Add(arguments.Get("x"));
+            }
+            else
+            {
+                commandList.Add(new SetArgumentCommand("0"));
+            }
+            if(arguments.ContainName("y"))
+            {
+                commandList.Add(arguments.Get("y"));
+            }
+            else
+            {
+                commandList.Add(new SetArgumentCommand("0"));
+            }
+
+            if (arguments.Count > 0)
+            {
+                CompilerLog.Log(line, index, "無効な引数があります。");
+                return null;
+            }
+
+            commandList.Add(new RunOrderCommand("CreateGameObject"));
+
+            return commandList.GetArray();
+
+        }
+    }
+
+    //ゲームオブジェクトの削除
+    public class CreateDeleteGameObject : Pattern_TagFormat
+    {
+        protected override string TagName()
+        {
+            return "delete_gameobject";
+        }
+
+        protected override CommandFormat[] CreateCommand(ArgumentDictionary arguments, int line, int index)
+        {
+            CommandList commandList = new CommandList();
+
+            if (arguments.ContainName("id"))
+            {
+                commandList.Add(arguments.Get("id"));
+            }
+            else
+            {
+                CompilerLog.Log(line, index, "id引数が不足しています。");
+                return null;
+            }
+
+            if (arguments.Count > 0)
+            {
+                CompilerLog.Log(line, index, "無効な引数があります。");
+                return null;
+            }
+
+            commandList.Add(new RunOrderCommand("DeleteGameObject"));
+
+            return commandList.GetArray();
+
+        }
+    }
+
+
+    //立ち絵移動
+    public class CreateMoveToCommand : Pattern_TagFormat
 	{
 		protected override string TagName(){
 			return "moveto";
