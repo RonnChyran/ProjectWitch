@@ -63,6 +63,8 @@ namespace ProjectWitch.Talk.Compiler
 			patternList.Add (new CreateCommandsOfOther ());
             patternList.Add(new CreateCommandsOfField());
             patternList.Add(new CreateCommandsOfPreBattle());
+            patternList.Add(new CreateCommandsOfMenu());
+            patternList.Add(new CreateCommandsOfBattle());
 			patternList.Add (new ErrorTagPattern ());
 
 			PatternFormat pattern = new Pattern_Component (patternList);

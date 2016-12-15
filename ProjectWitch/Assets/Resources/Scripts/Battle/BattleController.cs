@@ -6,6 +6,9 @@ namespace ProjectWitch.Battle
 {
     public class BattleController : MonoBehaviour
     {
+        [SerializeField]
+        private TalkCommandHelper mTalkCommandHelper = null;
+        public TalkCommandHelper TalkCommandHelper { get { return mTalkCommandHelper; } private set { } }
 
         // Use this for initialization
         void Start()

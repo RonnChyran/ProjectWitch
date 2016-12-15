@@ -47,6 +47,14 @@ namespace ProjectWitch.Talk.WorkSpace
         [SerializeField]
         private PreBattleWorkSpace mPreBattleWorkSpace = null;
 
+        //メニューとの連携関係
+        [SerializeField]
+        private MenuWorkSpace mMenuWorkSpace = null;
+
+        //バトルとの連携関係
+        [SerializeField]
+        private BattleWorkSpace mBattleWorkSpace = null;
+
         [SerializeField]
         //次の会話をスキップする前にこの時間分だけ待つ
         private float mSkipWaitDuration = 0.01f;
@@ -79,6 +87,8 @@ namespace ProjectWitch.Talk.WorkSpace
 			mGameWorkSpace.SetCommandDelegaters (vm);
             mFieldWorkSpace.SetCommandDelegaters(vm);
             mPreBattleWorkSpace.SetCommandDelegaters(vm);
+            mMenuWorkSpace.SetCommandDelegaters(vm);
+            mBattleWorkSpace.SetCommandDelegaters(vm);
 
             vm.AddNotification("scriptBegin", new NotifyMethod(mGameWorkSpace.ScriptBegin));
 			vm.AddNotification ("scriptEnd", new NotifyMethod(mGameWorkSpace.ScriptEnd));

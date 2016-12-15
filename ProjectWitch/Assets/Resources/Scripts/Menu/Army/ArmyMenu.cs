@@ -10,6 +10,11 @@ namespace ProjectWitch.Menu
         [SerializeField]
         private Canvas mTopMenu = null;
 
+        //ユニットリストへの参照
+        [SerializeField]
+        private UnitList mUnitList = null;
+        public UnitList UnitList { get { return mUnitList; }  private set { } }
+
         //component 
         private Canvas mcCanvas = null;
 
@@ -30,12 +35,17 @@ namespace ProjectWitch.Menu
             {
                 if (Input.GetButtonDown("Cancel"))
                 {
-                    StartCoroutine(Close());
+                    Close();
                 }
             }
         }
 
-        private IEnumerator Close()
+        public void Close()
+        {
+            StartCoroutine(_Close());
+        }
+
+        private IEnumerator _Close()
         {
             //キャンセル音再生
             Game.GetInstance().SoundManager.PlaySE(SE.Cancel);

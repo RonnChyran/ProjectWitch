@@ -135,6 +135,7 @@
     <Compile Include="Assets\Resources\Scripts\Battle\OrderDiplayObj.cs" />
     <Compile Include="Assets\Resources\Scripts\Battle\PlayMusic.cs" />
     <Compile Include="Assets\Resources\Scripts\Battle\SkillButton.cs" />
+    <Compile Include="Assets\Resources\Scripts\Battle\TalkCommandHelper.cs" />
     <Compile Include="Assets\Resources\Scripts\Battle\TurnNumDisplay.cs" />
     <Compile Include="Assets\Resources\Scripts\Common\FXController.cs" />
     <Compile Include="Assets\Resources\Scripts\Common\UIUVScroller.cs" />
@@ -161,6 +162,7 @@
     <Compile Include="Assets\Resources\Scripts\Menu\Army\Unit.cs" />
     <Compile Include="Assets\Resources\Scripts\Menu\Army\UnitList.cs" />
     <Compile Include="Assets\Resources\Scripts\Menu\MenuController.cs" />
+    <Compile Include="Assets\Resources\Scripts\Menu\TalkCommandHelper.cs" />
     <Compile Include="Assets\Resources\Scripts\Menu\Top\TopMenu.cs" />
     <Compile Include="Assets\Resources\Scripts\Opening_Ending\EndMovieController.cs" />
     <Compile Include="Assets\Resources\Scripts\Opening_Ending\Ending.cs" />
@@ -185,8 +187,10 @@
     <Compile Include="Assets\Resources\Scripts\System\SoundManager.cs" />
     <Compile Include="Assets\Resources\Scripts\System\SoundTester.cs" />
     <Compile Include="Assets\Resources\Scripts\System\TalkCommandHelper.cs" />
+    <Compile Include="Assets\Resources\Scripts\Talk\Command\BattleCommand.cs" />
     <Compile Include="Assets\Resources\Scripts\Talk\Command\FieldCommand.cs" />
     <Compile Include="Assets\Resources\Scripts\Talk\Command\GraphicsCommand.cs" />
+    <Compile Include="Assets\Resources\Scripts\Talk\Command\MenuCommand.cs" />
     <Compile Include="Assets\Resources\Scripts\Talk\Command\OtherCommand.cs" />
     <Compile Include="Assets\Resources\Scripts\Talk\Command\PreBattleCommand.cs" />
     <Compile Include="Assets\Resources\Scripts\Talk\Command\SoundsCommand.cs" />
@@ -206,9 +210,11 @@
     <Compile Include="Assets\Resources\Scripts\Talk\VM\Analyzer\WordAnalyzer.cs" />
     <Compile Include="Assets\Resources\Scripts\Talk\VM\Compiler.cs" />
     <Compile Include="Assets\Resources\Scripts\Talk\VM\VirtualMachine.cs" />
+    <Compile Include="Assets\Resources\Scripts\Talk\WorkSpace\BattleWorkSpace.cs" />
     <Compile Include="Assets\Resources\Scripts\Talk\WorkSpace\FieldWorkSpace.cs" />
     <Compile Include="Assets\Resources\Scripts\Talk\WorkSpace\GameWorkSpace.cs" />
     <Compile Include="Assets\Resources\Scripts\Talk\WorkSpace\GraphicsWorkSpace.cs" />
+    <Compile Include="Assets\Resources\Scripts\Talk\WorkSpace\MenuWorkSpace.cs" />
     <Compile Include="Assets\Resources\Scripts\Talk\WorkSpace\PreBattleWorkSpace.cs" />
     <Compile Include="Assets\Resources\Scripts\Talk\WorkSpace\ScenarioWorkSpace.cs" />
     <Compile Include="Assets\Resources\Scripts\Talk\WorkSpace\SoundsWorkSpace.cs" />
@@ -365,6 +371,12 @@
     <None Include="Assets\Resources\Scenarios\s0115.txt" />
     <None Include="Assets\Resources\Scenarios\s9800.txt" />
     <None Include="Assets\Resources\Scenarios\s9801.txt" />
+    <None Include="Assets\Resources\Scenarios\s9802.txt" />
+    <None Include="Assets\Resources\Scenarios\s9803.txt" />
+    <None Include="Assets\Resources\Scenarios\s9804.txt" />
+    <None Include="Assets\Resources\Scenarios\s9805.txt" />
+    <None Include="Assets\Resources\Scenarios\s9806.txt" />
+    <None Include="Assets\Resources\Scenarios\s9807.txt" />
     <None Include="Assets\Resources\Scenarios\s9994.txt" />
     <None Include="Assets\Resources\Scenarios\s9995.txt" />
     <None Include="Assets\Resources\Scenarios\s9996.txt" />

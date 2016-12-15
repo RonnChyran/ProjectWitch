@@ -1621,7 +1621,7 @@ RectTransform:
   - {fileID: 2137623955}
   - {fileID: 560266974}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
@@ -1792,7 +1792,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2125733122}
   m_HandleRect: {fileID: 2125733121}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -2216,7 +2216,6 @@ MonoBehaviour:
   mDefMainImage: {fileID: 21300000, guid: 991c7bb8ce4c23542a9bd21397e30ec0, type: 3}
   mDefSubImage: {fileID: 21300000, guid: c9ed3ba6e91252e48a37c415e6980136, type: 3}
   mLvUpButton: {fileID: 998707673}
-  mSoldierEditButton: {fileID: 1292231123}
   mPowerRankA: 900
   mPowerRankB: 600
   mPowerRankC: 200
@@ -2685,7 +2684,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
 --- !u!1 &516015660
 GameObject:
   m_ObjectHideFlags: 0
@@ -3074,7 +3073,7 @@ RectTransform:
   - {fileID: 1822485280}
   - {fileID: 1224820494}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
@@ -3092,6 +3091,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mTopMenu: {fileID: 241342185}
+  mUnitList: {fileID: 0}
 --- !u!1 &615456461
 GameObject:
   m_ObjectHideFlags: 0
@@ -4222,7 +4222,7 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 603.6}
+  m_AnchoredPosition: {x: 0, y: 0.000061035156}
   m_SizeDelta: {x: 11.549988, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &868257179
@@ -4394,6 +4394,47 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 885529063}
+--- !u!1 &891738169
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 891738171}
+  - 114: {fileID: 891738170}
+  m_Layer: 0
+  m_Name: TalkCommandHelper
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &891738170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 891738169}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f981e4271cb642c4ebcd63c47dbb837d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mMenuController: {fileID: 1115567906}
+--- !u!4 &891738171
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 891738169}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1027.0963, y: 540.09485, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
 --- !u!1 &908175861
 GameObject:
   m_ObjectHideFlags: 0
@@ -5600,7 +5641,7 @@ GameObject:
   - 114: {fileID: 1115567906}
   m_Layer: 0
   m_Name: MenuController
-  m_TagString: Untagged
+  m_TagString: MenuController
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5629,6 +5670,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f42e6251dd395834598947b530c6a60a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mTopMenu: {fileID: 241342187}
+  mArmyMenu: {fileID: 600664661}
+  mTalkCommandHelper: {fileID: 891738170}
 --- !u!1 &1151414120
 GameObject:
   m_ObjectHideFlags: 0
@@ -6563,7 +6607,7 @@ RectTransform:
   m_Children:
   - {fileID: 1883926596}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}

@@ -95,6 +95,14 @@ namespace ProjectWitch.Field
             }
         }
 
+        //メニューを開く
+        public void OpenMenu()
+        {
+            StartCoroutine(Game.GetInstance().CallMenu());
+            mFieldController.FieldUIController.HideUI();
+            mFieldController.MenuClickable = false;
+        }
+
         //コルーチン
         private IEnumerator _HilightArea(int areaID, EndCallBack callback)
         {
@@ -115,5 +123,7 @@ namespace ProjectWitch.Field
             yield return null;
         }
 
+
+        
     }
 }

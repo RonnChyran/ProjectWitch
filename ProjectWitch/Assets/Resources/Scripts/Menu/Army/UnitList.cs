@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Linq;
 
 namespace ProjectWitch.Menu
 {
@@ -43,6 +43,14 @@ namespace ProjectWitch.Menu
                 cUnit.StatusWindow = mStatusWindow;
                 inst.transform.SetParent(mContentGroup.transform, false);
             }
+        }
+
+        //ユニットリストを取得
+        public Unit[] GetUnitList()
+        {
+            var unitTranses = mContentGroup.GetComponentsInChildren<Transform>();
+            return unitTranses.Select(p => p.GetComponent<Unit>()).ToArray();
+            
         }
     }
 }

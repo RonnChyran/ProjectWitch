@@ -1086,6 +1086,9 @@ namespace ProjectWitch
             If_Val = new List<int>();
             If_Ope = new List<OperationType>();
             If_Imm = new List<int>();
+
+            NextA = -1;
+            NextB = -1;
         }
 
         //スクリプトファイル名
