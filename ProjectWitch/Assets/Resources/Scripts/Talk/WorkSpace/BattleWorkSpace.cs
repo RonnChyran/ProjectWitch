@@ -61,12 +61,12 @@ namespace ProjectWitch.Talk.WorkSpace
             //スキルの実行
             vm.AddCommandDelegater(
                 "Battle_ExecuteSkill",
-                new CommandDelegater(false, 0, delegate (object[] arguments) {
+                new CommandDelegater(false, 2, delegate (object[] arguments) {
                     string error;
 
                     var target = Converter.ObjectToInt(arguments[0], out error);
                     if (error != null) return error;
-                    var type = Converter.ObjectToInt(arguments[0], out error);
+                    var type = Converter.ObjectToInt(arguments[1], out error);
                     if (error != null) return error;
 
                     if (!BattleCommand)

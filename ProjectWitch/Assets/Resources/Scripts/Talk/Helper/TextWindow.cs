@@ -58,8 +58,7 @@ namespace ProjectWitch.Talk
             var anim = mMessage.GetComponent<Animator>();
             var info = anim.GetCurrentAnimatorStateInfo(0);
             //現在表示されていなかったら表示する
-            if (info.fullPathHash == Animator.StringToHash("Base Layer.hide"))
-                mMessage.GetComponent<Animator>().SetTrigger("Show");
+            mMessage.GetComponent<Animator>().SetBool("IsShow",true);
         }
 
         //ウィンドウ全体を隠す
@@ -72,8 +71,7 @@ namespace ProjectWitch.Talk
             var anim = mMessage.GetComponent<Animator>();
             var info = anim.GetCurrentAnimatorStateInfo(0);
             //現在表示されていなかったら表示する
-            if (info.fullPathHash == Animator.StringToHash("Base Layer.show"))
-                mMessage.GetComponent<Animator>().SetTrigger("Hide");
+            mMessage.GetComponent<Animator>().SetBool("IsShow",false);
         }
 
         //名前ウィンドウを表示
@@ -88,8 +86,7 @@ namespace ProjectWitch.Talk
                 var anim = mName.GetComponent<Animator>();
                 var info = anim.GetCurrentAnimatorStateInfo(0);
                 //現在表示されていなかったら表示する
-                if(info.fullPathHash == Animator.StringToHash("Base Layer.hide"))
-                    anim.SetTrigger("Show");
+                anim.SetBool("IsShow",true);
             }
         }
 
@@ -103,8 +100,7 @@ namespace ProjectWitch.Talk
                 var anim = mName.GetComponent<Animator>();
                 var info = anim.GetCurrentAnimatorStateInfo(0);
                 //現在表示されていたら隠す
-                if(info.fullPathHash == Animator.StringToHash("Base Layer.show"))
-                    anim.SetTrigger("Hide");
+                anim.SetBool("IsShow",false);
             }
         }
 
@@ -152,8 +148,7 @@ namespace ProjectWitch.Talk
             //表示
             var anim = mFaces[id].GetComponent<Animator>();
             var info = anim.GetCurrentAnimatorStateInfo(0);
-            if (info.fullPathHash == Animator.StringToHash("Base Layer.hide"))
-                mFaces[id].GetComponent<Animator>().SetTrigger("Show");
+            mFaces[id].GetComponent<Animator>().SetBool("IsShow",true);
 
             //現在の顔グラの参照をセット
             mCurrentFace = mFaces[id];
@@ -172,8 +167,7 @@ namespace ProjectWitch.Talk
                 var anim = mCurrentFace.GetComponent<Animator>();
                 var info = anim.GetCurrentAnimatorStateInfo(0);
                 //現在表示されていたら隠す
-                if (info.fullPathHash == Animator.StringToHash("Base Layer.show"))
-                    anim.SetTrigger("Hide");
+                anim.SetBool("IsShow",false);
             }
         }
 

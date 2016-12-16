@@ -18,19 +18,46 @@ namespace ProjectWitch.Menu
         [SerializeField]
         private TalkCommandHelper mTalkCommandHelper = null;
         public TalkCommandHelper TalkCommandHelper { get { return mTalkCommandHelper; } private set { } }
-       
+
+        //各アニメーターへの参照
+        [SerializeField]
+        private Animator mAnimTop = null;
+
+        [SerializeField]
+        private Animator mAnimCommon = null;
+
+        //内部変数
+        private Field.FieldController mFController = null;       
+
+        public void Start()
+        {
+            mFController = GameObject.FindWithTag("FieldController").GetComponent<Field.FieldController>();
+        }
 
         //メニューを閉じる
         public void Close()
         {
             var game = Game.GetInstance();
             game.SoundManager.PlaySE(SE.Cancel);
-            
-            var fctrl = GameObject.FindWithTag("FieldController").GetComponent<Field.FieldController>();
-            fctrl.MenuClickable = true;
-            fctrl.FieldUIController.ShowUI();
 
-            SceneManager.UnloadScene(game.SceneName_Menu);
+            StartCoroutine(_Close());
+        }
+        private IEnumerator _Close()
+        {
+            mAnimTop.SetBool("IsShow", false);
+            mAnimCommon.SetBool("IsShow", false);
+
+            yield return new WaitForSeconds(0.3f);
+
+            mFController.FieldUIController.ShowUI();
+            SceneManager.UnloadScene(Game.GetInstance().SceneName_Menu);
+
+        }
+
+        public void Update()
+        {
+            mFController.MenuClickable = false;
+
         }
     }
 }

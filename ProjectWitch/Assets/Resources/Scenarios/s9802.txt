@@ -2,7 +2,7 @@
 [skip_enable enable=0]
 
 [loadfg id=0 ref="alice"]
-[loadfg id=1 ref="chishire"]
+[loadfg id=1 ref="kuro"]
 
 [drawfg id=0]
 #アリス
@@ -76,7 +76,7 @@
 [battle_show_skill_button target=3]
 [se ref="040_click"]
 [battle_hide_skill_button]
-
+[delete_gameobject id=0]
 [hide_accentcursor]
 
 [battle_execute_skill target=3 type=0]

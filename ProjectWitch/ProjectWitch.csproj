@@ -13,13 +13,11 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Full v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile>
-    </CompilerResponseFile>
+    <CompilerResponseFile></CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.4.3f1</UnityVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -148,7 +146,6 @@
     <Compile Include="Assets\Resources\Scripts\Field\UI\ActionWindow.cs" />
     <Compile Include="Assets\Resources\Scripts\Field\UI\AreaName.cs" />
     <Compile Include="Assets\Resources\Scripts\Field\UI\AreaWindow.cs" />
-    <Compile Include="Assets\Resources\Scripts\Field\UI\InfoBoxText.cs" />
     <Compile Include="Assets\Resources\Scripts\Field\UI\MapColor.cs" />
     <Compile Include="Assets\Resources\Scripts\Field\UI\OwnerPanel.cs" />
     <Compile Include="Assets\Resources\Scripts\Field\UI\TimeCounter.cs" />
@@ -163,6 +160,7 @@
     <Compile Include="Assets\Resources\Scripts\Menu\Army\UnitList.cs" />
     <Compile Include="Assets\Resources\Scripts\Menu\MenuController.cs" />
     <Compile Include="Assets\Resources\Scripts\Menu\TalkCommandHelper.cs" />
+    <Compile Include="Assets\Resources\Scripts\Menu\Top\InfoBoxText.cs" />
     <Compile Include="Assets\Resources\Scripts\Menu\Top\TopMenu.cs" />
     <Compile Include="Assets\Resources\Scripts\Opening_Ending\EndMovieController.cs" />
     <Compile Include="Assets\Resources\Scripts\Opening_Ending\Ending.cs" />

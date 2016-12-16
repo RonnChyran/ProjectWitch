@@ -11,27 +11,27 @@ namespace ProjectWitch.Menu
 
         [Header("各メニューのキャンバス")]
         [SerializeField]
-        private Canvas mArmy = null;
+        private Animator mArmy = null;
         [SerializeField]
-        private Canvas mTown = null;
+        private Animator mTown = null;
         [SerializeField]
-        private Canvas mInfo = null;
+        private Animator mInfo = null;
         [SerializeField]
-        private Canvas mSystem = null;
+        private Animator mSystem = null;
 
         //内部変数
-        private Canvas mcCanvas = null;
+        private Animator mcAnim = null;
 
         // Use this for initialization
         void Start()
         {
-            mcCanvas = GetComponent<Canvas>();
+            mcAnim = GetComponent<Animator>();
         }
 
         // Update is called once per frame
         void Update()
         {
-            if (mcCanvas.enabled)
+            if (mcAnim.GetBool("IsShow"))
             {
                 if (Input.GetButtonDown("Cancel"))
                 {
@@ -43,29 +43,29 @@ namespace ProjectWitch.Menu
         //軍拡をクリック
         public void OnClickArmy()
         {
-            mArmy.enabled = true;
-            mcCanvas.enabled = false;
+            mArmy.SetBool("IsShow", true);
+            mcAnim.SetBool("IsShow", false);
         }
 
         //町へ行くをクリック
         public void OnClickTown()
         {
-            mTown.enabled = true;
-            mcCanvas.enabled = false;
+            mTown.SetBool("IsShow", true);
+            mcAnim.SetBool("IsShow", false);
         }
 
         //情報をクリック
         public void OnClickInfo()
         {
-            mInfo.enabled = true;
-            mcCanvas.enabled = false;
+            mInfo.SetBool("IsShow", true);
+            mcAnim.SetBool("IsShow", false);
         }
 
         //システムをクリック
         public void OnClickSystem()
         {
-            mSystem.enabled = true;
-            mcCanvas.enabled = false;
+            mSystem.SetBool("IsShow", true);
+            mcAnim.SetBool("IsShow", false);
         }
 
     }

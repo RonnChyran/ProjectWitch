@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using System.Linq;
 using System.Collections;
 
-namespace ProjectWitch.Field
+namespace ProjectWitch.Menu
 {
 
     public class InfoBoxText : MonoBehaviour

@@ -8,15 +8,19 @@ namespace ProjectWitch.Menu
 
         //トップメニューへの参照
         [SerializeField]
-        private Canvas mTopMenu = null;
+        private Animator mTopMenu = null;
 
         //ユニットリストへの参照
         [SerializeField]
         private UnitList mUnitList = null;
         public UnitList UnitList { get { return mUnitList; }  private set { } }
 
+        //ステータスウィンドウへの参照
+        [SerializeField]
+        private StatusWindow mStatusWindow = null;
+
         //component 
-        private Canvas mcCanvas = null;
+        private Animator mcAnim = null;
 
         //閉じれるかどうか
         public bool Closable { get; set; }
@@ -24,14 +28,14 @@ namespace ProjectWitch.Menu
         // Use this for initialization
         void Start()
         {
-            mcCanvas = GetComponent<Canvas>();
+            mcAnim = GetComponent<Animator>();
             Closable = true;
         }
 
         // Update is called once per frame
         void Update()
         {
-            if (mcCanvas.enabled && Closable)
+            if (mcAnim.GetBool("IsShow") && Closable)
             {
                 if (Input.GetButtonDown("Cancel"))
                 {
@@ -50,9 +54,15 @@ namespace ProjectWitch.Menu
             //キャンセル音再生
             Game.GetInstance().SoundManager.PlaySE(SE.Cancel);
 
-            yield return new WaitForSeconds(0.1f);
-            mcCanvas.enabled = false;
-            mTopMenu.enabled = true;
+            //ステータスウィンドウを閉じる
+            mStatusWindow.UnitID = -1;
+            mStatusWindow.Reset();
+
+            mcAnim.SetBool("IsShow", false);
+            yield return new WaitForSeconds(0.2f);
+            mTopMenu.SetBool("IsShow", true);
+            yield return new WaitForSeconds(0.2f);
+
         }
     }
 }

@@ -16,6 +16,11 @@ namespace ProjectWitch.Battle
             var game = Game.GetInstance();
             game.HideNowLoading();
             game.IsBattle = true;
+
+            //スクリプト実行のサンプル
+            //EventDataFormat e = new EventDataFormat();
+            //e.FileName = "s9804";
+            //game.CallScript(e);
         }
 
         // Update is called once per frame

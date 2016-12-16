@@ -85,9 +85,7 @@ namespace ProjectWitch.Field
 
                 if (Input.GetButtonDown("Cancel"))
                 {
-                    StartCoroutine(Game.GetInstance().CallMenu());
-                    HideUI();
-                    mFieldController.MenuClickable = false;
+                    ShowMenu();
                 }
             }
             else
@@ -229,18 +227,30 @@ namespace ProjectWitch.Field
         //UIを表示
         public void ShowUI()
         {
-            mPanel.enabled = true;
+            var anim = mPanel.GetComponent<Animator>();
+            anim.SetBool("IsShow", true);
+
+            mFieldController.MenuClickable = true;
         }
 
         //UIを隠す
         public void HideUI()
         {
-            mPanel.enabled = false;
+            var anim = mPanel.GetComponent<Animator>();
+            anim.SetBool("IsShow", false);
         }
 
-        //行動数表示パネルの更新
-        public void UpdateTerritoryPanel()
+        //メニューを表示
+        public void ShowMenu()
         {
+            mFieldController.MenuClickable = false;
+            StartCoroutine(_ShowMenu());
+        }
+        private IEnumerator _ShowMenu()
+        {
+            HideUI();
+            yield return new WaitForSeconds(0.3f);
+            yield return StartCoroutine(Game.GetInstance().CallMenu());
 
         }
     }
