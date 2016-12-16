@@ -127,6 +127,22 @@ namespace ProjectWitch.Talk.WorkSpace
 
                     return null;
                 }));
+
+            vm.AddCommandDelegater(
+                "Field_OpenMenu",
+                new CommandDelegater(false, 0, delegate (object[] arguments)
+                {
+                    string error = null;
+                    if (!FieldCommand)
+                    {
+                        error = "[field_open_menu]が実行できません。フィールドがロードされているシーンで実行してください。";
+                        return error;
+                    }
+
+                    FieldCommand.OpenMenu();
+
+                    return null;
+                }));
         }
     }
 }

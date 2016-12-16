@@ -6,6 +6,10 @@
 [loadfg id=0 ref="alice"]
 [loadfg id=1 ref="kuro"]
 
+[create_gameobject id=0 ref="Tutorial/battle_status2_hilight"]
+[wait time=1000]
+
+[show_message pos="top"]
 [drawfg id=0]
 #アリス
 おい、兵士数0にしたのに死なないぞ。[p]
@@ -13,9 +17,6 @@
 兵士数は部下の兵士の数です。[n]
 隊長は含まれません。[p]
 ユニットを全滅させるためには、隊長も倒す必要があります[p]
-
-;HPハイライト
-
 [drawfg id=0]
 #アリス
 そうか、このＨＰってのは隊長の体力だな！[p]
@@ -24,14 +25,17 @@
 その通りです。[n]
 兵士数が０になるまで、基本的に隊長を攻撃することができません。[p]
 ですので、兵士数を０にしてから隊長のＨＰを０にする、という流れになります。[p]
+[create_gameobject id=1 ref="Tutorial/battle_dead_escape"]
 ユニットを全滅させると、その隊長は敗走、もしくは死亡ということになります。[p]
 死亡した場合、その隊は二度と復活しないので気を付けてください。[p]
 それと、アリス様が倒れてしまうと戦争が続けられなくなってしまいますので、[p]
 くれぐれもお気を付けを……。[p]
+[delete_gameobject id=1]
 [drawfg id=0]
 #アリス
 ふん！　私がそう簡単にやられるもんか！[p]
 クフフッ！　まあ、一応気を付けておくぞ。[p]
+[create_gameobject id=1 ref="Turorial/battle_capture"]
 [drawfg id=1]
 #クロ
 敵の兵士数を０にすると、攻撃のほかに捕獲を行うこともできます。[p]
@@ -58,3 +62,6 @@
 [drawfg id=0]
 #アリス
 クフフッ！　ようし、ガンガン捕まえるぞォ！！[p]
+[delete_gameobject id=1]
+[delete_gameobject id=0]
+[hide_message]

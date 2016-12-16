@@ -11,7 +11,26 @@
 #チシャ
 兵の増員をするには「軍団」をクリックしてください。[p]
 
-;クリック
+[hide_cursor]
+[show_accentcursor x=10 y=80]
+
+[wait time=800]
+[se ref="040_click"]
+[menu_go_army]
+
+[hide_accentcursor]
+
+[wait time=500]
+
+[show_accentcursor x=30 y=60]
+[wait time=800]
+[se ref="040_click"]
+[menu_army_open_unit index=0]
+
+[wait time=800]
+
+[hide_accentcursor]
+[show_cursor]
 
 [drawfg id=1]
 #チシャ

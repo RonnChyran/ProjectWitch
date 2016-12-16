@@ -58,7 +58,7 @@ namespace ProjectWitch.Talk
             var res = Resources.Load(path) as GameObject;
             if(res == null)
             {
-                Debug.LogWarning("立ち絵画像が見つかりませんでした。" + path + "を確認してください。");
+                error = "立ち絵画像が見つかりませんでした。" + path + "を確認してください。";
                 return;
             }
 

@@ -20,8 +20,12 @@
 [drawfg id=0]
 #アリス
 な……なんだ、案外めんどくさいな。[p]
+[hide_message]
+[wait time=500]
 
 ;タイムバーハイライト
+[create_gameobject id=0 ref="Tutorial/battle_timeline_hilight"]
+[wait time=1000]
 
 [drawfg id=1]
 #クロ
@@ -34,6 +38,9 @@
 #クロ
 味方のユニットは赤、敵のユニットは青であらわされています。[p]
 味方のターンになったら、アリス様がご指示をお願いします。[p]
+
+[delete_gameobject id=0]
+
 [drawfg id=0]
 #アリス
 指示ったって、具体的に何をすればいいんだよ。[p]
@@ -54,16 +61,28 @@
 [drawfg id=1]
 #クロ
 そうですね……やっていただいた方が早いかと。[p]
+[hide_message]
+[wait time=500]
+
+[create_gameobject id=0 ref="Tutorial/battle_status_hilight"]
+
+[show_message pos="top"]
+#クロ
 敵のステータスにカーソルを合わせるとボタンが現れますので、選択してください。[p]
+[hide_message]
 
-;強調カーソル表示
-;ボタン表示(実装)
-;ボタンクリック(実装)
+[show_accentcursor x=60 y=30]
+
+[battle_show_skill_button target=3]
 [se ref="040_click"]
-;ボタン非表示(実装)
-;強調カーソル非表示
-;ユニット行動(実装)
+[battle_hide_skill_button]
 
+[hide_accentcursor]
+
+[battle_execute_skill target=3 type=0]
+[wait time=10000]
+
+[show_message pos="bottom"]
 [drawfg id=0]
 #アリス
 おお、確かに２回行動したな。[p]
@@ -107,4 +126,5 @@
 #アリス
 うーん……まあ、とりあえずやりながら覚えるか。[p]
 
+[hide_message]
 ;戦闘続行

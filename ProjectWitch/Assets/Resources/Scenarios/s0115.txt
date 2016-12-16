@@ -1,10 +1,10 @@
 ;script 115
 
 ;リソースロード
-[loadcg id=0 ref="000_cv_aliceA"]
-[loadcg id=1 ref="009_cv_chishireA"]
-[loadcg id=2 ref="010_cv_meisieA"]
-[loadcg id=3 ref="008_cv_kuroA"]
+[loadcg id=0 ref="alice"]
+[loadcg id=1 ref="chishire"]
+[loadcg id=2 ref="meisie"]
+[loadcg id=3 ref="kuro"]
 
 [if_alive unit=2]
 
@@ -14,7 +14,7 @@
 [background ref="1000"]
 [bgm ref="003_alice2"]
 [drawcg id=0 pos="right"]
-[drawcg id=2 pos="left"]
+[drawcg id=2 pos="left" dir="right"]
 
 #アリス
 [voice ref="010125"]
@@ -133,7 +133,7 @@
 [background ref="1000"]
 [bgm ref="003_alice2"]
 [drawcg id=0 pos="right"]
-[drawcg id=1 pos="left"]
+[drawcg id=1 pos="left" dir="right"]
 
 #アリス
 [voice ref="010112"]
@@ -185,6 +185,8 @@
 
 [endif]
 
-[call_ending index=16]
+[hide_message]
 
+;体験版
+[call_ending index=16]
 [sys_memset index=115 value="1"]
