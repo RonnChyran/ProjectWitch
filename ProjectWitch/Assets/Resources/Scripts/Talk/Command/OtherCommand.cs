@@ -35,6 +35,7 @@ namespace ProjectWitch.Talk.Compiler{
             patternList.Add(new CreateWaitTimerCommand());
 
             patternList.Add(new CreateEnableBattleTutorialCommand());
+            patternList.Add(new CreateEnableMenuTutorialCommand());
             patternList.Add(new CreateShowCursorCommand());
             patternList.Add(new CreateHideCursorCommand());
             patternList.Add(new CreateShowAccentCursorCommand());
@@ -457,6 +458,27 @@ namespace ProjectWitch.Talk.Compiler{
                 return null;
             }
             commandList.Add(new RunOrderCommand("EnableBattleTutorial"));
+            return commandList.GetArray();
+        }
+    }
+
+    //メニューのチュートリアルモードをオンにする
+    public class CreateEnableMenuTutorialCommand : Pattern_TagFormat
+    {
+        protected override string TagName()
+        {
+            return "menu_tutorial_enabled";
+        }
+        protected override CommandFormat[] CreateCommand(ArgumentDictionary arguments, int line, int index)
+        {
+            CommandList commandList = new CommandList();
+
+            if(arguments.Count > 0)
+            {
+                CompilerLog.Log(line, index, "無効な引数があります");
+                return null;
+            }
+            commandList.Add(new RunOrderCommand("EnableMenuTutorial"));
             return commandList.GetArray();
         }
     }

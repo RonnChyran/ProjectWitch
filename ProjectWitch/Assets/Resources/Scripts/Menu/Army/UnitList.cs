@@ -49,8 +49,8 @@ namespace ProjectWitch.Menu
         public Unit[] GetUnitList()
         {
             var unitTranses = mContentGroup.GetComponentsInChildren<Transform>();
-            return unitTranses.Select(p => p.GetComponent<Unit>()).ToArray();
-            
+            var objects =  unitTranses.Select(p => p.GetComponent<Unit>()).ToArray();
+            return objects.Where(p => p != null).ToArray();
         }
     }
 }

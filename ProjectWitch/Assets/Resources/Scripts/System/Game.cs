@@ -82,6 +82,8 @@ namespace ProjectWitch
 
         public ScenarioDataIn ScenarioIn { get; set; }
 
+        public MenuDataIn MenuDataIn { get; set; }
+
         public int EndingID { get; set; }
 
         #endregion
@@ -141,6 +143,8 @@ namespace ProjectWitch
             BattleIn = new BattleDataIn();
             BattleOut = new BattleDataOut();
             ScenarioIn = new ScenarioDataIn();
+            MenuDataIn = new MenuDataIn();
+            MenuDataIn.Reset();
 
             //ゲームデータ初期化
             GameData = new GameData();
@@ -263,15 +267,12 @@ namespace ProjectWitch
         public void CallSave()
         {
             GameData.Save(0);
-            //SceneManager.LoadScene(cSceneName_Save);
         }
 
         //ロード画面を呼び出す
         public void CallLoad()
         {
             GameData.Load(0);
-            //ShowDialog("じっそうしてないよ！", "");
-            //SceneManager.LoadScene(cSceneName_Load);
         }
 
         //ローディング画面を表示
