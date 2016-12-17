@@ -326,75 +326,81 @@ namespace ProjectWitch.Battle
                 SetStatusIcons();
         }
 
-        // マウスオーバーした時
-        public void OnPointerEnter(PointerEventData e)
+		// マウスオーバーしたときの動作
+		public void OnPointerEnterAction()
+		{
+			if (!BattleObj.IsPlayerSelectTime || !IsExsistUnit || Unit.UnitData.HP == 0)
+				return;
+			var turnUnit = BattleObj.TurnUnit;
+			string atkSkillName = "", defSkillName = "";
+			bool isCapture = (!Unit.IsPlayer && Unit.UnitData.Deathable && !Unit.IsExistSoldier);
+			if (turnUnit.IsPlayer == Unit.IsPlayer)
+			{
+				// 味方
+				if (turnUnit == Unit && turnUnit.LDefSkill.Target == SkillDataFormat.SkillTarget.Own)
+					defSkillName = turnUnit.LDefSkill.Name;
+				else if (turnUnit.LDefSkill.Target == SkillDataFormat.SkillTarget.Player ||
+					turnUnit.LDefSkill.Target == SkillDataFormat.SkillTarget.EnemyAndPlayer ||
+					turnUnit.LDefSkill.Target == SkillDataFormat.SkillTarget.PlayerLeader)
+				{
+					defSkillName = turnUnit.LDefSkill.Name;
+					if (turnUnit.LDefSkill.Range == SkillDataFormat.SkillRange.All)
+						foreach (var face in (Unit.IsPlayer ? BattleObj.PlayerFaces : BattleObj.EnemyFaces))
+							if (face.Unit != Unit && face.IsExsistUnit)
+							{
+								face.SetButton("", defSkillName, false);
+								face.SetSelectArrow(true);
+							}
+				}
+			}
+			else
+			{
+				// 敵
+				if (turnUnit.LAtkSkill.Target == SkillDataFormat.SkillTarget.Enemy ||
+					turnUnit.LAtkSkill.Target == SkillDataFormat.SkillTarget.EnemyAndPlayer ||
+					turnUnit.LAtkSkill.Target == SkillDataFormat.SkillTarget.EnemyLeader)
+				{
+					atkSkillName = turnUnit.LAtkSkill.Name;
+					if (turnUnit.LAtkSkill.Range == SkillDataFormat.SkillRange.All)
+						foreach (var face in (Unit.IsPlayer ? BattleObj.PlayerFaces : BattleObj.EnemyFaces))
+							if (face.Unit != Unit && face.IsExsistUnit)
+							{
+								face.SetButton(atkSkillName, "", false);
+								face.SetSelectArrow(true);
+							}
+				}
+				if (turnUnit.LDefSkill.Target == SkillDataFormat.SkillTarget.Enemy ||
+					turnUnit.LDefSkill.Target == SkillDataFormat.SkillTarget.EnemyAndPlayer ||
+					turnUnit.LDefSkill.Target == SkillDataFormat.SkillTarget.EnemyLeader)
+				{
+					defSkillName = turnUnit.LDefSkill.Name;
+					if (turnUnit.LDefSkill.Range == SkillDataFormat.SkillRange.All)
+						foreach (var face in (Unit.IsPlayer ? BattleObj.PlayerFaces : BattleObj.EnemyFaces))
+							if (face.Unit != Unit && face.IsExsistUnit)
+							{
+								face.SetButton("", defSkillName, false);
+								face.SetSelectArrow(true);
+							}
+				}
+			}
+			SetButton(atkSkillName, defSkillName, isCapture);
+			if (!Unit.IsPlayer)
+				Unit.StartCoroutine("SlideIn");
+			SetSelectArrow(true);
+		}
+
+		// マウスオーバーした時
+		public void OnPointerEnter(PointerEventData e)
         {
-            if (!BattleObj.IsPlayerSelectTime || !IsExsistUnit || Unit.UnitData.HP == 0)
-                return;
-            var turnUnit = BattleObj.TurnUnit;
-            string atkSkillName = "", defSkillName = "";
-            bool isCapture = (!Unit.IsPlayer && Unit.UnitData.Deathable && !Unit.IsExistSoldier);
-            if (turnUnit.IsPlayer == Unit.IsPlayer)
-            {
-                // 味方
-                if (turnUnit == Unit && turnUnit.LDefSkill.Target == SkillDataFormat.SkillTarget.Own)
-                    defSkillName = turnUnit.LDefSkill.Name;
-                else if (turnUnit.LDefSkill.Target == SkillDataFormat.SkillTarget.Player ||
-                    turnUnit.LDefSkill.Target == SkillDataFormat.SkillTarget.EnemyAndPlayer ||
-                    turnUnit.LDefSkill.Target == SkillDataFormat.SkillTarget.PlayerLeader)
-                {
-                    defSkillName = turnUnit.LDefSkill.Name;
-                    if (turnUnit.LDefSkill.Range == SkillDataFormat.SkillRange.All)
-                        foreach (var face in (Unit.IsPlayer ? BattleObj.PlayerFaces : BattleObj.EnemyFaces))
-                            if (face.Unit != Unit && face.IsExsistUnit)
-                            {
-                                face.SetButton("", defSkillName, false);
-                                face.SetSelectArrow(true);
-                            }
-                }
-            }
-            else
-            {
-                // 敵
-                if (turnUnit.LAtkSkill.Target == SkillDataFormat.SkillTarget.Enemy ||
-                    turnUnit.LAtkSkill.Target == SkillDataFormat.SkillTarget.EnemyAndPlayer ||
-                    turnUnit.LAtkSkill.Target == SkillDataFormat.SkillTarget.EnemyLeader)
-                {
-                    atkSkillName = turnUnit.LAtkSkill.Name;
-                    if (turnUnit.LAtkSkill.Range == SkillDataFormat.SkillRange.All)
-                        foreach (var face in (Unit.IsPlayer ? BattleObj.PlayerFaces : BattleObj.EnemyFaces))
-                            if (face.Unit != Unit && face.IsExsistUnit)
-                            {
-                                face.SetButton(atkSkillName, "", false);
-                                face.SetSelectArrow(true);
-                            }
-                }
-                if (turnUnit.LDefSkill.Target == SkillDataFormat.SkillTarget.Enemy ||
-                    turnUnit.LDefSkill.Target == SkillDataFormat.SkillTarget.EnemyAndPlayer ||
-                    turnUnit.LDefSkill.Target == SkillDataFormat.SkillTarget.EnemyLeader)
-                {
-                    defSkillName = turnUnit.LDefSkill.Name;
-                    if (turnUnit.LDefSkill.Range == SkillDataFormat.SkillRange.All)
-                        foreach (var face in (Unit.IsPlayer ? BattleObj.PlayerFaces : BattleObj.EnemyFaces))
-                            if (face.Unit != Unit && face.IsExsistUnit)
-                            {
-                                face.SetButton("", defSkillName, false);
-                                face.SetSelectArrow(true);
-                            }
-                }
-            }
-            SetButton(atkSkillName, defSkillName, isCapture);
-            if (!Unit.IsPlayer)
-                Unit.StartCoroutine("SlideIn");
-            SetSelectArrow(true);
-        }
+			OnPointerEnterAction();
+		}
 
         // マウスが離されたとき
         public void OnPointerExit(PointerEventData e)
         {
             if (!BattleObj.IsPlayerSelectTime || !IsExsistUnit)
                 return;
-            SetAllFaceHide();
+			SetAllFaceHideButton();
             if (!Unit.IsPlayer)
                 Unit.StartCoroutine("SlideOut");
         }
@@ -406,7 +412,7 @@ namespace ProjectWitch.Battle
             mImTargetFlame.SetActive(flag);
         }
 
-        public void SetAllFaceHide()
+        public void SetAllFaceHideButton()
         {
             foreach (var face in BattleObj.PlayerFaces)
                 if (face.IsExsistUnit)

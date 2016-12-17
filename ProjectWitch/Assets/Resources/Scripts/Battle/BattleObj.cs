@@ -37,13 +37,7 @@ namespace ProjectWitch.Battle
         public Transform SoldierSuperLarge { get { return mSoldierSuperLarge; } }
         // 顔グラ
         [SerializeField]
-        private GameObject mFaceP0 = null, mFaceP1 = null, mFaceP2 = null, mFaceE0 = null, mFaceE1 = null, mFaceE2 = null;
-        public FaceObj FaceP0 { get { return mFaceP0.GetComponent<FaceObj>(); } }
-        public FaceObj FaceP1 { get { return mFaceP1.GetComponent<FaceObj>(); } }
-        public FaceObj FaceP2 { get { return mFaceP2.GetComponent<FaceObj>(); } }
-        public FaceObj FaceE0 { get { return mFaceE0.GetComponent<FaceObj>(); } }
-        public FaceObj FaceE1 { get { return mFaceE1.GetComponent<FaceObj>(); } }
-        public FaceObj FaceE2 { get { return mFaceE2.GetComponent<FaceObj>(); } }
+        private FaceObj mFaceP0 = null, mFaceP1 = null, mFaceP2 = null, mFaceE0 = null, mFaceE1 = null, mFaceE2 = null;
         public List<FaceObj> PlayerFaces { get; private set; }
         public List<FaceObj> EnemyFaces { get; private set; }
         // カード
@@ -242,15 +236,15 @@ namespace ProjectWitch.Battle
             // 顔画像関連セット
             print("顔グラ設定");
             PlayerFaces = new List<FaceObj>();
-            PlayerFaces.Add(FaceP0);
-            PlayerFaces.Add(FaceP1);
-            PlayerFaces.Add(FaceP2);
+            PlayerFaces.Add(mFaceP0);
+            PlayerFaces.Add(mFaceP1);
+            PlayerFaces.Add(mFaceP2);
             for (int i = 0; i < PlayerFaces.Count; ++i)
                 PlayerFaces[i].SetPos(i, true);
             EnemyFaces = new List<FaceObj>();
-            EnemyFaces.Add(FaceE0);
-            EnemyFaces.Add(FaceE1);
-            EnemyFaces.Add(FaceE2);
+            EnemyFaces.Add(mFaceE0);
+            EnemyFaces.Add(mFaceE1);
+            EnemyFaces.Add(mFaceE2);
             for (int i = 0; i < EnemyFaces.Count; ++i)
                 EnemyFaces[i].SetPos(i, false);
             PlayerCardObjs = new List<GameObject>();
@@ -569,8 +563,12 @@ namespace ProjectWitch.Battle
             mBattleStartUI.SetActive(false);
             // 戦闘開始時がタイミングのカード発動
             yield return DoCardAction(CardDataFormat.CardTiming.BattleBegin, null);
-            // ターン処理開始
-            StartCoroutine("CoTurnProcess");
+			// チュートリアルイベント呼び出し
+			EventDataFormat e = new EventDataFormat();
+			e.FileName = "s9802";
+			mGame.CallScript(e);
+			// ターン処理開始
+			StartCoroutine("CoTurnProcess");
         }
 
         // AIの行動コルーチン
@@ -712,7 +710,8 @@ namespace ProjectWitch.Battle
                 else if (type == DamageType.Poison)
                     DamageNum = target.GetPoisonDamagePerTurn();
                 DamageNum = System.Math.Min(DamageNum, (!target.IsExistSoldier || toLeader ? target.UnitData.HP : target.UnitData.SoldierNum));
-                target.SufferDamage(DamageNum, toLeader);
+				var isNotSolNumZero = !target.IsPlayer && target.UnitData.SoldierNum != 0;
+				target.SufferDamage(DamageNum, toLeader);
                 var damageDisplay = (target.IsPlayer ? mDamageDisplayPlayer : mDamageDisplayEnemy).GetComponent<DamageDisplay>();
                 damageDisplay.Display(DamageNum, true);
                 while (FXCtrl && FXCtrl.LifeTime >= 0.5)
@@ -726,10 +725,17 @@ namespace ProjectWitch.Battle
                 }
                 yield return WaitSeconds(0.05f);
                 yield return damageDisplay.Hide();
-            }
+				if (isNotSolNumZero && target.UnitData.SoldierNum == 0)
+				{
+					// チュートリアルイベント呼び出し
+					EventDataFormat e = new EventDataFormat();
+					e.FileName = "s9803";
+					mGame.CallScript(e);
+				}
+			}
 
-            // 庇い対象を無しにする
-            target.GuardTarget = null;
+			// 庇い対象を無しにする
+			target.GuardTarget = null;
             if (type == DamageType.Normal)
                 target.Face.SetSelectArrow(false);
 
@@ -823,7 +829,7 @@ namespace ProjectWitch.Battle
                             unit.Face.SetDead();
                             BattleDataOut.DeadUnits.Add(unit.UnitID);
                             yield return StartCoroutine(CoDeleteUnit(DeleteUnitType.Dead, unit));
-                        }
+						}
                         else
                         {
                             // 撤退ユニットなら顔グラを赤く
@@ -1353,8 +1359,13 @@ namespace ProjectWitch.Battle
             }
             BattleDataOut.IsWin = isWin;
 
-            // エフェクトの終わるまで待つ
-            yield return StartCoroutine("CoWaitEffect");
+			// チュートリアルイベント呼び出し
+			EventDataFormat e = new EventDataFormat();
+			e.FileName = "s9804";
+			mGame.CallScript(e);
+
+			// エフェクトの終わるまで待つ
+			yield return StartCoroutine("CoWaitEffect");
             mMessageUI.SetActive(true);
             mMessageUI.transform.FindChild("Text").GetComponent<Text>().text = (IsInvasion ? 2 : 1) + (isWin ? 1 : 0) + "ポイントの経験値を得た";
             yield return WaitInputOrSeconds(2);
@@ -1424,7 +1435,7 @@ namespace ProjectWitch.Battle
         public void PushSkillButton(BattleUnit target, int type)
         {
             // スキルボタンを消す
-            PlayerUnits[0].Face.SetAllFaceHide();
+            PlayerUnits[0].Face.SetAllFaceHideButton();
             Music.PlayClickSkillButton();
             target.Face.SetSelectArrow(false);
             StartCoroutine(CoPlayerAction(target, type));
