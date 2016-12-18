@@ -1306,6 +1306,16 @@ namespace ProjectWitch
         public int NextB { get; set; }
     }
 
+    public class MenuDataIn
+    {
+        public void Reset()
+        {
+            TutorialMode = false;
+        }
+
+        public bool TutorialMode { get; set; }
+    }
+
     #endregion
 
     public class DataLoader

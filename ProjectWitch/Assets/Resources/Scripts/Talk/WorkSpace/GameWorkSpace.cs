@@ -623,6 +623,14 @@ namespace ProjectWitch.Talk.WorkSpace
                     return null;
                 }));
 
+            vm.AddCommandDelegater(
+                "EnableMenuTutorial",
+                new CommandDelegater(false, 0, delegate (object[] arguments)
+                 {
+                     Game.GetInstance().TalkCommand.EnableMenuTutorial();
+                     return null;
+                 }));
+
         }
     }
 }

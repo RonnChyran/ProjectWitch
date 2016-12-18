@@ -19,6 +19,7 @@ namespace ProjectWitch.Talk.WorkSpace
                 FieldCommand = fieldCtrl.GetComponent<Field.FieldController>().TalkCommandHelper;
         }
 
+
         //立ち絵の位置用のアップデータ
         private class FieldAreaHilightUpdater : UpdaterFormat
         {

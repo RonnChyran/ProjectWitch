@@ -23,6 +23,12 @@ namespace ProjectWitch
             Game.GetInstance().BattleIn.IsTutorial = true;
         }
 
+        //メニューのチュートリアルモードをオンにする
+        public void EnableMenuTutorial()
+        {
+            Game.GetInstance().MenuDataIn.TutorialMode = true;
+        }
+
         //カーソルの非表示
         public void HideCursor()
         {

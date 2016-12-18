@@ -61,6 +61,11 @@ namespace ProjectWitch.Field
         {
             mIsCoroutineExec = true;
 
+            //メニュー操作を無効にする
+            MenuClickable = false;
+            FlagClickable = false;
+
+
             var game = Game.GetInstance();
             var currentTime = game.GameData.CurrentTime;
 
@@ -121,16 +126,20 @@ namespace ProjectWitch.Field
 
                 //BGM再開
                 PlayBGM();
-                
+               
+                //カメラ操作を有効にする
+                CameraController.IsPlayable = true;
+
                 //メニュー操作を有効にする
                 MenuClickable = true;
                 FlagClickable = true;
 
-                //カメラ操作を有効にする
-                CameraController.IsPlayable = true;
-
                 //時間が変化するまで待機
                 while (currentTime == game.GameData.CurrentTime) yield return null;
+
+                //メニュー操作を無効にする
+                MenuClickable = false;
+                FlagClickable = false;
 
                 currentTime = game.GameData.CurrentTime;
 
@@ -145,10 +154,6 @@ namespace ProjectWitch.Field
             #endregion
 
             #region Enemy Turn
-
-            //メニュー操作を無効にする
-            MenuClickable = false;
-            FlagClickable = false;
 
             //カメラ操作を無効にする
             CameraController.IsPlayable = false;

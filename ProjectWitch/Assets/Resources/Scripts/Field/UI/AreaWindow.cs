@@ -72,9 +72,6 @@ namespace ProjectWitch.Field
                 //キャンセル音再生
                 game.SoundManager.PlaySE(SE.Cancel);
 
-                //メニューを開けるようにする
-                FieldController.MenuClickable = true;
-
                 Close();
             }
         }
@@ -177,7 +174,8 @@ namespace ProjectWitch.Field
         //ウィンドウを閉じる
         public void Close()
         {
-
+            //メニューを開けるようにする
+            FieldController.MenuClickable = true;
             FieldController.FlagClickable = true;
             FieldUIController.OwnerPanelLock = false;
             FieldUIController.SelectedTerritory = -1;

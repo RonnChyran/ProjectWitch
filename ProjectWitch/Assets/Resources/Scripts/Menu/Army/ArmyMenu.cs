@@ -5,6 +5,9 @@ namespace ProjectWitch.Menu
 {
     public class ArmyMenu : MonoBehaviour
     {
+        //コントローラへの参照
+        [SerializeField]
+        private MenuController mController = null;
 
         //トップメニューへの参照
         [SerializeField]
@@ -35,7 +38,7 @@ namespace ProjectWitch.Menu
         // Update is called once per frame
         void Update()
         {
-            if (mcAnim.GetBool("IsShow") && Closable)
+            if (mcAnim.GetBool("IsShow") && Closable && mController.InputEnable)
             {
                 if (Input.GetButtonDown("Cancel"))
                 {
