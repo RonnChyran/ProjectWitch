@@ -33,12 +33,17 @@ namespace ProjectWitch.Menu
         [SerializeField]
         private string mTutorialName = "s9806";
 
+        //操作できるか
+        public bool InputEnable { get; set; }
+
         //内部変数
         private Field.FieldController mFController = null;       
 
         public void Start()
         {
             mFController = GameObject.FindWithTag("FieldController").GetComponent<Field.FieldController>();
+
+            InputEnable = true;
 
             //チュートリアルの開始
             if(Game.GetInstance().MenuDataIn.TutorialMode)
@@ -69,16 +74,32 @@ namespace ProjectWitch.Menu
         public void Update()
         {
             mFController.MenuClickable = false;
-
         }
 
         private void StartTutorial()
+        {
+            InputEnable = false;
+            StartCoroutine(_StartTutorial());
+        }
+        private IEnumerator _StartTutorial()
         {
             var game = Game.GetInstance();
             var e = new EventDataFormat();
             e.FileName = mTutorialName;
 
+            //前のスクリプトの終了を待つ
+            while (game.IsTalk)
+                yield return null;
+
             game.CallScript(e);
+            yield return null;
+
+            //スクリプトの終了を待つ
+            while (game.IsTalk)
+                yield return null;
+
+            InputEnable = true;
+
         }
     }
 }

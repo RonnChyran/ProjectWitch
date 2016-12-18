@@ -31,7 +31,7 @@ namespace ProjectWitch.Menu
         // Update is called once per frame
         void Update()
         {
-            if (mcAnim.GetBool("IsShow"))
+            if (mcAnim.GetBool("IsShow") && mMenuController.InputEnable)
             {
                 if (Input.GetButtonDown("Cancel"))
                 {
