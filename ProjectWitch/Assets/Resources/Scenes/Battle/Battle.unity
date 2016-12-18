@@ -4767,7 +4767,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 2018290, guid: f06beb50ecbc362449478db1bead6c94, type: 2}
       propertyPath: m_ClearFlags
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2018290, guid: f06beb50ecbc362449478db1bead6c94, type: 2}
       propertyPath: m_Enabled
@@ -4775,7 +4775,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 2018290, guid: f06beb50ecbc362449478db1bead6c94, type: 2}
       propertyPath: m_CullingMask.m_Bits
-      value: 256
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 114000011027387586, guid: f06beb50ecbc362449478db1bead6c94,
         type: 2}
@@ -9990,7 +9990,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1756407210
 Transform:
   m_ObjectHideFlags: 0
@@ -10475,7 +10475,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1000010647980830, guid: 3471742428dbecf43804eb0400c06971, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3471742428dbecf43804eb0400c06971, type: 2}

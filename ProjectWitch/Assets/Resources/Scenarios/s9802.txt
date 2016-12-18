@@ -74,13 +74,15 @@
 [show_accentcursor x=60 y=30]
 
 [battle_show_skill_button target=3]
+[wait time=1000]
+
 [se ref="040_click"]
 [battle_hide_skill_button]
 [delete_gameobject id=0]
 [hide_accentcursor]
 
 [battle_execute_skill target=3 type=0]
-[wait time=10000]
+[wait time=8000]
 
 [show_message pos="bottom"]
 [drawfg id=0]
