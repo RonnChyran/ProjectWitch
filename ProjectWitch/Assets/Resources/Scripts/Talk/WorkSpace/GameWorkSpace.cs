@@ -283,7 +283,7 @@ namespace ProjectWitch.Talk.WorkSpace
         }
 
         //タイマーウェイトのアップデータ
-        private class TimerWaitUpdater : PauseUpdater
+        public class TimerWaitUpdater : PauseUpdater
         {
             float mTime = 0.0f;
 

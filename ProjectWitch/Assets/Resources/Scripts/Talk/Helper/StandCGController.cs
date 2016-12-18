@@ -48,17 +48,11 @@ namespace ProjectWitch.Talk
             if (obj == null)
                 Destroy(obj);
 
-            //obj = Instantiate(mCGPrefab) as GameObject;
-            //obj.SetActive(false);
-            //obj.GetComponent<RawImage>().texture = Resources.Load(path) as Texture2D;
-            //obj.GetComponent<RawImage>().SetNativeSize();
-            //obj.transform.SetParent(this.transform);
-
             //立ち絵ロード
             var res = Resources.Load(path) as GameObject;
             if(res == null)
             {
-                error = "立ち絵画像が見つかりませんでした。" + path + "を確認してください。";
+                Debug.LogWarning("立ち絵画像が見つかりませんでした。" + path + "を確認してください。");
                 return;
             }
 
@@ -99,7 +93,7 @@ namespace ProjectWitch.Talk
             GameObject obj = mCGArray[id];
             if (obj == null)
             {
-                error = "ID=" + id + "の立ち絵が存在しません";
+                Debug.LogWarning("ID=" + id + "の立ち絵が存在しません");
                 return;
             }
 
@@ -135,7 +129,7 @@ namespace ProjectWitch.Talk
             GameObject obj = mCGArray[id];
             if (obj == null)
             {
-                error = "ID=" + id + "の立ち絵が存在しません";
+                Debug.LogWarning("ID=" + id + "の立ち絵が存在しません");
                 return;
             }
             obj.SetActive(false);
@@ -154,7 +148,7 @@ namespace ProjectWitch.Talk
             GameObject obj = mCGArray[id];
             if (obj == null)
             {
-                error = "ID=" + id + "の立ち絵が存在しません";
+                Debug.LogWarning("ID=" + id + "の立ち絵が存在しません");
                 return;
             }
 

@@ -130,6 +130,12 @@ namespace ProjectWitch.Talk.WorkSpace
 
 			bool isWaiting = Updater is WaitUpdater;
 
+            //ウェイトタイマーの待ち
+            if(Updater is GameWorkSpace.TimerWaitUpdater)
+            {
+                 stepNextFlag = false;
+            }
+
 			//ここで次ステップへの処理を行う
 			if (stepNextFlag&&isWaiting)
 			{
