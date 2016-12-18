@@ -563,10 +563,13 @@ namespace ProjectWitch.Battle
             mBattleStartUI.SetActive(false);
             // 戦闘開始時がタイミングのカード発動
             yield return DoCardAction(CardDataFormat.CardTiming.BattleBegin, null);
-			// チュートリアルイベント呼び出し
-			EventDataFormat e = new EventDataFormat();
-			e.FileName = "s9802";
-			mGame.CallScript(e);
+			if (BattleDataIn.IsTutorial)
+			{
+				// チュートリアルイベント呼び出し
+				EventDataFormat e = new EventDataFormat();
+				e.FileName = "s9802";
+				mGame.CallScript(e);
+			}
 			// ターン処理開始
 			StartCoroutine("CoTurnProcess");
         }
@@ -725,7 +728,7 @@ namespace ProjectWitch.Battle
                 }
                 yield return WaitSeconds(0.05f);
                 yield return damageDisplay.Hide();
-				if (isNotSolNumZero && target.UnitData.SoldierNum == 0)
+				if (BattleDataIn.IsTutorial && isNotSolNumZero && target.UnitData.SoldierNum == 0)
 				{
 					// チュートリアルイベント呼び出し
 					EventDataFormat e = new EventDataFormat();
@@ -1358,11 +1361,13 @@ namespace ProjectWitch.Battle
                 GenerateEffect(mBattleLoseEffect, "BattleLoseEffect", true);
             }
             BattleDataOut.IsWin = isWin;
-
-			// チュートリアルイベント呼び出し
-			EventDataFormat e = new EventDataFormat();
-			e.FileName = "s9804";
-			mGame.CallScript(e);
+			if (BattleDataIn.IsTutorial)
+			{
+				// チュートリアルイベント呼び出し
+				EventDataFormat e = new EventDataFormat();
+				e.FileName = "s9804";
+				mGame.CallScript(e);
+			}
 
 			// エフェクトの終わるまで待つ
 			yield return StartCoroutine("CoWaitEffect");
