@@ -5,6 +5,8 @@ namespace ProjectWitch.Battle
 {
     public class TalkCommandHelper : MonoBehaviour
     {
+		[SerializeField]
+		private BattleObj mBattleObj = null;
 		// 顔グラ
 		[SerializeField]
 		private FaceObj mFaceP0 = null, mFaceP1 = null, mFaceP2 = null, mFaceE0 = null, mFaceE1 = null, mFaceE2 = null;
@@ -83,6 +85,14 @@ namespace ProjectWitch.Battle
 			}
 			else
 				error = "インスペクタで割り当てられていません";
+		}
+
+		// 一時停止する
+		// isPause==trueで一時停止
+		public void PauseBattle(bool isPause)
+		{
+			if (mBattleObj != null)
+				mBattleObj.IsPause = isPause;
 		}
 	}
 }
