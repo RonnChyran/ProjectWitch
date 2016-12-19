@@ -906,6 +906,33 @@ namespace ProjectWitch
             return units;
         }
 
+        //戦闘に出すカードを取得
+        public List<int> GetBattleCards()
+        {
+            //カードリストからメソッドに応じて３体抽出
+            var cards = new List<int>();
+            switch (CardChoiseMethod)
+            {
+                case ChoiseMethod.AscendingOrder:
+                    cards = CardList.GetOrderN(3);
+                    break;
+                case ChoiseMethod.Random3:
+                    cards = CardList.RandomN(3);
+                    break;
+                case ChoiseMethod.RandomAll:
+                    cards = CardList.RandomN(UnityEngine.Random.Range(1, 3));
+                    break;
+                default:
+                    break;
+            }
+
+            //３つに満たない部分を-1で補充
+            while (cards.Count < 3)
+                cards.Add(-1);
+
+            return cards;
+        }
+
         //死亡状態に移行する
         public void Kill()
         {

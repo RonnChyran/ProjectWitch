@@ -669,8 +669,12 @@ namespace ProjectWitch.Field
             //グループのユニットリストから3体取得
             var units = group.GetBattleUnits();
 
+            //グループのカードリストから3つ取得
+            var cards = group.GetBattleCards();
+
             //BattleInにセット
             game.BattleIn.EnemyUnits = units;
+            game.BattleIn.EnemyCards = cards;
 
             //バトルタイプのセット
             game.BattleIn.EnemyBattleType = 

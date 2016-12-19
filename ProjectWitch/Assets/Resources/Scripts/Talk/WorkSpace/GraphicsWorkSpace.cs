@@ -195,7 +195,8 @@ namespace ProjectWitch.Talk.WorkSpace
 					mCGLayer.AddStandCG(id, path, out error);
 					if (error != null) return error;
 					GameObject obj = mCGLayer.GetStandCG(id, out error);
-					obj.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+                    if(obj)
+    					obj.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
 					return error;
 				}));
 			//立ち絵を表示
@@ -222,6 +223,7 @@ namespace ProjectWitch.Talk.WorkSpace
 
                     GameObject obj = mCGLayer.GetStandCG(id, out error);
                     if (error != null) return error;
+                    if (obj == null) return null;
 
                     Rect canvasRect = CanvasRect;
 					float x = 1.5f * canvasRect.width;
@@ -355,6 +357,7 @@ namespace ProjectWitch.Talk.WorkSpace
 
 					GameObject obj = mCGLayer.GetStandCG(id, out error);
 					if (error != null) return error;
+                    if (obj == null) return null;
 
 					Transform trans = obj.transform;
 

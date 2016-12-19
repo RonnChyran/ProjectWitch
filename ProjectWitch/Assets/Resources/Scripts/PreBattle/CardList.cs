@@ -44,12 +44,12 @@ namespace ProjectWitch.PreBattle
 
             var territory = game.GameData.Territory[0];
             var group = game.GameData.Group[territory.GroupList[0]];
-            foreach (var cardid in group.CardList)
+            for (int cardid = 0; cardid < group.CardList.Count; cardid++)
             {
                 //コンテンツを追加
                 var inst = Instantiate(mCardPrefab);
                 var cCard = inst.GetComponent<Card>();
-                cCard.CardID = cardid;
+                cCard.CardIDInGroup = cardid;
                 cCard.Controller = mController;
                 cCard.CardInfo = mCardInfo;
                 inst.transform.SetParent(mContentGroup.transform, false);

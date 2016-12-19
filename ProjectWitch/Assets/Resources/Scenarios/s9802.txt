@@ -1,5 +1,4 @@
 [setskin ref="skin1"]
-[skip_enable enable=0]
 
 [loadfg id=0 ref="alice"]
 [loadfg id=1 ref="kuro"]
@@ -82,7 +81,7 @@
 [hide_accentcursor]
 
 [battle_execute_skill target=3 type=0]
-[wait time=8000]
+[wait time=5000]
 
 [show_message pos="bottom"]
 [drawfg id=0]

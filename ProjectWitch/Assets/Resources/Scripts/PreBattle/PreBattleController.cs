@@ -89,7 +89,7 @@ namespace ProjectWitch.PreBattle
             for(int i=0,j=0;i<3;i++)
             {
                 if (CardList[i] != -1)
-                    cards[j++] = CardList[i];
+                    cards[j++] = ConvertToGlobalCardIndex(CardList[i]);
             }
             game.BattleIn.PlayerCards = cards;
 
@@ -167,6 +167,17 @@ namespace ProjectWitch.PreBattle
             e.FileName = mTutorialScenarioName;
             game.CallScript(e);
         }
+
+        //グループのカードリストインデックスから、
+        //データのカードリストインデックスへ返還
+        public int ConvertToGlobalCardIndex(int index)
+        {
+            var game = Game.GetInstance();
+            var group = game.GameData.Group[0];
+            var cardlist = group.CardList;
+            return cardlist[index];
+        }
+
     }
 
     public static class PreBattleExtentions

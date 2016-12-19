@@ -8,9 +8,19 @@ namespace ProjectWitch.PreBattle
     {
 
         //プロパティ
-        public int CardID { get; set; }
+        public int CardIDInGroup { get; set; }
         public PreBattleController Controller { get; set; }
         public CardInfo CardInfo { get; set; }
+        private int CardID
+        {
+            get
+            {
+                var game = Game.GetInstance();
+                var group = game.GameData.Group[0];
+                var cardlist = group.CardList;
+                return cardlist[CardIDInGroup];
+            }
+        }
 
         //子プレハブ
         [SerializeField]
@@ -61,7 +71,7 @@ namespace ProjectWitch.PreBattle
             var card = game.GameData.Card[CardID];
 
             //もし使用カードに含まれていたら、無効にして、位置を表示
-            var battleID = Controller.CardList.IndexOf(CardID);
+            var battleID = Controller.CardList.IndexOf(CardIDInGroup);
             if (battleID != -1)
             {
                 mButton.interactable = false;
@@ -103,14 +113,14 @@ namespace ProjectWitch.PreBattle
                 }
             }
 
-            Controller.CardList[targetID] = CardID;
+            Controller.CardList[targetID] = CardIDInGroup;
             Controller.CardSetHistory.HistoryAdd(targetID);
             Controller.CancelTargetIsUnit = false;
         }
 
         public void OnClicked_Info()
         {
-            CardInfo.CardID = CardID;
+            CardInfo.CardID = CardIDInGroup;
             CardInfo.Show();
         }
 

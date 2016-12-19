@@ -143,6 +143,9 @@
 [wait time=1000]
 [se ref="040_click"]
 
+;戦闘ユニットのセット
+[battle_unit_in p0=0 p1=-1 p2=-1 e0=305 e1=-1 e2=-1]
+
 [hide_accentcursor]
 [show_cursor]
 [prebattle_callbattle]

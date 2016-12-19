@@ -26,14 +26,26 @@ namespace ProjectWitch.PreBattle
 
         //カード画像
         [SerializeField]
-        private Image mCard = null;
+        private Image mCardImg = null;
 
         //外すボタン
         [SerializeField]
         private GameObject mDetouchButton = null;
 
         //内部変数
-        private int mCardID = -1;
+        private int mCardIDInGroup = -1;
+
+        //プロパティ
+        private int CardID
+        {
+            get
+            {
+                var game = Game.GetInstance();
+                var group = game.GameData.Group[0];
+                var cardList = group.CardList;
+                return cardList[mCardIDInGroup];
+            }
+        }
 
         // Use this for initialization
         void Start()
@@ -44,9 +56,9 @@ namespace ProjectWitch.PreBattle
         void Update()
         {
             //unitIDが変化したら更新
-            if (mController.CardList[mID] != mCardID)
+            if (mController.CardList[mID] != mCardIDInGroup)
             {
-                mCardID = mController.CardList[mID];
+                mCardIDInGroup = mController.CardList[mID];
                 Reset();
             }
 
@@ -60,11 +72,11 @@ namespace ProjectWitch.PreBattle
                 mPanel.SetActive(true);
 
                 var game = Game.GetInstance();
-                var card = game.GameData.Card[mController.CardList[mID]];
+                var card = game.GameData.Card[CardID];
 
                 //表示の更新
                 var sprite = Resources.Load<Sprite>(mCardImagePath + card.ImageBack);
-                mCard.sprite = sprite;
+                mCardImg.sprite = sprite;
 
                 mDetouchButton.SetActive(false);
             }
