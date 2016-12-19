@@ -21,7 +21,7 @@ namespace ProjectWitch
         void Update()
         {
             var offset = mcRenderer.material.mainTextureOffset;
-            offset += mScrollSpeed;
+            offset += mScrollSpeed * Time.deltaTime;
 
             if (offset.x > 1.0f) offset.x = 0.0f;
             if (offset.y > 1.0f) offset.y = 0.0f;

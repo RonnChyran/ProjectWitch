@@ -75,6 +75,15 @@
     <Compile Include="Assets\MoviePlayer\Scripts\MobileMoviePlayer.cs" />
     <Compile Include="Assets\MoviePlayer\Scripts\MovieTexturePlayer.cs" />
     <Compile Include="Assets\Resources\Effects\Battle\Script\UVScroll.cs" />
+    <Compile Include="Assets\Resources\Effects\ImageEffects\AntiAliasing\AntiAliasing.cs" />
+    <Compile Include="Assets\Resources\Effects\ImageEffects\AntiAliasing\FXAA\FXAA.cs" />
+    <Compile Include="Assets\Resources\Effects\ImageEffects\AntiAliasing\IAntiAliasing.cs" />
+    <Compile Include="Assets\Resources\Effects\ImageEffects\AntiAliasing\SMAA\SMAA.cs" />
+    <Compile Include="Assets\Resources\Effects\ImageEffects\Common\ImageEffectHelper.cs" />
+    <Compile Include="Assets\Resources\Effects\ImageEffects\Common\MinAttribute.cs" />
+    <Compile Include="Assets\Resources\Effects\ImageEffects\Common\RenderTextureUtility.cs" />
+    <Compile Include="Assets\Resources\Effects\ImageEffects\LensAberrations\LensAberrations.cs" />
+    <Compile Include="Assets\Resources\Effects\ImageEffects\ScreenSpaceReflection\ScreenSpaceReflection.cs" />
     <Compile Include="Assets\Resources\Effects\ImageEffects\Scripts\Antialiasing.cs" />
     <Compile Include="Assets\Resources\Effects\ImageEffects\Scripts\Bloom.cs" />
     <Compile Include="Assets\Resources\Effects\ImageEffects\Scripts\BloomAndFlares.cs" />
@@ -113,6 +122,7 @@
     <Compile Include="Assets\Resources\Effects\ImageEffects\Scripts\Twirl.cs" />
     <Compile Include="Assets\Resources\Effects\ImageEffects\Scripts\VignetteAndChromaticAberration.cs" />
     <Compile Include="Assets\Resources\Effects\ImageEffects\Scripts\Vortex.cs" />
+    <Compile Include="Assets\Resources\Effects\ImageEffects\TonemappingColorGrading\TonemappingColorGrading.cs" />
     <Compile Include="Assets\Resources\Scripts\Battle\BattleBeginEffect.cs" />
     <Compile Include="Assets\Resources\Scripts\Battle\BattleController.cs" />
     <Compile Include="Assets\Resources\Scripts\Battle\BattleData.cs" />
@@ -271,7 +281,17 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\MoviePlayer\Readme.txt" />
-    <None Include="Assets\Resources\Effects\GlassRefraction\Shaders\GlassStainedBumpDistort.shader" />
+    <None Include="Assets\Resources\Effects\ImageEffects\AntiAliasing\FXAA\Resources\FXAA.shader" />
+    <None Include="Assets\Resources\Effects\ImageEffects\AntiAliasing\FXAA\Resources\FXAA3.cginc" />
+    <None Include="Assets\Resources\Effects\ImageEffects\AntiAliasing\SMAA\Resources\SMAA.cginc" />
+    <None Include="Assets\Resources\Effects\ImageEffects\AntiAliasing\SMAA\Resources\SMAA.shader" />
+    <None Include="Assets\Resources\Effects\ImageEffects\GlassRefraction\Shaders\GlassStainedBumpDistort.shader" />
+    <None Include="Assets\Resources\Effects\ImageEffects\LensAberrations\Resources\LensAberrations.shader" />
+    <None Include="Assets\Resources\Effects\ImageEffects\Projectors\Guidelines.txt" />
+    <None Include="Assets\Resources\Effects\ImageEffects\Projectors\Shaders\ProjectorLight.shader" />
+    <None Include="Assets\Resources\Effects\ImageEffects\Projectors\Shaders\ProjectorMultiply.shader" />
+    <None Include="Assets\Resources\Effects\ImageEffects\ScreenSpaceReflection\ScreenSpaceRaytrace.cginc" />
+    <None Include="Assets\Resources\Effects\ImageEffects\ScreenSpaceReflection\ScreenSpaceReflection.shader" />
     <None Include="Assets\Resources\Effects\ImageEffects\Shaders\BlendModesOverlay.shader" />
     <None Include="Assets\Resources\Effects\ImageEffects\Shaders\BlurEffectConeTaps.shader" />
     <None Include="Assets\Resources\Effects\ImageEffects\Shaders\CameraMotionBlur.shader" />
@@ -339,9 +359,10 @@
     <None Include="Assets\Resources\Effects\ImageEffects\Shaders\_DepthOfField\SeparableWeightedBlurDof34.shader" />
     <None Include="Assets\Resources\Effects\ImageEffects\Shaders\_DepthOfField\TiltShiftHdrLensBlur.shader" />
     <None Include="Assets\Resources\Effects\ImageEffects\Shaders\frag_ao.cginc" />
-    <None Include="Assets\Resources\Effects\Projectors\Guidelines.txt" />
-    <None Include="Assets\Resources\Effects\Projectors\Shaders\ProjectorLight.shader" />
-    <None Include="Assets\Resources\Effects\Projectors\Shaders\ProjectorMultiply.shader" />
+    <None Include="Assets\Resources\Effects\ImageEffects\TonemappingColorGrading\Resources\HistogramCompute.compute" />
+    <None Include="Assets\Resources\Effects\ImageEffects\TonemappingColorGrading\Resources\HistogramRender.shader" />
+    <None Include="Assets\Resources\Effects\ImageEffects\TonemappingColorGrading\Resources\TonemappingColorGrading.cginc" />
+    <None Include="Assets\Resources\Effects\ImageEffects\TonemappingColorGrading\Resources\TonemappingColorGrading.shader" />
     <None Include="Assets\Resources\Effects\TessellationShaders\Shaders\BumpedSpecularDisplacement.shader" />
     <None Include="Assets\Resources\Effects\TessellationShaders\Shaders\BumpedSpecularSmooth.shader" />
     <None Include="Assets\Resources\Effects\ToonShading\Shaders\ToonBasic.shader" />
