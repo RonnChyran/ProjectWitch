@@ -20,7 +20,7 @@ namespace ProjectWitch.Talk.Compiler
             patternList.Add(new CreateBattleShowSkillButtonCommand());
             patternList.Add(new CreateBattleHideSkillButtonCommand());
             patternList.Add(new CreateBattleExecuteSkillButtonCommand());
-
+            patternList.Add(new CreateBattlePauseCommand());
             mPatternList = patternList;
         }
     }
@@ -119,6 +119,36 @@ namespace ProjectWitch.Talk.Compiler
         }
     }
 
+    //スキルを実行
+    public class CreateBattlePauseCommand : Pattern_TagFormat
+    {
+        protected override string TagName()
+        {
+            return "battle_pause";
+        }
+        protected override CommandFormat[] CreateCommand(ArgumentDictionary arguments, int line, int index)
+        {
+            CommandList commandList = new CommandList();
+
+            if (arguments.ContainName("enable"))
+            {
+                commandList.Add(arguments.Get("enable"));
+            }
+            else
+            {
+                CompilerLog.Log(line, index, "引数enableが見つかりません。");
+                return null;
+            }
+
+            if (arguments.Count > 0)
+            {
+                CompilerLog.Log(line, index, "無効な引数があります。");
+                return null;
+            }
+            commandList.Add(new RunOrderCommand("Battle_Pause"));
+            return commandList.GetArray();
+        }
+    }
 
 
 

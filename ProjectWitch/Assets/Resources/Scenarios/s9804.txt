@@ -1,3 +1,4 @@
+[battle_pause enable=1]
 [setskin ref="skin1"]
 [skip_enable enable=0]
 
@@ -6,9 +7,8 @@
 
 [drawfg id=0]
 #アリス
-おっ、戦闘終了だな。[p]
-えいえいおー！！[n]
-クフフッ！　楽勝だったな！[p]
+おっ、戦闘終了だな。[n]
+ふう……支持するのも楽じゃないぞ。[p]
 [drawfg id=1]
 #クロ
 戦闘に勝利する条件は、こちらから攻め込む「侵攻戦」と、
@@ -33,8 +33,9 @@
 侵攻戦は犠牲を顧みず攻撃を重視、[p]
 防衛戦は兵力を温存し防御重視、[p]
 という戦い方が基本になります。[p]
-[drawfg id=0]
+[drawfg id=0 state=1]
 #アリス
 クフフッ！　わかったわかった。覚えておくっての。[p]
 
 [hide_message]
+[battle_enable pause=0]

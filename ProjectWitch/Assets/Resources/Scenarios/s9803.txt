@@ -1,5 +1,5 @@
 ;敵のユニットの兵士数を０にした時実行
-
+[battle_pause enable=1]
 [setskin ref="skin1"]
 [skip_enable enable=0]
 
@@ -18,7 +18,7 @@
 兵士数は部下の兵士の数です。[n]
 隊長は含まれません。[p]
 ユニットを全滅させるためには、隊長も倒す必要があります[p]
-[drawfg id=0]
+[drawfg id=0 state=1]
 #アリス
 そうか、このＨＰってのは隊長の体力だな！[p]
 [drawfg id=1]
@@ -36,7 +36,7 @@
 それと、アリス様が倒れてしまうと戦争が続けられなくなってしまいますので、[p]
 くれぐれもお気を付けを……。[p]
 [delete_gameobject id=1]
-[drawfg id=0]
+[drawfg id=0 state=1]
 #アリス
 ふん！　私がそう簡単にやられるもんか！[p]
 クフフッ！　まあ、一応気を付けておくぞ。[p]
@@ -51,22 +51,23 @@
 #クロ
 捕獲を行うと、敵を殺さずにとらえることができます。[p]
 とらえた隊長はアリス様の好きにしていただいて構いませんが……。[p]
-[drawfg id=0]
+[drawfg id=0 state=1]
 #アリス
 当然、私の奴隷として使ってやるぞ！[p]
 [drawfg id=1]
 #クロ
 元の主人への忠誠心が残っているものもおりますので、そう簡単には……。[p]
-[drawfg id=0]
+[drawfg id=0 state=1]
 #アリス
 魔女でもなければ隷属魔法で奴隷にしちまえばいいさ！[p]
 [drawfg id=1]
 #クロ
 おお……、さすがアリス様でございます。[p]
 では、捕えた際はそのように……。[p]
-[drawfg id=0]
+[drawfg id=0 state=1]
 #アリス
 クフフッ！　ようし、ガンガン捕まえるぞォ！！[p]
 [delete_gameobject id=1]
 [delete_gameobject id=0]
 [hide_message]
+[battle_pause enable=0]

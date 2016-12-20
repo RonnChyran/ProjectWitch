@@ -173,7 +173,8 @@ namespace ProjectWitch.PreBattle
         public int ConvertToGlobalCardIndex(int index)
         {
             var game = Game.GetInstance();
-            var group = game.GameData.Group[0];
+            var territory = game.GameData.Territory[0];
+            var group = game.GameData.Group[territory.GroupList[0]];
             var cardlist = group.CardList;
             return cardlist[index];
         }

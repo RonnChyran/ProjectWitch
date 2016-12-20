@@ -79,6 +79,26 @@ namespace ProjectWitch.Talk.WorkSpace
 
                     return error;
                 }));
+
+            //ポーズ
+            vm.AddCommandDelegater(
+                "Battle_Pause",
+                new CommandDelegater(false, 1, delegate (object[] arguments)
+                {
+                    string error;
+
+                    var enable = Converter.ObjectToInt(arguments[0], out error);
+                    if (error != null) return error;
+
+                    if (!BattleCommand)
+                    {
+                        error = "[battle_execute_skill]が実行できません。フィールドがロードされているシーンで実行してください。";
+                        return error;
+                    }
+
+                    BattleCommand.Pause(enable == 0 ? false : true);
+                    return error;
+                }));
         }
     }
 }

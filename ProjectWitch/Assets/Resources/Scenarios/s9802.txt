@@ -1,9 +1,10 @@
+[battle_pause enable=1]
 [setskin ref="skin1"]
 
 [loadfg id=0 ref="alice"]
 [loadfg id=1 ref="kuro"]
 
-[drawfg id=0]
+[drawfg id=0 state=1]
 #アリス
 よーっし！！　戦争だァ。[p]
 クフフフフッ！！　楽しくなってきたぞ！[p]
@@ -53,7 +54,7 @@
 #クロ
 いえ、最初は兵士が攻撃もしくは防御行動をとります。[p]
 次に隊長が、兵士の行動に応じた固有の能力を発動します。[p]
-[drawfg id=0]
+[drawfg id=0 state=2]
 #アリス
 ん……？　固有の能力って……さっきからややこしいぞ。[p]
 もっとわかりやすく説明しろよ。[p]
@@ -90,7 +91,7 @@
 [drawfg id=1]
 #クロ
 今は攻撃を行いましたが、防御を選択することもできます。[p]
-[drawfg id=0]
+[drawfg id=0 state=1]
 #アリス
 防御？　そんなのいらねえだろ。[p]
 突撃あるのみだ！[p]
@@ -115,7 +116,7 @@
 #クロ
 多くの隊長の「防御」は味方を選択することで発動できます。[p]
 ただし、敵を選択することで発動する「防御」もあります。[p]
-[drawfg id=0]
+[drawfg id=0 state=2]
 #アリス
 そっ、それだと「攻撃」と見分けがつかないじゃないか！[p]
 [drawfg id=1]
@@ -129,3 +130,4 @@
 
 [hide_message]
 ;戦闘続行
+[battle_pause enable=0]

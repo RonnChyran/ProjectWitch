@@ -89,7 +89,7 @@ namespace ProjectWitch.Battle
 
 		// 一時停止する
 		// isPause==trueで一時停止
-		public void PauseBattle(bool isPause)
+		public void Pause(bool isPause)
 		{
 			if (mBattleObj != null)
 				mBattleObj.IsPause = isPause;
