@@ -1827,6 +1827,7 @@ MonoBehaviour:
   mSkyBoxNight: {fileID: 2100000, guid: b6a3f8bca2c865243929bac258c89b96, type: 2}
   mDamageDisplayPlayer: {fileID: 1595893626}
   mDamageDisplayEnemy: {fileID: 1655505944}
+  mEscapeButton: {fileID: 783443989}
   EndEvent:
     m_PersistentCalls:
       m_Calls:
@@ -9497,6 +9498,11 @@ Prefab:
       propertyPath: mRandAmp8
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 114000010157674708, guid: 942477d124b96de45a0083cf505b7419,
+        type: 2}
+      propertyPath: mEscapeButton
+      value: 
+      objectReference: {fileID: 783443989}
     m_RemovedComponents:
     - {fileID: 0}
   m_ParentPrefab: {fileID: 100100000, guid: 942477d124b96de45a0083cf505b7419, type: 2}
