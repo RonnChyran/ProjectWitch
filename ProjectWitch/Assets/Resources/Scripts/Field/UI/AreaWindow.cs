@@ -67,6 +67,9 @@ namespace ProjectWitch.Field
             //ダイアログが出ていたら何もしない
             if (game.IsDialogShowd) return;
 
+            //トーク中なら何もしない
+            if (game.IsTalk) return;
+
             if (Input.GetButtonDown("Cancel"))
             {
                 //キャンセル音再生

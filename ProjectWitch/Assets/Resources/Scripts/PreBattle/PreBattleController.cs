@@ -55,6 +55,9 @@ namespace ProjectWitch.PreBattle
         {
             var game = Game.GetInstance();
 
+            //トーク中なら無効
+            if (game.IsTalk) return;
+
             //履歴に従ってセットしたユニットもしくはカードを削除
             if(Input.GetButtonDown("Cancel"))
             {

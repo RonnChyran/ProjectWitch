@@ -7,17 +7,16 @@
 [loadcg id=3 ref="chishire"]
 [loadcg id=4 ref="kuro"]
 
-
-[drawcg id=0 pos="right"]
-[drawcg id=1 pos="left" dir="right"]
-[bgm ref="017_event2"]
-[background ref="1025"]
-
-
 ;ライザ戦後
 #アリス
 [voice ref="000121"]
 ……んっ。[p]
+
+[bgm ref="017_event2"]
+[background ref="1025"]
+[drawcg id=0 pos="right"]
+[drawcg id=1 pos="left" dir="right"]
+
 #ヴェロニカ﻿
 [voice ref="000122"]
 あっ、目が覚めましたか？[p]
@@ -86,8 +85,8 @@
 ちょっと思いついたことがあるんだが……。[p]
 [filter name="fade" time="500"]
 [clearcg id=1]
-[drawcg id=1 pos="right" dir="left"]
-[moveto id=1 x=90 y=50 time=0]
+[drawcg id=1 pos="right"]
+[moveto id=1 x=90 time=0]
 [move id=0 x=10 y=0 time=0]
 [cn]
 ……………。[p]
@@ -112,15 +111,16 @@
 #ヴェロニカ
 [voice ref="000144"]
 そうだわ。[n]
-さっきのワープ魔法の副作用かもしれない……。[n]
+さっきのワープ魔法の副作用かもしれない……。[p]
 [voice ref="000145"]
 ニア、お願いだからアリスをお医者様のところへ連れて行ってあげて！[n]
 私たちの争いに、アリスは関係ないでしょう？[p]
 #ニア
 [voice ref="000146"]
-うーん、それもそっか。そうだよねえ、うんうん。[n]
+うーん、それもそっか。そうだよねえ、うんうん。[p]
 ニアもね？　町で買ったしめさばにあたったときは、[n]
-三日間くらい何も食べられなかったんだよ。 つらいよねぇ、うんうん。[p]
+三日間くらい何も食べられなかったんだよ。[p]
+つらいよねぇ、うんうん。[p]
 #アリス
 [move id=0 x=0 y=2 time=50]
 [move id=0 x=0 y=-2 time=50]

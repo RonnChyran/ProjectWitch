@@ -10,7 +10,7 @@
 [wait time=1000]
 
 [show_message pos="top"]
-[drawfg id=0]
+[drawfg id=0 state=2]
 #アリス
 おい、兵士数0にしたのに死なないぞ。[p]
 [drawfg id=1]
@@ -51,20 +51,20 @@
 #クロ
 捕獲を行うと、敵を殺さずにとらえることができます。[p]
 とらえた隊長はアリス様の好きにしていただいて構いませんが……。[p]
-[drawfg id=0 state=1]
+[drawfg id=0]
 #アリス
 当然、私の奴隷として使ってやるぞ！[p]
 [drawfg id=1]
 #クロ
 元の主人への忠誠心が残っているものもおりますので、そう簡単には……。[p]
-[drawfg id=0 state=1]
+[drawfg id=0]
 #アリス
 魔女でもなければ隷属魔法で奴隷にしちまえばいいさ！[p]
 [drawfg id=1]
 #クロ
 おお……、さすがアリス様でございます。[p]
 では、捕えた際はそのように……。[p]
-[drawfg id=0 state=1]
+[drawfg id=0]
 #アリス
 クフフッ！　ようし、ガンガン捕まえるぞォ！！[p]
 [delete_gameobject id=1]

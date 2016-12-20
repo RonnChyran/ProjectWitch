@@ -1,4 +1,3 @@
-[battle_pause enable=1]
 [setskin ref="skin1"]
 
 [loadfg id=0 ref="alice"]
@@ -11,7 +10,7 @@
 [drawfg id=1]
 #クロ
 アリス様、お楽しみのところ申し訳ありませんが、命令をお願いします。[p]
-[drawfg id=0]
+[drawfg id=0 state=0]
 #アリス
 命令ッつったって、それぞれ勝手にやればいいんじゃないのか。[p]
 [drawfg id=1]
@@ -71,7 +70,8 @@
 敵のステータスにカーソルを合わせるとボタンが現れますので、選択してください。[p]
 [hide_message]
 
-[show_accentcursor x=60 y=30]
+[hide_cursor]
+[show_accentcursor x=65 y=20]
 
 [battle_show_skill_button target=3]
 [wait time=1000]
@@ -80,12 +80,15 @@
 [battle_hide_skill_button]
 [delete_gameobject id=0]
 [hide_accentcursor]
+[show_cursor]
 
 [battle_execute_skill target=3 type=0]
+
 [wait time=5000]
 
+[battle_pause enable=1]
 [show_message pos="bottom"]
-[drawfg id=0]
+[drawfg id=0 state=0]
 #アリス
 おお、確かに２回行動したな。[p]
 [drawfg id=1]
@@ -101,7 +104,7 @@
 防御の際に発動する能力は、味方のステータスをあげる、敵のステータスを下げる、[p]
 兵数やＨＰを回復する、敵の行動順を遅らせるなど、[p]
 補助の役割を担うものが多いので、積極的に使われた方がよろしいですぞ。[p]
-[drawfg id=0]
+[drawfg id=0 state=0]
 #アリス
 うーん、そうか……。[n]
 結構迷うな。[p]
@@ -124,7 +127,7 @@
 「赤ボタン」が「攻撃」[n]
 「青ボタン」が「防御」[n]
 と覚えていただければ結構です。[p]
-[drawfg id=0]
+[drawfg id=0 state=0]
 #アリス
 うーん……まあ、とりあえずやりながら覚えるか。[p]
 
