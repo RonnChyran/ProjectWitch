@@ -1385,9 +1385,9 @@ namespace ProjectWitch.Battle
 				EventDataFormat e = new EventDataFormat();
 				e.FileName = "s9804";
 				mGame.CallScript(e);
-				yield return null;
 				// 一時停止
-				while (IsPause)
+				yield return null;
+				while (mGame.IsTalk)
 					yield return null;
 			}
 			// エフェクトの終わるまで待つ
