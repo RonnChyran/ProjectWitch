@@ -197,13 +197,13 @@ namespace ProjectWitch.Battle
         public bool IsNowIncDec { get; private set; }
         // 撤退したかどうか
         public bool IsEscape { get; private set; }
+		// 一時停止しているかどうか
+		public bool IsPause { get; set; }
 
-        #endregion
+		#endregion
 
-
-
-        // データのロード
-        void LoadData()
+		// データのロード
+		void LoadData()
         {
             mGame = Game.GetInstance();
 
@@ -232,9 +232,10 @@ namespace ProjectWitch.Battle
             IsEscape = false;
             IsEndWaitTime = false;
             IsWaitInputTime = false;
+			IsPause = false;
 
-            // 顔画像関連セット
-            print("顔グラ設定");
+			// 顔画像関連セット
+			print("顔グラ設定");
             PlayerFaces = new List<FaceObj>();
             PlayerFaces.Add(mFaceP0);
             PlayerFaces.Add(mFaceP1);
@@ -490,7 +491,10 @@ namespace ProjectWitch.Battle
         // カード発動コルーチン
         private IEnumerator CoCardSkillAction(CardManager card, BattleUnit action, BattleUnit target, bool isPlayer)
         {
-            var flame = card.Flame;
+			// 一時停止
+			while (IsPause)
+				yield return null;
+			var flame = card.Flame;
             if (flame)
             {
                 for (int i = 0; i < 5; i++)
@@ -590,7 +594,10 @@ namespace ProjectWitch.Battle
                 // 兵士ユニットがいるなら兵士ユニットで攻撃
                 if (TurnUnit.IsExistSoldier)
                 {
-                    TurnUnit.SetGroupAnimatorState(1);
+					// 一時停止
+					while (IsPause)
+						yield return null;
+					TurnUnit.SetGroupAnimatorState(1);
                     bool isSlideOut = TurnUnit.LAtkSkill.Range == SkillDataFormat.SkillRange.All && targetUnit.Position != Position.Front;
                     yield return StartCoroutine(CoSoldierAttack(targetUnit, isSlideOut));
                     yield return WaitSeconds(0.125f);
@@ -648,8 +655,11 @@ namespace ProjectWitch.Battle
 
             if (!IsBattleEnd)
             {
-                // リーダースキル発動
-                TurnUnit.SetLeaderAnimatorState(isAttack ? 1 : 2);
+				// 一時停止
+				while (IsPause)
+					yield return null;
+				// リーダースキル発動
+				TurnUnit.SetLeaderAnimatorState(isAttack ? 1 : 2);
                 SetSkillCaption(lSkillData.Name, isAttack);
                 MouseOverSkillButton(isAttack ? 0 : 1);
                 yield return StartCoroutine(CoSkillAction(TurnUnit, targetUnit, lSkillData, TurnUnit.IsPlayer, false));
@@ -1272,6 +1282,9 @@ namespace ProjectWitch.Battle
             yield return DoCardAction(CardDataFormat.CardTiming.Rand50, TurnUnit, (TurnUnit.IsPlayer ? 1 : -1));
             yield return DoCardAction(CardDataFormat.CardTiming.Rand20, TurnUnit, (TurnUnit.IsPlayer ? 1 : -1));
 
+			// 一時停止
+			while (IsPause)
+				yield return null;
             // 敵、または自動戦闘の場合
             if (!TurnUnit.IsPlayer || BattleDataIn.IsAuto)
                 yield return StartCoroutine("CoAIAction");
@@ -1368,6 +1381,9 @@ namespace ProjectWitch.Battle
 				e.FileName = "s9804";
 				mGame.CallScript(e);
 			}
+			// 一時停止
+			while (IsPause)
+				yield return null;
 
 			// エフェクトの終わるまで待つ
 			yield return StartCoroutine("CoWaitEffect");
@@ -1391,23 +1407,32 @@ namespace ProjectWitch.Battle
                 // 兵士での攻撃
                 if (TurnUnit.IsExistSoldier)
                 {
-                    TurnUnit.SetGroupAnimatorState(1);
+					// 一時停止
+					while (IsPause)
+						yield return null;
+					TurnUnit.SetGroupAnimatorState(1);
                     bool isSlideOut = TurnUnit.LAtkSkill.Range == SkillDataFormat.SkillRange.All && target.Position != Position.Front;
                     yield return StartCoroutine(CoSoldierAttack(target, isSlideOut));
                     yield return WaitSeconds(0.125f);
                 }
                 if (!IsBattleEnd)
                 {
-                    // リーダースキル発動
-                    SetSkillCaption(TurnUnit.LAtkSkill.Name, true);
+					// 一時停止
+					while (IsPause)
+						yield return null;
+					// リーダースキル発動
+					SetSkillCaption(TurnUnit.LAtkSkill.Name, true);
                     TurnUnit.SetLeaderAnimatorState(1);
                     yield return StartCoroutine(CoSkillAction(TurnUnit, target, TurnUnit.LAtkSkill, TurnUnit.IsPlayer, false));
                 }
             }
             else if (type == 1)
             {
-                //　防御
-                TurnUnit.SetGroupAnimatorState(2);
+				// 一時停止
+				while (IsPause)
+					yield return null;
+				//　防御
+				TurnUnit.SetGroupAnimatorState(2);
                 TurnUnit.IsDefense = true;
                 // リーダースキル発動
                 SetSkillCaption(TurnUnit.LDefSkill.Name, false);
@@ -1416,8 +1441,11 @@ namespace ProjectWitch.Battle
             }
             else
             {
-                // 捕獲
-                TurnUnit.SetGroupAnimatorState(1);
+				// 一時停止
+				while (IsPause)
+					yield return null;
+				// 捕獲
+				TurnUnit.SetGroupAnimatorState(1);
                 TurnUnit.SetLeaderAnimatorState(1);
                 yield return StartCoroutine(CoCapture(target));
             }
