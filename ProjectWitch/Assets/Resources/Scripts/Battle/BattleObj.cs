@@ -125,8 +125,11 @@ namespace ProjectWitch.Battle
         // DamageDisplay
         [SerializeField]
         private GameObject mDamageDisplayPlayer = null, mDamageDisplayEnemy = null;
-        // 最終呼び出しevent
-        [SerializeField]
+		// 撤退ボタン
+		[SerializeField]
+		private Button mEscapeButton = null;
+		// 最終呼び出しevent
+		[SerializeField]
         public UnityEvent EndEvent = null;
 
         #endregion
@@ -233,6 +236,8 @@ namespace ProjectWitch.Battle
             IsEndWaitTime = false;
             IsWaitInputTime = false;
 			IsPause = false;
+
+			mEscapeButton.interactable = !BattleDataIn.IsTutorial;
 
 			// 顔画像関連セット
 			print("顔グラ設定");
@@ -1380,11 +1385,11 @@ namespace ProjectWitch.Battle
 				EventDataFormat e = new EventDataFormat();
 				e.FileName = "s9804";
 				mGame.CallScript(e);
-			}
-			// 一時停止
-			while (IsPause)
 				yield return null;
-
+				// 一時停止
+				while (IsPause)
+					yield return null;
+			}
 			// エフェクトの終わるまで待つ
 			yield return StartCoroutine("CoWaitEffect");
             mMessageUI.SetActive(true);
@@ -1560,9 +1565,11 @@ namespace ProjectWitch.Battle
             if (IsEndWaitTime && Input.GetMouseButtonDown(0))
             {
                 if (EndEvent != null)
-                    EndEvent.Invoke();
-                print("戦闘終了");
-            }
+				{
+					EndEvent.Invoke();
+					print("戦闘終了");
+				}
+			}
             if (IsWaitInputTime && Input.GetMouseButtonDown(0))
             {
                 IsWaitInputTime = false;
