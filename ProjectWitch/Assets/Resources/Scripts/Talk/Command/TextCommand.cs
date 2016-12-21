@@ -357,6 +357,7 @@ namespace ProjectWitch.Talk.Compiler{
 			}
 			//改行は消去
 			text = new Regex ("\n").Replace (text, "");
+            text = new Regex("\r").Replace(text, "");
 			if (text == "") {
 				return new Result (false, null, currIndex);
 			}

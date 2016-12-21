@@ -21,7 +21,7 @@ namespace ProjectWitch.Talk.WorkSpace
 		private string mScenarioPath = "";
 
         //コマンドを実行する仮想フィールド
-        private VirtualMachine mVirtualMachine;
+        private VirtualMachine mVirtualMachine = null;
 
         //テキスト関連のフィールド
         [SerializeField]
@@ -68,7 +68,6 @@ namespace ProjectWitch.Talk.WorkSpace
         //スキップ禁止フラグ
         private bool mSkipIsEnable = true;
         
-
         //コマンドを読み込む
         void Start (){
 			VirtualMachine vm = null;
@@ -131,7 +130,7 @@ namespace ProjectWitch.Talk.WorkSpace
 			bool isWaiting = Updater is WaitUpdater;
 
             //ウェイトタイマーの待ち
-            if(Updater is GameWorkSpace.TimerWaitUpdater)
+            if(Updater is SelfDeleteUpdater)
             {
                  stepNextFlag = false;
             }
@@ -152,7 +151,7 @@ namespace ProjectWitch.Talk.WorkSpace
 					if (Updater != null)
 						break;
 				} else {
-					if (Updater is WaitUpdater)
+					if (Updater is WaitUpdater || Updater is SelfDeleteUpdater)
 						break;
 				}
 

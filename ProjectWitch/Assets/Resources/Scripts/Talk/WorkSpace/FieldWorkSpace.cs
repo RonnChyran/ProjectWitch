@@ -21,7 +21,7 @@ namespace ProjectWitch.Talk.WorkSpace
 
 
         //立ち絵の位置用のアップデータ
-        private class FieldAreaHilightUpdater : UpdaterFormat
+        private class FieldAreaHilightUpdater : SelfDeleteUpdater
         {
 
             //エンドフラグ

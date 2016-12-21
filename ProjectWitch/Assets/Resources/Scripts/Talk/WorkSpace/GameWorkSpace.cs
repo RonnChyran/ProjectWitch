@@ -17,8 +17,52 @@ using System.Linq;
 
 namespace ProjectWitch.Talk.WorkSpace
 {
-	//シナリオ操作時のワークスペース
-	public class GameWorkSpace : MonoBehaviour
+    //自己破壊を待つ基底アップデータ
+    public class SelfDeleteUpdater : UpdaterFormat
+    {
+        public override void Setup()
+        {
+        }
+
+        public override void Update(float deltaTime)
+        {
+            SetActive(false);
+        }
+
+        public override void Finish()
+        {
+        }
+    }
+
+    //タイマーウェイトのアップデータ
+    public class TimerWaitUpdater : SelfDeleteUpdater
+    {
+        float mTime = 0.0f;
+
+        protected TimerWaitUpdater() { }
+        public TimerWaitUpdater(float time)
+        {
+            mTime = time;
+        }
+
+        public override void Setup()
+        {
+        }
+
+        public override void Update(float deltaTime)
+        {
+            mTime -= deltaTime;
+            if (mTime <= 0.0f)
+                SetActive(false);
+        }
+
+        public override void Finish()
+        {
+        }
+    }
+    
+    //シナリオ操作時のワークスペース
+    public class GameWorkSpace : MonoBehaviour
 	{
 		//battle_unit_inタグ
 		//	p		:p?引数、0~2
@@ -281,34 +325,6 @@ namespace ProjectWitch.Talk.WorkSpace
 
             }
         }
-
-        //タイマーウェイトのアップデータ
-        public class TimerWaitUpdater : UpdaterFormat
-        {
-            float mTime = 0.0f;
-
-            private TimerWaitUpdater() { }
-            public TimerWaitUpdater(float time)
-            {
-                mTime = time;
-            }
-
-            public override void Setup()
-            {
-            }
-
-            public override void Update(float deltaTime)
-            {
-                mTime -= deltaTime;
-                if (mTime <= 0.0f)
-                    SetActive(false);
-            }
-
-            public override void Finish()
-            {
-            }
-        }
-
 
         [SerializeField]
         private float mBeginTime = 0.0f;

@@ -19,7 +19,7 @@ namespace ProjectWitch.Battle
 
             //スクリプト実行のサンプル
             //EventDataFormat e = new EventDataFormat();
-            //e.FileName = "s9804";
+            //e.FileName = "s9802";
             //game.CallScript(e);
         }
 
