@@ -217,7 +217,8 @@ namespace ProjectWitch.Battle
 			else if (BattleDataIn.TimeOfDay == 3)
 				BackGroundSceneName += "Nig_";
 			BackGroundSceneName += mGame.GameData.Area[mGame.BattleIn.AreaID].BackgroundName;
-			SceneManager.LoadScene(BackGroundSceneName, LoadSceneMode.Additive);
+			var async = SceneManager.LoadSceneAsync(BackGroundSceneName, LoadSceneMode.Additive);
+			while (async.progress < 0.9f) { }
 
 			// UIを非表示にセット
 			mEscapeConfUI.SetActive(false);
@@ -1560,6 +1561,7 @@ namespace ProjectWitch.Battle
 				{
 					EndEvent.Invoke();
 					SceneManager.UnloadScene(BackGroundSceneName);
+					Resources.UnloadUnusedAssets();
 					print("戦闘終了");
 				}
 			}
