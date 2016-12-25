@@ -247,8 +247,7 @@ namespace ProjectWitch.Battle
         private float LeadershipPercentCoe { get { return (1 + LeadershipPercent / 100); } }
         public float GetStatusPercent(int num)
         {
-            if (false) { }
-            else if (num == 0)
+            if (num == 0)
                 return PhyAtkPercent;
             else if (num == 1)
                 return PhyDefPercent;
@@ -265,8 +264,7 @@ namespace ProjectWitch.Battle
         }
         public bool GetStatusOtherFlag(int num)
         {
-            if (false) { }
-            else if (num == 0)
+            if (num == 0)
                 return IsStatePoisom;
             else if (num == 1)
                 return GuardTarget;
@@ -274,7 +272,6 @@ namespace ProjectWitch.Battle
                 return IsStateNoDamage;
             else
                 return false;
-
         }
         // 地形補正修正パーセント
         public float AreaCoePercent
@@ -559,32 +556,37 @@ namespace ProjectWitch.Battle
                         soldiderPosObj = bo.SoldierSuperLarge;
                         break;
                     default:
-                        soldiderPosObj = new GameObject().transform;
+                        soldiderPosObj = null;
                         break;
                 }
-                foreach (Transform child in soldiderPosObj)
-                {
-                    var obj = BattleData.Instantiate(soldierPrefab, child.gameObject.name, soldier).gameObject;
-                    obj.transform.localPosition = new Vector3(System.Math.Abs(child.localPosition.x) *
-                        (IsPlayer ? -1 : 1), child.localPosition.y, child.localPosition.z);
-                    obj.transform.localScale = new Vector3(System.Math.Abs(obj.transform.localScale.x) *
-                        (IsPlayer ? -1 : 1), obj.transform.localScale.y, obj.transform.localScale.z);
-                    mSoldierObj.Add(obj);
-                    // 兵士のアニメーター
-                    foreach (Transform c in obj.transform)
-                    {
-                        var ani = c.GetComponent<Animator>();
-                        if (ani != null)
-                        {
-                            ani.Rebind();
-                            GroupAnimators.Add(ani);
-                            break;
-                        }
-                    }
-                }
-                SetGroupAnimatorState(0);
-            }
-            else
+				if (soldiderPosObj != null)
+				{
+					foreach (Transform child in soldiderPosObj)
+					{
+						var obj = BattleData.Instantiate(soldierPrefab, child.gameObject.name, soldier).gameObject;
+						obj.transform.localPosition = new Vector3(System.Math.Abs(child.localPosition.x) *
+							(IsPlayer ? -1 : 1), child.localPosition.y, child.localPosition.z);
+						obj.transform.localScale = new Vector3(System.Math.Abs(obj.transform.localScale.x) *
+							(IsPlayer ? -1 : 1), obj.transform.localScale.y, obj.transform.localScale.z);
+						mSoldierObj.Add(obj);
+						// 兵士のアニメーター
+						foreach (Transform c in obj.transform)
+						{
+							var ani = c.GetComponent<Animator>();
+							if (ani != null)
+							{
+								ani.Rebind();
+								GroupAnimators.Add(ani);
+								break;
+							}
+						}
+					}
+					SetGroupAnimatorState(0);
+				}
+				else
+					print("兵士オブジェクトロード失敗：兵士のサイズが規定外です");
+			}
+			else
                 print("兵士オブジェクトロード失敗：" + UnitData.BattleGroupPrefabPath);
             SetDisplaySoldier();
             transform.position = new Vector3(OutDisplay * (IsPlayer ? -1 : 1), 0, 0);

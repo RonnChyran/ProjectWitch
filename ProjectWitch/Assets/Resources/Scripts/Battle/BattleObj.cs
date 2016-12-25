@@ -714,8 +714,7 @@ namespace ProjectWitch.Battle
             }
             else
             {
-                if (false) { }
-                else if (type == DamageType.Normal)
+                if (type == DamageType.Normal)
                     DamageNum = target.GetNormalDamage(phyDamage, magDamage, toLeader);
                 else if (type == DamageType.Counter)
                     DamageNum = target.GetCounterDamage(phyDamage, 0);
@@ -1480,8 +1479,7 @@ namespace ProjectWitch.Battle
         {
             mDescription.SetActive(true);
             var text = mDescription.GetComponent<Text>();
-            if (false) { }
-            else if (type == 0)
+            if (type == 0)
                 text.text = TurnUnit.LAtkSkill.Description;
             else if (type == 1)
                 text.text = TurnUnit.LDefSkill.Description;
