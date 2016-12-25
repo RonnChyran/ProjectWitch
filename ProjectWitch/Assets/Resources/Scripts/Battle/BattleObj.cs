@@ -203,11 +203,11 @@ namespace ProjectWitch.Battle
 		#endregion
 
 		// データのロード
-		private IEnumerator LoadData()
+		void LoadData()
         {
             mGame = Game.GetInstance();
 
-			// 背景シーンロード
+			// 背景シーン名決定
 			BackGroundSceneName = "Resources/Scenes/Battle/BackGround/";
 			if (BattleDataIn.TimeOfDay <= 1)
 				BackGroundSceneName += "Day_";
@@ -216,10 +216,6 @@ namespace ProjectWitch.Battle
 			else if (BattleDataIn.TimeOfDay == 3)
 				BackGroundSceneName += "Nig_";
 			BackGroundSceneName += mGame.GameData.Area[mGame.BattleIn.AreaID].BackgroundName;
-			print("背景シーンロード");
-			var async = SceneManager.LoadSceneAsync(BackGroundSceneName, LoadSceneMode.Additive);
-			while (async.progress < 0.9f)
-				yield return null;
 
 			// UIを非表示にセット
 			mEscapeConfUI.SetActive(false);
@@ -553,7 +549,12 @@ namespace ProjectWitch.Battle
         // 戦闘開始時のコルーチン
         private IEnumerator CoBattleStart()
         {
-            mBattleStartUI.SetActive(true);
+			print("背景シーンロード");
+			var async = SceneManager.LoadSceneAsync(BackGroundSceneName, LoadSceneMode.Additive);
+			while (async.progress < 0.9f)
+				yield return null;
+
+			mBattleStartUI.SetActive(true);
             var bsUI = mBattleStartUI.GetComponent<BattleStartUISetup>();
             if (bsUI)
                 bsUI.Setup();
@@ -1550,7 +1551,7 @@ namespace ProjectWitch.Battle
         // Use this for initialization
         void Start()
         {
-			StartCoroutine(LoadData());
+			LoadData();
 		}
 
 		// Update is called once per frame
