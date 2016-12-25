@@ -550,11 +550,12 @@ namespace ProjectWitch.Battle
         private IEnumerator CoBattleStart()
         {
 			print("背景シーンロード");
-			var async = SceneManager.LoadSceneAsync(BackGroundSceneName, LoadSceneMode.Additive);
-			while (async.progress < 0.9f)
-				yield return null;
-			mGame.HideNowLoading();
-			mBattleStartUI.SetActive(true);
+            yield return SceneManager.LoadSceneAsync(BackGroundSceneName, LoadSceneMode.Additive);
+            yield return null;
+            mGame.HideNowLoading();
+
+
+            mBattleStartUI.SetActive(true);
             var bsUI = mBattleStartUI.GetComponent<BattleStartUISetup>();
             if (bsUI)
                 bsUI.Setup();
