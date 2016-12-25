@@ -180,7 +180,6 @@ namespace ProjectWitch.Talk.WorkSpace
 
         public class FaceUpdater : UpdaterFormat
         {
-            private TextWorkSpace mTWS;
             private bool mHidden;
 
             private float mTime = 0.0f;
@@ -190,7 +189,6 @@ namespace ProjectWitch.Talk.WorkSpace
             {
                 mDuration = duration;
                 mHidden = hidden;
-                mTWS = tws;
             }
             //これまでのテキストを取得
             public override void Setup()
