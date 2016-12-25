@@ -1427,7 +1427,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 430766, guid: faf8facd8e6695640af571b008a1ee2f, type: 2}
       propertyPath: m_RootOrder
-      value: 16
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 1000010984675476, guid: faf8facd8e6695640af571b008a1ee2f, type: 2}
       propertyPath: m_IsActive
@@ -1814,17 +1814,13 @@ MonoBehaviour:
   mMessageUI: {fileID: 1147147135}
   mCardStartUI: {fileID: 1150481041}
   mCardStartEffect: {fileID: 0}
-  mEffectParent: {fileID: 578050071}
-  mBGParent: {fileID: 1756407209}
+  mUIEffectParent: {fileID: 578050071}
   mBar: {fileID: 1535331355}
   mDescription: {fileID: 953247719}
   mSkillCaption: {fileID: 1283719096}
   mSC_Atk: {fileID: 21300000, guid: 648a9e8e69d43d9448697fb47fdb88ad, type: 3}
   mSC_Def: {fileID: 21300002, guid: 648a9e8e69d43d9448697fb47fdb88ad, type: 3}
   mMusic: {fileID: 229891479}
-  mSkyBoxDay: {fileID: 2100000, guid: 71f14a2d79f732f4d9893ef1b911f4ff, type: 2}
-  mSkyBoxSunset: {fileID: 2100000, guid: 4067de1a02072244798361060c5e7325, type: 2}
-  mSkyBoxNight: {fileID: 2100000, guid: b6a3f8bca2c865243929bac258c89b96, type: 2}
   mDamageDisplayPlayer: {fileID: 1595893626}
   mDamageDisplayEnemy: {fileID: 1655505944}
   mEscapeButton: {fileID: 783443989}
@@ -4768,7 +4764,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 2018290, guid: f06beb50ecbc362449478db1bead6c94, type: 2}
       propertyPath: m_ClearFlags
-      value: 1
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2018290, guid: f06beb50ecbc362449478db1bead6c94, type: 2}
       propertyPath: m_Enabled
@@ -4776,7 +4772,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 2018290, guid: f06beb50ecbc362449478db1bead6c94, type: 2}
       propertyPath: m_CullingMask.m_Bits
-      value: 4294967295
+      value: 256
       objectReference: {fileID: 0}
     - target: {fileID: 114000011027387586, guid: f06beb50ecbc362449478db1bead6c94,
         type: 2}
@@ -9128,7 +9124,7 @@ Prefab:
         type: 2}
       propertyPath: mBGParent
       value: 
-      objectReference: {fileID: 1756407209}
+      objectReference: {fileID: 0}
     - target: {fileID: 114000010157674708, guid: 942477d124b96de45a0083cf505b7419,
         type: 2}
       propertyPath: mMusic
@@ -9503,6 +9499,11 @@ Prefab:
       propertyPath: mEscapeButton
       value: 
       objectReference: {fileID: 783443989}
+    - target: {fileID: 114000010157674708, guid: 942477d124b96de45a0083cf505b7419,
+        type: 2}
+      propertyPath: mUIEffectParent
+      value: 
+      objectReference: {fileID: 578050071}
     m_RemovedComponents:
     - {fileID: 0}
   m_ParentPrefab: {fileID: 100100000, guid: 942477d124b96de45a0083cf505b7419, type: 2}
@@ -9982,36 +9983,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1751597452}
---- !u!1 &1756407209
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 1000010647980830, guid: 3471742428dbecf43804eb0400c06971,
-    type: 2}
-  m_PrefabInternal: {fileID: 1875303284}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 1756407210}
-  m_Layer: 0
-  m_Name: BackGround
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1756407210
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 4000011225150328, guid: 3471742428dbecf43804eb0400c06971,
-    type: 2}
-  m_PrefabInternal: {fileID: 1875303284}
-  m_GameObject: {fileID: 1756407209}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.8731079, y: 0.28320312, z: -4.4257812}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 15
 --- !u!224 &1761669584 stripped
 RectTransform:
   m_PrefabParentObject: {fileID: 224000011614190028, guid: 8aa64f4f03de6214391c63b95bd69809,
@@ -10441,52 +10412,6 @@ GameObject:
   m_PrefabParentObject: {fileID: 1000013071055540, guid: 30cecfb16b077e14d998f571a4072b1b,
     type: 2}
   m_PrefabInternal: {fileID: 2061958674}
---- !u!1001 &1875303284
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4000011225150328, guid: 3471742428dbecf43804eb0400c06971, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 1.8731079
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000011225150328, guid: 3471742428dbecf43804eb0400c06971, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0.28320312
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000011225150328, guid: 3471742428dbecf43804eb0400c06971, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: -4.4257812
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000011225150328, guid: 3471742428dbecf43804eb0400c06971, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000011225150328, guid: 3471742428dbecf43804eb0400c06971, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000011225150328, guid: 3471742428dbecf43804eb0400c06971, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000011225150328, guid: 3471742428dbecf43804eb0400c06971, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000011225150328, guid: 3471742428dbecf43804eb0400c06971, type: 2}
-      propertyPath: m_RootOrder
-      value: 12
-      objectReference: {fileID: 0}
-    - target: {fileID: 1000010647980830, guid: 3471742428dbecf43804eb0400c06971, type: 2}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: 3471742428dbecf43804eb0400c06971, type: 2}
-  m_IsPrefabParent: 0
 --- !u!1 &1878930732
 GameObject:
   m_ObjectHideFlags: 0

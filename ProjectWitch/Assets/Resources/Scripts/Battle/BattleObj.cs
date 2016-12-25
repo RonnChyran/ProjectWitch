@@ -7,6 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 namespace ProjectWitch.Battle
 {
@@ -100,10 +101,7 @@ namespace ProjectWitch.Battle
         private GameObject mCardStartEffect = null;
         // エフェクトUIの親オブジェクト
         [SerializeField]
-        private GameObject mEffectParent = null;
-        // 背景の親オブジェクト
-        [SerializeField]
-        private GameObject mBGParent = null;
+        private GameObject mUIEffectParent = null;
         // バー関連
         [SerializeField]
         private GameObject mBar = null;
@@ -119,9 +117,6 @@ namespace ProjectWitch.Battle
         // 音楽再生
         [SerializeField]
         private PlayMusic mMusic = null;
-        // SkyBoxMaterial
-        [SerializeField]
-        private Material mSkyBoxDay = null, mSkyBoxSunset = null, mSkyBoxNight = null;
         // DamageDisplay
         [SerializeField]
         private GameObject mDamageDisplayPlayer = null, mDamageDisplayEnemy = null;
@@ -181,11 +176,13 @@ namespace ProjectWitch.Battle
         public BattleUnit EndTargetUnit { get; private set; }
         // エフェクトFXController
         public FXController FXCtrl { get; private set; }
+		// 背景シーン名
+		public string BackGroundSceneName { get; private set; }
 
-        #region フラグ系
+		#region フラグ系
 
-        // エフェクトが動作中である
-        public bool IsEffect { get; private set; }
+		// エフェクトが動作中である
+		public bool IsEffect { get; private set; }
         // 戦闘が終了したがどうか
         public bool IsBattleEnd { get; private set; }
         // 戦闘終了後の入力待機時間かどうか
@@ -210,8 +207,20 @@ namespace ProjectWitch.Battle
         {
             mGame = Game.GetInstance();
 
-            // UIを非表示にセット
-            mEscapeConfUI.SetActive(false);
+			// 背景シーンロード
+			print("背景シーンロード");
+			BackGroundSceneName = "Resources/Scenes/Battle/BackGround/";
+			if (BattleDataIn.TimeOfDay <= 1)
+				BackGroundSceneName += "Day_";
+			else if (BattleDataIn.TimeOfDay == 2)
+				BackGroundSceneName += "Eve_";
+			else if (BattleDataIn.TimeOfDay == 3)
+				BackGroundSceneName += "Nig_";
+			BackGroundSceneName += mGame.GameData.Area[mGame.BattleIn.AreaID].BackgroundName;
+			SceneManager.LoadScene(BackGroundSceneName, LoadSceneMode.Additive);
+
+			// UIを非表示にセット
+			mEscapeConfUI.SetActive(false);
             mConfigUI.SetActive(false);
             mBattleWinUI.SetActive(false);
             mBattleLoseUI.SetActive(false);
@@ -227,7 +236,7 @@ namespace ProjectWitch.Battle
             HideSkillCaption();
 
             // エリア(背景)セット
-            Area = new BattleArea(mBGParent);
+            Area = new BattleArea();
 
             // フラグ系セット
             IsEffect = false;
@@ -323,7 +332,7 @@ namespace ProjectWitch.Battle
             }
 
             // 戦闘ターン数取得
-            TurnNum = Area.AreaData.Time;
+            TurnNum = mGame.GameData.Area[mGame.BattleIn.AreaID].Time;
 
             // 順番バー初期化
             print("順番枠設定");
@@ -331,23 +340,6 @@ namespace ProjectWitch.Battle
             OrderController.Setup(this);
             mTurnNumDisplay.GetComponent<TurnNumDisplay>().SetUp(this);
 
-            // SkyBox設定
-            print("SkyBox設定");
-            if (BattleDataIn.TimeOfDay <= 1)
-            {
-                if (mSkyBoxDay)
-                    RenderSettings.skybox = mSkyBoxDay;
-            }
-            else if (BattleDataIn.TimeOfDay == 2)
-            {
-                if (mSkyBoxSunset)
-                    RenderSettings.skybox = mSkyBoxSunset;
-            }
-            else if (BattleDataIn.TimeOfDay == 3)
-            {
-                if (mSkyBoxNight)
-                    RenderSettings.skybox = mSkyBoxNight;
-            }
             mDamageDisplayPlayer.SetActive(false);
             mDamageDisplayEnemy.SetActive(false);
 
@@ -413,7 +405,7 @@ namespace ProjectWitch.Battle
                 return null;
             }
             var effect = BattleData.Instantiate(effectObj, name).gameObject;
-            effect.transform.parent = mEffectParent.transform;
+			effect.transform.parent = (isUI ? mUIEffectParent.transform : transform);
             if (isUI)
             {
                 effect.transform.localPosition = effectObj.transform.localPosition;
@@ -1567,6 +1559,7 @@ namespace ProjectWitch.Battle
                 if (EndEvent != null)
 				{
 					EndEvent.Invoke();
+					SceneManager.UnloadScene(BackGroundSceneName);
 					print("戦闘終了");
 				}
 			}

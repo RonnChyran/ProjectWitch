@@ -3,7 +3,7 @@
 //summary	: 戦闘に関するデータを扱うクラス群
 
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 
 namespace ProjectWitch.Battle
 {
@@ -165,22 +165,13 @@ namespace ProjectWitch.Battle
     public class BattleArea
     {
         private Game mGame = null;
-        public int AreaID { get { return mGame.BattleIn.AreaID; } }
-        public AreaDataFormat AreaData { get { return mGame.GameData.Area[AreaID]; } }
-        public AreaBattleFactor BattleFactor { get { return AreaData.BattleFactor; } }
-        private GameObject mAreaObj;
+        public AreaBattleFactor BattleFactor { get { return mGame.GameData.Area[mGame.BattleIn.AreaID].BattleFactor; } }
 
         //コンストラクタ
-        public BattleArea(GameObject parent)
+        public BattleArea()
         {
             mGame = Game.GetInstance();
-
-            if (AreaID < 0 || AreaID >= mGame.GameData.Area.Count)
-                return;
-            mAreaObj = (GameObject)Resources.Load("Prefabs/Background3D/" + AreaData.BackgroundName);
-            var inst = MonoBehaviour.Instantiate(mAreaObj);
-            inst.transform.SetParent(parent.transform);
-        }
+		}
 
         // 地形補正
         // 物理攻撃力
