@@ -553,7 +553,7 @@ namespace ProjectWitch.Battle
 			var async = SceneManager.LoadSceneAsync(BackGroundSceneName, LoadSceneMode.Additive);
 			while (async.progress < 0.9f)
 				yield return null;
-
+			mGame.HideNowLoading();
 			mBattleStartUI.SetActive(true);
             var bsUI = mBattleStartUI.GetComponent<BattleStartUISetup>();
             if (bsUI)
