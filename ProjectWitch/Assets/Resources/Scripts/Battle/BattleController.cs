@@ -14,7 +14,7 @@ namespace ProjectWitch.Battle
         void Start()
         {
             var game = Game.GetInstance();
-            game.HideNowLoading();
+//            game.HideNowLoading();
             game.IsBattle = true;
 
             //スクリプト実行のサンプル
