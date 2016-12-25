@@ -18,9 +18,7 @@ namespace ProjectWitch
         // Update is called once per frame
         void Update()
         {
-            if (Input.GetKey("e") &&
-                Input.GetKey("s") &&
-                Input.GetKey("c"))
+            if (Input.GetKey(KeyCode.Escape))
             {
                 Show();
             }
