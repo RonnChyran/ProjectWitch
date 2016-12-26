@@ -56,7 +56,6 @@ namespace ProjectWitch.Talk
         public void ShowWindow()
         {
             var anim = mMessage.GetComponent<Animator>();
-            var info = anim.GetCurrentAnimatorStateInfo(0);
             //現在表示されていなかったら表示する
             mMessage.GetComponent<Animator>().SetBool("IsShow",true);
         }
@@ -69,7 +68,6 @@ namespace ProjectWitch.Talk
             HideNextIcon();
 
             var anim = mMessage.GetComponent<Animator>();
-            var info = anim.GetCurrentAnimatorStateInfo(0);
             //現在表示されていなかったら表示する
             mMessage.GetComponent<Animator>().SetBool("IsShow",false);
         }
@@ -84,7 +82,6 @@ namespace ProjectWitch.Talk
             if (mName)
             {
                 var anim = mName.GetComponent<Animator>();
-                var info = anim.GetCurrentAnimatorStateInfo(0);
                 //現在表示されていなかったら表示する
                 anim.SetBool("IsShow",true);
             }
@@ -98,7 +95,6 @@ namespace ProjectWitch.Talk
             if (mName)
             {
                 var anim = mName.GetComponent<Animator>();
-                var info = anim.GetCurrentAnimatorStateInfo(0);
                 //現在表示されていたら隠す
                 anim.SetBool("IsShow",false);
             }
@@ -147,7 +143,6 @@ namespace ProjectWitch.Talk
 
             //表示
             var anim = mFaces[id].GetComponent<Animator>();
-            var info = anim.GetCurrentAnimatorStateInfo(0);
             mFaces[id].GetComponent<Animator>().SetBool("IsShow",true);
 
             //現在の顔グラの参照をセット
@@ -165,7 +160,6 @@ namespace ProjectWitch.Talk
             if (mCurrentFace)
             {
                 var anim = mCurrentFace.GetComponent<Animator>();
-                var info = anim.GetCurrentAnimatorStateInfo(0);
                 //現在表示されていたら隠す
                 anim.SetBool("IsShow",false);
             }
