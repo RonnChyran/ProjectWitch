@@ -412,7 +412,6 @@ namespace ProjectWitch.Battle
 					mOrderDiplayObj[i].SlideUpOut();
 			while (IsAnimation)
 				yield return null;
-			var turnODO = mOrderDiplayObj[0];
 			List<OrderDiplayObj> lodo = new List<OrderDiplayObj>();
 			for (int i = mOrderDiplayObj.Count - 1; i >= 0; i--)
 			{
