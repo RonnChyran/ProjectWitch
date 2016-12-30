@@ -1,5 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<game_data>
+<root_data>
+  <version>
+    <major>2</major>
+    <minor>0</minor>
+  </version>
   <unit id="0">
     <name>アリス</name>
     <level>10</level>
@@ -8,7 +12,7 @@
     <MaxHP>135</MaxHP>
     <hp0>35</hp0>
     <hp100>1000</hp100>
-    <exp>21</exp>
+    <exp>10</exp>
     <lpatk0>0</lpatk0>
     <lmatk0>18</lmatk0>
     <lpdef0>12</lpdef0>
@@ -62,7 +66,7 @@
     <MaxHP>147</MaxHP>
     <hp0>20</hp0>
     <hp100>850</hp100>
-    <exp>22</exp>
+    <exp>10</exp>
     <lpatk0>5</lpatk0>
     <lmatk0>0</lmatk0>
     <lpdef0>7</lpdef0>
@@ -85,7 +89,7 @@
     <agi100>22</agi100>
     <cur0>150</cur0>
     <cur100>1500</cur100>
-    <soldier_num>493</soldier_num>
+    <soldier_num>500</soldier_num>
     <max_soldier_num>500</max_soldier_num>
     <deathable>false</deathable>
     <is_alive>true</is_alive>
@@ -2654,7 +2658,7 @@
     <MaxHP>84</MaxHP>
     <hp0>20</hp0>
     <hp100>430</hp100>
-    <exp>22</exp>
+    <exp>10</exp>
     <lpatk0>5</lpatk0>
     <lmatk0>0</lmatk0>
     <lpdef0>7</lpdef0>
@@ -2708,7 +2712,7 @@
     <MaxHP>84</MaxHP>
     <hp0>20</hp0>
     <hp100>430</hp100>
-    <exp>11</exp>
+    <exp>10</exp>
     <lpatk0>5</lpatk0>
     <lmatk0>0</lmatk0>
     <lpdef0>7</lpdef0>
@@ -3460,7 +3464,7 @@
     <name>テンパイ</name>
     <level>20</level>
     <max_level>40</max_level>
-    <hp>81</hp>
+    <hp>106</hp>
     <MaxHP>106</MaxHP>
     <hp0>20</hp0>
     <hp100>430</hp100>
@@ -15880,7 +15884,7 @@
     <name>アリス</name>
     <level>10</level>
     <max_level>-1</max_level>
-    <hp>40</hp>
+    <hp>135</hp>
     <MaxHP>135</MaxHP>
     <hp0>35</hp0>
     <hp100>1000</hp100>
@@ -16474,7 +16478,7 @@
     <name>チューター</name>
     <level>12</level>
     <max_level>25</max_level>
-    <hp>0</hp>
+    <hp>71</hp>
     <MaxHP>71</MaxHP>
     <hp0>20</hp0>
     <hp100>430</hp100>
@@ -16501,10 +16505,10 @@
     <agi100>8</agi100>
     <cur0>150</cur0>
     <cur100>1500</cur100>
-    <soldier_num>0</soldier_num>
+    <soldier_num>500</soldier_num>
     <max_soldier_num>500</max_soldier_num>
     <deathable>true</deathable>
-    <is_alive>false</is_alive>
+    <is_alive>true</is_alive>
     <love>0</love>
     <latk_skill>58</latk_skill>
     <ldef_skill>23</ldef_skill>
@@ -16536,16 +16540,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -16560,13 +16554,6 @@
     <power>300</power>
     <type>StatusUp</type>
     <duration>3</duration>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
     <status>true</status>
     <status>false</status>
     <status>true</status>
@@ -16574,9 +16561,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -16598,16 +16582,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -16626,19 +16600,9 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
     <status>true</status>
     <status>false</status>
     <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -16660,16 +16624,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -16691,16 +16645,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -16722,16 +16666,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -16747,22 +16681,12 @@
     <type>StatusDown</type>
     <duration>3</duration>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
     <status>true</status>
     <status>false</status>
     <status>true</status>
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -16784,16 +16708,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -16814,17 +16728,7 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
     <status>true</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -16846,16 +16750,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -16871,22 +16765,12 @@
     <type>StatusUp</type>
     <duration>3</duration>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
     <status>true</status>
     <status>false</status>
     <status>true</status>
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -16908,16 +16792,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>true</attribute>
@@ -16939,16 +16813,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -16970,16 +16834,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -16994,13 +16848,6 @@
     <power>200</power>
     <type>StatusUp</type>
     <duration>3</duration>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
     <status>true</status>
     <status>false</status>
     <status>false</status>
@@ -17008,9 +16855,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -17032,16 +16876,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -17063,16 +16897,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -17094,16 +16918,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -17122,19 +16936,9 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
     <status>true</status>
     <status>false</status>
     <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -17156,16 +16960,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -17187,16 +16981,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -17218,16 +17002,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -17249,16 +17023,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -17280,16 +17044,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -17305,22 +17059,12 @@
     <type>StatusUp</type>
     <duration>3</duration>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
     <status>true</status>
     <status>false</status>
     <status>true</status>
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -17342,16 +17086,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -17373,16 +17107,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -17398,22 +17122,12 @@
     <type>StatusDown</type>
     <duration>3</duration>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
     <status>true</status>
     <status>false</status>
     <status>true</status>
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -17433,18 +17147,8 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
     <status>true</status>
     <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -17466,16 +17170,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -17494,19 +17188,9 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
     <status>true</status>
     <status>false</status>
     <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -17528,16 +17212,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -17552,13 +17226,6 @@
     <power>600</power>
     <type>Random</type>
     <duration>0</duration>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
     <status>true</status>
     <status>true</status>
     <status>true</status>
@@ -17566,9 +17233,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -17590,16 +17254,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -17621,16 +17275,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -17652,16 +17296,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -17677,22 +17311,12 @@
     <type>StatusUp</type>
     <duration>3</duration>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
     <status>true</status>
     <status>false</status>
     <status>false</status>
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -17714,16 +17338,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -17745,16 +17359,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -17776,16 +17380,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -17801,22 +17395,12 @@
     <type>StatusUp</type>
     <duration>3</duration>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
     <status>true</status>
     <status>false</status>
     <status>true</status>
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -17838,16 +17422,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -17869,16 +17443,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>true</attribute>
     <attribute>false</attribute>
@@ -17893,13 +17457,6 @@
     <power>200</power>
     <type>StatusUp</type>
     <duration>3</duration>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
     <status>true</status>
     <status>true</status>
     <status>true</status>
@@ -17907,9 +17464,6 @@
     <status>true</status>
     <status>true</status>
     <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -17931,16 +17485,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>true</attribute>
     <attribute>false</attribute>
@@ -17960,18 +17504,8 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
     <status>true</status>
     <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -17993,16 +17527,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -18018,22 +17542,12 @@
     <type>StatusUp</type>
     <duration>3</duration>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
     <status>true</status>
     <status>false</status>
     <status>false</status>
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -18055,16 +17569,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -18079,13 +17583,6 @@
     <power>100</power>
     <type>StatusDown</type>
     <duration>3</duration>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
     <status>true</status>
     <status>true</status>
     <status>true</status>
@@ -18093,9 +17590,6 @@
     <status>true</status>
     <status>true</status>
     <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -18117,16 +17611,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -18141,13 +17625,6 @@
     <power>250</power>
     <type>StatusDown</type>
     <duration>3</duration>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
     <status>true</status>
     <status>false</status>
     <status>true</status>
@@ -18155,9 +17632,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -18179,16 +17653,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -18203,13 +17667,6 @@
     <power>150</power>
     <type>StatusUp</type>
     <duration>3</duration>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
     <status>true</status>
     <status>false</status>
     <status>true</status>
@@ -18217,9 +17674,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -18241,16 +17695,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -18268,20 +17712,10 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
     <status>true</status>
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -18299,20 +17733,10 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
     <status>true</status>
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -18334,16 +17758,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -18365,16 +17779,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -18396,16 +17800,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -18427,16 +17821,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -18451,13 +17835,6 @@
     <power>200</power>
     <type>StatusDown</type>
     <duration>3</duration>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
     <status>true</status>
     <status>true</status>
     <status>true</status>
@@ -18465,9 +17842,6 @@
     <status>true</status>
     <status>false</status>
     <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -18482,13 +17856,6 @@
     <power>350</power>
     <type>StatusDown</type>
     <duration>3</duration>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
     <status>true</status>
     <status>true</status>
     <status>true</status>
@@ -18496,9 +17863,6 @@
     <status>true</status>
     <status>true</status>
     <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -18520,16 +17884,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>true</attribute>
     <attribute>false</attribute>
@@ -18551,16 +17905,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -18582,16 +17926,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -18613,16 +17947,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -18644,16 +17968,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -18675,16 +17989,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -18706,16 +18010,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -18737,16 +18031,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -18768,16 +18052,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -18799,16 +18073,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -18830,16 +18094,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -18861,16 +18115,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -18892,16 +18136,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -18923,16 +18157,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>true</attribute>
     <attribute>true</attribute>
@@ -18947,13 +18171,6 @@
     <power>300</power>
     <type>StatusUp</type>
     <duration>3</duration>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
     <status>true</status>
     <status>false</status>
     <status>true</status>
@@ -18961,9 +18178,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -18978,13 +18192,6 @@
     <power>300</power>
     <type>StatusDown</type>
     <duration>3</duration>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
     <status>true</status>
     <status>false</status>
     <status>true</status>
@@ -18992,9 +18199,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -19010,22 +18214,12 @@
     <type>StatusUp</type>
     <duration>3</duration>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
     <status>true</status>
     <status>false</status>
     <status>true</status>
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -19041,22 +18235,12 @@
     <type>StatusDown</type>
     <duration>3</duration>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
     <status>true</status>
     <status>false</status>
     <status>true</status>
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -19075,19 +18259,9 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
     <status>true</status>
     <status>false</status>
     <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -19107,18 +18281,8 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
     <status>true</status>
     <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -19133,13 +18297,6 @@
     <power>300</power>
     <type>StatusUp</type>
     <duration>3</duration>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
     <status>true</status>
     <status>false</status>
     <status>true</status>
@@ -19147,9 +18304,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -19164,13 +18318,6 @@
     <power>300</power>
     <type>StatusDown</type>
     <duration>3</duration>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
     <status>true</status>
     <status>false</status>
     <status>true</status>
@@ -19178,9 +18325,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -19196,22 +18340,12 @@
     <type>StatusUp</type>
     <duration>3</duration>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
     <status>true</status>
     <status>false</status>
     <status>true</status>
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -19227,22 +18361,12 @@
     <type>StatusDown</type>
     <duration>3</duration>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
     <status>true</status>
     <status>false</status>
     <status>true</status>
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -19261,19 +18385,9 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
     <status>true</status>
     <status>false</status>
     <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -19293,18 +18407,8 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
     <status>true</status>
     <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -19319,13 +18423,6 @@
     <power>300</power>
     <type>StatusUp</type>
     <duration>3</duration>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
     <status>true</status>
     <status>true</status>
     <status>true</status>
@@ -19333,9 +18430,6 @@
     <status>true</status>
     <status>true</status>
     <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -19357,16 +18451,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -19388,16 +18472,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -19418,17 +18492,7 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
     <status>true</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -19449,17 +18513,7 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
     <status>true</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -19474,13 +18528,6 @@
     <power>500</power>
     <type>Random</type>
     <duration>0</duration>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
     <status>true</status>
     <status>true</status>
     <status>true</status>
@@ -19488,9 +18535,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -19512,16 +18556,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -19543,16 +18577,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -19574,16 +18598,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -19598,13 +18612,6 @@
     <power>800</power>
     <type>Random</type>
     <duration>0</duration>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
     <status>true</status>
     <status>true</status>
     <status>true</status>
@@ -19612,9 +18619,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -19635,17 +18639,7 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
     <status>true</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -19666,17 +18660,7 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
     <status>true</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -19698,16 +18682,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -19722,13 +18696,6 @@
     <power>1000</power>
     <type>Random</type>
     <duration>0</duration>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
     <status>true</status>
     <status>true</status>
     <status>true</status>
@@ -19736,9 +18703,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -19760,16 +18724,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -19791,16 +18745,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>true</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -19822,16 +18766,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -19853,16 +18787,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -19884,16 +18808,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -19915,16 +18829,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -19946,16 +18850,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -19977,16 +18871,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -20008,16 +18892,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -20039,16 +18913,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -20070,16 +18934,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -20101,16 +18955,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -20132,16 +18976,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -20163,16 +18997,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -20194,16 +19018,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -20225,16 +19039,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -20256,16 +19060,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -20287,16 +19081,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -20318,16 +19102,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -20349,16 +19123,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -20380,16 +19144,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -20411,16 +19165,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -20442,16 +19186,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -20473,16 +19207,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -20504,16 +19228,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -20535,16 +19249,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -20566,16 +19270,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -20591,22 +19285,12 @@
     <type>StatusUp</type>
     <duration>2</duration>
     <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
     <status>true</status>
     <status>false</status>
     <status>false</status>
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -20621,13 +19305,6 @@
     <power>200</power>
     <type>StatusUp</type>
     <duration>2</duration>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
-    <status>false</status>
     <status>true</status>
     <status>false</status>
     <status>true</status>
@@ -20635,9 +19312,6 @@
     <status>false</status>
     <status>false</status>
     <status>false</status>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
-    <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
     <attribute>false</attribute>
@@ -20743,7 +19417,7 @@
       <x>2</x>
       <y>-9.1</y>
     </position>
-    <owner>0</owner>
+    <owner>9</owner>
     <level>3</level>
     <mana>1000</mana>
     <maxmana>1000</maxmana>
@@ -20790,7 +19464,7 @@
       <x>2.71</x>
       <y>-7.93</y>
     </position>
-    <owner>0</owner>
+    <owner>9</owner>
     <level>3</level>
     <mana>1000</mana>
     <maxmana>1000</maxmana>
@@ -23085,7 +21759,7 @@
     <active_flag_index>-1</active_flag_index>
     <invationable_flag_index>-1</invationable_flag_index>
     <State>Active</State>
-    <action_count>2</action_count>
+    <action_count>0</action_count>
   </territory>
   <territory id="1">
     <owner_name>トリアイナ</owner_name>
@@ -23232,8 +21906,8 @@
     <dead_flag_index>10000</dead_flag_index>
     <active_flag_index>10010</active_flag_index>
     <invationable_flag_index>-1</invationable_flag_index>
-    <State>Active</State>
-    <action_count>2</action_count>
+    <State>Ready</State>
+    <action_count>0</action_count>
   </territory>
   <group id="0">
     <name>メイジー軍先方隊</name>
@@ -23251,6 +21925,7 @@
     <unit_list>60</unit_list>
     <unit_list>61</unit_list>
     <unit_list>62</unit_list>
+    <unit_list>64</unit_list>
     <card_list>0</card_list>
     <card_list>1</card_list>
   </group>
@@ -25136,10 +23811,13 @@
     <unit_list>54</unit_list>
     <unit_list>55</unit_list>
     <unit_list>56</unit_list>
-    <unit_list>64</unit_list>
+    <card_list>0</card_list>
+    <card_list>0</card_list>
     <card_list>39</card_list>
     <card_list>39</card_list>
     <card_list>39</card_list>
+    <card_list>39</card_list>
+    <card_list>13</card_list>
     <card_list>13</card_list>
     <card_list>13</card_list>
   </group>
@@ -27128,14 +25806,12 @@
     <nextA>-1</nextA>
     <nextB>-1</nextB>
   </fevent>
-  <playermana>10168</playermana>
-  <current_turn>2</current_turn>
-  <current_time>1</current_time>
+  <playermana>10000</playermana>
+  <current_turn>1</current_turn>
+  <current_time>0</current_time>
   <field_bgm>002_alice1</field_bgm>
   <battle_bgm>004_battle1</battle_bgm>
   <memory>
-    <data>1</data>
-    <data>1</data>
     <data>0</data>
     <data>0</data>
     <data>0</data>
@@ -36934,12 +35610,10 @@
     <data>0</data>
     <data>0</data>
     <data>0</data>
-    <data>1</data>
     <data>0</data>
     <data>0</data>
     <data>0</data>
     <data>0</data>
-    <data>1</data>
     <data>0</data>
     <data>0</data>
     <data>0</data>
@@ -37144,7 +35818,11 @@
     <data>0</data>
     <data>0</data>
     <data>0</data>
-    <data>1</data>
+    <data>0</data>
+    <data>0</data>
+    <data>0</data>
+    <data>0</data>
+    <data>0</data>
     <data>0</data>
     <data>0</data>
     <data>0</data>
@@ -47135,4 +45813,4 @@
     <data>0</data>
     <data>0</data>
   </memory>
-</game_data>
+</root_data>

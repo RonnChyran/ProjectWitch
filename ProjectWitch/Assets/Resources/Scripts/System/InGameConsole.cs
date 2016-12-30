@@ -209,14 +209,14 @@ namespace ProjectWitch
         public static void PrintMemory(int index) { uREPL.Log.Output(Game.GetInstance().GameData.Memory[index].ToString()); }
         //index番目のゲームメモリを書き換え
         [uREPL.Command(name = "setmemory")]
-        public static void SetMemory(int index, object value) { Game.GetInstance().GameData.Memory[index] = value.ToString(); }
+        public static void SetMemory(int index, object value) { Game.GetInstance().GameData.Memory[index] = int.Parse(value.ToString()); }
 
         //index番目のシステムメモリを表示
         [uREPL.Command(name = "printsysmemory")]
         public static void PrintSysMemory(int index) { uREPL.Log.Output(Game.GetInstance().SystemData.Memory[index].ToString()); }
         //index番目のシステムメモリを書き換え
         [uREPL.Command(name = "setsysmemory")]
-        public static void SetSysMemory(int index, object value) { Game.GetInstance().SystemData.Memory[index] = value.ToString(); }
+        public static void SetSysMemory(int index, object value) { Game.GetInstance().SystemData.Memory[index] = int.Parse(value.ToString()); }
 
         //コンフィグ表示
         [uREPL.Command(name = "printconfig")]

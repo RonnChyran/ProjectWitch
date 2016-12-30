@@ -387,7 +387,7 @@ namespace ProjectWitch.Talk.WorkSpace
 					int count = memory.Count;
 					object value = arguments[1];
 					if (0 <= index && index<count){
-						memory[index] = value.ToString();
+						memory[index] = int.Parse(value.ToString());
 						return null;
 					}
 					return "システム変数のインデックスは0 ~ "+ (count - 1) +"です(" + index + ")";

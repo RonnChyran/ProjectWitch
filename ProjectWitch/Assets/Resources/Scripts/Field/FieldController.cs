@@ -532,7 +532,7 @@ namespace ProjectWitch.Field
                     {
                         if (eventlist[i].If_Val[j] != -1)  //条件なしの時If_Val == -1
                         {
-                            int src = int.Parse(game.GameData.Memory[eventlist[i].If_Val[j]]);
+                            int src = game.GameData.Memory[eventlist[i].If_Val[j]];
                             var imm = eventlist[i].If_Imm[j];
 
                             //演算結果用

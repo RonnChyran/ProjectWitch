@@ -62,4 +62,43 @@ namespace ProjectWitch.Extention
             return outList;
         }
     }
+
+    public static class ListEX
+    {
+        public static byte[] GetBytes(this List<int> list)
+        {
+            List<byte> outdata = new List<byte>();
+
+            foreach (var item in list)
+            {
+                outdata.AddRange(BitConverter.GetBytes(item));
+            }
+
+            return outdata.ToArray();
+        }
+        public static byte[] GetBytes(this List<float> list)
+        {
+            List<byte> outdata = new List<byte>();
+
+            foreach (var item in list)
+            {
+                outdata.AddRange(BitConverter.GetBytes(item));
+            }
+
+            return outdata.ToArray();
+        }
+
+        public static byte[] GetBytes<T>(this List<T> list)
+            where T : ISaveableData
+        {
+            var outdata = new List<byte>();
+
+            foreach (var item in list)
+            {
+                outdata.AddRange(item.GetSaveBytes());
+            }
+
+            return outdata.ToArray();
+        }
+    }
 }
