@@ -76,7 +76,7 @@ namespace ProjectWitch
         }
 
         //任意のオブジェクトをファイルのxmlからデシリアライズする
-        public static void LoadXML<T>(string filepath, FileVersion dataversion, Format format, out T data)
+        public static void LoadXML<T>(string filepath, FileVersion dataversion, Format format, ref T data)
             where T : ISaveableData
         {
             filepath += mExt[format];
@@ -86,10 +86,10 @@ namespace ProjectWitch
                 switch (format)
                 {
                     case Format.Text:
-                        ObjFromText(fs, dataversion, out data);
+                        ObjFromText(fs, dataversion, ref data);
                         break;
                     case Format.Binary:
-                        SaveableDataFromBinary(fs, dataversion, out data);
+                        SaveableDataFromBinary(fs, dataversion, ref data);
                         break;
                     default:
                         data = default(T);
@@ -128,7 +128,7 @@ namespace ProjectWitch
         }
 
         //任意のオブジェクトをxmlからデシリアライズする
-        private static void ObjFromText<T>(Stream stream, FileVersion dataversion, out T data)
+        private static void ObjFromText<T>(Stream stream, FileVersion dataversion, ref T data)
         {
             using (var xmlReader = new XmlTextReader(stream))
             {
@@ -271,10 +271,13 @@ namespace ProjectWitch
         }
 
         //ISaveableDataを実装するオブジェクトに、バイナリファイルからデータを読みだす
-        private static void SaveableDataFromBinary<T>(Stream stream, FileVersion version, out T data)
+        private static void SaveableDataFromBinary<T>(Stream stream, FileVersion version, ref T data)
             where T : ISaveableData
         {
-            data = default(T);
+
+            byte[] buffer = new byte[stream.Length];
+            stream.Read(buffer, 0, buffer.Length);
+            data.SetFromBytes(0, buffer);
         }
 
     }

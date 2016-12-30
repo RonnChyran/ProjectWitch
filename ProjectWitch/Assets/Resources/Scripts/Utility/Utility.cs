@@ -5,6 +5,7 @@ using System.Text;
 
 namespace ProjectWitch.Extention
 {
+    //乱数関係の拡張
     public static class RandomEx
     {
         static Random _Rand = new Random();
@@ -63,6 +64,7 @@ namespace ProjectWitch.Extention
         }
     }
 
+    //List<T>の拡張
     public static class ListEX
     {
         public static byte[] GetBytes(this List<int> list)
@@ -99,6 +101,14 @@ namespace ProjectWitch.Extention
             }
 
             return outdata.ToArray();
+        }
+    }
+
+    public static class EnumConverter
+    {
+        public static T ToEnum<T>(int value)
+        {
+            return (T)Enum.ToObject(typeof(T), value);
         }
     }
 }

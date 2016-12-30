@@ -9,9 +9,22 @@ using UnityEngine;
 using ProjectWitch.Extention;
 
 namespace ProjectWitch
-{
+{    
+    //セーブを想定したデータ
+    public abstract class ISaveableData
+    {
+        //セーブするためのデータをbyte配列にパックして取得
+        public abstract byte[] GetSaveBytes();
+
+        //バイト配列からデータを再現
+        //@offset　何バイト目から読み出し始めるか
+        //@return　何バイト読み込んだか、引数のoffsetと合計した数値を返す
+        public abstract int SetFromBytes(int offset, byte[] data);
+
+    }
+
     //プレイヤーデータ
-    [Serializable, System.Xml.Serialization.XmlRoot("root")]
+    [System.Xml.Serialization.XmlRoot("root")]
     public class GameData : ISaveableData
     {
         //セーブデータのフォーマット
@@ -25,9 +38,12 @@ namespace ProjectWitch
                 Major = 1,
                 Minor = 0
             };
-        
+
 
         #region data_member
+
+        //データの識別子(game save data)
+        private readonly string EXT = "GSD";
 
         //ユニットデータ
         [System.Xml.Serialization.XmlElement("unit")]
@@ -77,7 +93,7 @@ namespace ProjectWitch
         
         //システム変数
         [System.Xml.Serialization.XmlElement("memory")]
-        public VirtualMemory Memory { get; set; }
+        public VirtualMemory Memory { get; private set; }
         #endregion
 
         #region method
@@ -105,7 +121,7 @@ namespace ProjectWitch
                 BattleBGM = "004_battle1";
 
                 Memory = new VirtualMemory(20000);
-                Memory[0] = 0;
+
 
             }
             catch (InvalidCastException)
@@ -161,7 +177,8 @@ namespace ProjectWitch
         public void Load(int slot)
         {
             var inst = new GameData();
-            FileIO.LoadXML(GamePath.GameSaveFilePath(slot),SaveDataVersion, mFormat, out inst);
+            inst.Copy(this);
+            FileIO.LoadXML(GamePath.GameSaveFilePath(slot),SaveDataVersion, mFormat, ref inst);
             this.Copy(inst);
         }
 
@@ -183,7 +200,7 @@ namespace ProjectWitch
             CurrentTurn = inst.CurrentTurn;
             FieldBGM = inst.FieldBGM;
             BattleBGM = inst.BattleBGM;
-
+            Memory = inst.Memory;
         }
 
         //セーブ用データをByte配列にパックして取得
@@ -191,13 +208,10 @@ namespace ProjectWitch
         {
             var outdata = new List<byte>();
 
-            //データの識別子(game save data)
-            string ext = "GSD";
-
             //セーブするデータ（ゲーム内で変更の可能性のあるデータ）を追加
-            outdata.AddRange(Encoding.UTF8.GetBytes(ext));
-            outdata.AddRange(BitConverter.GetBytes(SaveDataVersion.Major));
-            outdata.AddRange(BitConverter.GetBytes(SaveDataVersion.Minor));
+            outdata.AddRange(Encoding.UTF8.GetBytes(EXT));
+            outdata.Add(SaveDataVersion.Major);
+            outdata.Add(SaveDataVersion.Minor);
 
             outdata.AddRange(BitConverter.GetBytes(Unit.Count));
             outdata.AddRange(Unit.GetBytes());
@@ -214,21 +228,116 @@ namespace ProjectWitch
             outdata.AddRange(BitConverter.GetBytes(PlayerMana));
             outdata.AddRange(BitConverter.GetBytes(CurrentTurn));
             outdata.AddRange(BitConverter.GetBytes(CurrentTime));
-            outdata.AddRange(Encoding.UTF8.GetBytes(FieldBGM));
-            outdata.AddRange(Encoding.UTF8.GetBytes(BattleBGM));
 
-            outdata.AddRange(BitConverter.GetBytes(Memory.Count));
+            outdata.AddRange(BitConverter.GetBytes(
+                Encoding.UTF8.GetByteCount(FieldBGM)));
+            outdata.AddRange(Encoding.UTF8.GetBytes(FieldBGM));
+
+            outdata.AddRange(BitConverter.GetBytes(
+                Encoding.UTF8.GetByteCount(BattleBGM)));
+            outdata.AddRange(Encoding.UTF8.GetBytes(BattleBGM));
+            
             outdata.AddRange(Memory.GetSaveBytes());
             
             return outdata.ToArray();
         }
 
+        //byte配列からデータを再現
+        public override int SetFromBytes(int _offset, byte[] data)
+        {
+            int offset = _offset;
+
+            byte[] extbytes = new byte[3];
+            Array.Copy(data, offset, extbytes, 0, 3);
+            offset += 3;
+            var ext = Encoding.UTF8.GetString(extbytes);
+
+            //キャプションが正しくない場合エラー
+            if(ext!=EXT)
+            {
+                Debug.LogError("データがGameDataのものではありません。");
+                return 0;
+            }
+
+            //バージョンチェック
+            var majorVersion = data[offset];  offset += 1;
+            var minorVersion = data[offset];  offset += 1;
+            if(SaveDataVersion.Major > majorVersion)
+            {
+                Debug.LogWarning("セーブデータのバージョンがゲームバージョンよりも古いです。" +
+                    "PWSaveConverterを使って、最新のセーブデータにアップグレードしてください。");
+                return 0;
+            }
+            else if(SaveDataVersion.Major < majorVersion)
+            {
+                Debug.LogWarning("セーブデータのバージョンよりゲームバージョンが古いです。" +
+                    "サイトより最新のゲームデータを入手してください。");
+                return 0;
+            }
+            else
+            {
+                if (SaveDataVersion.Minor > minorVersion)
+                    Debug.Log("セーブデータのマイナーバージョンがゲームバージョンよりも古いです。" +
+                        "ゲームプレイに軽微な影響が出る場合があります。" +
+                        "PWSaveConverterをつかって、最新のセーブデータにアップグレードすることを推奨します。");
+                else if (SaveDataVersion.Minor < minorVersion)
+                    Debug.Log("セーブデータのマイナーバージョンよりゲームバージョンが古いです。" +
+                        "ゲームプレイに軽微な影響が出る場合があります。" +
+                        "サイトより最新のゲームデータを入手することを推奨します。");
+            }
+
+            //データ代入
+            var unitCount = BitConverter.ToInt32(data, offset); offset += 4;
+            if (Unit.Count < unitCount) Unit = new List<UnitDataFormat>(unitCount);
+            for(int i=0;i<unitCount;i++)
+            {
+                offset = Unit[i].SetFromBytes(offset, data);
+            }
+
+            var areaCount = BitConverter.ToInt32(data, offset); offset += 4;
+            if (Area.Count < areaCount) Area = new List<AreaDataFormat>(areaCount);
+            for(int i=0; i<areaCount;i++)
+            {
+                offset = Area[i].SetFromBytes(offset, data);
+            }
+
+            var territoryCount = BitConverter.ToInt32(data, offset);    offset += 4;
+            if(Territory.Count < territoryCount) Territory = new List<TerritoryDataFormat>(territoryCount);
+            for(int i=0; i<territoryCount;i++)
+            {
+                offset = Territory[i].SetFromBytes(offset, data);
+            }
+
+            var groupCount = BitConverter.ToInt32(data, offset);    offset += 4;
+            if (Group.Count > groupCount) Group = new List<GroupDataFormat>(groupCount);
+            for(int i=0;i<groupCount;i++)
+            {
+                offset = Group[i].SetFromBytes(offset, data);
+            }
+
+            PlayerMana = BitConverter.ToInt32(data, offset);    offset += 4;
+            CurrentTurn = BitConverter.ToInt32(data, offset);   offset += 4;
+            CurrentTime = BitConverter.ToInt32(data, offset);   offset += 4;
+
+            var strlength = BitConverter.ToInt32(data, offset); offset += 4;
+            byte[] strbytes = new byte[strlength];
+            Array.Copy(data, offset, strbytes, 0, strlength);   offset += strlength;
+            FieldBGM = Encoding.UTF8.GetString(strbytes);
+
+            strlength = BitConverter.ToInt32(data, offset);     offset += 4;
+            strbytes = new byte[strlength];
+            Array.Copy(data, offset, strbytes, 0, strlength);   offset += strlength;
+            BattleBGM = Encoding.UTF8.GetString(strbytes);
+
+            offset = Memory.SetFromBytes(offset, data);
+
+            return offset;
+        }
         #endregion
     }
 
     //システムデータ
     [System.Xml.Serialization.XmlRoot("root")]
-    
     public class SystemData : ISaveableData
     {
         //セーブデータのフォーマット
@@ -244,6 +353,10 @@ namespace ProjectWitch
             };
 
         #region data_member
+
+        //データの識別子(system save data)
+        private readonly string EXT = "SSD";
+
         //コンフィグ
         [System.Xml.Serialization.XmlElement("config")]
         public ConfigDataFormat Config { get; set; }
@@ -271,7 +384,8 @@ namespace ProjectWitch
         public void Load()
         {
             var inst = new SystemData();
-            FileIO.LoadXML(GamePath.SystemSaveFilePath(),SaveDataVersion, mFormat, out inst);
+            inst.Copy(this);
+            FileIO.LoadXML(GamePath.SystemSaveFilePath(),SaveDataVersion, mFormat, ref inst);
             this.Copy(inst);
         }
 
@@ -287,17 +401,65 @@ namespace ProjectWitch
         {
             var outdata = new List<byte>();
 
-            //データの識別子(system save data)
-            string ext = "SSD";
-
             //セーブするデータ（ゲーム内で変更の可能性のあるデータ）を追加
-            outdata.AddRange(Encoding.UTF8.GetBytes(ext));
-            outdata.AddRange(BitConverter.GetBytes(SaveDataVersion.Major));
-            outdata.AddRange(BitConverter.GetBytes(SaveDataVersion.Minor));
+            outdata.AddRange(Encoding.UTF8.GetBytes(EXT));
+            outdata.Add(SaveDataVersion.Major);
+            outdata.Add(SaveDataVersion.Minor);
             outdata.AddRange(Config.GetSaveBytes());
             outdata.AddRange(Memory.GetSaveBytes());
 
             return outdata.ToArray();
+        }
+
+        //byte配列からデータを再現
+        public override int SetFromBytes(int _offset, byte[] data)
+        {
+            int offset = _offset;
+
+            byte[] extbytes = new byte[3];
+            Array.Copy(data, offset, extbytes, 0, 3);
+            offset += 3;
+            var ext = Encoding.UTF8.GetString(extbytes);
+
+            //キャプションが正しくない場合エラー
+            if (ext != EXT)
+            {
+                Debug.LogError("データがGameDataのものではありません。");
+                return 0;
+            }
+
+            //バージョンチェック
+            var majorVersion = data[offset]; offset += 1;
+            var minorVersion = data[offset]; offset += 1;
+            if (SaveDataVersion.Major > majorVersion)
+            {
+                Debug.LogWarning("セーブデータのバージョンがゲームバージョンよりも古いです。" +
+                    "PWSaveConverterを使って、最新のセーブデータにアップグレードしてください。");
+                return 0;
+            }
+            else if (SaveDataVersion.Major < majorVersion)
+            {
+                Debug.LogWarning("セーブデータのバージョンよりゲームバージョンが古いです。" +
+                    "サイトより最新のゲームデータを入手してください。");
+                return 0;
+            }
+            else
+            {
+                if (SaveDataVersion.Minor > minorVersion)
+                    Debug.Log("セーブデータのマイナーバージョンがゲームバージョンよりも古いです。" +
+                        "ゲームプレイに軽微な影響が出る場合があります。" +
+                        "PWSaveConverterをつかって、最新のセーブデータにアップグレードすることを推奨します。");
+                else if (SaveDataVersion.Minor < minorVersion)
+                    Debug.Log("セーブデータのマイナーバージョンよりゲームバージョンが古いです。" +
+                        "ゲームプレイに軽微な影響が出る場合があります。" +
+                        "サイトより最新のゲームデータを入手することを推奨します。");
+            }
+
+            //データ代入
+            offset = Config.SetFromBytes(offset, data);
+            offset = Memory.SetFromBytes(offset, data);
+
+            return offset;
         }
         #endregion
     }
@@ -305,15 +467,7 @@ namespace ProjectWitch
     //各種データ構造
 
     #region ゲームデータ系
-    
-    //セーブを想定したデータ
-    public abstract class ISaveableData
-    {
-        //セーブするためのデータをbyte配列にパックして取得
-        public abstract byte[] GetSaveBytes();
-
-    }
-
+   
     //ユニットデータ
     public class UnitDataFormat : ISaveableData
     {
@@ -563,6 +717,25 @@ namespace ProjectWitch
 
             return outdata.ToArray();
         }
+
+        //byte配列からデータを再現
+        public override int SetFromBytes(int _offset, byte[] data)
+        {
+            int offset = _offset;
+
+            ID =         BitConverter.ToInt32(data, offset);    offset += 4;
+            Level =      BitConverter.ToInt32(data, offset);    offset += 4;
+            HP =         BitConverter.ToInt32(data, offset);    offset += 4;
+            Experience = BitConverter.ToInt32(data, offset);    offset += 4;
+            SoldierNum = BitConverter.ToInt32(data, offset);    offset += 4;
+            Deathable =  BitConverter.ToBoolean(data, offset);  offset += 1;
+            IsAlive =    BitConverter.ToBoolean(data, offset);  offset += 1;
+            Love =       BitConverter.ToInt32(data, offset);    offset += 4;
+            Equipment =  BitConverter.ToInt32(data, offset);    offset += 4;
+
+
+            return offset;
+        }
         #endregion
 
     }
@@ -798,9 +971,29 @@ namespace ProjectWitch
             outdata.AddRange(BitConverter.GetBytes(ID));
             outdata.AddRange(BitConverter.GetBytes(Owner));
             outdata.AddRange(BitConverter.GetBytes(Mana));
+            outdata.AddRange(BitConverter.GetBytes(NextArea.Count));
             outdata.AddRange(NextArea.GetBytes());
 
             return outdata.ToArray();
+        }
+
+        //byte配列からデータを再現
+        public override int SetFromBytes(int _offset, byte[] data)
+        {
+            int offset = _offset;
+
+            ID =    BitConverter.ToInt32(data, offset); offset += 4;
+            Owner = BitConverter.ToInt32(data, offset); offset += 4;
+            Mana = BitConverter.ToInt32(data, offset); offset += 4;
+
+            var nextAreaCount = BitConverter.ToInt32(data, offset);offset += 4;
+            NextArea = new List<int>();
+            for(int i=0; i<nextAreaCount;i++)
+            {
+                NextArea.Add(BitConverter.ToInt32(data, offset)); offset += 4;
+            }
+
+            return offset;
         }
         #endregion
     }
@@ -938,11 +1131,33 @@ namespace ProjectWitch
 
             //セーブするデータ（ゲーム内で変更の可能性のあるデータ）を追加
             outdata.AddRange(BitConverter.GetBytes(ID));
+            outdata.AddRange(BitConverter.GetBytes(AreaList.Count));
             outdata.AddRange(AreaList.GetBytes());
             outdata.AddRange(BitConverter.GetBytes((int)State));
             outdata.AddRange(BitConverter.GetBytes(ActionCount));
 
             return outdata.ToArray();
+        }
+
+        //byte配列からデータを再現
+        public override int SetFromBytes(int _offset, byte[] data)
+        {
+            int offset = _offset;
+
+            ID = BitConverter.ToInt32(data, offset); offset += 4;
+
+            var areaListCount = BitConverter.ToInt32(data, offset); offset += 4;
+            AreaList = new List<int>();
+            for (int i = 0; i < areaListCount; i++)
+            {
+                AreaList.Add(BitConverter.ToInt32(data, offset)); offset += 4;
+            }
+
+            State = EnumConverter.ToEnum<TerritoryState>(
+                        BitConverter.ToInt32(data, offset));     offset += 4;
+            ActionCount = BitConverter.ToInt32(data, offset);    offset += 4;
+
+            return offset;
         }
 
         #endregion
@@ -1123,11 +1338,33 @@ namespace ProjectWitch
 
             //セーブするデータ（ゲーム内で変更の可能性のあるデータ）を追加
             outdata.AddRange(BitConverter.GetBytes(ID));
+            outdata.AddRange(BitConverter.GetBytes(UnitList.Count));
             outdata.AddRange(UnitList.GetBytes());
             outdata.AddRange(BitConverter.GetBytes((int)State));
 
             return outdata.ToArray();
         }
+
+        //byte配列からデータを再現
+        public override int SetFromBytes(int _offset, byte[] data)
+        {
+            int offset = _offset;
+
+            ID = BitConverter.ToInt32(data, offset); offset += 4;
+
+            var unitListCount = BitConverter.ToInt32(data, offset); offset += 4;
+            UnitList = new List<int>();
+            for (int i = 0; i < unitListCount; i++)
+            {
+                UnitList.Add(BitConverter.ToInt32(data, offset)); offset += 4;
+            }
+
+            State = EnumConverter.ToEnum<GroupState>(
+                        BitConverter.ToInt32(data, offset)); offset += 4;
+
+            return offset;
+        }
+
 
         #endregion
     }
@@ -1261,6 +1498,29 @@ namespace ProjectWitch
             return outdata.ToArray();
         }
 
+        //byte配列からデータを再現
+        public override int SetFromBytes(int _offset, byte[] data)
+        {
+            int offset = _offset;
+
+            var resolution = new Vector2();
+            resolution.x = BitConverter.ToSingle(data, offset); offset += 4;
+            resolution.y = BitConverter.ToSingle(data, offset); offset += 4;
+            Resolution = resolution;
+
+            IsFullScreen = BitConverter.ToBoolean(data, offset); offset += 1;
+            GraphicQuality = EnumConverter.ToEnum<GraphicQualityEnum>(
+                                BitConverter.ToInt32(data, offset)); offset += 4;
+            MasterVolume = BitConverter.ToSingle(data, offset); offset += 4;
+            BGMVolume =    BitConverter.ToSingle(data, offset); offset += 4;
+            SEVolume =     BitConverter.ToSingle(data, offset); offset += 4;
+            BattleSpeed =  BitConverter.ToInt32(data, offset);  offset += 4;
+            TextSpeed =    BitConverter.ToSingle(data, offset); offset += 4;
+
+            return offset;
+        }
+
+
         #endregion
     }
 
@@ -1315,10 +1575,27 @@ namespace ProjectWitch
             var outdata = new List<byte>();
 
             //セーブするデータ（ゲーム内で変更の可能性のあるデータ）を追加
+            outdata.AddRange(BitConverter.GetBytes(Data.Count));
             outdata.AddRange(Data.GetBytes());
 
             return outdata.ToArray();
         }
+
+        //byte配列からデータを再現
+        public override int SetFromBytes(int _offset, byte[] data)
+        {
+            int offset = _offset;
+
+            var dataCount = BitConverter.ToInt32(data, offset); offset += 4;
+            if (dataCount > Data.Count) Data = new List<int>(dataCount);
+            for(int i=0;i<dataCount;i++)
+            {
+                Data[i] = BitConverter.ToInt32(data, offset);   offset += 4;
+            }
+
+            return offset;
+        }
+
 
         #endregion
     }
@@ -1786,7 +2063,7 @@ namespace ProjectWitch
                     eventData.FileName = data[1];
 
                     //タイミング
-                    eventData.Timing = ToEnum<EventDataFormat.TimingType>(int.Parse(data[2]));
+                    eventData.Timing = EnumConverter.ToEnum<EventDataFormat.TimingType>(int.Parse(data[2]));
 
                     //地点ＩＤ
                     if (data[3] != "")
@@ -1992,22 +2269,22 @@ namespace ProjectWitch
 
                     //侵攻タイプ
                     groupData.DominationType = 
-                        ToEnum<GroupDataFormat.BattleType>(int.Parse(data[2]));
+                        EnumConverter.ToEnum<GroupDataFormat.BattleType>(int.Parse(data[2]));
 
                     //防衛タイプ
                     groupData.DefenseType =
-                        ToEnum<GroupDataFormat.BattleType>(int.Parse(data[3]));
+                        EnumConverter.ToEnum<GroupDataFormat.BattleType>(int.Parse(data[3]));
 
                     //防衛優先度
                     groupData.DefensePriority = int.Parse(data[4]);
 
                     //ユニットの選択方法
                     groupData.UnitChoiseMethod =
-                        ToEnum<GroupDataFormat.ChoiseMethod>(int.Parse(data[5]));
+                        EnumConverter.ToEnum<GroupDataFormat.ChoiseMethod>(int.Parse(data[5]));
 
                     //カードの選択方法
                     groupData.CardChoiseMethod =
-                        ToEnum<GroupDataFormat.ChoiseMethod>(int.Parse(data[6]));
+                        EnumConverter.ToEnum<GroupDataFormat.ChoiseMethod>(int.Parse(data[6]));
 
                     //侵攻開始フラグ
                     if (data[7] == "")
@@ -2282,7 +2559,7 @@ namespace ProjectWitch
                 {
                     card.ID = int.Parse(data[0]);
                     card.Name = data[1];
-                    card.Timing = ToEnum<CardDataFormat.CardTiming>(int.Parse(data[2]));
+                    card.Timing = EnumConverter.ToEnum<CardDataFormat.CardTiming>(int.Parse(data[2]));
                     card.Duration = int.Parse(data[3]);
                     card.SkillID = int.Parse(data[4]);
                     card.ImageFront = data[5];
@@ -2341,10 +2618,6 @@ namespace ProjectWitch
             return outData;
         }
 
-        private static T ToEnum<T>(int value)
-        {
-            return (T)Enum.ToObject(typeof(T),value);
-        }
     }
 
     public class GamePath
