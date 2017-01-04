@@ -13,13 +13,11 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Full v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile>
-    </CompilerResponseFile>
+    <CompilerResponseFile></CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.4.3f1</UnityVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -189,6 +187,9 @@
     <Compile Include="Assets\Resources\Scripts\PreBattle\TalkCommandHelper.cs" />
     <Compile Include="Assets\Resources\Scripts\PreBattle\Unit.cs" />
     <Compile Include="Assets\Resources\Scripts\PreBattle\UnitList.cs" />
+    <Compile Include="Assets\Resources\Scripts\SaveLoad\LoadButton.cs" />
+    <Compile Include="Assets\Resources\Scripts\SaveLoad\LoadController.cs" />
+    <Compile Include="Assets\Resources\Scripts\SaveLoad\LoadFileList.cs" />
     <Compile Include="Assets\Resources\Scripts\System\Game.cs" />
     <Compile Include="Assets\Resources\Scripts\System\GameData.cs" />
     <Compile Include="Assets\Resources\Scripts\System\GoTitleWindow.cs" />
@@ -238,10 +239,10 @@
     <Compile Include="Assets\Resources\Scripts\UI\DialogWindow.cs" />
     <Compile Include="Assets\Resources\Scripts\Utility\DragAndDropBase.cs" />
     <Compile Include="Assets\Resources\Scripts\Utility\Exception.cs" />
-    <Compile Include="Assets\Resources\Scripts\Utility\Utility.cs" />
     <Compile Include="Assets\Resources\Scripts\Utility\FileIO.cs" />
     <Compile Include="Assets\Resources\Scripts\Utility\LetterSpacing.cs" />
     <Compile Include="Assets\Resources\Scripts\Utility\Rotation.cs" />
+    <Compile Include="Assets\Resources\Scripts\Utility\Utility.cs" />
     <Compile Include="Assets\Resources\Scripts\Utility\fitter.cs" />
     <Compile Include="Assets\uREPL\Examples\Scripts\FieldItemTest.cs" />
     <Compile Include="Assets\uREPL\Scripts\Completions\CommandCompletion.cs" />
