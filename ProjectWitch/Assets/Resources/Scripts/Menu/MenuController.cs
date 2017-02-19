@@ -67,7 +67,7 @@ namespace ProjectWitch.Menu
             yield return new WaitForSeconds(0.3f);
 
             mFController.FieldUIController.ShowUI();
-            SceneManager.UnloadScene(Game.GetInstance().SceneName_Menu);
+            yield return SceneManager.UnloadSceneAsync(Game.GetInstance().SceneName_Menu);
 
         }
 

@@ -108,7 +108,7 @@ namespace ProjectWitch.PreBattle
             game.BattleOut.IsWin = false;
 
             game.IsBattle = false;
-            SceneManager.UnloadScene(game.SceneName_PreBattle);
+            SceneManager.UnloadSceneAsync(game.SceneName_PreBattle);
         }
 
         //履歴をもとにユニットを削除

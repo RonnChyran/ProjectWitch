@@ -41,7 +41,10 @@ namespace ProjectWitch
             mAnimators = GetComponentsInChildren<Animator>();
 
             foreach (var part in mPartSystem)
-                part.playbackSpeed = mPlaySpeed;
+            {
+                var ma = part.main;
+                ma.simulationSpeed = mPlaySpeed;
+            }
 
             foreach (var anim in mAnimators)
                 anim.speed = mPlaySpeed;
@@ -69,9 +72,10 @@ namespace ProjectWitch
             {
                 foreach (var partsys in mPartSystem)
                 {
-                    var color = partsys.startColor;
+                    var ma = partsys.main;
+                    var color = ma.startColor.color;
                     color.a = Math.Max(0.0f, color.a - i);
-                    partsys.startColor = color;
+                    ma.startColor = color;
                 }
                 yield return null;
             }

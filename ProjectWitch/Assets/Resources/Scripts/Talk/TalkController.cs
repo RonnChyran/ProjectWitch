@@ -27,7 +27,7 @@ namespace ProjectWitch.Talk
             game.IsTalk = false;
 
             //シーンのアンロード
-            SceneManager.UnloadScene(game.SceneName_Talk);
+            SceneManager.UnloadSceneAsync(game.SceneName_Talk);
 
             yield return null;
         }

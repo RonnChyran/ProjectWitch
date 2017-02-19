@@ -23,7 +23,7 @@ namespace ProjectWitch.Load
         //そのまま終了（キャンセル時の操作
         void Close()
         {
-            SceneManager.UnloadScene("Load");
+            SceneManager.UnloadSceneAsync("Load");
         }
     }
 }

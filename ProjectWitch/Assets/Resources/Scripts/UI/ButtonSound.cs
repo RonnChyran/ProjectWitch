@@ -9,8 +9,12 @@ namespace ProjectWitch
     [RequireComponent(typeof(Button))]
     public class ButtonSound : MonoBehaviour, IPointerEnterHandler
     {
-        [SerializeField]
         Button mcButton = null;
+
+        public void Start()
+        {
+            mcButton = GetComponent<Button>();
+        }
 
         public void OnPointerEnter(PointerEventData e)
         {

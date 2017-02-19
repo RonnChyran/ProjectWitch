@@ -1561,7 +1561,8 @@ namespace ProjectWitch.Battle
                 if (EndEvent != null)
 				{
 					EndEvent.Invoke();
-					SceneManager.UnloadScene(BackGroundSceneName);
+  //                  if(SceneManager.GetSceneByName(BackGroundSceneName).IsValid())
+    					SceneManager.UnloadSceneAsync(BackGroundSceneName);
 					Resources.UnloadUnusedAssets();
 					print("戦闘終了");
 				}

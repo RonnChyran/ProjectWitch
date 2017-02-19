@@ -245,8 +245,9 @@ namespace ProjectWitch
 
             BattleIn.TimeOfDay = GameData.CurrentTime;
 
-            SceneManager.UnloadScene(cSceneName_PreBattle);
             yield return SceneManager.LoadSceneAsync(cSceneName_Battle, LoadSceneMode.Additive);
+            if (SceneManager.GetSceneByName(cSceneName_PreBattle).IsValid())
+                yield return SceneManager.UnloadSceneAsync(cSceneName_PreBattle);
         }
 
         //スクリプトの開始

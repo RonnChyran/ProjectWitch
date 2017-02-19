@@ -34,7 +34,7 @@ namespace ProjectWitch.Battle
             var game = Game.GetInstance();
 
             game.IsBattle = false;
-            SceneManager.UnloadScene(game.SceneName_Battle);
+            SceneManager.UnloadSceneAsync(game.SceneName_Battle);
         }
     }
 }

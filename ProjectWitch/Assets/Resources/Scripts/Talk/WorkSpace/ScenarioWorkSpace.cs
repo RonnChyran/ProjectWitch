@@ -219,7 +219,7 @@ namespace ProjectWitch.Talk.WorkSpace
 				"RemoveScene",
 				new CommandDelegater (false, 0, delegate(object[] arguments) {
 					string name = SceneManager.GetActiveScene ().name;
-					SceneManager.UnloadScene (name);
+					SceneManager.UnloadSceneAsync (name);
 					return null;
 				}));
 
