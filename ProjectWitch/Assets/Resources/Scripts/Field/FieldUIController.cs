@@ -77,7 +77,7 @@ namespace ProjectWitch.Field
             OwnerPanelLock = false;
         }
 
-        void Update()
+        protected virtual void Update()
         {
             if(mFieldController.MenuClickable)
             {

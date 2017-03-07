@@ -1,0 +1,45 @@
+;s0200
+;title:
+;author:chicchi
+;timing:メイジー量占領後、ターンはじめ
+[hide_cursor]
+[field_area_hilight id=1]
+[wait time=200]
+[loadcg id=0 ref="marger"]
+
+[filter name="fade" time="500"]
+[drawbg ref="1023"]
+[se ref="200_env"]
+[filter name="clear" time="500"]
+
+
+[show_message]
+[cn]
+ウラール山脈。[p]
+かつて北の大地で起きた大戦争で、 地面が隆起し、できたこの山脈は、[p]
+現在は年中吹雪の吹き荒れる険しい土地となっており、 この世界を南北で完全に分断していた。[p]
+
+[drawcg id=0 pos="right"]
+#？？？
+急げ！　今日中にこの峠を越えるのだ！[n]
+体を動かせ、凍り付いて動けなくなるぞ！ [p]
+[cn]
+数名の男たちが、ウラール山脈の中腹を進んでいた。 [p]
+#？？？
+急ぎ、あれを手に入れなければ……。[p]
+#部下
+マルゲル様！　ウェッジの姿が見えません！[n]
+はぐれてしまいました！[p]
+#マルゲル
+なに！　仕方ない、戻るぞ。 [n]
+凍り付いて動けなくなっているのかもしれん。[p]
+#部下
+はっ！[p]
+[cn]
+どこを見ても真っ白な世界の中で、[p]
+魔法コンパスの指針を頼りに、[n]
+マルゲルたちは部下を探しにもと来た道を戻っていった。[p]
+[filter name="fade" time="500"]
+
+[wait time=500]
+[filter name="clear" time="500"]

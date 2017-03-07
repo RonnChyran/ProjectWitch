@@ -98,12 +98,10 @@ namespace ProjectWitch.Talk
             }
 
             //表示向きの設定
-            if(dir=="right")
-            {
-                var scale = obj.transform.localScale;
-                scale.x = -1;
-                obj.transform.localScale = scale;
-            }
+            var scale = obj.transform.localScale;
+            if (dir=="right") scale.x = -1;
+            else scale.x = 1;
+            obj.transform.localScale = scale;
 
             //表示位置の設定
             if (!isShowFront)

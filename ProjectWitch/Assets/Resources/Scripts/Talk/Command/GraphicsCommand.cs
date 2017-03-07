@@ -20,7 +20,8 @@ namespace ProjectWitch.Talk.Compiler{
 
 		public CreateCommandsOfGraphics() : base(){
 			List<PatternFormat> patternList = new List<PatternFormat> ();
-			patternList.Add (new CreateBackgroundCommand ());
+            patternList.Add(new CreateDrawBGCommand());
+            patternList.Add(new CreateClearBGCommand());
 			patternList.Add (new CreateLoadCGCommand ());
 			patternList.Add (new CreateShowCGCommand ());
             patternList.Add (new CreateChangeCGCommand());
@@ -43,16 +44,17 @@ namespace ProjectWitch.Talk.Compiler{
 	}
 
 	//背景設定
-	public class CreateBackgroundCommand : Pattern_TagFormat
+	public class CreateDrawBGCommand : Pattern_TagFormat
 	{
 		protected override string TagName(){
-			return "background";
+			return "drawbg";
 		}
 		protected override CommandFormat[] CreateCommand(ArgumentDictionary arguments, int line, int index)
 		{
 			CommandList commandList = new CommandList ();
 			if (arguments.ContainName ("ref")) {
 				commandList.Add(arguments.Get ("ref"));
+                commandList.Add(new SetArgumentCommand("0"));
 			} else {
 				CompilerLog.Log (line, index, "ref引数が不足しています。");
 				return null;
@@ -67,8 +69,32 @@ namespace ProjectWitch.Talk.Compiler{
 		}
 	}
 
-	//立ち絵読み込み
-	public class CreateLoadCGCommand : Pattern_TagFormat
+    //背景削除
+    public class CreateClearBGCommand : Pattern_TagFormat
+    {
+        protected override string TagName()
+        {
+            return "clearbg";
+        }
+        protected override CommandFormat[] CreateCommand(ArgumentDictionary arguments, int line, int index)
+        {
+            CommandList commandList = new CommandList();
+
+            commandList.Add(new SetArgumentCommand("0"));
+            commandList.Add(new SetArgumentCommand("1"));
+
+            if (arguments.Count > 0)
+            {
+                CompilerLog.Log(line, index, "無効な引数があります。");
+                return null;
+            }
+            commandList.Add(new RunOrderCommand("SetBackground"));
+            return commandList.GetArray();
+        }
+    }
+
+    //立ち絵読み込み
+    public class CreateLoadCGCommand : Pattern_TagFormat
 	{
 		protected override string TagName(){
 			return "loadcg";

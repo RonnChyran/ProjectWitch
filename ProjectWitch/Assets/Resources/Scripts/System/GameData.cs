@@ -1824,11 +1824,13 @@ namespace ProjectWitch
             FileName = "";
             NextA = -1;
             NextB = -1;
+            IsTest = false;
         }
 
         public string FileName { get; set; }
         public int NextA { get; set; }
         public int NextB { get; set; }
+        public bool IsTest { get; set; } //テストモードフラグ
     }
 
     //メニューシーンへの入力

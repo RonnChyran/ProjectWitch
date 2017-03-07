@@ -73,7 +73,9 @@ namespace ProjectWitch.Talk.WorkSpace
 			VirtualMachine vm = null;
 
 			string name = Game.GetInstance ().ScenarioIn.FileName;
-			string path = mScenarioPath + name;
+            string path = name;
+            if (!Game.GetInstance().ScenarioIn.IsTest)
+                path = mScenarioPath + name;
 			ScriptCompiler compiler = new ScriptCompiler();
 			vm = compiler.CompileScript (path);
 

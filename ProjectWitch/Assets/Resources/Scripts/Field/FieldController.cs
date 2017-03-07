@@ -39,7 +39,7 @@ namespace ProjectWitch.Field
         public bool MenuClickable { get; set; }
         public bool FlagClickable { get; set; }
 
-        void Start()
+        protected virtual void Start()
         {
             MenuClickable = true;
             FlagClickable = true;
@@ -48,7 +48,7 @@ namespace ProjectWitch.Field
             PlayBGM();
         }
 
-        void Update()
+        protected virtual void Update()
         {
             var game = Game.GetInstance();
 

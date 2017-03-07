@@ -82,14 +82,33 @@ namespace ProjectWitch.Talk.Compiler
             //FileInfo fi = new FileInfo(path);
             //StreamReader sr = new StreamReader(fi.OpenRead(), Encoding.GetEncoding("UTF-8"));
 
-            var tasset = Resources.Load(path) as TextAsset;            
-            if (!tasset)
+            //テストモードの場合外部フォルダから、それ以外の場合は内部フォルダからロード
+            string text="";
+            if (Game.GetInstance().ScenarioIn.IsTest)
             {
-            	CompilerLog.Log ("(" + path + ")ファイルが存在しません");
-            	return null;
+                try
+                {
+                    var reader = new StreamReader(path, Encoding.UTF8);
+                    text = reader.ReadToEnd();
+                    reader.Close();
+                }
+                catch (FileNotFoundException)
+                {
+                    CompilerLog.Log("(" + path + ")ファイルが存在しません");
+                    return null;
+                }
             }
-            var reader = new StringReader(tasset.text);
-			string text = reader.ReadToEnd ();
+            else
+            {
+                var tasset = Resources.Load(path) as TextAsset;
+                if (!tasset)
+                {
+                    CompilerLog.Log("(" + path + ")ファイルが存在しません");
+                    return null;
+                }
+                var reader = new StringReader(tasset.text);
+                text = reader.ReadToEnd();
+            }
 
 			//CRLF、CRをLFに変換
 			text = new Regex ("\r\n|\r").Replace (text, "\n");

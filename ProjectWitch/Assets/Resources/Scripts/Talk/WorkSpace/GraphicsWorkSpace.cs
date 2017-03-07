@@ -163,19 +163,26 @@ namespace ProjectWitch.Talk.WorkSpace
 			//背景を表示
 			vm.AddCommandDelegater(
 				"SetBackground",
-				new CommandDelegater(false, 1, delegate(object[] arguments){
+				new CommandDelegater(false, 2, delegate(object[] arguments){
 					string error;
 					string name = Converter.ObjectToString(arguments[0], out error);
+                    var isClear = Converter.ObjectToInt(arguments[1], out error);
 					if (error != null) return error;
+
 					string path = mBackgroundPath + name;
-					mBackgroundSprite.GetComponent<RawImage>().texture = Resources.Load (path) as Texture2D;
-					if (mNeedsToFadeBackGround)
+                    if(isClear==0)
+    					mBackgroundSprite.GetComponent<RawImage>().texture = Resources.Load (path) as Texture2D;
+
+                    if (mNeedsToFadeBackGround)
 					{
 						float time = 0.5f;
 						RawImage img = mBackgroundSprite.GetComponent<RawImage>();
 						Color prevColor = img.color;
 						mSWS.SetUpdater(new CGAnimationUpdater(time, delegate(float progress) {
-							img.color = new Color(prevColor.r, prevColor.g, prevColor.b, progress);
+                            var weight = 0.0f;
+                            if (isClear == 0) weight = progress;
+                            else weight = 1 - progress;
+							img.color = new Color(prevColor.r, prevColor.g, prevColor.b, weight);
 						}));
 						mNeedsToFadeBackGround = true;
 					}
@@ -278,6 +285,7 @@ namespace ProjectWitch.Talk.WorkSpace
                     if(posx != "")
                     {
                         int _posx = int.Parse(posx);
+                        _posx = (int)(_posx / 100.0f * 1920.0f); 
                         var p = position_prev;
                         var n = position_next;
                         position_prev = new Vector3((_posx > 0) ? x : -x, p.y, p.z);
@@ -286,6 +294,7 @@ namespace ProjectWitch.Talk.WorkSpace
                     if (posy != "")
                     {
                         int _posy = int.Parse(posy);
+                        _posy = (int)(_posy / 100.0f * 1080.0f);
                         var p = position_prev;
                         var n = position_next;
                         position_prev = new Vector3(p.x, p.y, p.z);
@@ -318,8 +327,11 @@ namespace ProjectWitch.Talk.WorkSpace
                             {
                                 Transform trans = obj.transform;
                                 trans.localPosition = position_prev;
+                                RawImage image = obj.GetComponent<RawImage>();
                                 updater = new CGAnimationUpdater(time, delegate (float progress)
                                 {
+                                    Color cp = image.color;
+                                    image.color = new Color(cp.r, cp.g, cp.b, 1.0f);
                                     trans.localPosition = position_prev * (1.0f - progress) + position_next * progress;
                                 });
                             }
