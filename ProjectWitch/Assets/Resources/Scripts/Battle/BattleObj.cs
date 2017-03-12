@@ -207,8 +207,6 @@ namespace ProjectWitch.Battle
         {
             mGame = Game.GetInstance();
 
-			BattleDataIn.PlayerCards[0] = 0;
-
 			// 背景シーン名決定
 			BackGroundSceneName = "Resources/Scenes/Battle/BackGround/";
 			if (BattleDataIn.TimeOfDay <= 1)
