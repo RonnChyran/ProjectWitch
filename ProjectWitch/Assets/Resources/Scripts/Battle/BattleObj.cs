@@ -207,6 +207,8 @@ namespace ProjectWitch.Battle
         {
             mGame = Game.GetInstance();
 
+			BattleDataIn.PlayerCards[0] = 0;
+
 			// 背景シーン名決定
 			BackGroundSceneName = "Resources/Scenes/Battle/BackGround/";
 			if (BattleDataIn.TimeOfDay <= 1)
@@ -1285,53 +1287,56 @@ namespace ProjectWitch.Battle
 			// 一時停止
 			while (IsPause)
 				yield return null;
-            // 敵、または自動戦闘の場合
-            if (!TurnUnit.IsPlayer || BattleDataIn.IsAuto)
-                yield return StartCoroutine("CoAIAction");
-            else
-            {
-                // 味方キャラの場合
-                IsPlayerSelectTime = true;
-                mMouseCover.SetActive(true);
-                while ((IsPlayerSelectTime || IsPlayerActionTime) && !IsBattleEnd)
-                    yield return null;
-            }
+			if (!IsBattleEnd)
+			{
+				// 敵、または自動戦闘の場合
+				if (!TurnUnit.IsPlayer || BattleDataIn.IsAuto)
+					yield return StartCoroutine("CoAIAction");
+				else
+				{
+					// 味方キャラの場合
+					IsPlayerSelectTime = true;
+					mMouseCover.SetActive(true);
+					while ((IsPlayerSelectTime || IsPlayerActionTime) && !IsBattleEnd)
+						yield return null;
+				}
 
-            // ターン終了
-            yield return StartCoroutine("CoCheckUnit");
+				// ターン終了
+				yield return StartCoroutine("CoCheckUnit");
 
-            if (!preTurnUnit.IsSummonUnit)
-            {
-                preTurnUnit.Face.SetActionFlame(false);
-            }
-            if (preTurnUnit.IsSummonUnit || preTurnUnit.Face.IsExsistUnit)
-            {
-                if (preTurnUnit.IsStatePoisom)
-                {
-                    // 毒ダメージエフェクト
-                    StartCoroutine("CoDoEffect", "毒ダメージエフェクトパス名");
-                    // 毒状態なら毒ダメージを受ける
-                    yield return StartCoroutine(DamageProcess(preTurnUnit, 0, 0, DamageType.Poison));
-                    yield return WaitSeconds(0.05f);
-                }
-                bool isSummoneUnit = preTurnUnit.IsSummonUnit;
-                yield return preTurnUnit.TurnEnd();
+				if (!preTurnUnit.IsSummonUnit)
+				{
+					preTurnUnit.Face.SetActionFlame(false);
+				}
+				if (preTurnUnit.IsSummonUnit || preTurnUnit.Face.IsExsistUnit)
+				{
+					if (preTurnUnit.IsStatePoisom)
+					{
+						// 毒ダメージエフェクト
+						StartCoroutine("CoDoEffect", "毒ダメージエフェクトパス名");
+						// 毒状態なら毒ダメージを受ける
+						yield return StartCoroutine(DamageProcess(preTurnUnit, 0, 0, DamageType.Poison));
+						yield return WaitSeconds(0.05f);
+					}
+					bool isSummoneUnit = preTurnUnit.IsSummonUnit;
+					yield return preTurnUnit.TurnEnd();
 
-                if (!IsBattleEnd && (!isSummoneUnit || !preTurnUnit.IsReturnSummonUnit))
-                    yield return OrderController.TurnEnd();
+					if (!IsBattleEnd && (!isSummoneUnit || !preTurnUnit.IsReturnSummonUnit))
+						yield return OrderController.TurnEnd();
 
-            }
+				}
 
-            yield return preTurnUnit.SlideOut();
+				yield return preTurnUnit.SlideOut();
 
-            if (TurnNum > 0)
-                --TurnNum;
-            if (TurnNum == 0)
-                IsBattleEnd = true;
-            if (IsEscape)
-                IsBattleEnd = true;
+				if (TurnNum > 0)
+					--TurnNum;
+				if (TurnNum == 0)
+					IsBattleEnd = true;
+				if (IsEscape)
+					IsBattleEnd = true;
+			}
 
-            if (IsBattleEnd)
+			if (IsBattleEnd)
                 // 戦闘終了
                 StartCoroutine("CoBattleEnd");
             else
