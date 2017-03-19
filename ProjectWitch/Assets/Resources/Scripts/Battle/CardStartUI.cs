@@ -40,10 +40,10 @@ namespace ProjectWitch.Battle
             panel.color = new Color(panel.color.r, panel.color.g, panel.color.b, 0);
             while (time < mCardMoveTime)
             {
-                cardFrontR.position += parPos * Time.deltaTime;
-                cardFrontR.sizeDelta += parSize * Time.deltaTime;
-                panel.color += new Color(0, 0, 0, parColorA * Time.deltaTime);
-                time += Time.deltaTime;
+                cardFrontR.position += parPos * Time.deltaTime * BattleObj.BattleSpeedMagni;
+                cardFrontR.sizeDelta += parSize * Time.deltaTime * BattleObj.BattleSpeedMagni;
+                panel.color += new Color(0, 0, 0, parColorA * Time.deltaTime * BattleObj.BattleSpeedMagni);
+                time += Time.deltaTime * BattleObj.BattleSpeedMagni;
                 yield return null;
             }
             cardFrontR.position = cardBackR.position;
@@ -53,8 +53,8 @@ namespace ProjectWitch.Battle
             time = 0;
             while (time < mCardMoveTime)
             {
-				cardBack.fillAmount += 1.0f / mCardOpenTime * Time.deltaTime;
-                time += Time.deltaTime;
+				cardBack.fillAmount += 1.0f / mCardOpenTime * Time.deltaTime * BattleObj.BattleSpeedMagni;
+                time += Time.deltaTime * BattleObj.BattleSpeedMagni;
                 yield return null;
             }
 			cardBack.fillAmount = 1.0f;

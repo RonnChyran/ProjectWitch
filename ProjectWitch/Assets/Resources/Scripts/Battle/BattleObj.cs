@@ -317,16 +317,16 @@ namespace ProjectWitch.Battle
             for (int i = 0; i < BattleDataIn.PlayerCards.Count; i++)
             {
                 var card = new CardManager();
-                card.Setup(BattleDataIn.PlayerCards[i], PlayerCardObjs[i]);
-                PlayerCards.Add(card);
+				card.Setup(BattleDataIn.PlayerCards[i], true, PlayerCardObjs[i]);
+				PlayerCards.Add(card);
             }
             print("エネミーカード設定");
             EnemyCards = new List<CardManager>();
             for (int i = 0; i < BattleDataIn.EnemyCards.Count; i++)
             {
                 var card = new CardManager();
-                card.Setup(BattleDataIn.EnemyCards[i], EnemyCardObjs[i]);
-                EnemyCards.Add(card);
+				card.Setup(BattleDataIn.EnemyCards[i], false, EnemyCardObjs[i]);
+				EnemyCards.Add(card);
             }
 
             // 戦闘ターン数取得
@@ -374,8 +374,8 @@ namespace ProjectWitch.Battle
             while (IsWaitInputTime)
             {
                 time += Time.deltaTime;
-                if (time >= seconds)
-                    IsWaitInputTime = false;
+				if (time * BattleSpeedMagni >= seconds)
+					IsWaitInputTime = false;
                 yield return null;
             }
         }
@@ -432,7 +432,78 @@ namespace ProjectWitch.Battle
         // カードの発動チェック＆発動　checkCamp: 0=両方, -1=敵, 1=味方
         private IEnumerator DoCardAction(CardDataFormat.CardTiming timeing, BattleUnit induceUnit, int checkCamp = 0)
         {
-            for (int i = 0; i < 2; i++)
+			List<CardManager> cards = new List<CardManager>();
+			for (int i = 0; i < 3; i++)
+			{
+				if (TurnUnit.IsPlayer)
+				{
+					if (i < PlayerCards.Count)
+						cards.Add(PlayerCards[i]);
+					if (i < EnemyCards.Count)
+						cards.Add(EnemyCards[i]);
+				}
+				else
+				{
+					if (i < EnemyCards.Count)
+						cards.Add(EnemyCards[i]);
+					if (i < PlayerCards.Count)
+						cards.Add(PlayerCards[i]);
+				}
+			}
+			foreach (var card in cards)
+			{
+				if (card.CardData == null || !card.IsCanUse)
+					continue;
+				if (card.CardData.Timing == timeing)
+				{
+					if ((timeing == CardDataFormat.CardTiming.Rand80 && BattleRandom.value > 0.8f) ||
+						(timeing == CardDataFormat.CardTiming.Rand50 && BattleRandom.value > 0.5f) ||
+						(timeing == CardDataFormat.CardTiming.Rand20 && BattleRandom.value > 0.2f))
+						continue;
+					if (((timeing == CardDataFormat.CardTiming.UserState_HP10 ||
+						timeing == CardDataFormat.CardTiming.EnemyState_HP10) &&
+						induceUnit.UnitData.HP > induceUnit.UnitData.MaxHP * 0.1) ||
+						((timeing == CardDataFormat.CardTiming.UserState_HP50 ||
+						timeing == CardDataFormat.CardTiming.EnemyState_HP50) &&
+						induceUnit.UnitData.HP > induceUnit.UnitData.MaxHP * 0.5) ||
+						((timeing == CardDataFormat.CardTiming.UserState_S10 ||
+						timeing == CardDataFormat.CardTiming.EnemyState_S10) &&
+						induceUnit.UnitData.SoldierNum > induceUnit.UnitData.MaxSoldierNum * 0.1) ||
+						((timeing == CardDataFormat.CardTiming.UserState_S50 ||
+						timeing == CardDataFormat.CardTiming.EnemyState_S50) &&
+						induceUnit.UnitData.SoldierNum > induceUnit.UnitData.MaxSoldierNum * 0.5))
+						break;
+					// カードスキル発動
+					BattleUnit action = (card.IsPlayer ? PlayerUnits[0] : EnemyUnits[0]);            // 行動ユニットはその陣営の先頭ユニット
+					if (card.Skill.Type == SkillDataFormat.SkillType.SoulSteal && induceUnit != null)// ソウルスティールなら行動ユニットは誘発ユニット
+						action = induceUnit;
+
+					BattleUnit target = null;
+					if (card.Skill.Range == SkillDataFormat.SkillRange.Single)                       // 対象が単体の時
+					{
+						if (card.Skill.Type == SkillDataFormat.SkillType.Heal && induceUnit != null) // 回復効果なら誘発ユニット
+							target = induceUnit;
+						else                                                                    // それ以外ならランダム
+						{
+							List<BattleUnit> units = new List<BattleUnit>();
+							if (card.Skill.Target == SkillDataFormat.SkillTarget.Enemy ||
+								card.Skill.Target == SkillDataFormat.SkillTarget.EnemyLeader)        // 対象が敵の時
+							{
+								units = (card.IsPlayer ? EnemyUnits : PlayerUnits);
+							}
+							else if (card.Skill.Target == SkillDataFormat.SkillTarget.Player ||
+								card.Skill.Target == SkillDataFormat.SkillTarget.PlayerLeader)       // 対象が味方の時
+							{
+								units = (!card.IsPlayer ? EnemyUnits : PlayerUnits);
+							}
+							target = units[BattleRandom.Range(0, units.Count - 1)];
+						}
+					}
+					yield return StartCoroutine(CoCardSkillAction(card, action, target));
+				}
+			}
+			/*
+			for (int i = 0; i < 2; i++)
             {
                 var isPlayer = (i == 0);
                 if ((isPlayer && checkCamp >= 0) || (!isPlayer && checkCamp <= 0))
@@ -443,14 +514,27 @@ namespace ProjectWitch.Battle
                         var card = cards[j];
                         if (card.CardData == null || !card.IsCanUse)
                             continue;
-                        if (card.CardData.Timing == timeing)
-                        {
-                            if ((timeing == CardDataFormat.CardTiming.Rand80 && BattleRandom.value > 0.8f) ||
+						if (card.CardData.Timing == timeing)
+						{
+							if ((timeing == CardDataFormat.CardTiming.Rand80 && BattleRandom.value > 0.8f) ||
                                 (timeing == CardDataFormat.CardTiming.Rand50 && BattleRandom.value > 0.5f) ||
                                 (timeing == CardDataFormat.CardTiming.Rand20 && BattleRandom.value > 0.2f))
                                 continue;
-                            // カードスキル発動
-                            BattleUnit action = (isPlayer ? PlayerUnits[0] : EnemyUnits[0]);            // 行動ユニットはその陣営の先頭ユニット
+							if (((timeing == CardDataFormat.CardTiming.UserState_HP10 ||
+								timeing == CardDataFormat.CardTiming.EnemyState_HP10) &&
+								induceUnit.UnitData.HP > induceUnit.UnitData.MaxHP * 0.1) ||
+								((timeing == CardDataFormat.CardTiming.UserState_HP50 ||
+								timeing == CardDataFormat.CardTiming.EnemyState_HP50) &&
+								induceUnit.UnitData.HP > induceUnit.UnitData.MaxHP * 0.5) ||
+								((timeing == CardDataFormat.CardTiming.UserState_S10 ||
+								timeing == CardDataFormat.CardTiming.EnemyState_S10) &&
+								induceUnit.UnitData.SoldierNum > induceUnit.UnitData.MaxSoldierNum * 0.1) ||
+								((timeing == CardDataFormat.CardTiming.UserState_S50 ||
+								timeing == CardDataFormat.CardTiming.EnemyState_S50) &&
+								induceUnit.UnitData.SoldierNum > induceUnit.UnitData.MaxSoldierNum * 0.5))
+								break;
+							// カードスキル発動
+							BattleUnit action = (isPlayer ? PlayerUnits[0] : EnemyUnits[0]);            // 行動ユニットはその陣営の先頭ユニット
                             if (card.Skill.Type == SkillDataFormat.SkillType.SoulSteal && induceUnit != null)// ソウルスティールなら行動ユニットは誘発ユニット
                                 action = induceUnit;
 
@@ -480,11 +564,12 @@ namespace ProjectWitch.Battle
                     }
                 }
             }
+			*/
             yield return null;
         }
 
         // カード発動コルーチン
-        private IEnumerator CoCardSkillAction(CardManager card, BattleUnit action, BattleUnit target, bool isPlayer)
+        private IEnumerator CoCardSkillAction(CardManager card, BattleUnit action, BattleUnit target)
         {
 			// 一時停止
 			while (IsPause)
@@ -504,7 +589,7 @@ namespace ProjectWitch.Battle
             GenerateEffect(mCardStartEffect, "CardStartEffect", true);
             yield return StartCoroutine("CoWaitEffect");
             mCardStartUI.SetActive(false);
-            yield return StartCoroutine(CoSkillAction(action, target, card.Skill, isPlayer, true));
+            yield return StartCoroutine(CoSkillAction(action, target, card.Skill, card.IsPlayer, true));
             flame.SetActive(false);
             // カード数消費(無限じゃない時)
             card.SetUsedCard();
@@ -796,43 +881,47 @@ namespace ProjectWitch.Battle
                 var units = (i == 0 ? PlayerUnits : EnemyUnits);
                 foreach (var unit in units)
                 {
-                    bool isS50 = unit.UnitData.SoldierNum <= unit.UnitData.MaxSoldierNum * 0.5;
-                    bool isS10 = unit.UnitData.SoldierNum <= unit.UnitData.MaxSoldierNum * 0.1;
-                    bool isHP50 = unit.UnitData.HP <= unit.MaxHP * 0.5;
-                    bool isHP10 = unit.UnitData.HP <= unit.MaxHP * 0.1;
-                    bool isDeath = unit.UnitData.HP == 0;
-                    // 兵士数が50％以下
-                    if (isS50)
-                    {
-                        yield return DoCardAction(CardDataFormat.CardTiming.UserState_S50, unit, (unit.IsPlayer ? 1 : -1));
-                        yield return DoCardAction(CardDataFormat.CardTiming.EnemyState_S50, unit, (unit.IsPlayer ? -1 : 1));
-                    }
-                    // 兵士数が10％以下
-                    if (isS10)
-                    {
-                        yield return DoCardAction(CardDataFormat.CardTiming.UserState_S10, unit, (unit.IsPlayer ? 1 : -1));
-                        yield return DoCardAction(CardDataFormat.CardTiming.EnemyState_S10, unit, (unit.IsPlayer ? -1 : 1));
-                    }
-                    // HPが50％以下
-                    if (isHP50)
-                    {
-                        yield return DoCardAction(CardDataFormat.CardTiming.UserState_HP50, unit, (unit.IsPlayer ? 1 : -1));
-                        yield return DoCardAction(CardDataFormat.CardTiming.EnemyState_HP50, unit, (unit.IsPlayer ? -1 : 1));
-                    }
-                    // HPが10％以下
-                    if (isHP10)
-                    {
-                        yield return DoCardAction(CardDataFormat.CardTiming.UserState_HP10, unit, (unit.IsPlayer ? 1 : -1));
-                        yield return DoCardAction(CardDataFormat.CardTiming.EnemyState_HP10, unit, (unit.IsPlayer ? -1 : 1));
-                    }
-                    // 死亡
-                    if (isDeath)
-                    {
-                        yield return DoCardAction(CardDataFormat.CardTiming.UserState_Death, unit, (unit.IsPlayer ? 1 : -1));
-                        yield return DoCardAction(CardDataFormat.CardTiming.EnemyState_Death, unit, (unit.IsPlayer ? -1 : 1));
-                    }
+					if (unit.IsDamaged)
+					{
+						bool isS50 = unit.UnitData.SoldierNum <= unit.UnitData.MaxSoldierNum * 0.5;
+						bool isS10 = unit.UnitData.SoldierNum <= unit.UnitData.MaxSoldierNum * 0.1;
+						bool isHP50 = unit.UnitData.HP <= unit.MaxHP * 0.5;
+						bool isHP10 = unit.UnitData.HP <= unit.MaxHP * 0.1;
+						bool isDeath = unit.UnitData.HP == 0;
+						// 兵士数が50％以下
+						if (isS50)
+						{
+							yield return DoCardAction(CardDataFormat.CardTiming.UserState_S50, unit, (unit.IsPlayer ? 1 : -1));
+							yield return DoCardAction(CardDataFormat.CardTiming.EnemyState_S50, unit, (unit.IsPlayer ? -1 : 1));
+						}
+						// 兵士数が10％以下
+						if (isS10)
+						{
+							yield return DoCardAction(CardDataFormat.CardTiming.UserState_S10, unit, (unit.IsPlayer ? 1 : -1));
+							yield return DoCardAction(CardDataFormat.CardTiming.EnemyState_S10, unit, (unit.IsPlayer ? -1 : 1));
+						}
+						// HPが50％以下
+						if (isHP50)
+						{
+							yield return DoCardAction(CardDataFormat.CardTiming.UserState_HP50, unit, (unit.IsPlayer ? 1 : -1));
+							yield return DoCardAction(CardDataFormat.CardTiming.EnemyState_HP50, unit, (unit.IsPlayer ? -1 : 1));
+						}
+						// HPが10％以下
+						if (isHP10)
+						{
+							yield return DoCardAction(CardDataFormat.CardTiming.UserState_HP10, unit, (unit.IsPlayer ? 1 : -1));
+							yield return DoCardAction(CardDataFormat.CardTiming.EnemyState_HP10, unit, (unit.IsPlayer ? -1 : 1));
+						}
+						// 死亡
+						if (isDeath)
+						{
+							yield return DoCardAction(CardDataFormat.CardTiming.UserState_Death, unit, (unit.IsPlayer ? 1 : -1));
+							yield return DoCardAction(CardDataFormat.CardTiming.EnemyState_Death, unit, (unit.IsPlayer ? -1 : 1));
+						}
+						unit.IsDamaged = false;
+					}
 
-                    removeFlags.Add(unit.UnitData.HP == 0 || unit.IsCapture);
+					removeFlags.Add(unit.UnitData.HP == 0 || unit.IsCapture);
                     if (unit.UnitData.HP == 0)
                     {
                         // 死亡確認
@@ -922,9 +1011,9 @@ namespace ProjectWitch.Battle
             // どちらかのユニット数が０になっていれば戦闘終了
             if (PlayerUnits.Count == 0 || EnemyUnits.Count == 0)
                 IsBattleEnd = true;
-        }
+		}
 
-        private enum DeleteUnitType : int
+		private enum DeleteUnitType : int
         {
             Dead = 0,
             Capture,
@@ -938,7 +1027,7 @@ namespace ProjectWitch.Battle
             mLastSerifUI.SetActive(true);
             mMessageUI.SetActive(false);
             var imSerif = mLastSerifUI.transform.FindChild("Image");
-            var imMessage = mMessageUI.transform.FindChild("Image");
+//            var imMessage = mMessageUI.transform.FindChild("Image");
             var text = imSerif.FindChild("Text").GetComponent<Text>();
             imSerif.localPosition = new Vector3(unit.Face.transform.localPosition.x, imSerif.localPosition.y, imSerif.localPosition.z);
             // 固有メッセージ表示
@@ -1104,7 +1193,7 @@ namespace ProjectWitch.Battle
                         // 毒を与える効果
                         if (skill.Attribute[0] && BattleRandom.value <= 0.5)
                         {
-                            unit.IsStatePoisom = true;
+                            unit.IsStatePoison = true;
                             // エフェクト？
 
                             yield return DoCardAction(CardDataFormat.CardTiming.UserState_Poison, unit, (unit.IsPlayer ? 1 : -1));
@@ -1116,7 +1205,7 @@ namespace ProjectWitch.Battle
                         //1:回復
                         // 回復処理					
                         if (skill.Attribute[0])         // 毒を回復させるなら
-                            unit.IsStatePoisom = false;
+                            unit.IsStatePoison = false;
                         else                            // HPを回復させる
                             StartCoroutine(HealProcess(unit, unit.GetLeaderCurativeAmount(skill), unit.GetGroupCurativeAmount(skill)));
                     }
@@ -1308,13 +1397,14 @@ namespace ProjectWitch.Battle
 				}
 				if (preTurnUnit.IsSummonUnit || preTurnUnit.Face.IsExsistUnit)
 				{
-					if (preTurnUnit.IsStatePoisom)
+					if (preTurnUnit.IsStatePoison)
 					{
 						// 毒ダメージエフェクト
 						StartCoroutine("CoDoEffect", "毒ダメージエフェクトパス名");
 						// 毒状態なら毒ダメージを受ける
 						yield return StartCoroutine(DamageProcess(preTurnUnit, 0, 0, DamageType.Poison));
 						yield return WaitSeconds(0.05f);
+						yield return StartCoroutine("CoCheckUnit");
 					}
 					bool isSummoneUnit = preTurnUnit.IsSummonUnit;
 					yield return preTurnUnit.TurnEnd();

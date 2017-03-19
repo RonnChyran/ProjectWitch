@@ -14,11 +14,13 @@ namespace ProjectWitch.Battle
         public int ID { get; private set; }
         public int Duration { get; private set; }
         public bool IsCanUse { get; private set; }
+		public bool IsPlayer { get; private set; }
 
-        // 初期設定
-        public void Setup(int id, GameObject cardObj)
+		// 初期設定
+		public void Setup(int id, bool isPlayer, GameObject cardObj)
         {
             ID = id;
+			IsPlayer = isPlayer;
             mGame = Game.GetInstance();
             CardObj = cardObj;
             CardObj.SetActive(id != -1);
@@ -33,12 +35,12 @@ namespace ProjectWitch.Battle
             Duration = CardData.Duration;
             CardObj.GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/Card/" + CardData.ImageBack);
             IsCanUse = true;
-        }
+		}
 
         // カード1枚消費
         public void SetUsedCard()
         {
-            if (Duration != -1)
+			if (Duration != -1)
             {
                 if (Duration == CardData.Duration)
                 {
@@ -53,7 +55,6 @@ namespace ProjectWitch.Battle
                     CardObj.SetActive(false);
                 }
             }
-
         }
 
         // Use this for initialization
