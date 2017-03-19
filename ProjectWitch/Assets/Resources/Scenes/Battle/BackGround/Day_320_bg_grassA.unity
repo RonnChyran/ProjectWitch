@@ -37,7 +37,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.7290495, g: 0.78738874, b: 0.8476181, a: 1}
+  m_IndirectSpecularColor: {r: 0.7302264, g: 0.7889753, b: 0.8498664, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -50,7 +50,7 @@ LightmapSettings:
     m_AlbedoBoost: 1
     m_TemporalCoherenceThreshold: 1
     m_EnvironmentLightingMode: 0
-    m_EnableBakedLightmaps: 1
+    m_EnableBakedLightmaps: 0
     m_EnableRealtimeLightmaps: 0
   m_LightmapEditorSettings:
     serializedVersion: 4
@@ -71,7 +71,8 @@ LightmapSettings:
     m_FinalGatherFiltering: 1
     m_FinalGatherRayCount: 256
     m_ReflectionCompression: 2
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000001, guid: 42b772e78ec9aaf41b41da368d96be09,
+    type: 2}
   m_RuntimeCPUUsage: 25
 --- !u!196 &4
 NavMeshSettings:
@@ -583,7 +584,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 2018290, guid: f06beb50ecbc362449478db1bead6c94, type: 2}
       propertyPath: m_HDR
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 11464758, guid: f06beb50ecbc362449478db1bead6c94, type: 2}
       propertyPath: screenBlendMode
@@ -616,7 +617,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 2018290, guid: f06beb50ecbc362449478db1bead6c94, type: 2}
       propertyPath: m_RenderingPath
-      value: 1
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2018290, guid: f06beb50ecbc362449478db1bead6c94, type: 2}
+      propertyPath: m_CullingMask.m_Bits
+      value: 4294966527
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 11467090, guid: f06beb50ecbc362449478db1bead6c94, type: 2}
