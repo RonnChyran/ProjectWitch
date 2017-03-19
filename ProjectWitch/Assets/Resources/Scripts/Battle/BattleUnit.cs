@@ -53,12 +53,13 @@ namespace ProjectWitch.Battle
         private bool mIsSildeIn = false;
         // スライドアウト中かどうか
         private bool mIsSildeOut = false;
+		// ダメージを受けた
+		public bool IsDamaged { get; set; }
 
+		#region 参照データ
 
-        #region 参照データ
-
-        // ユニットID
-        public int UnitID { get; private set; }
+		// ユニットID
+		public int UnitID { get; private set; }
 
         public UnitDataFormat UnitData { get { return mGame.GameData.Unit[UnitID]; } }
         // リーダーのAnimator
@@ -154,10 +155,10 @@ namespace ProjectWitch.Battle
         #region 状態異常系
 
         public List<UnitStatus> Status { get; set; }
-        // 毒状態である
-        public bool IsStatePoisom { get; set; }
-        // 一度だけ無敵状態である
-        public bool IsStateNoDamage { get; set; }
+		// 毒状態である
+		public bool IsStatePoison { get; set; }
+		// 一度だけ無敵状態である
+		public bool IsStateNoDamage { get; set; }
         // 身代わりスキル対象、nullのときはなし
         public BattleUnit GuardTarget { get; set; }
         // 召喚ユニットの場合持続時間、通常ユニットの場合-1
@@ -265,7 +266,7 @@ namespace ProjectWitch.Battle
         public bool GetStatusOtherFlag(int num)
         {
             if (num == 0)
-                return IsStatePoisom;
+                return IsStatePoison;
             else if (num == 1)
                 return GuardTarget;
             else if (num == 2)
@@ -493,8 +494,9 @@ namespace ProjectWitch.Battle
             ApproachDisplay(0);
             print("セットアップ：" + UnitData.Name);
 
+			IsDamaged = false;
             IsDisplay = false;
-            IsStatePoisom = false;
+            IsStatePoison = false;
             IsStateNoDamage = false;
             GuardTarget = null;
             SummonDuration = summonDuration;
@@ -756,6 +758,7 @@ namespace ProjectWitch.Battle
                 UnitData.HP = System.Math.Max(UnitData.HP - (int)damage, 0);
             else
                 UnitData.SoldierNum = System.Math.Max(UnitData.SoldierNum - (int)damage, 0);
+			IsDamaged = true;
         }
 
         // 回復する
