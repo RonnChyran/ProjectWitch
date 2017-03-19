@@ -180,7 +180,7 @@ namespace ProjectWitch.Field
             //メニューを開けるようにする
             FieldController.MenuClickable = true;
             FieldController.FlagClickable = true;
-            FieldUIController.OwnerPanelLock = false;
+            FieldUIController.ActionPanelLock = false;
             FieldUIController.SelectedTerritory = -1;
             Destroy(NameWindow);
             Destroy(this.gameObject);

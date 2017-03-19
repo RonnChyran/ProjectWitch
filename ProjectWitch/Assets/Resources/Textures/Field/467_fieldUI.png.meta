@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 84c7da679348d35429eceada24b39154
-timeCreated: 1478176260
+timeCreated: 1489917092
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -24,12 +24,17 @@ TextureImporter:
     21300034: 467_fieldUI_17
     21300036: 467_fieldUI_18
     21300038: 467_fieldUI_19
-  serializedVersion: 2
+    21300040: 467_fieldUI_20
+    21300042: 467_fieldUI_21
+    21300044: 467_fieldUI_22
+    21300046: 467_fieldUI_23
+    21300048: 467_fieldUI_24
+  serializedVersion: 4
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
+    sRGBTexture: 1
     linearTexture: 0
-    correctGamma: 0
     fadeOut: 0
     borderMipMap: 0
     mipMapFadeDistanceStart: 1
@@ -41,10 +46,8 @@ TextureImporter:
     normalMapFilter: 0
   isReadable: 0
   grayScaleToAlpha: 0
-  generateCubemap: 0
+  generateCubemap: 6
   cubemapConvolution: 0
-  cubemapConvolutionSteps: 7
-  cubemapConvolutionExponent: 1.5
   seamlessCubemap: 0
   textureFormat: -3
   maxTextureSize: 1024
@@ -55,9 +58,7 @@ TextureImporter:
     wrapMode: 1
   nPOTScale: 0
   lightmap: 0
-  rGBM: 0
   compressionQuality: 50
-  allowsAlphaSplitting: 0
   spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
@@ -65,10 +66,39 @@ TextureImporter:
   spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 100
+  alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
   textureType: 8
-  buildTargetSettings: []
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 1024
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Standalone
+    maxTextureSize: 1024
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: WebGL
+    maxTextureSize: 1024
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -208,7 +238,7 @@ TextureImporter:
         serializedVersion: 2
         x: 114
         y: 884
-        width: 211
+        width: 246
         height: 78
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -297,7 +327,7 @@ TextureImporter:
       name: 467_fieldUI_17
       rect:
         serializedVersion: 2
-        x: 322
+        x: 520
         y: 788
         width: 491
         height: 236
@@ -327,6 +357,71 @@ TextureImporter:
         y: 42
         width: 1024
         height: 87
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: 467_fieldUI_20
+      rect:
+        serializedVersion: 2
+        x: 111
+        y: 584
+        width: 103
+        height: 38
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: 467_fieldUI_21
+      rect:
+        serializedVersion: 2
+        x: 111
+        y: 549
+        width: 103
+        height: 35
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: 467_fieldUI_22
+      rect:
+        serializedVersion: 2
+        x: 111
+        y: 513
+        width: 103
+        height: 36
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: 467_fieldUI_23
+      rect:
+        serializedVersion: 2
+        x: 111
+        y: 480
+        width: 103
+        height: 33
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: 467_fieldUI_24
+      rect:
+        serializedVersion: 2
+        x: 111
+        y: 447
+        width: 103
+        height: 33
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}

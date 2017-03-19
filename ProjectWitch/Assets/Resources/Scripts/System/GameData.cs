@@ -1066,7 +1066,7 @@ namespace ProjectWitch
         //状態
         public enum TerritoryState : int
         {
-            Prepare,    //宣戦布告不可
+            Prepare=0,    //宣戦布告不可
             Ready,      //宣戦布告可
             Active,     //交戦中
             Dead        //占領済み

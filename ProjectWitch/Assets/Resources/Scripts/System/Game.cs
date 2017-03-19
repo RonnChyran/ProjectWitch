@@ -153,6 +153,10 @@ namespace ProjectWitch
             //システムデータ初期化
             SystemData = new SystemData();
             SystemData.Reset();
+
+            //デバッグ用（すぐけす
+            GameData.Memory[9800] = 1; //チュートリアル無効
+            GameData.Memory[9805] = 1;
         }
 
         //ダイアログを表示

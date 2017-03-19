@@ -72,10 +72,10 @@ namespace ProjectWitch.Field
             FieldController.MenuClickable = false;
 
             //オーナーパネルをロック
-            FieldUIController.OwnerPanelLock = true;
+            FieldUIController.ActionPanelLock = true;
         }
 
-        //メニューの表示処理
+        //エリアウィンドウの表示処理
         private void ShowMenu(GameObject menu)
         {
             //描画先のキャンバス
@@ -101,7 +101,7 @@ namespace ProjectWitch.Field
             //ホバー音再生
             game.SoundManager.PlaySE(SE.Hover);
 
-            if (FieldUIController.OwnerPanelLock == false)
+            if (FieldUIController.ActionPanelLock == false)
             {
                 FieldUIController.SelectedTerritory = mTerritoryID;
                 ShowAreaName();
@@ -112,7 +112,7 @@ namespace ProjectWitch.Field
         public void OnPointerExit(PointerEventData e)
         {
             if (FieldUIController.SelectedTerritory == mTerritoryID &&
-                FieldUIController.OwnerPanelLock == false)
+                FieldUIController.ActionPanelLock == false)
             {
                 Destroy(mInstAreaName);
                 FieldUIController.SelectedTerritory = -1;

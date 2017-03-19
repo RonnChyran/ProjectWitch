@@ -7,7 +7,10 @@ namespace ProjectWitch.Field
     public class OwnerPanel : MonoBehaviour {
 
         [SerializeField]
-        private Text mActionCountText = null;
+        private Image mActionStateImage = null;
+
+        [SerializeField]
+        private Sprite[] mActionStateSourceImages = new Sprite[5];
 
         [SerializeField]
         private float mBackPos = 0.0f;
@@ -47,15 +50,18 @@ namespace ProjectWitch.Field
             //テキスト更新
             var game = Game.GetInstance();
             var ter = game.GameData.Territory[TerritoryID];
-            mActionCountText.text = ter.ActionCount.ToString();
+            if (TerritoryID == 0)
+                mActionStateImage.sprite = mActionStateSourceImages[0];
+            else
+                mActionStateImage.sprite = mActionStateSourceImages[(int)(ter.State) + 1];
         }
 
         //ほんのちょっとtargetPosに向かって進む
         void DeltaMove(float targetX)
         {
-            var pos = transform.localPosition;
+            var pos = mcRect.localPosition;
 
-            var delta = targetX - transform.localPosition.x;
+            var delta = targetX - mcRect.localPosition.x;
             if (Mathf.Abs(delta) <= mSpeed * Time.deltaTime)
             {
                 pos.x = targetX;

@@ -30,6 +30,11 @@ namespace ProjectWitch.Field
 
         }
 
+        void OnDisable()
+        {
+            mIsRunnning = false;
+        }
+
         // Update is called once per frame
         void Update() {
             if (!mIsRunnning)

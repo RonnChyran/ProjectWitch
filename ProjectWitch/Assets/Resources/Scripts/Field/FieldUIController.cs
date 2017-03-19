@@ -58,7 +58,7 @@ namespace ProjectWitch.Field
         //現在選択している領地
         public int SelectedTerritory { get; set; }
         //オーナーパネルロックフラグ
-        public bool OwnerPanelLock { get; set; }
+        public bool ActionPanelLock { get; set; }
 
 
         void Start()
@@ -74,7 +74,7 @@ namespace ProjectWitch.Field
 
             //内部変数初期化
             SelectedTerritory = -1;
-            OwnerPanelLock = false;
+            ActionPanelLock = false;
         }
 
         protected virtual void Update()
