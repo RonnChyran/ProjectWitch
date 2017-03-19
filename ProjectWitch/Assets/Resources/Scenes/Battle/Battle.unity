@@ -3545,7 +3545,7 @@ GameObject:
   - component: {fileID: 661317601}
   - component: {fileID: 661317600}
   m_Layer: 5
-  m_Name: CardFront
+  m_Name: CardBack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5572,6 +5572,11 @@ Prefab:
       propertyPath: m_FontData.m_MaxSize
       value: 26
       objectReference: {fileID: 0}
+    - target: {fileID: 224000013355163394, guid: 8aa64f4f03de6214391c63b95bd69809,
+        type: 2}
+      propertyPath: m_LocalScale.x
+      value: -1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8aa64f4f03de6214391c63b95bd69809, type: 2}
   m_IsPrefabParent: 0
@@ -6457,8 +6462,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mPanel: {fileID: 477580959}
-  mCardBack: {fileID: 1327639440}
-  mCardFront: {fileID: 661317598}
+  mCardBack: {fileID: 661317598}
+  mCardFront: {fileID: 1327639440}
   mName: {fileID: 413127520}
   mExposition: {fileID: 1260022251}
   mCardMoveTime: 0.5
@@ -7242,7 +7247,7 @@ GameObject:
   - component: {fileID: 1327639443}
   - component: {fileID: 1327639442}
   m_Layer: 5
-  m_Name: CardBack
+  m_Name: CardFront
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7971,6 +7976,11 @@ Prefab:
         type: 2}
       propertyPath: m_FontData.m_MaxSize
       value: 26
+      objectReference: {fileID: 0}
+    - target: {fileID: 224000013355163394, guid: 8aa64f4f03de6214391c63b95bd69809,
+        type: 2}
+      propertyPath: m_LocalScale.x
+      value: -1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8aa64f4f03de6214391c63b95bd69809, type: 2}
@@ -10491,6 +10501,11 @@ Prefab:
         type: 2}
       propertyPath: m_FontData.m_MaxSize
       value: 26
+      objectReference: {fileID: 0}
+    - target: {fileID: 224000013355163394, guid: 8aa64f4f03de6214391c63b95bd69809,
+        type: 2}
+      propertyPath: m_LocalScale.x
+      value: -1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8aa64f4f03de6214391c63b95bd69809, type: 2}
