@@ -37,7 +37,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311918, g: 0.3807398, b: 0.35872716, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311992, g: 0.38074034, b: 0.35872713, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -425,7 +425,6 @@ GameObject:
   - component: {fileID: 66121800}
   - component: {fileID: 66121803}
   - component: {fileID: 66121802}
-  - component: {fileID: 66121801}
   m_Layer: 5
   m_Name: meisie
   m_TagString: Untagged
@@ -453,21 +452,6 @@ RectTransform:
   m_AnchoredPosition: {x: -876.4, y: 214.8}
   m_SizeDelta: {x: 211, y: 78}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &66121801
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 66121799}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba216890f4a2661429d39d6c399d5156, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mActionCountText: {fileID: 2028820772}
-  mBackPos: 30
-  mTerritoryID: 9
-  mSpeed: 100
 --- !u!114 &66121802
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1262,7 +1246,6 @@ GameObject:
   - component: {fileID: 534897454}
   - component: {fileID: 534897457}
   - component: {fileID: 534897456}
-  - component: {fileID: 534897455}
   m_Layer: 5
   m_Name: orivia
   m_TagString: Untagged
@@ -1290,21 +1273,6 @@ RectTransform:
   m_AnchoredPosition: {x: -876.4, y: 64.6}
   m_SizeDelta: {x: 211, y: 78}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &534897455
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 534897453}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba216890f4a2661429d39d6c399d5156, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mActionCountText: {fileID: 1890728452}
-  mBackPos: 30
-  mTerritoryID: 2
-  mSpeed: 100
 --- !u!114 &534897456
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1502,7 +1470,6 @@ GameObject:
   - component: {fileID: 558744812}
   - component: {fileID: 558744815}
   - component: {fileID: 558744814}
-  - component: {fileID: 558744813}
   m_Layer: 5
   m_Name: alice
   m_TagString: Untagged
@@ -1530,21 +1497,6 @@ RectTransform:
   m_AnchoredPosition: {x: -876.4, y: 290.1}
   m_SizeDelta: {x: 211, y: 78}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &558744813
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 558744811}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba216890f4a2661429d39d6c399d5156, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mActionCountText: {fileID: 1116233388}
-  mBackPos: 30
-  mTerritoryID: 0
-  mSpeed: 100
 --- !u!114 &558744814
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1588,7 +1540,6 @@ GameObject:
   - component: {fileID: 593306907}
   - component: {fileID: 593306910}
   - component: {fileID: 593306909}
-  - component: {fileID: 593306908}
   m_Layer: 5
   m_Name: pumpking
   m_TagString: Untagged
@@ -1616,21 +1567,6 @@ RectTransform:
   m_AnchoredPosition: {x: -876.4, y: -161.1}
   m_SizeDelta: {x: 211, y: 78}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &593306908
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 593306906}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba216890f4a2661429d39d6c399d5156, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mActionCountText: {fileID: 1405363701}
-  mBackPos: 30
-  mTerritoryID: 5
-  mSpeed: 100
 --- !u!114 &593306909
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1814,7 +1750,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 625352031}
-  - component: {fileID: 625352032}
   m_Layer: 5
   m_Name: ActionPanel
   m_TagString: Untagged
@@ -1852,30 +1787,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &625352032
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 625352030}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b82771ab831342e43bf0594406c7e7d6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mcFUICtrl: {fileID: 75874510}
-  mOwnerPanels:
-  - {fileID: 558744813}
-  - {fileID: 66121801}
-  - {fileID: 1745172358}
-  - {fileID: 534897455}
-  - {fileID: 1488742178}
-  - {fileID: 719341783}
-  - {fileID: 593306908}
-  - {fileID: 638499320}
-  - {fileID: 1950367717}
-  mAttackIcon: {fileID: 539542016}
-  mDefenseIcon: {fileID: 296423697}
 --- !u!1 &633039437
 GameObject:
   m_ObjectHideFlags: 0
@@ -1954,7 +1865,6 @@ GameObject:
   - component: {fileID: 638499319}
   - component: {fileID: 638499322}
   - component: {fileID: 638499321}
-  - component: {fileID: 638499320}
   m_Layer: 5
   m_Name: lily
   m_TagString: Untagged
@@ -1982,21 +1892,6 @@ RectTransform:
   m_AnchoredPosition: {x: -876.4, y: -236.79999}
   m_SizeDelta: {x: 211, y: 78}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &638499320
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 638499318}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba216890f4a2661429d39d6c399d5156, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mActionCountText: {fileID: 304008107}
-  mBackPos: 30
-  mTerritoryID: 6
-  mSpeed: 100
 --- !u!114 &638499321
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2222,7 +2117,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 010d29878f6125a42aeaca7c174fd5e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mScenarioFolderPath: C:/Users/yuichi-surface/GoogleDrive/ProjectWitch/Scenario/Script
+  mScenarioFolderPath: D:/GoogleDrive/ProjectWitch/Scenario/Script
   mCanvas0: {fileID: 195328246}
   mCanvas1: {fileID: 700664059}
   mText: {fileID: 1505341431}
@@ -2342,7 +2237,6 @@ GameObject:
   - component: {fileID: 719341782}
   - component: {fileID: 719341785}
   - component: {fileID: 719341784}
-  - component: {fileID: 719341783}
   m_Layer: 5
   m_Name: charlotte
   m_TagString: Untagged
@@ -2370,21 +2264,6 @@ RectTransform:
   m_AnchoredPosition: {x: -876.4, y: -86.6}
   m_SizeDelta: {x: 211, y: 78}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &719341783
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 719341781}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba216890f4a2661429d39d6c399d5156, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mActionCountText: {fileID: 1892673936}
-  mBackPos: 30
-  mTerritoryID: 4
-  mSpeed: 100
 --- !u!114 &719341784
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3805,7 +3684,6 @@ GameObject:
   - component: {fileID: 1488742177}
   - component: {fileID: 1488742180}
   - component: {fileID: 1488742179}
-  - component: {fileID: 1488742178}
   m_Layer: 5
   m_Name: vega
   m_TagString: Untagged
@@ -3833,21 +3711,6 @@ RectTransform:
   m_AnchoredPosition: {x: -876.4, y: -11.200001}
   m_SizeDelta: {x: 211, y: 78}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1488742178
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1488742176}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba216890f4a2661429d39d6c399d5156, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mActionCountText: {fileID: 1616895336}
-  mBackPos: 30
-  mTerritoryID: 3
-  mSpeed: 100
 --- !u!114 &1488742179
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4252,7 +4115,6 @@ GameObject:
   - component: {fileID: 1745172357}
   - component: {fileID: 1745172360}
   - component: {fileID: 1745172359}
-  - component: {fileID: 1745172358}
   m_Layer: 5
   m_Name: triaina
   m_TagString: Untagged
@@ -4280,21 +4142,6 @@ RectTransform:
   m_AnchoredPosition: {x: -876.4, y: 138.99994}
   m_SizeDelta: {x: 211, y: 78}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1745172358
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1745172356}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba216890f4a2661429d39d6c399d5156, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mActionCountText: {fileID: 610206360}
-  mBackPos: 30
-  mTerritoryID: 1
-  mSpeed: 100
 --- !u!114 &1745172359
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5107,7 +4954,6 @@ GameObject:
   - component: {fileID: 1950367716}
   - component: {fileID: 1950367719}
   - component: {fileID: 1950367718}
-  - component: {fileID: 1950367717}
   m_Layer: 5
   m_Name: raisa
   m_TagString: Untagged
@@ -5135,21 +4981,6 @@ RectTransform:
   m_AnchoredPosition: {x: -876.4, y: -311.3}
   m_SizeDelta: {x: 211, y: 78}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1950367717
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1950367715}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba216890f4a2661429d39d6c399d5156, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mActionCountText: {fileID: 1097043814}
-  mBackPos: 30
-  mTerritoryID: 8
-  mSpeed: 100
 --- !u!114 &1950367718
 MonoBehaviour:
   m_ObjectHideFlags: 0
