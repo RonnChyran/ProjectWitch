@@ -576,7 +576,6 @@ namespace ProjectWitch.Battle
             yield return null;
             mGame.HideNowLoading();
 
-
             mBattleStartUI.SetActive(true);
             var bsUI = mBattleStartUI.GetComponent<BattleStartUISetup>();
             if (bsUI)
@@ -1216,8 +1215,8 @@ namespace ProjectWitch.Battle
                 // 以前のターゲットユニットをスライドアウトさせる
                 if (preUnit)
                 {
-                    if (preUnit != actionUnit || (isCard && preUnit != TurnUnit))
-                        yield return preUnit.SlideOut();
+					if (isCard ? preUnit != TurnUnit : preUnit != actionUnit)
+						yield return preUnit.SlideOut();
                     preUnit.Face.SetSelectArrow(false);
                 }
             }
@@ -1307,6 +1306,13 @@ namespace ProjectWitch.Battle
             yield return DoCardAction(CardDataFormat.CardTiming.Rand80, TurnUnit, (TurnUnit.IsPlayer ? 1 : -1));
             yield return DoCardAction(CardDataFormat.CardTiming.Rand50, TurnUnit, (TurnUnit.IsPlayer ? 1 : -1));
             yield return DoCardAction(CardDataFormat.CardTiming.Rand20, TurnUnit, (TurnUnit.IsPlayer ? 1 : -1));
+			foreach (var unit in PlayerUnits)
+				if (unit != TurnUnit)
+					unit.SlideOut();
+			foreach (var unit in EnemyUnits)
+				if (unit != TurnUnit)
+					unit.SlideOut();
+			yield return TurnUnit.SlideIn();
 
 			// 一時停止
 			while (IsPause)

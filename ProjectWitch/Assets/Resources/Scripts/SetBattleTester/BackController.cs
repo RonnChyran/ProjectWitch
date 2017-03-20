@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
+using ProjectWitch.Battle;
 
 
 namespace ProjectWitch.BattleTester
@@ -41,6 +42,8 @@ namespace ProjectWitch.BattleTester
 
 		public IEnumerator CoCancelBattle()
 		{
+			var battleObj = GameObject.Find("BattleObject").GetComponent<BattleObj>();
+			yield return SceneManager.UnloadSceneAsync(battleObj.BackGroundSceneName);
 			yield return SceneManager.UnloadSceneAsync(Game.SceneName_Battle);
 		}
 	}
