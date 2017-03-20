@@ -105,8 +105,10 @@ namespace ProjectWitch.BattleTester
 				{
 					SliderHP.interactable = false;
 					SliderSoldierNum.interactable = false;
-					SliderHP.minValue = SliderHP.maxValue = SliderHP.value = 0;
-					SliderSoldierNum.minValue = SliderSoldierNum.maxValue = SliderSoldierNum.value = 0;
+					SliderHP.minValue = SliderHP.maxValue = 0;
+					ChangeHP(0);
+					SliderSoldierNum.minValue = SliderSoldierNum.maxValue = 0;
+					ChangeSoldierNum(0);
 				}
 				else
 				{

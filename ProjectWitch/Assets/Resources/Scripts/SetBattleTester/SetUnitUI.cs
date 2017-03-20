@@ -376,9 +376,16 @@ namespace ProjectWitch.BattleTester
 			m_SelectUnitUI.SetUnit(Unit);
 		}
 
-		public void ChangeName(string _str) { Unit.Data.Name = _str; }
+		public void ChangeName(string _str)
+		{
+			if (ID == -1)
+				return;
+			Unit.Data.Name = _str;
+		}
 		public void ChangeLevelFirst(int _value)
 		{
+			if (ID == -1)
+				return;
 			m_SlLevel.minValue = Unit.FirstLevel = _value;
 			m_SlHP.maxValue = Unit.Data.MaxHP;
 			m_SlLevel.SetSliderValueText(Unit.Data.Level, Unit.Data.MaxLevel);
@@ -386,6 +393,8 @@ namespace ProjectWitch.BattleTester
 		}
 		public void ChangeLevelMax(int _value)
 		{
+			if (ID == -1)
+				return;
 			Unit.Data.MaxLevel = m_INLevelFirst.MaxInt = _value;
 			m_SlLevel.maxValue = (_value == -1 ? 500 : _value);
 			if (m_SlLevel.maxValue < m_SlLevel.minValue)
@@ -396,13 +405,18 @@ namespace ProjectWitch.BattleTester
 		}
 		public void ChangeHPLv0(int _value)
 		{
+			if (ID == -1)
+				return;
 			Unit.Data.HP0 = _value;
 			m_TrHP.FindChild("INLv100").GetComponent<InputNumber>().MaxInt = 999999 - _value;
 			m_TrHP.FindChild("TeValue").GetComponent<Text>().text = Unit.Data.MaxHP.ToString();
 			m_SlHP.maxValue = Unit.Data.MaxHP;
 			m_SlHP.SetSliderValueText(Unit.Data.HP, Unit.Data.MaxHP);
 		}
-		public void ChangeHPLv100(int _value) {
+		public void ChangeHPLv100(int _value)
+		{
+			if (ID == -1)
+				return;
 			Unit.Data.HP100 = _value;
 			m_TrHP.FindChild("INLv0").GetComponent<InputNumber>().MaxInt = 999999 - _value;
 			m_TrHP.FindChild("TeValue").GetComponent<Text>().text = Unit.Data.MaxHP.ToString();
@@ -411,58 +425,231 @@ namespace ProjectWitch.BattleTester
 		}
 		public void ChangeSoldierNum(int _value)
 		{
+			if (ID == -1)
+				return;
 			m_SlSoldeirNum.maxValue = Unit.Data.MaxSoldierNum = _value;
 			m_SlSoldeirNum.SetSliderValueText(Unit.Data.SoldierNum, Unit.Data.MaxSoldierNum);
 		}
-		public void ChangeLove(int _value) { Unit.Data.Love = _value; }
-		public void ChangeDeathable(bool _value) { Unit.Data.Deathable = _value; }
+		public void ChangeLove(int _value)
+		{
+			if (ID == -1)
+				return;
+			Unit.Data.Love = _value;
+		}
+		public void ChangeDeathable(bool _value)
+		{
+			if (ID == -1)
+				return;
+			Unit.Data.Deathable = _value;
+		}
 
-		public void ChangeLPAtkLv0(int _value) { Unit.Data.LPAtk0 = _value; m_TrLPAtk.SetMin(_value, Unit.Data.LeaderPAtk); }
-		public void ChangeLPAtkLv100(int _value) { Unit.Data.LPAtk100 = _value; m_TrLPAtk.SetMax(_value, Unit.Data.LeaderPAtk); }
-		public void ChangeLMAtkLv0(int _value) { Unit.Data.LMAtk0 = _value; m_TrLMAtk.SetMin(_value, Unit.Data.LeaderMAtk); }
-		public void ChangeLMAtkLv100(int _value) { Unit.Data.LMAtk100 = _value; m_TrLMAtk.SetMax(_value, Unit.Data.LeaderMAtk); }
-		public void ChangeLPDefLv0(int _value) { Unit.Data.LPDef0 = _value; m_TrLPDef.SetMin(_value, Unit.Data.LeaderPDef); }
-		public void ChangeLPDefLv100(int _value) { Unit.Data.LPDef100 = _value; m_TrLPDef.SetMax(_value, Unit.Data.LeaderPDef); }
-		public void ChangeLMDefLv0(int _value) { Unit.Data.LMDef0 = _value; m_TrLMDef.SetMin(_value, Unit.Data.LeaderMDef); }
-		public void ChangeLMDefLv100(int _value) { Unit.Data.LMDef100 = _value; m_TrLMDef.SetMax(_value, Unit.Data.LeaderMDef); }
+		public void ChangeLPAtkLv0(int _value)
+		{
+			if (ID == -1)
+				return;
+			Unit.Data.LPAtk0 = _value;
+			m_TrLPAtk.SetMin(_value, Unit.Data.LeaderPAtk);
+		}
+		public void ChangeLPAtkLv100(int _value)
+		{
+			if (ID == -1)
+				return;
+			Unit.Data.LPAtk100 = _value;
+			m_TrLPAtk.SetMax(_value, Unit.Data.LeaderPAtk);
+		}
+		public void ChangeLMAtkLv0(int _value)
+		{
+			if (ID == -1)
+				return;
+			Unit.Data.LMAtk0 = _value;
+			m_TrLMAtk.SetMin(_value, Unit.Data.LeaderMAtk);
+		}
+		public void ChangeLMAtkLv100(int _value)
+		{
+			if (ID == -1)
+				return;
+			Unit.Data.LMAtk100 = _value;
+			m_TrLMAtk.SetMax(_value, Unit.Data.LeaderMAtk);
+		}
+		public void ChangeLPDefLv0(int _value)
+		{
+			if (ID == -1)
+				return;
+			Unit.Data.LPDef0 = _value;
+			m_TrLPDef.SetMin(_value, Unit.Data.LeaderPDef);
+		}
+		public void ChangeLPDefLv100(int _value)
+		{
+			if (ID == -1)
+				return;
+			Unit.Data.LPDef100 = _value;
+			m_TrLPDef.SetMax(_value, Unit.Data.LeaderPDef);
+		}
+		public void ChangeLMDefLv0(int _value)
+		{
+			if (ID == -1)
+				return;
+			Unit.Data.LMDef0 = _value;
+			m_TrLMDef.SetMin(_value, Unit.Data.LeaderMDef);
+		}
+		public void ChangeLMDefLv100(int _value)
+		{
+			if (ID == -1)
+				return;
+			Unit.Data.LMDef100 = _value;
+			m_TrLMDef.SetMax(_value, Unit.Data.LeaderMDef);
+		}
 
-		public void ChangeGPAtkLv0(int _value) { Unit.Data.GPAtk0 = _value; m_TrGPAtk.SetMin(_value, Unit.Data.GroupPAtk); }
-		public void ChangeGPAtkLv100(int _value) { Unit.Data.GPAtk100 = _value; m_TrGPAtk.SetMax(_value, Unit.Data.GroupPAtk); }
-		public void ChangeGMAtkLv0(int _value) { Unit.Data.GMAtk0 = _value; m_TrGMAtk.SetMin(_value, Unit.Data.GroupMAtk); }
-		public void ChangeGMAtkLv100(int _value) { Unit.Data.GMAtk100 = _value; m_TrGMAtk.SetMax(_value, Unit.Data.GroupMAtk); }
-		public void ChangeGPDefLv0(int _value) { Unit.Data.GPDef0 = _value; m_TrGPDef.SetMin(_value, Unit.Data.GroupPDef); }
-		public void ChangeGPDefLv100(int _value) { Unit.Data.GPDef100 = _value; m_TrGPDef.SetMax(_value, Unit.Data.GroupPDef); }
-		public void ChangeGMDefLv0(int _value) { Unit.Data.GMDef0 = _value; m_TrGMDef.SetMin(_value, Unit.Data.GroupMDef); }
-		public void ChangeGMDefLv100(int _value) { Unit.Data.GMDef100 = _value; m_TrGMDef.SetMax(_value, Unit.Data.GroupMDef); }
+		public void ChangeGPAtkLv0(int _value)
+		{
+			if (ID == -1)
+				return;
+			Unit.Data.GPAtk0 = _value;
+			m_TrGPAtk.SetMin(_value, Unit.Data.GroupPAtk);
+		}
+		public void ChangeGPAtkLv100(int _value)
+		{
+			if (ID == -1)
+				return;
+			Unit.Data.GPAtk100 = _value;
+			m_TrGPAtk.SetMax(_value, Unit.Data.GroupPAtk);
+		}
+		public void ChangeGMAtkLv0(int _value)
+		{
+			if (ID == -1)
+				return;
+			Unit.Data.GMAtk0 = _value;
+			m_TrGMAtk.SetMin(_value, Unit.Data.GroupMAtk);
+		}
+		public void ChangeGMAtkLv100(int _value)
+		{
+			if (ID == -1)
+				return;
+			Unit.Data.GMAtk100 = _value;
+			m_TrGMAtk.SetMax(_value, Unit.Data.GroupMAtk);
+		}
+		public void ChangeGPDefLv0(int _value)
+		{
+			if (ID == -1)
+				return;
+			Unit.Data.GPDef0 = _value;
+			m_TrGPDef.SetMin(_value, Unit.Data.GroupPDef);
+		}
+		public void ChangeGPDefLv100(int _value)
+		{
+			if (ID == -1)
+				return;
+			Unit.Data.GPDef100 = _value;
+			m_TrGPDef.SetMax(_value, Unit.Data.GroupPDef);
+		}
+		public void ChangeGMDefLv0(int _value)
+		{
+			if (ID == -1)
+				return;
+			Unit.Data.GMDef0 = _value;
+			m_TrGMDef.SetMin(_value, Unit.Data.GroupMDef);
+		}
+		public void ChangeGMDefLv100(int _value)
+		{
+			if (ID == -1)
+				return;
+			Unit.Data.GMDef100 = _value;
+			m_TrGMDef.SetMax(_value, Unit.Data.GroupMDef);
+		}
 
-		public void ChangeLeadershipLv0(int _value) { Unit.Data.Lead0 = _value; m_TrLeadership.SetMin(_value, Unit.Data.Leadership); }
-		public void ChangeLeadershipLv100(int _value) { Unit.Data.Lead100 = _value; m_TrLeadership.SetMax(_value, Unit.Data.Leadership); }
-		public void ChangeAgilityLv0(int _value) { Unit.Data.Agi0 = _value; m_TrAgility.SetMin(_value, Unit.Data.Agility); }
-		public void ChangeAgilityLv100(int _value) { Unit.Data.Agi100 = _value; m_TrAgility.SetMax(_value, Unit.Data.Agility); }
-		public void ChangeCurativeLv0(int _value) { Unit.Data.Cur0 = _value; m_TrCurative.SetMin(_value, Unit.Data.Curative); }
-		public void ChangeCurativeLv100(int _value) { Unit.Data.Cur100 = _value; m_TrCurative.SetMax(_value, Unit.Data.Curative); }
-		public void ChangeSize(int _value) { Unit.Data.GUnitSize = _value; }
+		public void ChangeLeadershipLv0(int _value) {
+			if (ID == -1)
+				return;
+			Unit.Data.Lead0 = _value; m_TrLeadership.SetMin(_value, Unit.Data.Leadership); }
+		public void ChangeLeadershipLv100(int _value) {
+			if (ID == -1)
+				return;
+			Unit.Data.Lead100 = _value; m_TrLeadership.SetMax(_value, Unit.Data.Leadership); }
+		public void ChangeAgilityLv0(int _value)
+		{
+			if (ID == -1)
+				return;
+			Unit.Data.Agi0 = _value; m_TrAgility.SetMin(_value, Unit.Data.Agility); }
+		public void ChangeAgilityLv100(int _value)
+		{
+			if (ID == -1)
+				return;
+			Unit.Data.Agi100 = _value; m_TrAgility.SetMax(_value, Unit.Data.Agility); }
+		public void ChangeCurativeLv0(int _value)
+		{
+			if (ID == -1)
+				return;
+			Unit.Data.Cur0 = _value; m_TrCurative.SetMin(_value, Unit.Data.Curative); }
+		public void ChangeCurativeLv100(int _value)
+		{
+			if (ID == -1)
+				return;
+			Unit.Data.Cur100 = _value; m_TrCurative.SetMax(_value, Unit.Data.Curative); }
+		public void ChangeSize(int _value)
+		{
+			if (ID == -1)
+				return;
+			Unit.Data.GUnitSize = _value; }
 		public void ChangeEquipment(int _value)
 		{
+			if (ID == -1)
+				return;
 			Unit.Data.Equipment = _value;
 			m_TeEquipName.text = (Unit.Data.Equipment == -1 ? "(装備なし)" : m_SBT.Game.GameData.Equipment[Unit.Data.Equipment].Name);
 		}
 
-		public void ChangeStandImagePath(string _str) { Unit.Data.StandImagePath = _str; }
+		public void ChangeStandImagePath(string _str)
+		{
+			if (ID == -1)
+				return;
+			Unit.Data.StandImagePath = _str;
+		}
 		public void ChangeFaceIamgePath(string _str)
 		{
+			if (ID == -1)
+				return;
 			Unit.Data.FaceIamgePath = _str;
 			m_ImFace.sprite = Resources.Load<Sprite>("Textures/Face/" + Unit.Data.FaceIamgePath);
 			if (m_ImFace.sprite == null)
 				m_ImFace.sprite = m_SBT.SpriteNoneFace;
 		}
-		public void ChangeBattleLeaderPrefabPath(string _str) { Unit.Data.BattleLeaderPrefabPath = _str; }
-		public void ChangeBattleGroupPrefabPath(string _str) { Unit.Data.BattleGroupPrefabPath = _str; }
+		public void ChangeBattleLeaderPrefabPath(string _str)
+		{
+			if (ID == -1)
+				return;
+			Unit.Data.BattleLeaderPrefabPath = _str;
+		}
+		public void ChangeBattleGroupPrefabPath(string _str)
+		{
+			if (ID == -1)
+				return;
+			Unit.Data.BattleGroupPrefabPath = _str;
+		}
 
-		public void ChangeComment(string _str) { Unit.Data.Comment = _str; }
-		public void ChangeOnDeadSerif(string _str) { Unit.Data.OnDeadSerif = _str; }
-		public void ChangeOnCapturedSerif(string _str) { Unit.Data.OnCapturedSerif = _str; }
-		public void ChangeOnEscapedSerif(string _str) { Unit.Data.OnEscapedSerif = _str; }
+		public void ChangeComment(string _str)
+		{
+			if (ID == -1)
+				return;
+			Unit.Data.Comment = _str;
+		}
+		public void ChangeOnDeadSerif(string _str)
+		{
+			if (ID == -1)
+				return;
+			Unit.Data.OnDeadSerif = _str;
+		}
+		public void ChangeOnCapturedSerif(string _str)
+		{
+			if (ID == -1)
+				return;
+			Unit.Data.OnCapturedSerif = _str;
+		}
+		public void ChangeOnEscapedSerif(string _str)
+		{
+			if (ID == -1)
+				return;
+			Unit.Data.OnEscapedSerif = _str;
+		}
 
 		public void ChangeSkillLA(int _value) {
 			if (ID == -1)
@@ -484,14 +671,23 @@ namespace ProjectWitch.BattleTester
 
 		public void ChangeAI(int _value)
 		{
+			if (ID == -1)
+				return;
 			Unit.Data.AIID = _value;
 			m_INAIAttackRate.ValueFloat = m_SBT.Game.GameData.AI[_value].AttackRate;
 		}
 
-		public void ChangeAIAttackRate(float _value) { m_SBT.Game.GameData.AI[Unit.Data.AIID].AttackRate = _value; }
+		public void ChangeAIAttackRate(float _value)
+		{
+			if (ID == -1)
+				return;
+			m_SBT.Game.GameData.AI[Unit.Data.AIID].AttackRate = _value;
+		}
 
 		public void ChangeLevel(float _value)
 		{
+			if (ID == -1)
+				return;
 			Unit.Data.Level = (int)_value;
 			m_SlLevel.SetSliderValueText((int)_value, Unit.Data.MaxLevel);
 			m_SlHP.maxValue = Unit.Data.MaxHP;
@@ -511,18 +707,24 @@ namespace ProjectWitch.BattleTester
 
 		public void ChangeHP(float _value)
 		{
+			if (ID == -1)
+				return;
 			Unit.Data.HP = (int)_value;
 			m_SlHP.SetSliderValueText((int)_value, Unit.Data.MaxHP);
 		}
 
 		public void ChangeSoldierNum(float _value)
 		{
+			if (ID == -1)
+				return;
 			Unit.Data.SoldierNum = (int)_value;
 			m_SlSoldeirNum.SetSliderValueText((int)_value, Unit.Data.MaxSoldierNum);
 		}
 
 		public void Recovery()
 		{
+			if (ID == -1)
+				return;
 			m_SlHP.value = Unit.Data.MaxHP;
 			m_SlSoldeirNum.value = Unit.Data.MaxSoldierNum;
 		}

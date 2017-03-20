@@ -43,8 +43,9 @@ namespace ProjectWitch.BattleTester
 		public CardDataFormat Data { get { return m_SBT.Game.GameData.Card[ID]; } }
 		private int m_ID;
 		public int ID { get { return m_ID; } set { Card.ID = m_ID = value; ChangeDisplay(m_ID); } }
+		public bool IsDisplayChange { get; private set; }
 
-		void Awake() { Buttons = new List<Button>(); }
+		void Awake() { Buttons = new List<Button>(); IsDisplayChange = false; }
 
 		void Update()
 		{
@@ -101,6 +102,7 @@ namespace ProjectWitch.BattleTester
 
 		private void ChangeDisplay(int _ID)
 		{
+			IsDisplayChange = true;
 			if (_ID == -1)
 			{
 				m_BuClearCard.interactable = false;
@@ -144,6 +146,7 @@ namespace ProjectWitch.BattleTester
 				if (m_ImBack.sprite == null)
 					m_ImBack.sprite = m_SBT.SpriteNoneCard;
 			}
+			IsDisplayChange = false;
 		}
 
 		public void ClearCard() { Card.ID = ID = -1; }
@@ -157,14 +160,14 @@ namespace ProjectWitch.BattleTester
 		public void ChangeName(string _str) { Data.Name = _str; }
 		public void ChangeTiming(int _value)
 		{
-			if (ID == -1)
+			if (ID == -1 || IsDisplayChange)
 				return;
 			Data.Timing = (CardDataFormat.CardTiming)_value;
 		}
 		public void ChangeDuration(int _value) { Data.Duration = _value; }
 		public void ChangeSkillID(int _value)
 		{
-			if (ID == -1)
+			if (ID == -1 || IsDisplayChange)
 				return;
 			Data.SkillID = _value;
 		}
