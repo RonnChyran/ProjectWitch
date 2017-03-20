@@ -1,0 +1,167 @@
+;アリス、トリアイナもしくはオリヴィアと交戦状態になる
+;オリヴィア・トリアイナ通常
+;タイミング：トリアイナ領に攻め込む
+;memoオリヴィア、トリアイナと交戦状態になる
+
+;ロード
+[loadcg id=0 ref="triaina"]
+[loadcg id=1 ref="helen"]
+[loadcg id=2 ref="orivia"]
+[loadcg id=3 ref="alice"]
+[loadcg id=4 ref="kuro"]
+
+;マップスクロール
+[field_area_hilight id=19]
+[wait time=200]
+
+;場面転換
+[filter name="fade" time=500]
+[drawbg ref="1050m"]
+[filter name="clear" time=500]
+[bgm ref="009_triaina"]
+
+[show_message]
+魔女の湖。[n]
+氷の宮殿内。[p]
+[drawcg id=0 pos=5]
+[drawcg id=1 pos=4]
+[drawcg id=2 pos=3]
+#部下
+申し上げます！！[p]
+#トリアイナ
+なんですか、騒々しい。[p]
+[cn]
+トリアイナたちは、[n]
+いつものように三人でお茶会をしていた。[p]
+そこへ、水を差すように部下があわただしく入ってきたのだ。[p]
+#部下
+華の魔女アリス、国境付近に現れ、[n]
+こちらに向かって攻撃を仕掛けた模様！[p]
+#トリアイナ
+なんですって！[p]
+#部下
+いかがいたしますか。[p]
+#トリアイナ
+……ピノの町、アイスの町に徴兵をかけてちょうだい。[p]
+各砦の将は最低限の兵力を残して、[n]
+すべてをシャーベット砦に集結させるように。[p]
+#部下
+はっ、承知しました。[n]
+失礼します！[p]
+;部下退出
+#トリアイナ
+してやられたわ……。[n]
+まさか突然攻めてくるなんて。[p]
+オリヴィアも自分の領地に戻って軍備を整えなさい。[p]
+いつそっちに敵が行くかわからないわよ。[p]
+#オリヴィア
+う、うん……わかった。[p]
+#トリアイナ
+ヘレン。[n]
+オリヴィアを送り届けたらすぐに戻ってきてちょうだい。[p]
+忙しくなるわよ。[p]
+#ヘレン
+ええ、わかったわ！[p]
+[cn]
+
+[filter name="fade" time=500]
+;暗転
+こうなったときのトリアイナの判断は早かった。[p]
+素早い采配であっという間に兵をかき集めた。[p]
+トリアイナの軍勢は決して訓練度が高いわけではなかった。[p]
+正規兵はわずかで、[n]
+そのほとんどは徴兵された町民たちだった。[p]
+しかし、彼女の軍の強さは、彼女の指揮力にこそあった。[p]
+;明転
+[hide_message]
+[clearbg]
+[clearcg id=0]
+[clearcg id=1]
+[clearcg id=2]
+[filter name="clear" time=500]
+[bgm ref="002_alice1"]
+
+;マップスクロール
+[field_area_hilight id=11]
+[wait time=200]
+
+[filter name="fade" time=500]
+[drawbg ref="1030m"]
+[bgm ref="018_event3"]
+[filter name="clear" time=500]
+
+[show_message]
+[drawcg id=3 pos=2 dir="right" state=1]
+[drawcg id=4 pos=1 dir="right"]
+#アリス
+おせっ！　おしだせーーーー！！！[p]
+アッハッハッハッハーーー！！[p]
+いいぞいいぞ！！[n]
+奇襲は大成功だな、クロ！[p]
+#クロ
+はっ！　[n]
+このまま一気に攻め落としてごらんに入れましょう。[p]
+[cn]
+
+[clearcg id=3]
+[clearcg id=4]
+
+アリス軍はシャーベット砦の門前に迫っていた。[p]
+すでに味方は砦の壁をよじ登り、[n]
+内部を蹂躙し始めている。[p]
+砦が陥落するのも時間の問題かに見えた。[p]
+事実、この時点でトリアイナ軍はわずか500程度しかおらず、[n]
+対するアリス軍は控えも合わせて5000にも上る大軍勢だった。[p]
+砦は今にも陥落するかに見えた。[p]
+しかし、そこへ信じられない速さで兵をかき集めたトリアイナが到着したのだった。[p]
+
+;背景切り替え
+[hide_message]
+[filter name="fade" time=300]
+[clearbg]
+[drawbg ref="1048m"]
+[filter name="clear" time=300]
+[show_message]
+
+[drawcg id=0 pos=4]
+#トリアイナ
+みな、よく耐えてくれました！[n]
+さあ、ここから反撃ですよ！！[p]
+[cn]
+トリアイナの到着で、砦の兵の指揮は一気に高まった。[p]
+
+;背景切り替え
+[hide_message]
+[filter name="fade" time=300]
+[clearbg]
+[drawbg ref="1030m"]
+[clearcg id=0]
+[filter name="clear" time=300]
+[show_message]
+
+[drawcg id=3 pos=2 dir="right"]
+[drawcg id=4 pos=1 dir="right"]
+#アリス
+……向こうで歓声が上がってるな。[n]
+ひょっとして援軍でも来たか？[p]
+#クロ
+探ってまいりますか？[p]
+[changecg id=3 state=1]
+#アリス
+いや、構わん。[n]
+いくら援軍が来ようともう遅い。[p]
+さあ、門が開くぞ！！[n]
+全軍突撃！！[n]
+敵兵をぶち殺せ！！！[p]
+[cn]
+両軍の本格的なぶつかり合いが始まった。[p]
+
+[hide_message]
+[filter name="fade" time=500]
+[clearbg]
+[clearcg id=3]
+[clearcg id=4]
+[filter name="clear" time=500]
+[stopbgm]
+
+[sys_memset index=213 value="1"]

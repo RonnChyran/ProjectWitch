@@ -1,0 +1,116 @@
+;s0402
+;author: yuichi
+;timing: グラマンに敗北
+
+;ロード系
+[loadcg id=0 ref="alice"]
+[loadcg id=1 ref="kuro"]
+[loadcg id=2 ref="chishire"]
+[loadcg id=3 ref="meisie"]
+
+;スクロール
+[field_area_hilight id=1]
+[wait time=200]
+
+;場面転換
+[filter name="fade" time=500]
+[drawbg ref="1002m"]
+[bgm ref="003_alice2"]
+[filter name="clear" time=500]
+
+[drawcg id=0 pos=4 state=2]
+[drawcg id=1 pos=1 dir="right"]
+[drawcg id=2 pos=2 dir="right"]
+[show_message]
+#アリス
+あー、畜生！！[p]
+あんなデカブツどうしろってんだ！！[p]
+#クロ
+アリス様、北から迂回されてはどうでしょう。[p]
+少し遠回りになりますが、[n]
+あの竜と一戦構えることもないかと。[p]
+#アリス
+それでは私が逃げたようではないか！[p]
+ううむ……、チシャ！　お茶！！[p]
+#チシャ
+はっ、はい！！[p]
+
+[scale id=2 sx=-1 time=0]
+[move id=2 x=-100 time=500]
+[wait time=500]
+[se ref="155"]
+
+[if_alive unit=2]
+[cn]
+あわあわと部屋を出ていくチシャと入れ替わりで、メイジーが入ってきた。[p]
+[se ref="155"]
+[drawcg id=3 pos=2 dir="right" mode="slidein"]
+#メイジー
+……姉さん。[p]
+[changecg id=0 state=0]
+#アリス
+ん、メイジーか。なんか用か？[p]
+#メイジー
+なんか用か？　じゃないわよ！！[p]
+さっき街に行ってきたんだけど、コレ！[p]
+[cn]
+そういいながらメイジーが突き付けたのは、アリス行きつけの酒場の請求書だった。[p]
+#アリス
+ああ……あのとき偶然持ち合わせがなくてツケといてもらったんだった。[p]
+#メイジー
+もう……たまたまたくさん持っていたからよかったけど、[n]
+何よこの金額……。[p]
+#アリス
+そのあたりにいたやつ全員に奢ったんだ。[n]
+成り行きでな。[p]
+まあいいじゃねーか、ちゃんと払うからさぁ。[p]
+#メイジー
+それならいいけど……。[p]
+あっ、そうそう！　[p]
+その酒場のおじさんに頼まれたんだけど、[n]
+明日からワインフェアやるから来てって。[p]
+なんでも、世界中の珍しいワインをたっくさん仕入れたんだとか……。[p]
+[changecg id=0 state=2]
+#アリス
+宣伝じゃねえか……。[p]
+[changecg id=0 state=1]
+いや、まてよ？[n]
+これは使えるかもしれんぞ。[p]
+クフフフッ、メイジー、[n]
+大急ぎで酒場のオヤジにつたえてこい。[p]
+そのワイン、残らず私が買い取ってやるってな。[p]
+#メイジー
+ええっ！　いまから？[p]
+#アリス
+もちろん今からだ。一時間以内で帰って来い。[p]
+#メイジー
+そんなぁ……。[p]
+#アリス
+あの変態クソドラゴンめ、[n]
+私の恐ろしさを思い知るがいい。[p]
+クフフフフフッ……！！[p]
+[else]
+#アリス
+クロ、何かいい案はないか。[p]
+#クロ
+いえ、そういわれましても……。[p]
+何か弱点でもあれば話は別なのでしょうが。[p]
+[changecg id=0 state=0]
+#アリス
+弱点か……。[p]
+[changecg id=0 state=1]
+そうか！　クフフフッ、いい案を思いついたぞ。[p]
+早速準備する、クロ支度をしろ！[p]
+[endif]
+
+[hide_message]
+[filter name="fade" time=500]
+[clearbg]
+[clearcg id=0]
+[clearcg id=1]
+[clearcg id=2]
+[clearcg id=3]
+[filter name="clear" time=500]
+
+[stopbgm]
+[sys_memset index=402 value="1"]

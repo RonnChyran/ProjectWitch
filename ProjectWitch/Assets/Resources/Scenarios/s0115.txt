@@ -11,7 +11,7 @@
 ;アリス領　アリスの館
 ;条件　メイジー生存
 ;タイミング　内乱鎮圧直後　ターン開始時
-[drawbg ref="1000"]
+[drawbg ref="1004m"]
 [bgm ref="003_alice2"]
 [drawcg id=0 pos="right"]
 [drawcg id=2 pos="left" dir="right"]
@@ -130,7 +130,7 @@
 ;アリス領　アリスの館
 ;条件　メイジー死亡
 ;タイミング　内乱鎮圧直後　ターン開始時
-[drawbg ref="1000"]
+[drawbg ref="1002m"]
 [bgm ref="003_alice2"]
 [drawcg id=0 pos="right"]
 [drawcg id=1 pos="left" dir="right"]
@@ -187,6 +187,4 @@
 
 [hide_message]
 
-;体験版
-[call_ending index=16]
 [sys_memset index=115 value="1"]

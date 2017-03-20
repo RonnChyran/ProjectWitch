@@ -1,0 +1,154 @@
+;ここまでにアリスがトリアイナ領に進行している場合
+
+
+;ロード
+[loadcg id=0 ref="alice"]
+[loadcg id=1 ref="kuro"]
+[loadcg id=2 ref="chuwirish"]
+[loadcg id=3 ref="triaina"]
+
+;マップスクロール
+[field_area_hilight id=1]
+[wait time=200]
+
+;場面転換
+[filter name="fade" time=500]
+[drawbg ref="1002m"]
+[filter name="clear" time=500]
+[bgm ref="003_alice2"]
+
+[show_message]
+アリスの館。[p]
+[drawcg id=0 pos=5]
+[drawcg id=1 pos=4]
+[drawcg id=2 pos=1 dir="right" mode="slidein"]
+#チュイリッシュ
+アリスサマ、ソクタツカキトメデース！[p]
+#クロ
+アリス様。氷の魔女様から魔法文書が。[p]
+#アリス
+氷の魔女から？[n]
+読み上げろ。[p]
+#チュイリッシュ
+サインオネガイシマース。[p]
+#クロ
+はっ。[n]
+えー……。[p]
+#チュイリッシュ
+サインオネガイシマース。[p]
+#アリス
+忘れてた。[n]
+ファイアーボールっと。[p]
+[filter name="color" color="FFFFFF" time=150]
+[changecg id=2 state=1]
+[filter name="clear" time=150]
+#チュイリッシュ
+ぐえええーーーーー！！！？[p]
+[move id=2 y=-110 time=300]
+#クロ
+アリス様。いい加減やめませんと、[n]
+郵便局から苦情が来ますぞ？[p]
+#アリス
+サインサインってうるさいのが悪いんだって。[p]
+ほら、続きを読めよ。[p]
+#クロ
+ええ、では……。[p]
+「華の魔女アリス殿。[p]
+「貴公に置かれましては、日頃の戦功華々しく、敵ながら我ら一同ほれぼれとした戦いぶりと……。[p]
+[changecg id=0 state=2]
+#アリス
+あー、待て待て。[p]
+そういうのいいから、かいつまんで。[p]
+#クロ
+はあ……では改めて。[p]
+「私とお友達になりませんか？」[p]
+以上でございます。[p]
+#アリス
+端折りすぎだ！[p]
+[changecg id=0 state=0]
+……まあつまり、同盟の誘いってわけだな？[p]
+#クロ
+左様です。[p]
+#アリス
+断る。[p]
+#クロ
+アリス様、よくお考えになられたほうが。[p]
+#アリス
+こっちは向こうを占領するつもりで[n]
+攻め込んでるんだぞ？[p]
+降伏ならともかく同盟というのは[n]
+虫が良すぎるだろう。[p]
+#クロ
+では条件を付けるというのはいかがでしょう。[p]
+#アリス
+条件？[p]
+#クロ
+兵の指揮権はすべて我らに委ねること。[p]
+その代わり、氷の魔女殿の所領は安堵すること。[p]
+このように申せば、形式上は同盟ですが、実質占領とかわりません。[p]
+軍隊の指揮権を握っている限り、向こうはこちらのことに一切口を出せませんので。[p]
+[changecg id=0 state=1]
+#アリス
+なるほどな……、よし、それで書状を書いて送り付けろ。[p]
+#クロ
+はっ……。[p]
+[cn]
+
+[filter name="fade" time=200]
+[clearcg id=0]
+[clearcg id=1]
+[clearcg id=2]
+……………。[p]
+アリスの出した条件は、[n]
+意外にもすんなりと受け入れられ、[n]
+トリアイナ領は、実質アリス領の支配下となった。[p]
+同盟の締結が決まり、トリアイナがアリスの館を訪れた。[p]
+[filter name="clear" time=500]
+
+[drawcg id=0 pos=5]
+[drawcg id=1 pos=4]
+[drawcg id=3 pos=1 dir="right"]
+
+#トリアイナ
+初めまして、華の魔女アリス。[p]
+#アリス
+ふん、お前が氷の魔女トリアイナか。[p]
+それで、本当にこの条件でいいんだな？[p]
+#トリアイナ
+ええ……なんでもいいわ。[p]
+私は、山の魔女と戦わなければならない。[p]
+そのためなら、領地を捨てることも[n]
+いとわないということよ。[p]
+[changecg id=0 state=1]
+#アリス
+ふん、何があったか知らんが、[n]
+私にとっては都合がいいからな。[p]
+せいぜいがんばれよ、[n]
+たっぷりと前線で戦ってもらうからな。[p]
+クフフフフフ……。[p]
+
+;アリス領領地
+[change_area_owner area=11 owner=0]
+[change_area_owner area=12 owner=0]
+[change_area_owner area=13 owner=0]
+[change_area_owner area=14 owner=0]
+[change_area_owner area=15 owner=0]
+[change_area_owner area=16 owner=0]
+[change_area_owner area=17 owner=0]
+[change_area_owner area=18 owner=0]
+[change_area_owner area=19 owner=0]
+[change_area_owner area=20 owner=0]
+[change_area_owner area=21 owner=0]
+
+;クリア処理
+[hide_message]
+[filter name="fade" time=500]
+[clearbg]
+[clearcg id=0]
+[clearcg id=1]
+[clearcg id=3]
+[filter name="clear" time=500]
+
+;終了処理
+[stopbgm]
+[sys_memset index=211 value="1"]

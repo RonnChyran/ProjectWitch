@@ -1,0 +1,72 @@
+;s0219
+;author: yuichi
+;timing: s0218後、オリヴィアの家　戦闘前
+
+;ロード
+[loadcg id=0 ref="alice"]
+[loadcg id=1 ref="kuro"]
+[loadcg id=2 ref="triaina"]
+[loadcg id=3 ref="marger"]
+[loadcg id=4 ref="orivia"]
+
+;マップスクロール
+[field_area_hilight id=28]
+[wait time=200]
+
+;場面転換
+[filter name="fade" time=500]
+[drawbg ref="1005m"]
+[filter name="clear" time=500]
+[bgm ref="018_event3"]
+
+[show_message]
+[drawcg id=0 posx=10 dir="right" state=1]
+[drawcg id=1 posx=-10 dir="right"]
+#アリス
+よし、いよいよ森の魔女だな……。[p]
+クフフフッ！　腕がなるぜ。[p]
+#クロ
+アリス様！　あれを！[p]
+[cn]
+目の前に、[n]
+陣を横に広げたトリアイナが待ち構えていた。[p]
+[drawcg id=2 posx=40 mode="slidein"]
+#トリアイナ
+待っていたわ、華の魔女アリス。[p]
+さあ、おとなしくわが兵の餌食となりなさい！[p]
+#アリス
+ふん！　誰がてめえなんぞに負けるかよ！！[p]
+[drawcg id=3 posx=-30 mode="slidein" dir="right"]
+#マルゲル
+ええ、一人ならば負けるかもしれない。[p]
+[drawcg id=4 posx=-40 layer="front" mode="slidein" dir="right"]
+#オリヴィア
+み、みんなでやれば強い！　……から。[p]
+[scale id=1 sx=-1 time=0]
+[move id=1 x=10 time=300]
+#クロ
+三方から囲まれた！？[n]
+しまった、伏兵か。[p]
+[cn]
+トリアイナはおとりだった。[p]
+トリアイナがアリスの主力部隊を前進させ、[n]
+その背後からオリヴィアとマルゲルの部隊が襲い掛かる形となったのだった。[p]
+[changecg id=0 state=2]
+#アリス
+ふん！　小細工を弄したところで雑魚は雑魚だ！[p]
+おとなしく死ね！！！！[p]
+
+;クリア処理
+[hide_message]
+[filter name="fade" time=500]
+[clearbg]
+[clearcg id=0]
+[clearcg id=1]
+[clearcg id=2]
+[clearcg id=3]
+[clearcg id=4]
+[filter name="clear" time=500]
+
+;終了処理
+[stopbgm]
+[sys_memset index=219 value="1"]
