@@ -1,0 +1,666 @@
+;s0223
+;author: yuichi
+;timing: s0222後
+
+;ロード
+[loadcg id=0 ref="alice"]
+[loadcg id=1 ref="kuro"]
+[loadcg id=2 ref="triaina"]
+[loadcg id=3 ref="orivia"]
+[loadcg id=4 ref="helen"]
+[loadcg id=5 ref="marger"]
+[loadcg id=6 ref="karton"]
+
+;フィールドスクロール
+[field_area_hilight id=28]
+[wait time=200]
+
+[if_alive unit=5]
+[if_alive unit=6]
+
+ ;場面転換
+[filter name="fade" time=500]
+[drawbg ref="1005e"]
+[filter name="clear" time=500]
+[bgm ref="021_event6"]
+
+[show_message]
+
+;両方生存
+決着は着いた。[p]
+アリス軍の圧倒的勝利となった。[p]
+氷の魔女トリアイナ、森の魔女オリヴィアはとらえられ、
+アリスの前へ引き出された。[p]
+[drawcg id=0 dir="right" pos=2 mode="slidein" state=1]
+#アリス
+クフフフフッ！！[n]
+しょーり！！[p]
+アッハッハッハッハ！[p]
+どうだ、私が本気を出せばこんなもんだ！[p]
+[drawcg id=2 pos=5]
+[drawcg id=3 pos=4 state=1]
+#トリアイナ
+華の魔女……。[p]
+#オリヴィア
+うっ……うう……。[p]
+#アリス
+クフフフフッ！[p]
+さて、どうやって調理してやろうかなぁ。[p]
+私を苦戦させたからなあ。[p]
+ちょっぴりきつーいお仕置きしちゃおっかなぁー！[p]
+[move id=3 y=10 time=100]
+[move id=3 y=-10 time=100]
+#オリヴィア
+ひっ……！[p]
+#トリアイナ
+茶番はよして。[n]
+さっさと殺しなさい。[p]
+[changecg id=0 state=0]
+#アリス
+なんだ、死にたいのか？[p]
+#オリヴィア
+いっ、いやぁっ！[p]
+#アリス
+ほら、そっちのやつはいやって言ってるぞ。[p]
+#トリアイナ
+オリヴィアは見逃して。[p]
+今回の指揮はほとんど私がとっていたようなものよ。[p]
+大将だけ処刑すればそれでいいでしょう。[p]
+#アリス
+ふん！　馬鹿なこと言うな。[n]
+どっちも殺す気などないわ。[p]
+#トリアイナ
+恥辱を受けるくらいならここで舌をかみ切ってやるわ！[p]
+[changecg id=0 state=2]
+#アリス
+ああもうわかったっての！[n]
+めんどくせえ奴だなぁ……。[p]
+お仕置きもなしでいいっての。[p]
+[changecg id=0 state=1]
+その代わり、お前たち、私の部下になれ。[p]
+#トリアイナ
+なんですって！[p]
+#アリス
+おっと、もともと拒否権なんてないんだぜ？[p]
+さっき珍しい人魚をひろってな？[n]
+うちで保護してるんだ。[p]
+#オリヴィア
+ヘレン……。[p]
+#アリス
+やっぱ知り合いだったか。[p]
+あいつがどんなはずかしーい目にあってもいいなら、どうぞ断ればいいさ。[p]
+#トリアイナ
+くっ……外道め！[p]
+#アリス
+何が外道だ。[n]
+殺さないだけありがたく思え。[p]
+よし、話は決まったな。[p]
+オイ、この二人を開放してやれ。[p]
+#オリヴィア
+あっ、あの……。[n]
+吟遊詩人風の男の人は捕まっていませんか？[p]
+[changecg id=0 state=0]
+#アリス
+あん？　吟遊詩人……？[n]
+いや、見てないが。[p]
+#オリヴィア
+そうですか……。[p]
+[cn]
+
+[hide_message]
+[filter name="fade" time=500]
+[drawbg ref="black"]
+[clearcg id=0]
+[clearcg id=2]
+[clearcg id=3]
+[filter name="clear" time=0]
+[show_message]
+
+マルゲルの行方は、[n]
+そのあとも結局わからないままだった。[p]
+こうして、オリヴィアとトリアイナ、[n]
+それにヘレンがアリスの部下に加わったのだった。[p]
+…………。[p]
+そうそう、カートンも。[p]
+[drawcg id=6 mode="slidein" pos=2 dir="right"]
+#カートン
+ウオオオォォン（忘れてませんでしたか！？）……！[p]
+
+;クリア処理
+[hide_message]
+[filter name="fade" time=500]
+[clearbg]
+[clearcg id=6]
+[filter name="clear" time=500]
+[bgm ref="002_alice1"]
+
+;フィールドスクロール
+[field_area_hilight id=15]
+[wait time=200]
+
+;場面切り替え
+[filter name="fade" time=500]
+[drawbg ref="1045n"]
+[filter name="clear" time=500]
+[bgm ref="019_event4"]
+
+[show_message]
+[cn]
+深夜。[p]
+ピノの町、とある少女の家。[p]
+#少女
+ふわあ……、うーん！　そろそろねようかなぁ……。[p]
+[cn]
+その少女は、孤児だった。[p]
+今は町のパン屋で働き、何とか生活していた。[p]
+彼女はいつか商人になって、[n]
+その稼ぎで自分のような身寄りのない子供たちを支える施設を経営するのが夢だった。[p]
+そのため、今日も夜遅くまで商売の勉強をしていたのだ。[p]
+[se ref="160"]
+コンコン……。[p]
+#少女
+あっ、はーい……。[p]
+誰だろう……こんな夜遅くに。[p]
+[hide_message]
+
+[se ref="155"]
+[drawcg id=5 posx=-10 mode="slidein" dir="right"]
+[filter name="color" color="FFFFFF" time=300]
+[se ref="151"]
+[wait time=500]
+[filter name="clear" time=300]
+
+[show_message]
+[cn]
+それは一瞬の出来事だった。[p]
+わずかに開けられた扉は、その男によって一気に開かれ、[p]
+そのまま飛び込んできた男に、少女は取り押さえられた。[p]
+#少女
+ムグッ……ンー！！　ンーーーー！！[p]
+#マルゲル
+…………。[p]
+[move id=5 y=-10 time=300]
+[cn]
+マルゲルは少女を組み伏せ、[n]
+なおもきつく口を押さえつけた。[p]
+#少女
+ンッ、ンッ……ンンーーーー！！[p]
+ン…………。[p]
+………………。[p]
+[cn]
+少女はじたばたともがいていたが、[n]
+しばらくたつと動かなくなってしまった。[p]
+#マルゲル
+…………。[p]
+[move id=5 y=10 time=500]
+[cn]
+マルゲルは抑えていた手をどけ、立ち上がり、[n]
+少女を見下ろした。[p]
+その時だった。[p]
+#少女
+ッ……！！[p]
+[move id=5 x=-30 time=300]
+[cn]
+少女が突然跳ね起き、[n]
+マルゲルに向かって手を突き出した。[p]
+手の先端から火球が飛び出し、マルゲルを襲う。[p]
+[filter name="flush" time=300 color="FF1111"]
+#マルゲル
+っ……。[p]
+[cn]
+すんでのところで、マルゲルはそれをかわした。[p]
+#マルゲル
+やはり魔女か……。[p]
+#少女
+魔女……？[p]
+[cn]
+町の人間たちには、[n]
+魔女という存在を知らないものも多い。[p]
+そのため、町の中には名もなき魔女が埋もれていることがあるのだった。[p]
+多くのものは、魔法を使えることを隠して生活していた。[p]
+この少女も、その一人だったのだ。[p]
+#少女
+はあ……はあ。[p]
+こ、今度は外さないわよ……。[p]
+#マルゲル
+そうか……、では、今度は外さぬことだな。[p]
+#少女
+言われなくてもッ！！[p]
+
+[move id=5 x=50 time=400]
+[wait time=200]
+[filter name="color" color="FF1111" time=300]
+[se ref="150"]
+[wait time=300]
+[se ref="157"]
+[clearcg id=5]
+[drawbg ref="black"]
+[filter name="clear" time=500]
+
+[cn]
+火球がマルゲルにぶつかるのと、[n]
+マルゲルが少女の心臓を剣で貫いたのは同時だった。[p]
+
+[filter name="fade" time=500]
+[clearbg]
+[filter name="clear" time=500]
+[hide_message]
+
+[else]
+;オリヴィア死亡、トリアイナ生存
+
+;場面転換
+[filter name="fade" time=500]
+[drawbg ref="1005e"]
+[filter name="clear" time=500]
+[bgm ref="021_event6"]
+
+[show_message]
+
+[cn]
+決着は着いた。[p]
+アリス軍の圧倒的勝利となった。[p]
+氷の魔女トリアイナはとらえられ、[n]
+オリヴィアとマルゲルはどこを探しても見つからなかった。[p]
+[drawcg id=0 pos=2 dir="right"]
+[drawcg id=1 pos=1 dir="right"]
+[drawcg id=2 pos=5]
+#アリス
+ふう、てこずらせやがって……。[p]
+#トリアイナ
+敵の領地であんな大規模の伏兵だなんて、[n]
+聞いたことがないわ……。[p]
+#アリス
+確認しなかったお前が悪い。[p]
+まあ、見張りは全員クロが殺したのだがな。[p]
+#クロ
+…………。[p]
+#トリアイナ
+オリヴィアはどこ……。[p]
+#アリス
+さあな。今探してる。[p]
+もしかしたら、この混戦で死体がぐちゃぐちゃになっちまったのかもな。[p]
+#トリアイナ
+……オリヴィア。[p]
+[drawcg id=4 posx=-1 dir="right" mode="slidein" state=5]
+#ヘレン
+ちょっと！　離しなさいよッ！！[p]
+#トリアイナ
+ヘレン！！[p]
+#アリスの部下
+アリス様！　残党処理の最中に、[n]
+本陣に近づく怪しげな者を見つけたので、とらえました。[p]
+#アリス
+そうか、ごくろう。[n]
+おいていけ。[p]
+#アリスの部下
+はっ！！[p]
+[scale id=4 sx=-1 time=0]
+[wait time=200]
+[move id=4 x=20 time=200]
+#ヘレン
+いてっ！　ちょっと、もうちょっと優しくしてよ！！[p]
+#アリス
+ほう……お前人魚か。珍しいな。[p]
+#トリアイナ
+あなた、人魚と人間の見分けがつくのね。[p]
+[cn]
+地上にいる人魚の下半身は、[n]
+人間と同じように二本の足になっている。[p]
+そのため、人間と人魚の区別をつけるのは[n]
+難しいとされていた。[p]
+#アリス
+ババアに教わったんだ。別に大したことじゃない。[p]
+#ヘレン
+ねえオリヴィアは？[p]
+トリアイナがいるなら無事なんでしょ？[p]
+#トリアイナ
+……わからないわ。[p]
+#ヘレン
+わ、わからないってなによ！[p]
+#アリス
+行方不明なんだ。[n]
+おとなしく、私の兵が見つけるまで待ってるんだな。[p]
+#ヘレン
+そんな……。[p]
+[cn]
+
+[stopbgm]
+[hide_message]
+[filter name="fade" time=500]
+[drawbg ref="1016m"]
+[clearcg id=0]
+[clearcg id=1]
+[clearcg id=2]
+[clearcg id=4]
+[filter name="clear" time=500]
+[bgm ref="008_orivia"]
+
+[show_message]
+オリヴィアの家付近、森の中。[p]
+薄暗い洞窟の中に、オリヴィアとマルゲルが隠れていた。[p]
+[drawcg id=5 pos=2 dir="right"]
+#マルゲル
+ひとまず、ここまで来れば敵は追ってこないでしょう。[p]
+[drawcg id=3 pos=3]
+#オリヴィア
+マルゲルさん……ありがとう。[p]
+また、助けてもらって。[p]
+#マルゲル
+戦場でここまで危なかったのは久しぶりでした。[p]
+……無事でよかった。[p]
+#オリヴィア
+マルゲルさん、戦場慣れているんですか？[p]
+個人戦ならともかく、[n]
+軍団の指揮までできるなんて……。[p]
+#マルゲル
+……そうですね。[p]
+わかりました。[p]
+オリヴィア殿にはすべてお話ししましょう。[p]
+[cn]
+そういって、マルゲルは一呼吸置いた。[p]
+マルゲルはオリヴィアに、自らの素性を語り始めた。[p]
+
+[stopbgm]
+[hide_message]
+[filter name="fade" time=500]
+[drawbg ref="1005e"]
+[clearcg id=3]
+[clearcg id=5]
+[filter name="clear" time=500]
+
+[show_message]
+[drawcg id=0 pos=2 dir="right"]
+[drawcg id=1 pos=1 dir="right"]
+[drawcg id=2 pos=5]
+[drawcg id=4 pos=4 state=5]
+#アリスの部下
+申し上げます！[p]
+#アリス
+なんだ。[p]
+#アリスの部下
+たった今、行方の分からなかった森の魔女が発見されたとのこと。[p]
+[changecg id=0 state=2]
+#アリス
+なにっ！！　とらえたか！[p]
+#アリスの部下
+いえ……それが。[p]
+[cn]
+アリスのもとへ持ってこられたのは、[n]
+眠るように横たわる、オリヴィアの遺体だった。[p]
+
+[bgm ref="019_event4"]
+
+#アリスの部下
+心臓をえぐり取られています。[p]
+誰が一体こんなことを……。[p]
+[changecg id=4 state=7]
+#ヘレン
+オリヴィア！！[p]
+……オリ、ヴィア……？[p]
+いや、そんな！　いやあぁっ！！[p]
+#アリス
+どこで見つけた。[p]
+#アリスの部下
+ここから５キロ離れた、山間の洞窟とのこと。[p]
+#アリス
+そんな遠くで……。[p]
+[cn]
+結局犯人はわからずじまいだった。[p]
+
+[hide_message]
+[filter name="fade" time=500]
+[clearbg]
+[clearcg id=0]
+[clearcg id=1]
+[clearcg id=2]
+[clearcg id=4]
+[filter name="clear" time=500]
+[bgm ref="002_alice1"]
+
+[field_area_hilight id=1]
+[wait time=200]
+
+[filter name="fade" time=500]
+[drawbg ref="1002e"]
+[bgm ref="003_alice2"]
+[filter name="clear" time=500]
+
+[show_message]
+[drawcg id=0 pos=5 state=1]
+[drawcg id=2 pos=2 dir="right"]
+#アリス
+と、いうわけで、今日からお前たちは
+私の部下になるわけだが、何か言うことはあるか。[p]
+#トリアイナ
+……いいえ、ないわ。[p]
+[drawcg id=4 pos=1 layer="front" dir="right" state=7]
+#ヘレン
+あるに決まってんでしょう！？[p]
+ちょっとトリアイナ！　[n]
+こいつらオリヴィア殺したんだよ！？[p]
+許せるわけないじゃん！！[p]
+[changecg id=0 state=2]
+#アリス
+ちょっと待て！！[p]
+私たちは森の魔女を殺してねえぞ！[n]
+見つけたときにはもう死んでたんだ！[p]
+#ヘレン
+そんなの嘘に決まってるわ！[p]
+最初から殺すつもりだったのよ！[p]
+#トリアイナ
+ヘレン、落ち着きなさい。[p]
+それなら、私たちもとっくに殺されているわ。[p]
+[changecg id=4 state=5]
+#ヘレン
+それは……。[p]
+#トリアイナ
+私たちにできることは、[n]
+オリヴィアを殺した真犯人を見つけて殺すことよ。[p]
+そうでしょう？[p]
+#ヘレン
+…………。[p]
+#トリアイナ
+ここにいれば、いずれその者に出会う気がするの。[p]
+今は我慢して、ヘレン。[p]
+#ヘレン
+……わかったわよ。[p]
+[cn]
+
+[hide_message]
+[filter name="fade" time=500]
+[drawbg ref="black"]
+[clearcg id=0]
+[clearcg id=2]
+[clearcg id=4]
+[filter name="clear" time=0]
+[show_message]
+
+こうして、トリアイナとヘレンが仲間に加わった。[p]
+…………。[p]
+ついでに、とらえられていたカートンも説得に応じ、仲間になった。[p]
+[drawcg id=6 pos=2 mode="slidein" dir="right"]
+#カートン
+ウオオオォォォン！（忘れてたのではあるまいな！）[p]
+
+;クリア処理
+[hide_message]
+[filter name="fade" time=500]
+[clearbg]
+[clearcg id=6]
+[filter name="clear" time=500]
+
+[endif]
+[else]
+[if_alive unit=6]
+;トリアイナ死亡、オリヴィア生存
+
+[filter name="fade" time=500]
+[drawbg ref="1005e"]
+[bgm ref="021_event6"]
+[filter name="clear" time=500]
+
+[show_message]
+[cn]
+決着は着いた。[p]
+アリス軍の圧倒的勝利となった。[p]
+氷の魔女トリアイナの遺体はその部下ヘレンの遺体と重なり合うようにして見つかった。[p]
+オリヴィアとマルゲルはどこを探しても見つからなかった。[p]
+[drawcg id=0 pos=2 dir="right" state=1]
+[drawcg id=1 pos=1 dir="right"]
+#アリス
+クフフフフッ！！[p]
+しょーり！！[p]
+アッハッハッハッハ！[p]
+どうだ、私が本気を出せばこんなもんだ！[p]
+#クロ
+お見事でございますアリス様。[p]
+敵は壊滅。[n]
+主だった将はすべて打ち取りましたぞ。[p]
+#アリス
+よっし、この調子で、ほかの領地もガンガン占領するぞー！！[p]
+[cn]
+
+[stopbgm]
+[hide_message]
+[filter name="fade" time=500]
+[drawbg ref="1016m"]
+[clearcg id=0]
+[clearcg id=1]
+[clearcg id=2]
+[clearcg id=4]
+[filter name="clear" time=500]
+[bgm ref="008_orivia"]
+
+[show_message]
+オリヴィアの家付近、森の中。[p]
+薄暗い洞窟の中に、オリヴィアとマルゲルが隠れていた。[p]
+[drawcg id=5 pos=2 dir="right"]
+#マルゲル
+ひとまず、ここまで来れば敵は追ってこないでしょう。[p]
+[drawcg id=3 pos=3]
+#オリヴィア
+マルゲルさん……ありがとう。[p]
+また、助けてもらって。[p]
+#マルゲル
+戦場でここまで危なかったのは久しぶりでした。[p]
+……無事でよかった。[p]
+#オリヴィア
+マルゲルさん、戦場慣れているんですか？[p]
+個人戦ならともかく、[n]
+軍団の指揮までできるなんて……。[p]
+#マルゲル
+……そうですね。[p]
+わかりました。[p]
+オリヴィア殿にはすべてお話ししましょう。[p]
+[cn]
+そういって、マルゲルは一呼吸置いた。[p]
+マルゲルはオリヴィアに、自らの素性を語り始めた。[p]
+
+[hide_message]
+[filter name="fade" time=500]
+[drawbg ref="1005e"]
+[clearcg id=3]
+[clearcg id=5]
+[filter name="clear" time=500]
+
+[show_message]
+[drawcg id=0 pos=2 dir="right"]
+[drawcg id=1 pos=1 dir="right"]
+#アリスの部下
+申し上げます！[p]
+#アリス
+なんだ。[p]
+#アリスの部下
+たった今、[n]
+行方の分からなかった森の魔女が発見されたとのこと。[p]
+[changecg id=0 state=2]
+#アリス
+なにっ！！　とらえたか！[p]
+#アリスの部下
+いえ……それが。[p]
+[cn]
+アリスのもとへ持ってこられたのは、[n]
+眠るように横たわる、オリヴィアの遺体だった。[p]
+#アリスの部下
+心臓をえぐり取られています。[n]
+誰が一体こんなことを……。[p]
+#アリス
+どこで見つけた。[p]
+#アリスの部下
+ここから５キロ離れた、山間の洞窟とのこと。[p]
+#アリス
+そんな遠くで……。[p]
+
+[cn]
+結局犯人はわからずじまいだった。[p]
+
+[hide_message]
+[filter name="fade" time=500]
+[clearbg]
+[clearcg id=0]
+[clearcg id=1]
+[filter name="clear" time=500]
+
+[else]
+;両方死亡
+
+[filter name="fade" time=500]
+[drawbg ref="1005e"]
+[bgm ref="021_event6"]
+[filter name="clear" time=500]
+
+[show_message]
+[cn]
+決着は着いた。[p]
+アリス軍の圧倒的勝利となった。[p]
+氷の魔女トリアイナの遺体はその部下ヘレンの遺体と重なり合うようにして見つかった。[p]
+オリヴィアとマルゲルはどこを探しても見つからなかった。[p]
+[drawcg id=0 pos=2 dir="right" state=1]
+[drawcg id=1 pos=1 dir="right"]
+#アリス
+クフフフフッ！！[n]
+しょーり！！[p]
+アッハッハッハッハ！[p]
+どうだ、私が本気を出せばこんなもんだ！[p]
+#クロ
+お見事でございますアリス様。[p]
+敵は壊滅。[n]
+主だった将はすべて打ち取りましたぞ。[p]
+#アリス
+よっし、この調子で、ほかの領地もガンガン占領するぞー！！[p]
+[cn]
+
+[hide_message]
+[filter name="fade" time=500]
+[drawbg ref="1016n"]
+[clearcg id=0]
+[clearcg id=1]
+[bgm ref="019_event4"]
+[filter name="clear" time=500]
+[show_message]
+
+[drawcg id=5 pos=2 dir="right" mode="slidein"]
+アリス軍の勝鬨に乗じて、[n]
+戦場を離脱したものがいた。[n]
+マルゲルだ。[p]
+彼はオリヴィアの亡骸から心臓を取り出し、北の大地に向かって走っていた。[p]
+#マルゲル
+……オリヴィア殿。[p]
+やはりあなたの方が、私なんかよりよっぽど強い人だ。[p]
+[cn]
+懐のつつみに話しかけるようにして、[n]
+マルゲルはつぶやいた。[p]
+
+[hide_message]
+[filter name="fade" time=500]
+[clearbg]
+[clearcg id=5]
+[filter name="clear" time=500]
+
+[endif]
+;[endif]
+
+;終了処理
+[stopbgm]
+[sys_memset index=223 value="1"]

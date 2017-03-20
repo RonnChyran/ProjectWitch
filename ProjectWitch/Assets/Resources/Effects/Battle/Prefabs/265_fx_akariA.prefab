@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4000011710796688}
   - component: {fileID: 114000011533303928}
+  - component: {fileID: 114108127429696712}
   m_Layer: 9
   m_Name: 265_fx_akariA
   m_TagString: Untagged
@@ -114,12 +115,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mPlaySpeed: 1
-  mLifeTime: 5
+  mLifeTime: 6
   EndEvent:
     m_PersistentCalls:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
+--- !u!114 &114108127429696712
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000010584344370}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1e631c3b9947b54c823c6853a05529c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playOnStart: 1
+  _cueName: 114_fx_akariA
+  _cueSheet: SE
+  _use3dPositioning: 0
+  _loop: 0
+  _volume: 0.5
+  _pitch: 0
+  _androidUseLowLatencyVoicePool: 0
+  need_to_player_update_all: 1
 --- !u!198 &198000011424897510
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -127,7 +148,7 @@ ParticleSystem:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000010602168528}
   serializedVersion: 5
-  lengthInSec: 5
+  lengthInSec: 3
   simulationSpeed: 1
   looping: 0
   prewarm: 0
@@ -180,7 +201,7 @@ ParticleSystem:
     serializedVersion: 3
     enabled: 1
     startLifetime:
-      scalar: 5
+      scalar: 2.61
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -654,7 +675,7 @@ ParticleSystem:
     enabled: 1
     serializedVersion: 3
     rateOverTime:
-      scalar: 7.87
+      scalar: 25.31
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -985,7 +1006,7 @@ ParticleSystem:
       minMaxState: 0
     separateAxes: 0
   ColorModule:
-    enabled: 0
+    enabled: 1
     gradient:
       serializedVersion: 2
       maxGradient:
@@ -994,7 +1015,7 @@ ParticleSystem:
           rgba: 4294967295
         key1:
           serializedVersion: 2
-          rgba: 4294967295
+          rgba: 4227858431
         key2:
           serializedVersion: 2
           rgba: 0
@@ -1022,8 +1043,8 @@ ParticleSystem:
         ctime6: 0
         ctime7: 0
         atime0: 0
-        atime1: 65535
-        atime2: 0
+        atime1: 54356
+        atime2: 65535
         atime3: 0
         atime4: 0
         atime5: 0
@@ -1031,7 +1052,7 @@ ParticleSystem:
         atime7: 0
         m_Mode: 0
         m_NumColorKeys: 2
-        m_NumAlphaKeys: 2
+        m_NumAlphaKeys: 3
       minGradient:
         key0:
           serializedVersion: 2
@@ -2764,7 +2785,7 @@ ParticleSystem:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000012933576932}
   serializedVersion: 5
-  lengthInSec: 5
+  lengthInSec: 2.79
   simulationSpeed: 1
   looping: 0
   prewarm: 0

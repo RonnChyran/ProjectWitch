@@ -1,0 +1,48 @@
+;s0204
+;title:
+;author:yuichi
+;timing:s0203翌ターンはじめ
+
+;ロード関係
+[loadcg id=0 ref="alice"]
+[loadcg id=1 ref="kuro"]
+
+;マップスクロール
+[field_area_hilight id=1]
+[wait time=200]
+
+;場面転換
+[filter name="fade" time=500]
+[drawbg ref="1002m"]
+[bgm ref="003_alice2"]
+[filter name="clear" time=500]
+
+;場面開始
+[drawcg id=0 pos=4 state=2]
+[show_message]
+#アリス
+なにっ！！[n]
+森の魔女がやられた！？[p]
+[drawcg id=1 pos=1 dir="right"]
+#クロ
+国境まで山の魔女の軍勢が迫ってきております。[p]
+まさか一晩で領地を占領するとは。[p]
+いったいどんな手を使ったのか……。[p]
+#アリス
+りょ、両サイドから挟み撃ちじゃねえか……。[p]
+森の魔女は腰抜けだっていうから攻めてこないと思ったのに。[p]
+あー、畜生！！[n]
+クロ、向こう側の砦を固めろ！[p]
+守備をガッチガチにしろ！[p]
+しょうがない、同時攻略だ！！[p]
+
+;終了処理
+[hide_message]
+[filter name="fade" time=500]
+[clearbg]
+[clearcg id=0]
+[clearcg id=1]
+[filter name="clear" time=500]
+[stopbgm]
+
+[sys_memset index=204 value="1"]

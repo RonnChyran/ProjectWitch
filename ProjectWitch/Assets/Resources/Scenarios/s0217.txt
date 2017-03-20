@@ -1,0 +1,42 @@
+;s0217
+;author: yuichi
+;timing: s0216
+;s0216後、戦闘勝利
+
+;ロード
+[loadcg id=0 ref="alice"]
+
+;マップスクロール
+[field_area_hilight id=19]
+[wait time=200]
+
+;場面転換
+[filter name="fade" time=500]
+[drawbg ref="1019e"]
+[filter name="clear" time=500]
+[bgm ref="018_event3"]
+
+[show_message]
+[drawcg id=0 pos=4 state=2]
+#アリス
+逃がすな！　追えーーー！！！！[p]
+[cn]
+マルゲルの逃げ足は実に早かった。[p]
+巧みに馬を操り、[n]
+あっという間にアリス軍から２キロは離れた位置まで逃げていた。[p]
+#アリス
+ちっ！　逃がしたか……。[p]
+オイ、深入りはするな！！[n]
+いったん引くぞ！[p]
+[cn]
+ともかく、トリアイナ領を占領したアリスは、
+次にオリヴィア領への進行を開始したのだった。[p]
+
+[hide_message]
+[filter name="fade" time=500]
+[clearbg]
+[clearcg id=0]
+[filter name="clear" time=500]
+[stopbgm]
+
+[sys_memset index=217 value="1"]

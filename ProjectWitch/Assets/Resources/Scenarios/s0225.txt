@@ -1,0 +1,42 @@
+;s0225
+;author: yuichi
+;timing: マルフィの町、もしくはデルモンテ東の森侵攻
+
+[loadcg id=0 ref="triaina"]
+[loadcg id=1 ref="helen"]
+
+[filter name="fade" time=500]
+[drawbg ref="1050m"]
+[bgm ref="009_triaina"]
+[filter name="clear" time=500]
+
+[show_message]
+[drawcg id=0 pos=5]
+[drawcg id=1 pos=4 state=1]
+#トリアイナの部下
+申し上げます！[p]
+華の魔女の軍団、[n]
+オリヴィア様の本拠地の間近に迫りつつあり！[p]
+#トリアイナ
+……わかった。下がりなさい。[p]
+#トリアイナの部下
+はっ！！[p]
+#ヘレン
+どうするのトリアイナ！[p]
+このままだとオリヴィア……。[p]
+#トリアイナ
+ええ……、オリヴィアの救援に行くわ。[p]
+最低限の兵力を残して、[n]
+全軍をオリヴィアの家へ向かわせるわよ。[p]
+#ヘレン
+わかったわ！[p]
+
+[hide_message]
+[filter name="fade" time=500]
+[clearbg]
+[clearcg id=0]
+[clearcg id=1]
+[filter name="clear" time=500]
+
+[stopbgm]
+[sys_memset index=225 value="1"]

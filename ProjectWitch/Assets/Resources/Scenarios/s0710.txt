@@ -1,12 +1,14 @@
-﻿;script 710
+;script 711
 
 
-;場面10後　魔女の沼戦闘前
+;場面11戦闘後　勝利
 [loadcg id=0 ref="000_cv_aliceA"]
 [drawbg ref="1011"]
 [bgm ref="018_event3"]
-[drawcg id=0 pos="right"]
+[drawcg id=0 pos="center"]
 
+[cn]
+両腕を失ったゾンビリリィが地面に突っ伏す。[p]
 #アリス
-よし、次は右腕だな。[p]
-お前ら！　気合い入れて行けよーー！！！[p]
+よし！　今回はこれで十分だ！！[n]
+撤退して回復するぞ！！[p]

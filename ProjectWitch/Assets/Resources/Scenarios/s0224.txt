@@ -1,0 +1,75 @@
+;s0224
+;author: yuichi
+;timing: オリヴィア領に攻め込む
+
+;ロード
+[loadcg id=0 ref="triaina"]
+[loadcg id=1 ref="orivia"]
+[loadcg id=2 ref="helen"]
+
+;フィールドスクロール
+[field_area_hilight id=19]
+[wait time=200]
+
+ ;場面転換
+[filter name="fade" time=500]
+[drawbg ref="1050m"]
+[filter name="clear" time=500]
+[bgm ref="009_triaina"]
+
+[show_message]
+魔女の湖。[n]
+氷の宮殿内。[p]
+[drawcg id=0 pos=5]
+[drawcg id=1 pos=4]
+[drawcg id=2 pos=3]
+#部下
+申し上げます！！[p]
+#トリアイナ
+なんですか、騒々しい。[p]
+[cn]
+トリアイナたちは、[n]
+いつものように三人でお茶会をしていた。[p]
+そこへ、水を差すように部下があわただしく入ってきたのだ。[p]
+#部下
+華の魔女アリス、カプリ砦付近に現れ、[n]
+こちらに向かって攻撃を仕掛けた模様！[p]
+#トリアイナ
+なんですって！[p]
+#オリヴィア
+わっ、私の領地に！？[p]
+#部下
+いかがいたしますか。[p]
+#トリアイナ
+……ピノの町、アイスの町に徴兵をかけてちょうだい。[p]
+オリヴィア軍に援軍を向かわせるわ。[p]
+それと、シャーベット砦の守りを強化するように。[p]
+#部下
+はっ、承知しました。[n]
+失礼します！[p]
+;部下退出
+#トリアイナ
+してやられたわ……。[n]
+まさか突然攻めてくるなんて。[p]
+オリヴィア、自分の領地に戻って軍備を整えなさい。[p]
+私も後で向かってあげるわ。[p]
+#オリヴィア
+う、うん……わかった。[p]
+#トリアイナ
+ヘレン。オリヴィアを送り届けたらすぐに戻ってきてちょうだい。[p]
+忙しくなるわよ。[p]
+#ヘレン
+ええ、わかったわ！[p]
+
+;クリア処理
+[hide_message]
+[filter name="fade" time=500]
+[clearbg]
+[clearcg id=0]
+[clearcg id=1]
+[clearcg id=2]
+[filter name="clear" time=500]
+
+;終了処理
+[stopbgm]
+[sys_memset index=224 value="1"]
