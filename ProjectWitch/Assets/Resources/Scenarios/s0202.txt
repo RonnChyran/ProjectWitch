@@ -1,0 +1,358 @@
+;s0202
+;title:
+;author chicchi
+;timing: オリヴィア・トリアイナ以外の領地に侵攻
+
+;ロード系
+[loadcg id=0 ref="karton"]
+[loadcg id=1 ref="orivia"]
+[loadcg id=2 ref="helen"]
+
+;マップスクロール
+[field_area_hilight id=28]
+[wait time=200]
+
+;場面転換
+[filter name="fade" time="500"]
+[drawbg ref="1005m"]
+[bgm ref="008_orivia"]
+[filter name="clear" time="500"]
+
+;場面開始
+[show_message]
+[cn]
+魔女オリヴィアの家。[p]
+[drawcg id=1 pos=4]
+#カートン
+;カートンです、入ってもよろしいですか
+……！　……、……。[p]
+#オリヴィア
+カートン？いいわよ、入ってきて。[p]
+[drawcg id=0 pos=1 dir="right" mode="slidein"]
+#カートン
+……。[p]
+#オリヴィア
+どうしたの？　あっ、クッキー焼いたんだけど、食べる？[p]
+#カートン
+[move id=0 y=10 time=200]
+[move id=0 y=-10 time=200]
+[move id=0 y=10 time=200]
+[move id=0 y=-10 time=200]
+;おおこれはかたじけない。いただきます。
+……♪[n]
+……。[p]
+#オリヴィア
+相変わらず、あなたの話していることはさっぱりわからないわ。[p]
+#カートン
+;申し訳ありません……。
+……。[p]
+#オリヴィア
+あっ、大丈夫だよ！[p]
+なんとなくわかるときもあるし……。[p]
+それより、何の用だったの？[p]
+#カートン
+;ええ、それが、西に不審な動きありと……。
+…………、……、……！[p]
+#オリヴィア
+……ご、ごめんなさい。[p]
+今のは完全にわからなかったわ。[p]
+そうだ！　筆談にしましょう。[p]
+そうよ、なんでもっと早く思いつかなかったのかしら。[p]
+はい！　紙とペンよ。[p]
+#カートン
+;おお……、それは良いアイディアですな。では早速
+[move id=0 y=10 time=200]
+[move id=0 y=-10 time=200]
+[move id=0 y=10 time=200]
+[move id=0 y=-10 time=200]
+……、……！　……。[p]
+#オリヴィア
+……カートン、字へたねえ。[p]
+「西に不穏な動きあり」[p]
+……山の魔女が攻めてきたの？[p]
+#カートン
+……。[p]
+#オリヴィア
+「山がさわがしい」[p]
+……って、いつものことじゃない。[p]
+心配しすぎよ。[p]
+#カートン
+;そうだといいのですが
+……。[p]
+#ヘレン
+オリヴィアー？[p]
+#オリヴィア
+ヘレン？[p]
+[drawcg id=2 dir="right" pos=1 layer="front" state=4 mode="slidein"]
+#ヘレン
+あっ、カートンさん。[n]
+こんにちはー。[p]
+#カートン
+;やあ、ヘレン殿。こんにちは
+……！[p]
+#ヘレン
+それでね、オリヴィア。[p]
+トリアイナからオリヴィアを呼んでくるように言われてて。[p]
+#オリヴィア
+え？[n]
+ええ……すぐ行くわ。[p]
+#カートン
+;オリヴィア様！
+……！[p]
+#オリヴィア
+カートン。[n]
+お留守番お願いしてもいい？[p]
+#カートン
+;え、ええ……。
+…………。[p]
+
+[scale id=2 sx=-1 time=0]
+[move id=2 x=-50 time=250]
+[move id=1 x=-100 time=500]
+[cn]
+カートンを一人残して、オリヴィアたちはトリアイナ領へ向かった。[p]
+
+[hide_message]
+[filter name="fade" time="500"]
+[clearbg]
+[clearcg id=0]
+[clearcg id=1]
+[clearcg id=2]
+[wait time=500]
+[filter name="clear" time="500"]
+[stopbgm]
+
+[bgm ref="002_alice1"]
+
+;ロード系
+[loadcg id=3 ref="vega"]
+[loadcg id=4 ref="messer"]
+
+;マップスクロール
+[field_area_hilight id=42]
+[wait time=200]
+
+;場面転換
+[filter name="fade" time="500"]
+[drawbg ref="1006e"]
+[bgm ref="010_vega"]
+[filter name="clear" time="500"]
+
+;場面開始
+[drawcg id=3 pos=5]
+[show_message]
+[cn]
+ベスビオ山山頂神殿。[p]
+中央の台座に、山の魔女ベガが鎮座していた。[p]
+[drawcg id=4 pos=2 dir="right" mode="slidein"]
+#ベガ
+メッサーシュミット。[p]
+奴の様子は。[p]
+#メッサーシュミット
+はい！[n]
+どうやら東側の攻略を開始したようです。[p]
+西側は現在手薄。[n]
+攻め込むなら今です！[p]
+#ベガ
+ご苦労。[n]
+では、後の手はずは任せるぞ。[p]
+#メッサーシュミット
+はい、お任せください！[p]
+[cn]
+
+[scale id=4 sx=-1 time=0]
+[clearcg id=4 mode="slideout"]
+
+[wait time=200]
+[move id=3 x=-40 time=500]
+[scale id=3 sx=-1 time=0]
+メッサーシュミットが出ていくと、[n]
+ベガはすっくと立ちあがり、[n]
+東の空を見渡した。[p]
+#ベガ
+父上……ドラゴン族の長年の悲願。[n]
+私が、必ず。[p]
+[cn]
+
+;場面転換
+[hide_message]
+[filter name="fade" time=500]
+[clearbg]
+[clearcg id=3]
+[clearcg id=4]
+[filter name="clear" time=500]
+[bgm ref="002_alice1"]
+
+;ロード系
+[loadcg id=5 ref="triaina"]
+[loadcg id=6 ref="marger"]
+
+;マップスクロール
+[field_area_hilight id=19]
+[wait time=200]
+
+;場面転換
+[filter name="fade" time=500]
+[drawbg ref="1050n"]
+[bgm ref="009_triaina"]
+[filter name="clear" time=500]
+
+[show_message]
+[cn]
+魔女の湖。[n]
+氷の宮殿内。[p]
+[drawcg id=5 pos=5]
+#トリアイナ
+本当に行くのですか？[p]
+[drawcg id=6 pos=2 dir="right"]
+#マルゲル
+ええ、仲間とはぐれてしまいました。[p]
+探しに行かねば。[p]
+#トリアイナ
+まだ体力も戻っていないのよ、[n]
+もう少しゆっくりしていきなさい。[p]
+#マルゲル
+……お気遣いありがとうございます。[p]
+失礼します。[p]
+
+[scale id=6 sx=-1 time=0]
+
+#ヘレン
+あっ、ちょっとマルゲルさん、どこ行くのよ。[p]
+
+[move id=6 x=40 time=400]
+[drawcg id=2 mode="slidein" layer="front" dir="right" pos=2 state=1]
+[drawcg id=1 mode="slidein" layer="front" dir="right" pos=1]
+
+#トリアイナ
+ヘレン、それにオリヴィア。[p]
+#オリヴィア
+あっ、その、[n]
+お庭でとれたポテトをおすそ分けに来たんだけど……。[p]
+#マルゲル
+……オリヴィア殿。[p]
+#オリヴィア
+へっ！？[n]
+あっ、ハイ！[p]
+#マルゲル
+氷豆のスープ、おいしかったです。[p]
+……それでは。[p]
+
+[move id=6 x=-50 time=500]
+
+#オリヴィア
+……マルゲルさん。[p]
+
+[scale id=2 sx=-1 time=0]
+
+#ヘレン
+ね、ねえ待ちなよ！[p]
+アンタ、まだつらそうじゃない！[p]
+#マルゲル
+……。[p]
+
+[move id=6 x=-40 time=500]
+
+#ヘレン
+ちょ、ちょっと！！[p]
+[cn]
+ヘレンの制止も聞かず、マルゲルは宮殿から出て行ってしまった。[p]
+#ヘレン
+何なのよ、あいつ。[p]
+#トリアイナ
+はぐれた仲間を探しに行くそうよ。[p]
+ごめんなさい、オリヴィア。[p]
+ポテト、ありがたくもらうわね。[p]
+#オリヴィア
+あっ、えっ……うん。[p]
+[cn]
+謎の吟遊詩人マルゲル。[p]
+どこからともなく表れ、立ち去った彼に、[n]
+オリヴィアが再び会うことはないのだった。[p]
+
+;場面転換
+[hide_message]
+[filter name="fade" time=500]
+[clearbg]
+[clearcg id=1]
+[clearcg id=2]
+[clearcg id=5]
+[clearcg id=6]
+[filter name="clear" time=500]
+[bgm ref="002_alice1"]
+
+;ロード系
+[loadcg id=7 ref="dood"]
+
+;マップスクロール
+[field_area_hilight id=30]
+[wait time=200]
+
+;場面転換
+[filter name="fade" time=500]
+[drawbg ref="1048n"]
+[bgm ref="018_event3"]
+[filter name="clear" time=500]
+
+[show_message]
+[cn]
+コンペイ砦。[n]
+オリヴィア領とベガ領の国境。[p]
+オリヴィア領の兵力の8割はこの国境に集中していた。[p]
+いつドラゴンたちが攻めてきてもおかしくない。[p]
+この場所は常にそんな緊張感に包まれていた。[p]
+[drawcg id=0 posx=50]
+#カートン
+;ぬ、ドード殿ではないか。
+;このようなとこまで珍しい。[p]
+……、……。…………。[p]
+[drawcg id=7 pos=2 dir="right" mode="slidein"]
+#ドード
+イヒヒッ！　お勤めご苦労さんです。[p]
+しかし、あなたも大変ですな。[p]
+こんな偏狭で、[n]
+年がら年中ドラゴンを相手してんですから。[p]
+あっしだったら、気がめいっちまいます。[p]
+#カートン
+;オリヴィア様のために私ができることなどこれくらいのもの。
+…………、…………！[p]
+#ドード
+へえ、オリヴィア様のためですか。[p]
+それはそれは、アンタ本当に素晴らしい部下だ。[p]
+#カートン
+;しかし、ドード殿はわしの話すことが理解できるのだな
+……………？[p]
+#ドード
+アンタの話がなんで理解できるんだって？[p]
+まあ、一種の読心術のようなものでさあ。[p]
+#カートン
+;それは素晴らしい！　ぜひオリヴィア様にその極意を教えてほしいものだ。
+…………！[p]
+………、……。[p]
+#ドード
+へへ、これにはちょいと特殊な能力が必要でして、[n]
+あいにく魔女様には使えねえんです。[p]
+#カートン
+;そうか……。
+……。[p]
+#ドード
+まあまあ、そう気を落としなさんな。[p]
+魔女様に会うときにはあっしが通訳しまさあ。[p]
+#カートン
+;すまない。今度からぜひ頼む。
+……。…………。[p]
+#ドード
+へいへい、もちろんでさあ。[p]
+あっしら部下同士、仲良くやりましょうぜ。[p]
+イッヒッヒッヒッヒ……。[p]
+
+[hide_message]
+[filter name="fade" time="500"]
+[clearbg]
+[clearcg id=0]
+[clearcg id=7]
+[wait time=500]
+[filter name="clear" time="500"]
+[stopbgm]
+
+[sys_memset index=202 value="1"]

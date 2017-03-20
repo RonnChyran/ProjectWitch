@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4000011525551428}
   - component: {fileID: 114000014025891362}
+  - component: {fileID: 114586004456302378}
   m_Layer: 9
   m_Name: 271_fx_niaA
   m_TagString: Untagged
@@ -107,6 +108,26 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
+--- !u!114 &114586004456302378
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000012685063480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1e631c3b9947b54c823c6853a05529c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playOnStart: 1
+  _cueName: 120_fx_niaA
+  _cueSheet: SE
+  _use3dPositioning: 0
+  _loop: 0
+  _volume: 0.5
+  _pitch: 0
+  _androidUseLowLatencyVoicePool: 0
+  need_to_player_update_all: 1
 --- !u!198 &198000013322735644
 ParticleSystem:
   m_ObjectHideFlags: 1

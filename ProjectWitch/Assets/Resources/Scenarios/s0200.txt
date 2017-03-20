@@ -1,15 +1,14 @@
 ;s0200
 ;title:
 ;author:chicchi
-;timing:メイジー量占領後、ターンはじめ
-[hide_cursor]
-[field_area_hilight id=1]
+;timing:メイジー量占領前、ターンおわり
+[field_area_hilight id=15]
 [wait time=200]
 [loadcg id=0 ref="marger"]
 
 [filter name="fade" time="500"]
-[drawbg ref="1023"]
-[se ref="200_env"]
+[drawbg ref="1046m"]
+[bgm ref="200_env0"]
 [filter name="clear" time="500"]
 
 
@@ -39,7 +38,99 @@
 どこを見ても真っ白な世界の中で、[p]
 魔法コンパスの指針を頼りに、[n]
 マルゲルたちは部下を探しにもと来た道を戻っていった。[p]
-[filter name="fade" time="500"]
 
+[hide_message]
+[filter name="fade" time="500"]
+[clearcg id=0]
+[clearbg]
 [wait time=500]
 [filter name="clear" time="500"]
+
+[field_area_hilight id=28]
+[wait time=500]
+
+[loadcg id=1 ref="orivia"]
+[loadcg id=2 ref="helen"]
+[bgm ref="008_orivia"]
+
+[filter name="fade" time="500"]
+[drawbg ref="1005m"]
+[filter name="clear" time="500"]
+
+[show_message]
+[drawcg id=1 pos="right" dir="left"]
+#オリヴィア
+ふんふんふーん♪ そろそろ焼きあがるわね、[p]
+おいしくできたかなぁ。[p]
+後でヘレンに味見してもらおっと！[p]
+
+[drawcg id=2 pos="left" dir="right" mode="slidein" state=4]
+#ヘレン
+オリヴィア、いるー？[p]
+#オリヴィア
+あっ、ヘレン！ ちょうどよかったわ。[p]
+ 今ちょうどパイが焼きあがったのよ。[p]
+味見していかない？[p]
+#ヘレン
+えっ！　するする！！ なになに、何のパイ？[p]
+#オリヴィア
+ふふっ！　今日はね、じゃーん！！ ヘレンの好きな、水ブドウでパイを作ったのだー！[p]
+[changecg id=2 state=5]
+#ヘレン
+えっ……、それ海藻じゃない。おいしいの？[p]
+#オリヴィア
+ヘレン魚でしょ？　[n]
+水ブドウ好きかなーと思ったんだけど。[p]
+#ヘレン
+だれが魚よ！ 私は人魚！　半分人間よ！！ ってか、味覚は完全に人間よ！！[p]
+ ……まあおなかすいたときに水ブドウ食べるけど、 別に好きじゃないわよ！！[p]
+[changecg id=1 state=1]
+#オリヴィア
+ええっ！　そ、そうなの？[p]
+……ごめんなさい、私ヘレンが喜ぶと思って……。[p]
+#ヘレン
+うっ……、そんな顔しないでよもう。[p]
+わ、わかったわよ、食べればいいんでしょ、[n]
+ほら、よこしなさいよ。[p]
+[changecg id=1 state=0]
+#オリヴィア
+ヘレン！ うん！　じゃあハイ！！ たっぷり大盛だよ！[p]
+#ヘレン
+味見なのよね！？ ……まあいいわ、いただきます。 ……………ブッ！ オエエェーーー！！！！[p]
+#オリヴィア
+へっ、ヘレン！？ ちょっと、はかないでよ！！[p]
+そんなにまずかった！？[p]
+#ヘレン
+まずいとかじゃないわよ！ 何よこれ！[p]
+殺しに来てるわ！ 水ブドウの味じゃない……[p]
+いったい何を入れたのよ！[p]
+#オリヴィア
+えっと……隠し味にニシンのたまごを……少々。[p]
+#ヘレン
+隠せてないよ！！ 生ぐっさ！　これ生ぐっさ！！ なんで入れようと思った！？[p]
+なんで入れようと思った！！？[p]
+#オリヴィア
+いや、見た目にてるし……いけそうかなって。[p]
+#ヘレン
+いけるどころか完全に勢い殺したよ！？[p]
+水ブドウのよさ全部消えたよ！！[p]
+完全に卵が勝っちゃってるよ！！！[n]
+ゲホッ、ゲホッ！！[p]
+#オリヴィア
+だっ、大丈夫！？[p]
+#ヘレン
+誰のせいよーーーー！！！[p]
+[cn]
+オリヴィア領は緑の豊かな土地だった。[p]
+年中温暖な気候で、 領内は花や果物、動物たちであふれていた。[p]
+そんな土地でのオリヴィアの平穏な暮らしに、 影が差そうとしていた。[p]
+
+[hide_message]
+[filter name="fade" time="500"]
+[clearbg]
+[clearcg id=1]
+[clearcg id=2]
+[wait time=500]
+[filter name="clear" time="500"]
+
+[sys_memset index=200 value="1"]

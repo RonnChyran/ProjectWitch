@@ -74,6 +74,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4000011099775032}
   - component: {fileID: 114000010924042186}
+  - component: {fileID: 114515326388918052}
   m_Layer: 9
   m_Name: 253_fx_meisieB
   m_TagString: Untagged
@@ -391,7 +392,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mPlaySpeed: 2
-  mLifeTime: 8.5
+  mLifeTime: 6.2
   EndEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -415,6 +416,26 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
+--- !u!114 &114515326388918052
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000010429632670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1e631c3b9947b54c823c6853a05529c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playOnStart: 1
+  _cueName: 102_fx_meisieB
+  _cueSheet: SE
+  _use3dPositioning: 0
+  _loop: 0
+  _volume: 0.5
+  _pitch: 0
+  _androidUseLowLatencyVoicePool: 0
+  need_to_player_update_all: 1
 --- !u!135 &135000010453140884
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -467,8 +488,8 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 0}
   m_AABB:
-    m_Center: {x: 0.0026245117, y: 0.8102722, z: -0.40011978}
-    m_Extent: {x: 6.1121616, y: 3.472451, z: 5.810796}
+    m_Center: {x: 0.0026283264, y: 0.8102722, z: -0.40011978}
+    m_Extent: {x: 6.11216, y: 3.4724507, z: 5.810794}
   m_DirtyAABB: 0
 --- !u!183 &183000010901977422
 Cloth:
@@ -1298,7 +1319,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 1155276476
+  randomSeed: 1155276416
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -3911,7 +3932,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 256728686
+  randomSeed: 256728688
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -6548,7 +6569,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -267985026
+  randomSeed: -267985024
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -9113,7 +9134,7 @@ ParticleSystem:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000010545107812}
   serializedVersion: 5
-  lengthInSec: 2
+  lengthInSec: 3
   simulationSpeed: 1
   looping: 0
   prewarm: 0
@@ -9161,7 +9182,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -824074905
+  randomSeed: -824074880
   InitialModule:
     serializedVersion: 3
     enabled: 1

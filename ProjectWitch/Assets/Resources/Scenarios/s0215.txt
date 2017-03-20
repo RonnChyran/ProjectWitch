@@ -1,0 +1,78 @@
+;s0215
+;author: yuichi
+;timing:
+
+;ロード
+[loadcg id=0 ref="triaina"]
+[loadcg id=1 ref="orivia"]
+[loadcg id=2 ref="marger"]
+
+;マップスクロール
+[field_area_hilight id=19]
+[wait time=200]
+
+;場面転換
+[filter name="fade" time=500]
+[drawbg ref="1050m"]
+[filter name="clear" time=500]
+[bgm ref="009_triaina"]
+
+[show_message]
+魔女の湖、氷の宮殿。[p]
+[drawcg id=0 pos=5]
+[drawcg id=1 pos=2 dir="right" mode="slidein" state=1]
+#オリヴィア
+トリアイナ！！　大丈夫！？[p]
+#トリアイナ
+ええ、問題ないわ。[p]
+それよりも、あなたは自分の心配をしなさい。[p]
+#オリヴィア
+それは……。[p]
+[drawcg id=2 pos=1 dir="right" mode="slidein"]
+#マルゲル
+失礼、オリヴィア殿。[p]
+[changecg id=1 state=0]
+#オリヴィア
+あっ！　……この前の。[n]
+名前……覚えてたんですね。[p]
+#マルゲル
+ええ、命の恩人ですから。[p]
+#トリアイナ
+マルゲルさん。[n]
+今は少し外してもらえないかしら。[p]
+#マルゲル
+おっと、これは失礼。[n]
+オリヴィア殿、また後で。[p]
+#オリヴィア
+えっ、はい……。[p]
+[move id=2 x=100 time=500]
+[clearcg id=2]
+[cn]
+オリヴィアがあっけにとられている間に、[n]
+マルゲルは奥の部屋へと消えた。[p]
+#トリアイナ
+彼、あれからだいぶ良くなって、[n]
+そろそろここを立つそうよ。[p]
+#オリヴィア
+で、でも！　外は戦争で危険なんじゃ……。[p]
+#トリアイナ
+ええ、だから戦争が終わるまではここでゆっくりしていきなさいと言っておいたわ。[p]
+#オリヴィア
+そ、そっか……。[p]
+#トリアイナ
+……？[p]
+あなた、何だか顔が赤いわよ？[p]
+#オリヴィア
+そっ、そんなことないよッ！！[p]
+#トリアイナ
+そう……？[p]
+
+[hide_message]
+[filter name="fade" time=500]
+[clearbg]
+[clearcg id=0]
+[clearcg id=1]
+[filter name="clear" time=500]
+[stopbgm]
+
+[sys_memset index=215 value="1"]

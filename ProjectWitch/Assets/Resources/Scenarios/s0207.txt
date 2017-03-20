@@ -1,0 +1,39 @@
+;s0207
+;author:yuichi
+;timing:コンペイ砦戦闘前
+
+;マップスクロール
+[field_area_hilight id=30]
+[wait time=200]
+
+;ロード
+[loadcg id=0 ref="triaina"]
+[loadcg id=1 ref="helen"]
+
+;場面転換
+[filter name="fade" time=500]
+[drawbg ref="1030m"]
+[bgm ref="018_event3"]
+[filter name="clear" time=500]
+
+[drawcg id=1 pos=5 state=5]
+[drawcg id=0 pos=4]
+[show_message]
+#トリアイナ
+来たわね、華の魔女アリス。[p]
+……ヘレン、落ち着いた？[p]
+#ヘレン
+私はまだ許してないわよ……。[n]
+オリヴィアのかたきに味方するなんて。[p]
+#トリアイナ
+……来るわよ。[p]
+
+[hide_message]
+[filter name="fade" time=500]
+[clearbg]
+[clearcg id=0]
+[clearcg id=1]
+[filter name="clear" time=500]
+
+[stopbgm]
+[sys_memset index=207 value="1"]
