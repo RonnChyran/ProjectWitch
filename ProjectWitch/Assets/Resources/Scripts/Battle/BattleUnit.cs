@@ -711,7 +711,8 @@ namespace ProjectWitch.Battle
         //　0:待機　1:攻撃　2:防御
         public void SetLeaderAnimatorState(int state)
         {
-            LeaderAnimator.SetInteger("State", state);
+			if (LeaderAnimator != null)
+				LeaderAnimator.SetInteger("State", state);
         }
 
         // 兵士のアニメーターの表示をセットする
@@ -720,8 +721,8 @@ namespace ProjectWitch.Battle
         {
             foreach (var ani in GroupAnimators)
             {
-                if (ani.isActiveAndEnabled)
-                    ani.SetInteger("State", state);
+				if (ani != null && ani.isActiveAndEnabled)
+					ani.SetInteger("State", state);
             }
         }
 

@@ -435,7 +435,7 @@ namespace ProjectWitch.Battle
 			List<CardManager> cards = new List<CardManager>();
 			for (int i = 0; i < 3; i++)
 			{
-				if (TurnUnit.IsPlayer)
+				if (TurnUnit == null || TurnUnit.IsPlayer)
 				{
 					if (i < PlayerCards.Count)
 						cards.Add(PlayerCards[i]);
@@ -502,69 +502,6 @@ namespace ProjectWitch.Battle
 					yield return StartCoroutine(CoCardSkillAction(card, action, target));
 				}
 			}
-			/*
-			for (int i = 0; i < 2; i++)
-            {
-                var isPlayer = (i == 0);
-                if ((isPlayer && checkCamp >= 0) || (!isPlayer && checkCamp <= 0))
-                {
-                    var cards = (isPlayer ? PlayerCards : EnemyCards);
-                    for (int j = 0; j < cards.Count; j++)
-                    {
-                        var card = cards[j];
-                        if (card.CardData == null || !card.IsCanUse)
-                            continue;
-						if (card.CardData.Timing == timeing)
-						{
-							if ((timeing == CardDataFormat.CardTiming.Rand80 && BattleRandom.value > 0.8f) ||
-                                (timeing == CardDataFormat.CardTiming.Rand50 && BattleRandom.value > 0.5f) ||
-                                (timeing == CardDataFormat.CardTiming.Rand20 && BattleRandom.value > 0.2f))
-                                continue;
-							if (((timeing == CardDataFormat.CardTiming.UserState_HP10 ||
-								timeing == CardDataFormat.CardTiming.EnemyState_HP10) &&
-								induceUnit.UnitData.HP > induceUnit.UnitData.MaxHP * 0.1) ||
-								((timeing == CardDataFormat.CardTiming.UserState_HP50 ||
-								timeing == CardDataFormat.CardTiming.EnemyState_HP50) &&
-								induceUnit.UnitData.HP > induceUnit.UnitData.MaxHP * 0.5) ||
-								((timeing == CardDataFormat.CardTiming.UserState_S10 ||
-								timeing == CardDataFormat.CardTiming.EnemyState_S10) &&
-								induceUnit.UnitData.SoldierNum > induceUnit.UnitData.MaxSoldierNum * 0.1) ||
-								((timeing == CardDataFormat.CardTiming.UserState_S50 ||
-								timeing == CardDataFormat.CardTiming.EnemyState_S50) &&
-								induceUnit.UnitData.SoldierNum > induceUnit.UnitData.MaxSoldierNum * 0.5))
-								break;
-							// カードスキル発動
-							BattleUnit action = (isPlayer ? PlayerUnits[0] : EnemyUnits[0]);            // 行動ユニットはその陣営の先頭ユニット
-                            if (card.Skill.Type == SkillDataFormat.SkillType.SoulSteal && induceUnit != null)// ソウルスティールなら行動ユニットは誘発ユニット
-                                action = induceUnit;
-
-                            BattleUnit target = null;
-                            if (card.Skill.Range == SkillDataFormat.SkillRange.Single)                       // 対象が単体の時
-                            {
-                                if (card.Skill.Type == SkillDataFormat.SkillType.Heal && induceUnit != null) // 回復効果なら誘発ユニット
-                                    target = induceUnit;
-                                else                                                                    // それ以外ならランダム
-                                {
-                                    List<BattleUnit> units = new List<BattleUnit>();
-                                    if (card.Skill.Target == SkillDataFormat.SkillTarget.Enemy ||
-                                        card.Skill.Target == SkillDataFormat.SkillTarget.EnemyLeader)        // 対象が敵の時
-                                    {
-                                        units = (isPlayer ? EnemyUnits : PlayerUnits);
-                                    }
-                                    else if (card.Skill.Target == SkillDataFormat.SkillTarget.Player ||
-                                        card.Skill.Target == SkillDataFormat.SkillTarget.PlayerLeader)       // 対象が味方の時
-                                    {
-                                        units = (!isPlayer ? EnemyUnits : PlayerUnits);
-                                    }
-                                    target = units[BattleRandom.Range(0, units.Count - 1)];
-                                }
-                            }
-                            yield return StartCoroutine(CoCardSkillAction(card, action, target, isPlayer));
-                        }
-                    }
-                }
-            }
-			*/
             yield return null;
         }
 
@@ -1651,16 +1588,16 @@ namespace ProjectWitch.Battle
         {
             if (IsEndWaitTime && Input.GetMouseButtonDown(0))
             {
-                if (EndEvent != null)
+				if (EndEvent != null)
 				{
 					EndEvent.Invoke();
-  //                  if(SceneManager.GetSceneByName(BackGroundSceneName).IsValid())
-    					SceneManager.UnloadSceneAsync(BackGroundSceneName);
+//					if (SceneManager.GetSceneByName(BackGroundSceneName).IsValid())
+						SceneManager.UnloadSceneAsync(BackGroundSceneName);
 					Resources.UnloadUnusedAssets();
 					print("戦闘終了");
 				}
 			}
-            if (IsWaitInputTime && Input.GetMouseButtonDown(0))
+			if (IsWaitInputTime && Input.GetMouseButtonDown(0))
             {
                 IsWaitInputTime = false;
             }
