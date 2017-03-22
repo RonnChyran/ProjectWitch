@@ -27,6 +27,9 @@ namespace ProjectWitch.Battle
 		// コンフィグのスライダーの移動音
 		[SerializeField]
 		private string mMoveConfigSlider = null;
+		// 捕獲ゲージ増加音
+		[SerializeField]
+		private string mCaptureGauge = null;
 
 		public void PlayAudio(string name)
 		{
@@ -76,6 +79,11 @@ namespace ProjectWitch.Battle
 		public void PlayMoveConfigSlider()
 		{
 			PlayAudio(mMoveConfigSlider);
+		}
+
+		public void PlayCaptureGauge()
+		{
+			PlayAudio(mCaptureGauge);
 		}
 
 		// Use this for initialization

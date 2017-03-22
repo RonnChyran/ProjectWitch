@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
@@ -17,11 +18,17 @@ namespace ProjectWitch.Battle
 		// 表示文字色
 		[SerializeField]
 		private Color mTextColorPlayer = new Color(1, 1, 1), mTextColorEnemy = new Color(0, 0, 0);
-		// オブジェクトの左右移動スピード
+		public RectTransform BaseRect { get; private set; }
+		// オブジェクトの左右移動スピード必要秒
 		[SerializeField]
-		private float mMoveSpeedX = 1200f, mMoveSpeedY = 100f;
-		public float MoveSpeedX { get { return mMoveSpeedX; } }
-		public float MoveSpeedY { get { return mMoveSpeedY; } }
+		private float mMoveTimeX = 0.5f, mMoveTimeY = 0.5f;
+		// オブジェクトの左右移動スピード
+		//		public float MoveSpeedX { get { return BaseRect.sizeDelta.x * DisplayOutCount / mMoveTimeX; } }
+		public float GetMoveSpeedX(int _fromPos, int _toTos)
+		{
+			return BaseRect.sizeDelta.x * Math.Abs(_fromPos - _toTos) / mMoveTimeX;
+		}
+		public float MoveSpeedY { get { return BaseRect.sizeDelta.y * 1.5f / mMoveTimeY; } }
 		public int NextPos { get; private set; }
 		// 表示オブジェクト
 		private List<OrderDiplayObj> mOrderDiplayObj;
@@ -65,11 +72,11 @@ namespace ProjectWitch.Battle
 		// 各種セットアップ
 		public void Setup(BattleObj battleObj)
 		{
-			var mBaseRect = mDisplayObject.GetComponent<RectTransform>();
+			BaseRect = mDisplayObject.GetComponent<RectTransform>();
 			DisplayOutCount = 0;
 			DisplayOutCount = (int)transform.parent.GetComponent<CanvasScaler>().referenceResolution.x;
-			DisplayOutCount -= DisplayOutCount / 2 + (int)mBaseRect.localPosition.x;
-			DisplayOutCount /= (int)mBaseRect.sizeDelta.x;
+			DisplayOutCount -= DisplayOutCount / 2 + (int)BaseRect.localPosition.x;
+			DisplayOutCount /= (int)BaseRect.sizeDelta.x;
 
 			mOrderDiplayObj = new List<OrderDiplayObj>();
 			mBattleObj = battleObj;
@@ -88,9 +95,8 @@ namespace ProjectWitch.Battle
 		// スタート時に移動させるコルーチン
 		private IEnumerator CoStartMove()
 		{
-			var baseRect = mDisplayObject.GetComponent<RectTransform>();
-			var baseWidth = baseRect.sizeDelta.x;
-			var basePosX = baseRect.localPosition.x;
+			var baseWidth = BaseRect.sizeDelta.x;
+			var basePosX = BaseRect.localPosition.x;
 			for (int i = 0; i < mOrderDiplayObj.Count; ++i)
 			{
 				mOrderDiplayObj[i].SlideIn(i);
@@ -117,7 +123,7 @@ namespace ProjectWitch.Battle
 			var rect = mImNextArrow.GetComponent<RectTransform>();
 
 			var targetPosX = bRect.localPosition.x + bRect.sizeDelta.x / 2;
-			float speedPerSec = MoveSpeedX * mBattleObj.BattleSpeedMagni;
+			float speedPerSec = GetMoveSpeedX(NextPos, nextPosNow) * mBattleObj.BattleSpeedMagni;
 			while (NextPos < nextPosNow ? rect.localPosition.x > targetPosX : rect.localPosition.x < targetPosX)
 			{
 				rect.localPosition -= new Vector3(speedPerSec * Time.deltaTime * (NextPos < nextPosNow ? 1 : -1), 0, 0);
@@ -147,8 +153,6 @@ namespace ProjectWitch.Battle
 			}
 			--NextPos;
 		}
-
-
 
 		// 戦闘不能時の移動コルーチン
 		private IEnumerator CoDeadOut(List<BattleUnit> units)

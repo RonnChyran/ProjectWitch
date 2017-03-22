@@ -283,26 +283,6 @@ namespace ProjectWitch.BattleTester
 			}
 		}
 
-		void Update()
-		{
-			var kLeft = Input.GetKeyUp(KeyCode.LeftArrow);
-			var kRight = Input.GetKeyUp(KeyCode.RightArrow);
-			if(kLeft || kRight)
-			{
-				Unit.ID = ID;
-				Unit.SetHPs();
-				int id;
-				for (id = 0; id < m_SBT.Units.Count; id++)
-					if (Unit == m_SBT.Units[id])
-						break;
-				if (kLeft && !kRight)
-					SetUnit(m_SBT.Units[(id + 5) % 6]);
-				else if (!kLeft && kRight)
-					SetUnit(m_SBT.Units[(id + 1) % 6]);
-
-			}
-		}
-
 		public void SetUnit(SetBattleTester.UnitData _unit)
 		{
 			Unit = _unit;

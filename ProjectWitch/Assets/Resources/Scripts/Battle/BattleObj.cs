@@ -21,10 +21,23 @@ namespace ProjectWitch.Battle
 
     public class BattleObj : MonoBehaviour
     {
-        #region インスペクタ
-
-        // ユニットプレハブ
-        [SerializeField]
+		#region インスペクタ
+		// 捕獲ゲージの速度
+		[SerializeField]
+		private float mCaptureGaugeTime = 2f;
+		// 矢印の振れ幅、かかる時間
+		[SerializeField]
+		private float mArrowShakeWidth = 40f, mArrowTime = 0.5f;
+		public float ArrowShakeWidth { get { return mArrowShakeWidth; } }
+		public float ArrowTime { get { return mArrowTime; } }
+		// 操作説明文
+		[SerializeField]
+		private string mDescriptionText = "";
+		// 操作説明文のスライド時間
+		[SerializeField]
+		private float mDescriptionTextSlideTime = 10f;
+		// ユニットプレハブ
+		[SerializeField]
         private GameObject mUnitPrefab = null;
         // プレイヤー空オブジェクト
         [SerializeField]
@@ -108,8 +121,11 @@ namespace ProjectWitch.Battle
         // スキル説明文
         [SerializeField]
         private GameObject mDescription = null;
-        // スキルキャプション
-        [SerializeField]
+		// スキル説明文マスク
+		[SerializeField]
+		private RectTransform mMaskDescription = null;
+		// スキルキャプション
+		[SerializeField]
         private GameObject mSkillCaption = null;
         // スキルキャプションスプライト
         [SerializeField]
@@ -228,6 +244,7 @@ namespace ProjectWitch.Battle
             mCaptureGauge.SetActive(false);
             mCaptureGaugeBack.SetActive(false);
             Bar.HideAll();
+			IsPlayerSelectTime = false;
             HideDescription();
             mDamageDisplayPlayer.GetComponent<DamageDisplay>().Setup();
             mDamageDisplayEnemy.GetComponent<DamageDisplay>().Setup();
@@ -1262,26 +1279,32 @@ namespace ProjectWitch.Battle
                 CaptureGauge.fillAmount = preCaptureGauge / 100;
                 target.SufferCaptureDamage(target.GetCaptureDamage(TurnUnit.IsExistSoldier ? TurnUnit.GetGroupPhyDamage() : TurnUnit.GetLeaderPhyDamage(),
                     TurnUnit.IsExistSoldier ? TurnUnit.GetGroupMagDamage() : TurnUnit.GetLeaderMagDamage()));
-                var length = 200 / BattleSpeedMagni;
-                var parCaptureGauge = (target.CaptureGauge - preCaptureGauge) / length;
-                var text = mCaptureGauge.transform.FindChild("Text").GetComponent<Text>();
-                for (int i = 0; i < length; i++)
-                {
-                    CaptureGauge.fillAmount = (preCaptureGauge + parCaptureGauge * i) / 100;
-                    text.text = (int)(preCaptureGauge + parCaptureGauge * i) + "％";
-                    Bar.SetBar(target, 0, 0, 0, -parCaptureGauge * (length - i));
-                    yield return WaitSeconds(0.05f / length);
-                }
-                text.text = (int)target.CaptureGauge + "％";
+				// 捕獲音再生
+				Music.PlayCaptureGauge();
+				var text = mCaptureGauge.transform.FindChild("Text").GetComponent<Text>();
+				float time = 0;
+				var endTime = mCaptureGaugeTime / BattleSpeedMagni;
+				while (time < endTime)
+				{
+					var rate = time / endTime;
+					var gauge = (preCaptureGauge + (target.CaptureGauge - preCaptureGauge) * rate);
+					CaptureGauge.fillAmount = gauge / 100;
+					text.text = (int)gauge + "％";
+					Bar.SetBar(target, 0, 0, 0, (target.CaptureGauge - preCaptureGauge) * (rate - 1));
+					yield return null;
+					time += Time.deltaTime;
+				}
+
+				text.text = (int)target.CaptureGauge + "％";
                 CaptureGauge.fillAmount = target.CaptureGauge / 100;
-                yield return WaitSeconds(0.05f);
+                yield return WaitSeconds(0.3f / BattleSpeedMagni);
             }
 
             // エフェクト発生中は待つ
             yield return StartCoroutine("CoWaitEffect");
             while (IsNowIncDec)
                 yield return null;
-            yield return WaitSeconds(0.05f);
+            yield return WaitSeconds(0.1f);
             mCaptureGauge.SetActive(false);
             mCaptureGaugeBack.SetActive(false);
 
@@ -1300,7 +1323,7 @@ namespace ProjectWitch.Battle
             TurnUnit.IsDefense = false;
             yield return TurnUnit.SlideIn();
             if (!TurnUnit.IsSummonUnit)
-                TurnUnit.Face.SetActionFlame(true);
+                TurnUnit.Face.SetActionArrow(true);
 
             // 確率発動
             yield return DoCardAction(CardDataFormat.CardTiming.Rand80, TurnUnit, (TurnUnit.IsPlayer ? 1 : -1));
@@ -1327,6 +1350,7 @@ namespace ProjectWitch.Battle
 					// 味方キャラの場合
 					IsPlayerSelectTime = true;
 					mMouseCover.SetActive(true);
+					HideDescription();
 					while ((IsPlayerSelectTime || IsPlayerActionTime) && !IsBattleEnd)
 						yield return null;
 				}
@@ -1336,7 +1360,7 @@ namespace ProjectWitch.Battle
 
 				if (!preTurnUnit.IsSummonUnit)
 				{
-					preTurnUnit.Face.SetActionFlame(false);
+					preTurnUnit.Face.SetActionArrow(false);
 				}
 				if (preTurnUnit.IsSummonUnit || preTurnUnit.Face.IsExsistUnit)
 				{
@@ -1513,7 +1537,13 @@ namespace ProjectWitch.Battle
         // スキル選択ボタンがマウスオーバーしたことを通知する関数
         public void MouseOverSkillButton(int type)
         {
-            mDescription.SetActive(true);
+			if (mDescription.activeSelf)
+			{
+				StopCoroutine("CoSlideDescriptionText");
+				var textRect = mDescription.GetComponent<Text>().rectTransform;
+				textRect.localPosition = new Vector3(0, 0, 0);
+			}
+			mDescription.SetActive(true);
             var text = mDescription.GetComponent<Text>();
             if (type == 0)
                 text.text = TurnUnit.LAtkSkill.Description;
@@ -1526,18 +1556,43 @@ namespace ProjectWitch.Battle
         // 説明文を消す
         public void HideDescription()
         {
-            mDescription.SetActive(false);
-        }
+			mDescription.SetActive(IsPlayerSelectTime);
+			var text = mDescription.GetComponent<Text>();
+			if (IsPlayerSelectTime)
+			{
+				text.text = mDescriptionText;
+				text.rectTransform.sizeDelta = new Vector2(text.preferredWidth, text.rectTransform.sizeDelta.y);
+				if (text.preferredWidth >= mMaskDescription.sizeDelta.x)
+					StartCoroutine("CoSlideDescriptionText");
+			}
+			else
+				text.rectTransform.sizeDelta = mMaskDescription.sizeDelta;
+		}
 
-        // スキルキャプション表示
-        public void SetSkillCaption(string skillName, bool isAttack)
+		public IEnumerator CoSlideDescriptionText()
+		{
+			var text = mDescription.GetComponent<Text>();
+			var textRect = text.rectTransform;
+			var width = (text.preferredWidth + mMaskDescription.sizeDelta.x) / 2;
+			textRect.localPosition = new Vector3(width, 0, 0);
+			while (true)
+			{
+				textRect.localPosition -= new Vector3(text.preferredWidth * 2 / mDescriptionTextSlideTime * Time.deltaTime, 0, 0);
+				if (textRect.localPosition.x < -width)
+					textRect.localPosition = new Vector3(width, 0, 0);
+				yield return null;
+			}
+		}
+
+		// スキルキャプション表示
+		public void SetSkillCaption(string skillName, bool isAttack)
         {
             mSkillCaption.GetComponent<Image>().sprite = (isAttack ? mSC_Atk : mSC_Def);
             mSkillCaption.transform.FindChild("Text").GetComponent<Text>().text = skillName;
             mSkillCaption.SetActive(true);
         }
 
-        // スキルキャプション表示
+        // スキルキャプション非表示
         public void HideSkillCaption()
         {
             mSkillCaption.SetActive(false);
@@ -1575,7 +1630,7 @@ namespace ProjectWitch.Battle
         {
             BattleSpeed = (int)val;
             Music.PlayMoveConfigSlider();
-        }
+		}
 
         // 設定画面を閉じる関数
         public void PushCloseConfig()

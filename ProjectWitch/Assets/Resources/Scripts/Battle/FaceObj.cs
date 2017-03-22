@@ -51,16 +51,28 @@ namespace ProjectWitch.Battle
         public int Pos { get; private set; }
         public bool IsPlayer { get; private set; }
         public bool IsMoving { get; private set; }
-        // 音楽再生
-        public PlayMusic Music { get { return BattleObj.Music; } }
-
+		public class BoolClass
+		{
+			public bool Flag { get; set; }
+			public BoolClass() { Flag = false; }
+			public BoolClass(bool _flag) { Flag = _flag; }
+			public static bool operator true(BoolClass _flag) { return _flag.Flag; }
+			public static bool operator false(BoolClass _flag) { return !_flag.Flag; }
+			public static bool operator !(BoolClass _flag) { return !_flag.Flag; }
+		}
+		public BoolClass IsMoveArrowSelect { get; private set; }
+		public BoolClass IsMoveArrowAction { get; private set; }
+		// 音楽再生
+		public PlayMusic Music { get { return BattleObj.Music; } }
 
         // ユニットを設定する
         public void SetUnit(BattleUnit unit)
         {
             Unit = unit;
             Unit.Face = this;
-            var image = mImFace.GetComponent<Image>();
+			IsMoveArrowSelect = new BoolClass();
+			IsMoveArrowAction = new BoolClass();
+			var image = mImFace.GetComponent<Image>();
             image.sprite = Resources.Load<Sprite>("Textures/Face/" + unit.UnitData.FaceIamgePath);
             if (!image.sprite)
                 image.sprite = Resources.Load<Sprite>("Textures/Face/640_fv_non");
@@ -76,8 +88,9 @@ namespace ProjectWitch.Battle
             DefenseButton.Setup(this);
             CaptureButton.Setup(this);
             HideButton();
-            SetActionFlame(false);
-            SetSelectArrow(false);
+			mImActionArrow.SetActive(false);
+			mImSelectArrow.SetActive(false);
+			mImTargetFlame.SetActive(false);
             IsExsistUnit = true;
             Icons = new List<GameObject>();
             PrefabStatusOthers = new List<GameObject>();
@@ -107,7 +120,7 @@ namespace ProjectWitch.Battle
             DefenseButton.Setup(this);
             CaptureButton.Setup(this);
             HideButton();
-            SetActionFlame(false);
+            SetActionArrow(false);
             SetSelectArrow(false);
 
             IsExsistUnit = false;
@@ -198,12 +211,6 @@ namespace ProjectWitch.Battle
                 Unit.Position = Position.Middle;
             else
                 Unit.Position = Position.Rear;
-        }
-
-        // 行動設定
-        public void SetActionFlame(bool action)
-        {
-            mImActionArrow.SetActive(action);
         }
 
         // 死亡設定
@@ -324,7 +331,7 @@ namespace ProjectWitch.Battle
             }
             if (statusChangeFlag)
                 SetStatusIcons();
-        }
+		}
 
 		// マウスオーバーしたときの動作
 		public void OnPointerEnterAction()
@@ -395,24 +402,57 @@ namespace ProjectWitch.Battle
 			OnPointerEnterAction();
 		}
 
-        // マウスが離されたとき
-        public void OnPointerExit(PointerEventData e)
+		// マウスが離されたとき
+		public void OnPointerExit(PointerEventData e)
         {
             if (!BattleObj.IsPlayerSelectTime || !IsExsistUnit)
                 return;
 			SetAllFaceHideButton();
             if (!Unit.IsPlayer)
                 Unit.StartCoroutine("SlideOut");
-        }
+		}
 
-        // 選択指定を表示
-        public void SetSelectArrow(bool flag)
+		// 選択指定を表示
+		public void SetSelectArrow(bool flag)
         {
-            mImSelectArrow.SetActive(flag);
             mImTargetFlame.SetActive(flag);
-        }
+			IsMoveArrowSelect.Flag = flag;
+			if (flag)
+				StartCoroutine(CoMoveArrow(mImSelectArrow, IsMoveArrowSelect));
+		}
 
-        public void SetAllFaceHideButton()
+		// 行動設定
+		public void SetActionArrow(bool action)
+		{
+			IsMoveArrowAction.Flag = action;
+			if (action)
+				StartCoroutine(CoMoveArrow(mImActionArrow, IsMoveArrowAction));
+		}
+
+		private IEnumerator CoMoveArrow(GameObject _arrow, BoolClass _flag)
+		{
+			_arrow.SetActive(true);
+			bool isMoveUp = true;
+			float time = 0;
+			var arrow = _arrow.GetComponent<RectTransform>();
+			var pos = arrow.localPosition;
+			while (_flag)
+			{
+				time += Time.deltaTime;
+				var width = BattleObj.ArrowShakeWidth * BattleObj.BattleSpeedMagni * Time.deltaTime * (isMoveUp ? 1 : -1);
+				arrow.localPosition += new Vector3(0, width, 0);
+				if (time >= BattleObj.ArrowTime / BattleObj.BattleSpeedMagni)
+				{
+					time = 0;
+					isMoveUp = !isMoveUp;
+				}
+				yield return null;
+			}
+			arrow.localPosition = pos;
+			_arrow.SetActive(false);
+		}
+
+		public void SetAllFaceHideButton()
         {
             foreach (var face in BattleObj.PlayerFaces)
                 if (face.IsExsistUnit)
