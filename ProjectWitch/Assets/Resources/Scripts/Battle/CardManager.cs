@@ -11,7 +11,8 @@ namespace ProjectWitch.Battle
         public GameObject Flame { get { return CardObj.transform.FindChild("Flame").gameObject; } }
         public CardDataFormat CardData { get; private set; }
         public SkillDataFormat Skill { get; private set; }
-        public int ID { get; private set; }
+        public Image Image { get { return CardObj.GetComponent<Image>(); } }
+		public int ID { get; private set; }
         public int Duration { get; private set; }
         public bool IsCanUse { get; private set; }
 		public bool IsPlayer { get; private set; }
@@ -33,7 +34,7 @@ namespace ProjectWitch.Battle
             CardData = mGame.GameData.Card[id];
             Skill = mGame.GameData.Skill[CardData.SkillID];
             Duration = CardData.Duration;
-            CardObj.GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/Card/" + CardData.ImageBack);
+            CardObj.GetComponent<Image>().sprite = Resources.Load<Sprite>("Textures/Card/" + CardData.ImageFront);
             IsCanUse = true;
 		}
 
@@ -46,19 +47,26 @@ namespace ProjectWitch.Battle
                 {
                     // 初めての使用の場合
                     mGame.BattleOut.UsedCards.Add(ID);
-                }
-                Duration--;
+				}
+				Duration--;
                 if (Duration <= 0)
                 {
                     IsCanUse = false;
-                    // 表示処理
-                    CardObj.SetActive(false);
+					// 表示処理
+					Image.color = new Color(Image.color.r * 0.5f, Image.color.g * 0.5f, Image.color.b * 0.5f);
                 }
             }
         }
 
-        // Use this for initialization
-        void Start()
+		public void SetUseSprite()
+		{
+			if (Duration != CardData.Duration)
+				return;
+			Image.sprite = Resources.Load<Sprite>("Textures/Card/" + CardData.ImageBack);
+		}
+
+		// Use this for initialization
+		void Start()
         {
 
         }

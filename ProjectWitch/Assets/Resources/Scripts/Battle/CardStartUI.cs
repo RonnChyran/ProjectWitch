@@ -10,7 +10,7 @@ namespace ProjectWitch.Battle
         [SerializeField]
         private GameObject mPanel = null, mCardBack = null, mCardFront = null, mName = null, mExposition = null;
         [SerializeField]
-        private float mCardMoveTime = 0.125f, mCardOpenTime = 0.125f, mWaitTime = 0.75f;
+        private float mCardMoveTime = 0.125f, mCardOpenTime = 0.125f, mWaitTime = 0.5f;
 
         public BattleObj BattleObj { get; private set; }
 

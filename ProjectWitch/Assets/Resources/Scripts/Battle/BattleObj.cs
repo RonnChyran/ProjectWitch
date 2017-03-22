@@ -215,7 +215,10 @@ namespace ProjectWitch.Battle
         public bool IsEscape { get; private set; }
 		// 一時停止しているかどうか
 		public bool IsPause { get; set; }
-
+		// 現在状態チェック中かどうか
+		public bool IsCheck { get; private set; }
+		// 現在兵士の攻撃中かどうか
+		public bool IsAttackGroup { get; private set; }
 		#endregion
 
 		// データのロード
@@ -260,6 +263,8 @@ namespace ProjectWitch.Battle
             IsEndWaitTime = false;
             IsWaitInputTime = false;
 			IsPause = false;
+			IsCheck = false;
+			IsAttackGroup = false;
 
 			mEscapeButton.interactable = !BattleDataIn.IsTutorial;
 
@@ -469,7 +474,7 @@ namespace ProjectWitch.Battle
 			}
 			foreach (var card in cards)
 			{
-				if (card.CardData == null || !card.IsCanUse)
+				if (card.CardData == null || !card.IsCanUse || checkCamp == (card.IsPlayer ? -1 : 1))
 					continue;
 				if (card.CardData.Timing == timeing)
 				{
@@ -537,9 +542,10 @@ namespace ProjectWitch.Battle
                     yield return WaitSeconds(0.06f);
                 }
             }
-            mCardStartUI.SetActive(true);
-            yield return mCardStartUI.GetComponent<CardStartUI>().CardStart(card.CardData, card.CardObj);
-            print("Load：カード起動エフェクト");
+			mCardStartUI.SetActive(true);
+			yield return mCardStartUI.GetComponent<CardStartUI>().CardStart(card.CardData, card.CardObj);
+			card.SetUseSprite();
+			print("Load：カード起動エフェクト");
             GenerateEffect(mCardStartEffect, "CardStartEffect", true);
             yield return StartCoroutine("CoWaitEffect");
             mCardStartUI.SetActive(false);
@@ -826,6 +832,9 @@ namespace ProjectWitch.Battle
         // ユニット状態確認コルーチン
         private IEnumerator CoCheckUnit()
         {
+			if (IsCheck)
+				yield break;
+			IsCheck = true;
             List<BattleUnit> removeUnits = new List<BattleUnit>();
             for (int i = 0; i < 2; i++)
             {
@@ -836,40 +845,43 @@ namespace ProjectWitch.Battle
                 {
 					if (unit.IsDamaged)
 					{
-						bool isS50 = unit.UnitData.SoldierNum <= unit.UnitData.MaxSoldierNum * 0.5;
-						bool isS10 = unit.UnitData.SoldierNum <= unit.UnitData.MaxSoldierNum * 0.1;
-						bool isHP50 = unit.UnitData.HP <= unit.MaxHP * 0.5;
-						bool isHP10 = unit.UnitData.HP <= unit.MaxHP * 0.1;
 						bool isDeath = unit.UnitData.HP == 0;
-						// 兵士数が50％以下
-						if (isS50)
-						{
-							yield return DoCardAction(CardDataFormat.CardTiming.UserState_S50, unit, (unit.IsPlayer ? 1 : -1));
-							yield return DoCardAction(CardDataFormat.CardTiming.EnemyState_S50, unit, (unit.IsPlayer ? -1 : 1));
-						}
-						// 兵士数が10％以下
-						if (isS10)
-						{
-							yield return DoCardAction(CardDataFormat.CardTiming.UserState_S10, unit, (unit.IsPlayer ? 1 : -1));
-							yield return DoCardAction(CardDataFormat.CardTiming.EnemyState_S10, unit, (unit.IsPlayer ? -1 : 1));
-						}
-						// HPが50％以下
-						if (isHP50)
-						{
-							yield return DoCardAction(CardDataFormat.CardTiming.UserState_HP50, unit, (unit.IsPlayer ? 1 : -1));
-							yield return DoCardAction(CardDataFormat.CardTiming.EnemyState_HP50, unit, (unit.IsPlayer ? -1 : 1));
-						}
-						// HPが10％以下
-						if (isHP10)
-						{
-							yield return DoCardAction(CardDataFormat.CardTiming.UserState_HP10, unit, (unit.IsPlayer ? 1 : -1));
-							yield return DoCardAction(CardDataFormat.CardTiming.EnemyState_HP10, unit, (unit.IsPlayer ? -1 : 1));
-						}
 						// 死亡
 						if (isDeath)
 						{
 							yield return DoCardAction(CardDataFormat.CardTiming.UserState_Death, unit, (unit.IsPlayer ? 1 : -1));
 							yield return DoCardAction(CardDataFormat.CardTiming.EnemyState_Death, unit, (unit.IsPlayer ? -1 : 1));
+						}
+						else if(!IsAttackGroup)
+						{
+							bool isS50 = unit.UnitData.SoldierNum <= unit.UnitData.MaxSoldierNum * 0.5;
+							bool isS10 = unit.UnitData.SoldierNum <= unit.UnitData.MaxSoldierNum * 0.1;
+							bool isHP50 = unit.UnitData.HP <= unit.MaxHP * 0.5;
+							bool isHP10 = unit.UnitData.HP <= unit.MaxHP * 0.1;
+							// 兵士数が50％以下
+							if (isS50)
+							{
+								yield return DoCardAction(CardDataFormat.CardTiming.UserState_S50, unit, (unit.IsPlayer ? 1 : -1));
+								yield return DoCardAction(CardDataFormat.CardTiming.EnemyState_S50, unit, (unit.IsPlayer ? -1 : 1));
+							}
+							// 兵士数が10％以下
+							if (isS10)
+							{
+								yield return DoCardAction(CardDataFormat.CardTiming.UserState_S10, unit, (unit.IsPlayer ? 1 : -1));
+								yield return DoCardAction(CardDataFormat.CardTiming.EnemyState_S10, unit, (unit.IsPlayer ? -1 : 1));
+							}
+							// HPが50％以下
+							if (isHP50)
+							{
+								yield return DoCardAction(CardDataFormat.CardTiming.UserState_HP50, unit, (unit.IsPlayer ? 1 : -1));
+								yield return DoCardAction(CardDataFormat.CardTiming.EnemyState_HP50, unit, (unit.IsPlayer ? -1 : 1));
+							}
+							// HPが10％以下
+							if (isHP10)
+							{
+								yield return DoCardAction(CardDataFormat.CardTiming.UserState_HP10, unit, (unit.IsPlayer ? 1 : -1));
+								yield return DoCardAction(CardDataFormat.CardTiming.EnemyState_HP10, unit, (unit.IsPlayer ? -1 : 1));
+							}
 						}
 						unit.IsDamaged = false;
 					}
@@ -964,6 +976,7 @@ namespace ProjectWitch.Battle
             // どちらかのユニット数が０になっていれば戦闘終了
             if (PlayerUnits.Count == 0 || EnemyUnits.Count == 0)
                 IsBattleEnd = true;
+			IsCheck = false;
 		}
 
 		private enum DeleteUnitType : int
@@ -1013,7 +1026,8 @@ namespace ProjectWitch.Battle
         // 兵士ユニットで攻撃するコルーチン
         private IEnumerator CoSoldierAttack(BattleUnit target, bool isSlideOut)
         {
-            var gSkillData = TurnUnit.GAtkSkill;
+			IsAttackGroup = true;
+			var gSkillData = TurnUnit.GAtkSkill;
             // エフェクト発生
             GenerateEffect(gSkillData.EffectPath, target.IsPlayer);
             // ダメージ処理
@@ -1032,10 +1046,11 @@ namespace ProjectWitch.Battle
             if (isSlideOut || target.UnitData.HP == 0)
                 yield return target.SlideOut();
             yield return StartCoroutine("CoCheckUnit");
-        }
+			IsAttackGroup = false;
+		}
 
-        // スキルの行動コルーチン
-        private IEnumerator CoSkillAction(BattleUnit actionUnit, BattleUnit target, SkillDataFormat skill, bool isPlayer, bool isCard)
+		// スキルの行動コルーチン
+		private IEnumerator CoSkillAction(BattleUnit actionUnit, BattleUnit target, SkillDataFormat skill, bool isPlayer, bool isCard)
         {
             // ターゲットユニット設定
             List<BattleUnit> targetsList = new List<BattleUnit>();

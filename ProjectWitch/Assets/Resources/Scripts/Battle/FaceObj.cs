@@ -88,9 +88,6 @@ namespace ProjectWitch.Battle
             DefenseButton.Setup(this);
             CaptureButton.Setup(this);
             HideButton();
-			mImActionArrow.SetActive(false);
-			mImSelectArrow.SetActive(false);
-			mImTargetFlame.SetActive(false);
             IsExsistUnit = true;
             Icons = new List<GameObject>();
             PrefabStatusOthers = new List<GameObject>();
@@ -270,10 +267,13 @@ namespace ProjectWitch.Battle
         {
             mBaseRectPos = gameObject.GetComponent<RectTransform>().localPosition;
             mBaseRectSize = gameObject.GetComponent<RectTransform>().sizeDelta;
-        }
+			mImActionArrow.SetActive(false);
+			mImSelectArrow.SetActive(false);
+			mImTargetFlame.SetActive(false);
+		}
 
-        // Use this for initialization
-        void Start()
+		// Use this for initialization
+		void Start()
         {
             BattleObj = GameObject.Find("/BattleObject").GetComponent<BattleObj>();
             mImSelectArrow.SetActive(false);
@@ -416,6 +416,8 @@ namespace ProjectWitch.Battle
 		public void SetSelectArrow(bool flag)
         {
             mImTargetFlame.SetActive(flag);
+			if (IsMoveArrowSelect == null)
+				IsMoveArrowSelect = new BoolClass();
 			IsMoveArrowSelect.Flag = flag;
 			if (flag)
 				StartCoroutine(CoMoveArrow(mImSelectArrow, IsMoveArrowSelect));
@@ -424,6 +426,8 @@ namespace ProjectWitch.Battle
 		// 行動設定
 		public void SetActionArrow(bool action)
 		{
+			if (IsMoveArrowAction == null)
+				IsMoveArrowAction = new BoolClass();
 			IsMoveArrowAction.Flag = action;
 			if (action)
 				StartCoroutine(CoMoveArrow(mImActionArrow, IsMoveArrowAction));
@@ -439,9 +443,9 @@ namespace ProjectWitch.Battle
 			while (_flag)
 			{
 				time += Time.deltaTime;
-				var width = BattleObj.ArrowShakeWidth * BattleObj.BattleSpeedMagni * Time.deltaTime * (isMoveUp ? 1 : -1);
+				var width = BattleObj.ArrowShakeWidth * Time.deltaTime * (isMoveUp ? 1 : -1);
 				arrow.localPosition += new Vector3(0, width, 0);
-				if (time >= BattleObj.ArrowTime / BattleObj.BattleSpeedMagni)
+				if (time >= BattleObj.ArrowTime)
 				{
 					time = 0;
 					isMoveUp = !isMoveUp;
