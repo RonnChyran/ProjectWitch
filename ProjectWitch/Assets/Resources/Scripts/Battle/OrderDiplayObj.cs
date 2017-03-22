@@ -42,7 +42,7 @@ namespace ProjectWitch.Battle
 		{
 			IsAnimation = true;
 			var targetPosX = mBaseRect.localPosition.x + mBaseRect.sizeDelta.x * pos;
-			float speedPerSec = OrderCtrl.MoveSpeedX * BattleObj.BattleSpeedMagni;
+			float speedPerSec = OrderCtrl.GetMoveSpeedX(pos, Pos) * BattleObj.BattleSpeedMagni;
 			while (pos < Pos ? Rect.localPosition.x > targetPosX : Rect.localPosition.x < targetPosX)
 			{
 				Rect.localPosition -= new Vector3(speedPerSec * Time.deltaTime * (pos < Pos ? 1 : -1), 0, 0);
@@ -119,7 +119,7 @@ namespace ProjectWitch.Battle
 			IsAnimation = true;
 			var canvas = transform.parent.parent.GetComponent<CanvasScaler>();
 			var targetPosX = -(canvas.referenceResolution.x + mBaseRect.sizeDelta.x) / 2;
-			float speedPerSec = OrderCtrl.MoveSpeedX * BattleObj.BattleSpeedMagni;
+			float speedPerSec = OrderCtrl.GetMoveSpeedX(-2, Pos) * BattleObj.BattleSpeedMagni;
 			while (Rect.localPosition.x > targetPosX)
 			{
 				Rect.localPosition -= new Vector3(speedPerSec * Time.deltaTime, 0, 0);

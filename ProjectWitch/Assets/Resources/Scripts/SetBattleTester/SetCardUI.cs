@@ -47,24 +47,6 @@ namespace ProjectWitch.BattleTester
 
 		void Awake() { Buttons = new List<Button>(); IsDisplayChange = false; }
 
-		void Update()
-		{
-			var kLeft = Input.GetKeyUp(KeyCode.LeftArrow);
-			var kRight = Input.GetKeyUp(KeyCode.RightArrow);
-			if (kLeft || kRight)
-			{
-				int id;
-				for (id = 0; id < m_SBT.Cards.Count; id++)
-					if (Card == m_SBT.Cards[id])
-						break;
-				if (kLeft && !kRight)
-					SetCard(m_SBT.Cards[(id + 5) % 6]);
-				else if (!kLeft && kRight)
-					SetCard(m_SBT.Cards[(id + 1) % 6]);
-
-			}
-		}
-
 		private void SetSkillDropDown()
 		{
 			m_DdSkill.ClearOptions();
