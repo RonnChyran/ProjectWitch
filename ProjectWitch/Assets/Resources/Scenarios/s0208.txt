@@ -120,6 +120,9 @@
 [clearcg id=3]
 [filter name="clear" time=500]
 
+;進行度を加算
+[sys_memset index=4000 value="3"]
+
 [else]
 
 [cn]

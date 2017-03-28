@@ -165,3 +165,8 @@
 [stopbgm]
 
 [sys_memset index=213 value="1"]
+[sys_memset index=4000 value="5"]
+
+;トリアイナ、オリヴィアと交戦状態になる
+[sys_memset index=10011 value="1"]
+[sys_memset index=10012 value="1"]

@@ -13,11 +13,13 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Full v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile></CompilerResponseFile>
+    <CompilerResponseFile>
+    </CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows64:19</UnityBuildTarget>
     <UnityVersion>5.5.1f1</UnityVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -181,6 +183,11 @@
     <Compile Include="Assets\Resources\Scripts\Menu\Army\Unit.cs" />
     <Compile Include="Assets\Resources\Scripts\Menu\Army\UnitList.cs" />
     <Compile Include="Assets\Resources\Scripts\Menu\MenuController.cs" />
+    <Compile Include="Assets\Resources\Scripts\Menu\System\HilightBoxLoadReciever.cs" />
+    <Compile Include="Assets\Resources\Scripts\Menu\System\HilightBoxReciever.cs" />
+    <Compile Include="Assets\Resources\Scripts\Menu\System\HilightBoxSaveReciever.cs" />
+    <Compile Include="Assets\Resources\Scripts\Menu\System\HilightBoxSender.cs" />
+    <Compile Include="Assets\Resources\Scripts\Menu\System\SystemMenu.cs" />
     <Compile Include="Assets\Resources\Scripts\Menu\TalkCommandHelper.cs" />
     <Compile Include="Assets\Resources\Scripts\Menu\Top\InfoBoxText.cs" />
     <Compile Include="Assets\Resources\Scripts\Menu\Top\TopMenu.cs" />
@@ -219,6 +226,9 @@
     <Compile Include="Assets\Resources\Scripts\System\GoTitleWindow.cs" />
     <Compile Include="Assets\Resources\Scripts\System\InGameConsole.cs" />
     <Compile Include="Assets\Resources\Scripts\System\QuitWindow.cs" />
+    <Compile Include="Assets\Resources\Scripts\System\SaveLoad\LoadContainer.cs" />
+    <Compile Include="Assets\Resources\Scripts\System\SaveLoad\SaveContainer.cs" />
+    <Compile Include="Assets\Resources\Scripts\System\SaveLoad\SaveLoadContainerBase.cs" />
     <Compile Include="Assets\Resources\Scripts\System\SoundManager.cs" />
     <Compile Include="Assets\Resources\Scripts\System\SoundTester.cs" />
     <Compile Include="Assets\Resources\Scripts\System\TalkCommandHelper.cs" />
@@ -456,6 +466,24 @@
     <None Include="Assets\Resources\Scenarios\s0405.txt" />
     <None Include="Assets\Resources\Scenarios\s0406.txt" />
     <None Include="Assets\Resources\Scenarios\s0407.txt" />
+    <None Include="Assets\Resources\Scenarios\s0500.txt" />
+    <None Include="Assets\Resources\Scenarios\s0501.txt" />
+    <None Include="Assets\Resources\Scenarios\s0502.txt" />
+    <None Include="Assets\Resources\Scenarios\s0503.txt" />
+    <None Include="Assets\Resources\Scenarios\s0504.txt" />
+    <None Include="Assets\Resources\Scenarios\s0505.txt" />
+    <None Include="Assets\Resources\Scenarios\s0506.txt" />
+    <None Include="Assets\Resources\Scenarios\s0507.txt" />
+    <None Include="Assets\Resources\Scenarios\s0508.txt" />
+    <None Include="Assets\Resources\Scenarios\s0509.txt" />
+    <None Include="Assets\Resources\Scenarios\s0510.txt" />
+    <None Include="Assets\Resources\Scenarios\s0511.txt" />
+    <None Include="Assets\Resources\Scenarios\s0512.txt" />
+    <None Include="Assets\Resources\Scenarios\s0513.txt" />
+    <None Include="Assets\Resources\Scenarios\s0514.txt" />
+    <None Include="Assets\Resources\Scenarios\s0515.txt" />
+    <None Include="Assets\Resources\Scenarios\s0516.txt" />
+    <None Include="Assets\Resources\Scenarios\s0517.txt" />
     <None Include="Assets\Resources\Scenarios\s0600.txt" />
     <None Include="Assets\Resources\Scenarios\s0601.txt" />
     <None Include="Assets\Resources\Scenarios\s0602.txt" />
@@ -560,7 +588,6 @@
     <None Include="Assets\Resources\Scenarios\s9995.txt" />
     <None Include="Assets\Resources\Scenarios\s9996.txt" />
     <None Include="Assets\Resources\Scenarios\test.txt" />
-    <None Include="Assets\SaveData\save0.xml" />
     <None Include="Assets\StreamingAssets\s0000.txt" />
     <None Include="Assets\uREPL\Resources\uREPL\Xmls\Help.txt" />
     <None Include="Assets\uREPL\Resources\uREPL\Xmls\UnityEngineClasses.xml" />

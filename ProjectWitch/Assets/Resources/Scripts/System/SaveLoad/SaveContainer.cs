@@ -1,0 +1,19 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+
+namespace ProjectWitch
+{
+    public class SaveContainer : SaveLoadContainerBase
+    {
+        //セーブを実行
+        public void Save()
+        {
+            var game = Game.GetInstance();
+            game.GameData.Save(mFileIndex);
+
+            Reset();
+        }
+    }
+}

@@ -2,6 +2,7 @@
 using System.IO;
 using System.Text;
 using System.Collections;
+using System.Runtime.InteropServices;
 using System.Collections.Generic;
 using System.Linq; //iOSで動かないかも
 
@@ -9,90 +10,179 @@ using UnityEngine;
 using ProjectWitch.Extention;
 
 namespace ProjectWitch
-{    
-    //セーブを想定したデータ
-    public abstract class ISaveableData
+{   
+    //プレイヤーデータ用のメタデータ
+    public class GameMetaData : ISaveMetaData
     {
-        //セーブするためのデータをbyte配列にパックして取得
-        public abstract byte[] GetSaveBytes();
+        //タイムスタンプ
+        public int Year { get; set; }       //yearのみ255を超えるのでint型
+        public byte Month { get; set; }
+        public byte Day { get; set; }
+        public byte Hour { get; set; }
+        public byte Minute { get; set; }
 
-        //バイト配列からデータを再現
-        //@offset　何バイト目から読み出し始めるか
-        //@return　何バイト読み込んだか、引数のoffsetと合計した数値を返す
-        public abstract int SetFromBytes(int offset, byte[] data);
+        //占領済み領地数
+        public int DominatedTerritory { get; set; }
 
+        //アリスのレベル
+        public int Level { get; set; }
+
+        //経過ターン数
+        public int Turn { get; set; }
+
+        //クラスサイズの取得
+        public override int GetSize()
+        {
+            var size = base.GetSize();
+            size += Marshal.SizeOf(Year);
+            size += Marshal.SizeOf(Month);
+            size += Marshal.SizeOf(Day);
+            size += Marshal.SizeOf(Hour);
+            size += Marshal.SizeOf(Minute);
+            size += Marshal.SizeOf(DominatedTerritory);
+            size += Marshal.SizeOf(Level);
+            size += Marshal.SizeOf(Turn);
+
+            return size;
+        }
+
+        //セーブファイルに書き込むバイト列を取得
+        public override byte[] GetSaveBytes()
+        {
+            List<byte> outList = new List<byte>();
+            
+            //値のアップデート
+            Update();
+
+            //version
+            outList.Add(Major);
+            outList.Add(Minor);
+
+            //time stamp
+            outList.AddRange(BitConverter.GetBytes(Year));
+            outList.Add(Month);
+            outList.Add(Day);
+            outList.Add(Hour);
+            outList.Add(Minute);
+
+            //ゲームデータ
+            outList.AddRange(BitConverter.GetBytes(DominatedTerritory));
+            outList.AddRange(BitConverter.GetBytes(Level));
+            outList.AddRange(BitConverter.GetBytes(Turn));
+
+            return outList.ToArray();
+        }
+
+        //バイト列からデータを復元
+        public override void SetFromBytes(byte[] data)
+        {
+            int offset = 0;
+
+            //version
+            Major = data[offset++];
+            Minor = data[offset++];
+
+            //time stamp
+            Year = BitConverter.ToInt32(data, offset); offset += 4;
+            Month =     data[offset++];
+            Day =       data[offset++];
+            Hour =      data[offset++];
+            Minute =    data[offset++];
+
+            //ゲームデータ
+            DominatedTerritory =    BitConverter.ToInt32(data, offset); offset += 4;
+            Level =                 BitConverter.ToInt32(data, offset); offset += 4;
+            Turn =                  BitConverter.ToInt32(data, offset); offset += 4;
+        }
+
+        //値のアップ―デート
+        private void Update()
+        {
+            var game = Game.GetInstance();
+
+            //タイムスタンプ
+            var timestamp = DateTime.Now;
+            Year = timestamp.Year;
+            Month = (byte)timestamp.Month;
+            Day = (byte)timestamp.Day;
+            Hour = (byte)timestamp.Hour;
+            Minute = (byte)timestamp.Minute;
+
+            //ゲームデータ
+            DominatedTerritory = game.GameData.Territory[0].AreaList.Count;
+            Level = game.GameData.Unit[0].Level;
+            Turn = game.GameData.CurrentTurn;
+
+        }
+    }
+
+    //システムデータ用のメタデータ
+    public class SystemMetaData : ISaveMetaData
+    {
+        //セーブファイルに書き込むバイト列を取得
+        public override byte[] GetSaveBytes()
+        {
+            List<byte> outList = new List<byte>();
+
+            //version
+            outList.Add(Major);
+            outList.Add(Minor);
+
+            return outList.ToArray();
+        }
+
+        //バイト列からデータを復元
+        public override void SetFromBytes(byte[] data)
+        {
+            int offset = 0;
+
+            //version
+            Major = data[offset++];
+            Minor = data[offset++];
+        }
+        
     }
 
     //プレイヤーデータ
-    [System.Xml.Serialization.XmlRoot("root")]
     public class GameData : ISaveableData
     {
-        //セーブデータのフォーマット
-        private static readonly FileIO.Format mFormat = FileIO.Format.Binary;
-
         //セーブファイルのバージョン
-        [System.Xml.Serialization.XmlElement("version")]
-        public readonly FileVersion SaveDataVersion =
-            new FileVersion()
-            {
-                Major = 1,
-                Minor = 0
-            };
-
+        private GameMetaData metaData = new GameMetaData();
 
         #region data_member
 
-        //データの識別子(game save data)
-        private readonly string EXT = "GSD";
-
         //ユニットデータ
-        [System.Xml.Serialization.XmlElement("unit")]
         public List<UnitDataFormat> Unit { get; set; }
         //スキルデータ
-        [System.Xml.Serialization.XmlElement("skill")]
         public List<SkillDataFormat> Skill { get; set; }
         //土地データ
-        [System.Xml.Serialization.XmlElement("area")]
         public List<AreaDataFormat> Area { get; set; }
         //領地データ
-        [System.Xml.Serialization.XmlElement("territory")]
         public List<TerritoryDataFormat> Territory { get; set; }
         //グループデータ
-        [System.Xml.Serialization.XmlElement("group")]
         public List<GroupDataFormat> Group { get; set; }
         //AIデータ
-        [System.Xml.Serialization.XmlIgnore]
         public List<AIDataFormat> AI { get; set; }
         //装備データ
-        [System.Xml.Serialization.XmlIgnore]
         public List<EquipmentDataFormat> Equipment { get; set; }
         //カードデータ
-        [System.Xml.Serialization.XmlIgnore]
         public List<CardDataFormat> Card { get; set; }
         //イベントデータ
-        [System.Xml.Serialization.XmlIgnore]
         public List<EventDataFormat> FieldEvent { get; set; }
-        [System.Xml.Serialization.XmlIgnore]
         public List<EventDataFormat> TownEvent { get; set; }
 
         //所持マナ
-        [System.Xml.Serialization.XmlElement("playermana")]
         public int PlayerMana { get; set; }
         //現在のターン数
-        [System.Xml.Serialization.XmlElement("current_turn")]
         public int CurrentTurn { get; set; }
         //現在の時間数 0:朝 1:昼 2:夜 3~:敵ターン
-        [System.Xml.Serialization.XmlElement("current_time")]
         public int CurrentTime { get; set; }
         //フィールドのBGM
-        [System.Xml.Serialization.XmlElement("field_bgm")]
         public string FieldBGM { get; set; }
         //通常バトルのBGM
-        [System.Xml.Serialization.XmlElement("battle_bgm")]
         public string BattleBGM { get; set; }
         
         //システム変数
-        [System.Xml.Serialization.XmlElement("memory")]
         public VirtualMemory Memory { get; private set; }
         #endregion
 
@@ -170,16 +260,21 @@ namespace ProjectWitch
         //データをセーブファイルに書き出す
         public void Save(int slot)
         {
-            FileIO.SaveXML(GamePath.GameSaveFilePath(slot),SaveDataVersion, mFormat, this);
+            FileIO.SaveBinary(GamePath.GameSaveFilePath(slot),metaData, this);
         }
 
         //データをセーブファイルから読み込む
         public void Load(int slot)
         {
+            var meta = new GameMetaData();
+
             var inst = new GameData();
             inst.Copy(this);
-            FileIO.LoadXML(GamePath.GameSaveFilePath(slot),SaveDataVersion, mFormat, ref inst);
+            FileIO.LoadBinary(GamePath.GameSaveFilePath(slot),meta, inst);
             this.Copy(inst);
+
+            //ファイルのバージョンチェック
+            metaData = meta;
         }
 
         //引数に与えられたオブジェクトをコピーする
@@ -209,10 +304,6 @@ namespace ProjectWitch
             var outdata = new List<byte>();
 
             //セーブするデータ（ゲーム内で変更の可能性のあるデータ）を追加
-            outdata.AddRange(Encoding.UTF8.GetBytes(EXT));
-            outdata.Add(SaveDataVersion.Major);
-            outdata.Add(SaveDataVersion.Minor);
-
             outdata.AddRange(BitConverter.GetBytes(Unit.Count));
             outdata.AddRange(Unit.GetBytes());
 
@@ -246,45 +337,6 @@ namespace ProjectWitch
         public override int SetFromBytes(int _offset, byte[] data)
         {
             int offset = _offset;
-
-            byte[] extbytes = new byte[3];
-            Array.Copy(data, offset, extbytes, 0, 3);
-            offset += 3;
-            var ext = Encoding.UTF8.GetString(extbytes);
-
-            //キャプションが正しくない場合エラー
-            if(ext!=EXT)
-            {
-                Debug.LogError("データがGameDataのものではありません。");
-                return 0;
-            }
-
-            //バージョンチェック
-            var majorVersion = data[offset];  offset += 1;
-            var minorVersion = data[offset];  offset += 1;
-            if(SaveDataVersion.Major > majorVersion)
-            {
-                Debug.LogWarning("セーブデータのバージョンがゲームバージョンよりも古いです。" +
-                    "PWSaveConverterを使って、最新のセーブデータにアップグレードしてください。");
-                return 0;
-            }
-            else if(SaveDataVersion.Major < majorVersion)
-            {
-                Debug.LogWarning("セーブデータのバージョンよりゲームバージョンが古いです。" +
-                    "サイトより最新のゲームデータを入手してください。");
-                return 0;
-            }
-            else
-            {
-                if (SaveDataVersion.Minor > minorVersion)
-                    Debug.Log("セーブデータのマイナーバージョンがゲームバージョンよりも古いです。" +
-                        "ゲームプレイに軽微な影響が出る場合があります。" +
-                        "PWSaveConverterをつかって、最新のセーブデータにアップグレードすることを推奨します。");
-                else if (SaveDataVersion.Minor < minorVersion)
-                    Debug.Log("セーブデータのマイナーバージョンよりゲームバージョンが古いです。" +
-                        "ゲームプレイに軽微な影響が出る場合があります。" +
-                        "サイトより最新のゲームデータを入手することを推奨します。");
-            }
 
             //データ代入
             var unitCount = BitConverter.ToInt32(data, offset); offset += 4;
@@ -337,32 +389,17 @@ namespace ProjectWitch
     }
 
     //システムデータ
-    [System.Xml.Serialization.XmlRoot("root")]
     public class SystemData : ISaveableData
     {
-        //セーブデータのフォーマット
-        private static readonly FileIO.Format mFormat = FileIO.Format.Binary;
-
         //セーブファイルのバージョン
-        [System.Xml.Serialization.XmlElement("version")]
-        public static readonly FileVersion SaveDataVersion =
-            new FileVersion()
-            {
-                Major = 1,
-                Minor = 0
-            };
+        private SystemMetaData metaData = new SystemMetaData();
 
         #region data_member
 
-        //データの識別子(system save data)
-        private readonly string EXT = "SSD";
-
         //コンフィグ
-        [System.Xml.Serialization.XmlElement("config")]
         public ConfigDataFormat Config { get; set; }
 
         //仮想メモリ(CGギャラリーの開放、周回フラグなどを含める)
-        [System.Xml.Serialization.XmlElement("memory")]
         public VirtualMemory Memory { get; set; }
         #endregion
 
@@ -377,7 +414,7 @@ namespace ProjectWitch
         //データをシステムファイルに書き出す
         public void Save()
         {
-            FileIO.SaveXML(GamePath.SystemSaveFilePath(), SaveDataVersion, mFormat, this);
+            FileIO.SaveBinary(GamePath.SystemSaveFilePath(), metaData, this);
         }
 
         //データをシステムファイルから読み込む
@@ -385,7 +422,7 @@ namespace ProjectWitch
         {
             var inst = new SystemData();
             inst.Copy(this);
-            FileIO.LoadXML(GamePath.SystemSaveFilePath(),SaveDataVersion, mFormat, ref inst);
+            FileIO.LoadBinary(GamePath.SystemSaveFilePath(),metaData, inst);
             this.Copy(inst);
         }
 
@@ -402,9 +439,6 @@ namespace ProjectWitch
             var outdata = new List<byte>();
 
             //セーブするデータ（ゲーム内で変更の可能性のあるデータ）を追加
-            outdata.AddRange(Encoding.UTF8.GetBytes(EXT));
-            outdata.Add(SaveDataVersion.Major);
-            outdata.Add(SaveDataVersion.Minor);
             outdata.AddRange(Config.GetSaveBytes());
             outdata.AddRange(Memory.GetSaveBytes());
 
@@ -415,45 +449,6 @@ namespace ProjectWitch
         public override int SetFromBytes(int _offset, byte[] data)
         {
             int offset = _offset;
-
-            byte[] extbytes = new byte[3];
-            Array.Copy(data, offset, extbytes, 0, 3);
-            offset += 3;
-            var ext = Encoding.UTF8.GetString(extbytes);
-
-            //キャプションが正しくない場合エラー
-            if (ext != EXT)
-            {
-                Debug.LogError("データがGameDataのものではありません。");
-                return 0;
-            }
-
-            //バージョンチェック
-            var majorVersion = data[offset]; offset += 1;
-            var minorVersion = data[offset]; offset += 1;
-            if (SaveDataVersion.Major > majorVersion)
-            {
-                Debug.LogWarning("セーブデータのバージョンがゲームバージョンよりも古いです。" +
-                    "PWSaveConverterを使って、最新のセーブデータにアップグレードしてください。");
-                return 0;
-            }
-            else if (SaveDataVersion.Major < majorVersion)
-            {
-                Debug.LogWarning("セーブデータのバージョンよりゲームバージョンが古いです。" +
-                    "サイトより最新のゲームデータを入手してください。");
-                return 0;
-            }
-            else
-            {
-                if (SaveDataVersion.Minor > minorVersion)
-                    Debug.Log("セーブデータのマイナーバージョンがゲームバージョンよりも古いです。" +
-                        "ゲームプレイに軽微な影響が出る場合があります。" +
-                        "PWSaveConverterをつかって、最新のセーブデータにアップグレードすることを推奨します。");
-                else if (SaveDataVersion.Minor < minorVersion)
-                    Debug.Log("セーブデータのマイナーバージョンよりゲームバージョンが古いです。" +
-                        "ゲームプレイに軽微な影響が出る場合があります。" +
-                        "サイトより最新のゲームデータを入手することを推奨します。");
-            }
 
             //データ代入
             offset = Config.SetFromBytes(offset, data);
@@ -1080,23 +1075,17 @@ namespace ProjectWitch
 
                 if (state == TerritoryState.Prepare)
                 {
-                    if (InvationableFlagIndex == -1)
-                        state = TerritoryState.Ready;
-                    else if (!game.GameData.Memory.IsZero(InvationableFlagIndex))
+                    if (InvationableFlagIndex == -1 || !game.GameData.Memory.IsZero(InvationableFlagIndex))
                         state = TerritoryState.Ready;
                 }
                 if (state == TerritoryState.Ready)
                 {
-                    if (ActiveFlagIndex == -1)
-                        state = TerritoryState.Active;
-                    else if (!game.GameData.Memory.IsZero(ActiveFlagIndex))
+                    if (ActiveFlagIndex == -1 || !game.GameData.Memory.IsZero(ActiveFlagIndex))
                         state = TerritoryState.Active;
                 }
                 if (state == TerritoryState.Active)
                 {
-                    if (DeadFlagIndex == -1)
-                        state = TerritoryState.Dead;
-                    else if (!game.GameData.Memory.IsZero(DeadFlagIndex))
+                    if (DeadFlagIndex == -1 || !game.GameData.Memory.IsZero(DeadFlagIndex))
                         state = TerritoryState.Dead;
                 }
                 return state;
@@ -1551,6 +1540,8 @@ namespace ProjectWitch
         //指定したインデックスの値が、整数の0かどうか
         public bool IsZero(int index)
         {
+            if (index < 0 || index >= Count) return false;
+
             var num = Data[index];
             return (num == 0);
         }
@@ -1605,7 +1596,7 @@ namespace ProjectWitch
     {
         public EventDataFormat()
         {
-            If_Val = new List<int>();
+            If_Var = new List<int>();
             If_Ope = new List<OperationType>();
             If_Imm = new List<int>();
 
@@ -1633,17 +1624,13 @@ namespace ProjectWitch
         [System.Xml.Serialization.XmlElement("area")]
         public int Area { get; set; }
 
-        //登場人物味方
-        [System.Xml.Serialization.XmlElement("actorA")]
-        public List<int> ActorA { get; set; }
-
-        //登場人物敵
-        [System.Xml.Serialization.XmlElement("actorB")]
-        public List<int> ActorB { get; set; }
+        //生きている必要があるユニット
+        [System.Xml.Serialization.XmlElement("if_alive")]
+        public List<int> IfAlive { get; set; }
 
         //条件式に使う変数番号
         [System.Xml.Serialization.XmlElement("if_val")]
-        public List<int> If_Val { get; set; }
+        public List<int> If_Var { get; set; }
 
         //条件式に使う演算子
         public enum OperationType : int
@@ -2052,7 +2039,7 @@ namespace ProjectWitch
             //データの代入
             for(int i=1; i<rowData.Count; i++)
             {
-                if (rowData[i].Count != 14) continue;
+                if (rowData[i].Count < 3) continue;
 
                 var data = rowData[i];
                 var eventData = new EventDataFormat();
@@ -2073,59 +2060,40 @@ namespace ProjectWitch
                     else
                         eventData.Area = -1;
 
-                    //味方登場人物
-                    eventData.ActorA = new List<int>();
+                    //IfAlive
+                    eventData.IfAlive = new List<int>();
                     var parts = data[4].Split(' ');
-                    foreach( string part in parts )
+                    foreach (string part in parts)
                     {
                         if (part == "") continue;
-                        eventData.ActorA.Add(int.Parse(part));
-                    }
-
-                    //敵登場人物
-                    eventData.ActorB = new List<int>();
-                    parts = data[5].Split(' ');
-                    foreach( string part in parts)
-                    {
-                        if (part == "") continue;
-                        eventData.ActorB.Add(int.Parse(part));
-                    }
-
-                    //条件読み出し1
-                    if (data[6] != "")
-                    {
-                        var dummy = EventDataFormat.OperationType.Equal;
-                        eventData.If_Val.Add(int.Parse(data[6]));
-                        eventData.If_Ope.Add(dummy.Parse(data[7]));
-                        eventData.If_Imm.Add(int.Parse(data[8]));
-                    }
-                    else
-                    {
-                        eventData.If_Val.Add(-1);
-                        eventData.If_Ope.Add(EventDataFormat.OperationType.Equal);
-                        eventData.If_Imm.Add(0);
-                    }
-
-                    //条件読み出し2
-                    if (data[9] != "")
-                    {
-                        var dummy = EventDataFormat.OperationType.Equal;
-                        eventData.If_Val.Add(int.Parse(data[9]));
-                        eventData.If_Ope.Add(dummy.Parse(data[10]));
-                        eventData.If_Imm.Add(int.Parse(data[11]));
-                    }
-                    else
-                    {
-                        eventData.If_Val.Add(-1);
-                        eventData.If_Ope.Add(EventDataFormat.OperationType.Equal);
-                        eventData.If_Imm.Add(0);
+                        eventData.IfAlive.Add(int.Parse(part));
                     }
 
                     //次のスクリプト
-                    if (data[12] != "") eventData.NextA = int.Parse(data[12]);
+                    if (data[5] != "") eventData.NextA = int.Parse(data[5]);
                     else eventData.NextA = -1;
-                    if (data[13] != "") eventData.NextB = int.Parse(data[13]);
+                    if (data[6] != "") eventData.NextB = int.Parse(data[6]);
                     else eventData.NextB = -1;
+
+
+                    for (int index = 7, j = 0; j < 3 * 3; j += 3)
+                    {
+                        //条件読み出し1
+                        if (data[index + j] != "")
+                        {
+                            var dummy = EventDataFormat.OperationType.Equal;
+                            eventData.If_Var.Add(int.Parse(data[index + j]));
+                            eventData.If_Ope.Add(dummy.Parse(data[index + j + 1]));
+                            eventData.If_Imm.Add(int.Parse(data[index + j + 2]));
+                        }
+                        else
+                        {
+                            eventData.If_Var.Add(-1);
+                            eventData.If_Ope.Add(EventDataFormat.OperationType.Equal);
+                            eventData.If_Imm.Add(0);
+                        }
+                    }
+
                 }
                 catch (ArgumentNullException e)
                 {
@@ -2627,7 +2595,7 @@ namespace ProjectWitch
         public static readonly string Data = "Data/";
         public static readonly string SaveFolderPath = Application.dataPath + "/SaveData/";
 
-        public static string GameSaveFilePath(int index) { return SaveFolderPath + "save" + index.ToString(); }
+        public static string GameSaveFilePath(int index) { return SaveFolderPath + "save" + index.ToString() + ".dat"; }
         public static string SystemSaveFilePath() { return SaveFolderPath + "sys_save"; }
     }
 }

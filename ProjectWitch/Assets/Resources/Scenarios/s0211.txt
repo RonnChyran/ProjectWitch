@@ -1,4 +1,6 @@
-;ここまでにアリスがトリアイナ領に進行している場合
+;s0211
+;author: yuichi
+;timing: ;ここまでにアリスがトリアイナ領に進行している場合
 
 
 ;ロード
@@ -152,3 +154,4 @@
 ;終了処理
 [stopbgm]
 [sys_memset index=211 value="1"]
+[sys_memset index=4000 value="4"]

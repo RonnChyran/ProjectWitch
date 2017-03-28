@@ -1,7 +1,10 @@
 ;s0210
 ;author:yuichi
-;timing:
+;timing:ベガ戦後
 
+;マップスクロール
+[field_area_hilight id=1]
+[wait time=200]
 
 ;ロード
 [loadcg id=0 ref="vega"]
@@ -10,10 +13,6 @@
 [loadcg id=3 ref="triaina"]
 
 [if_alive unit=9]
-
-;マップスクロール
-[field_area_hilight id=1]
-[wait time=200]
 
 ;場面転換
 [filter name="fade" time=500]
@@ -158,8 +157,10 @@
 [clearcg id=3]
 [filter name="clear" time=500]
 
-[endif]
+[endif] ;[if_alive unit=9]
 
 ;終了処理
 [stopbgm]
 [sys_memset index=210 value="1"]
+
+[sys_memset index=10003 value="1"]

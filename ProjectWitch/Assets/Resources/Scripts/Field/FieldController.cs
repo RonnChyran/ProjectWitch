@@ -41,6 +41,12 @@ namespace ProjectWitch.Field
 
         protected virtual void Start()
         {
+            var game = Game.GetInstance();
+            game.HideNowLoading();
+
+            //スクリプト初期化
+            game.ScenarioIn.Reset();
+
             MenuClickable = true;
             FlagClickable = true;
 
@@ -475,7 +481,7 @@ namespace ProjectWitch.Field
                 bool isEventEnable = true;
 
                 //味方の生存判定
-                foreach (int unit in eventlist[i].ActorA)
+                foreach (int unit in eventlist[i].IfAlive)
                 {
                     //ユニットが生きているか
                     if (!game.GameData.Unit[unit].IsAlive)
@@ -483,44 +489,6 @@ namespace ProjectWitch.Field
                         isEventEnable = false;
                         break;
                     }
-
-                    //自領地にユニットが含まれているか
-                    var playerUnitList = game.GameData.Group[game.GameData.Territory[0].GroupList[0]].UnitList;
-                    if (playerUnitList.Contains(unit) == false)
-                    {
-                        //含まれていなかったらイベント棄却
-                        isEventEnable = false;
-                        break;
-                    }
-                }
-                if (!isEventEnable) continue;
-
-                //敵の生存判定
-                foreach (int unit in eventlist[i].ActorB)
-                {
-                    isEventEnable = false;
-
-                    //ユニットが生きているか
-                    if (!game.GameData.Unit[unit].IsAlive) break;
-
-                    //任意の領地にユニットが含まれているか
-                    for (int j = 1; j < game.GameData.Territory.Count; j++)
-                    {
-                        //領地の所持するグループに所属するユニットから総当たりする
-                        var groupList = game.GameData.Territory[j].GroupList;
-                        foreach (var groupID in groupList)
-                        {
-                            var group = game.GameData.Group[groupID];
-                            if (group.UnitList.Contains(unit))
-                            {
-                                isEventEnable = true;
-                                break;
-                            }
-                        }
-                    }
-
-                    //どの領地にも敵が見つからなかったらイベント棄却
-                    if (!isEventEnable) break;
                 }
                 if (!isEventEnable) continue;
 
@@ -528,11 +496,11 @@ namespace ProjectWitch.Field
                 try
                 {
                     bool result = false;
-                    for (int j = 0; j < eventlist[i].If_Val.Count; j++)
+                    for (int j = 0; j < eventlist[i].If_Var.Count; j++)
                     {
-                        if (eventlist[i].If_Val[j] != -1)  //条件なしの時If_Val == -1
+                        if (eventlist[i].If_Var[j] != -1)  //条件なしの時If_Val == -1
                         {
-                            int src = game.GameData.Memory[eventlist[i].If_Val[j]];
+                            int src = game.GameData.Memory[eventlist[i].If_Var[j]];
                             var imm = eventlist[i].If_Imm[j];
 
                             //演算結果用

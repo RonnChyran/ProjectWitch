@@ -153,10 +153,6 @@ namespace ProjectWitch
             //システムデータ初期化
             SystemData = new SystemData();
             SystemData.Reset();
-
-            //デバッグ用（すぐけす
-            GameData.Memory[9800] = 1; //チュートリアル無効
-            GameData.Memory[9805] = 1;
         }
 
         //ダイアログを表示
@@ -205,10 +201,9 @@ namespace ProjectWitch
             ShowNowLoading();
             yield return null;
 
-            SceneManager.LoadSceneAsync(cSceneName_Field);
+            yield return SceneManager.LoadSceneAsync(cSceneName_Field);
 
             HideNowLoading();
-            yield return null;
         }
 
         //メニューの呼び出し

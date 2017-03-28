@@ -74,7 +74,7 @@ namespace ProjectWitch.Menu
             if (comp)
                 comp.text = str;
             else
-                Debug.Log("テキストコンポーネントの接続が着れています");
+                Debug.Log("テキストコンポーネントの接続がきれています");
         }
     }
 }
