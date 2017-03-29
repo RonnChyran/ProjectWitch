@@ -56,7 +56,6 @@ namespace ProjectWitch.Field
 
         protected virtual void Update()
         {
-            var game = Game.GetInstance();
 
             if (!mIsCoroutineExec)
                 StartCoroutine(TurnProcess());

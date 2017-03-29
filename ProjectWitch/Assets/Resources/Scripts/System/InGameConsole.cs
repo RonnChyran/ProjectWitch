@@ -11,9 +11,6 @@ namespace ProjectWitch
         [SerializeField]
         private GameObject mcUI = null;
 
-        //表示するテキストの配列
-        private Queue<string> text = new Queue<string>();
-
 
         // Use this for initialization
         void Start()
