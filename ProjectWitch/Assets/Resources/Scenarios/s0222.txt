@@ -110,3 +110,7 @@
 ;終了処理
 [stopbgm]
 [sys_memset index=222 value="1"]
+
+;戦闘処理
+[battle_unit_in p0=-1 p1=-1 p2=-1 e0=34 e1=5 e2=6]
+[battle_bgm ref="005_battle2"]

@@ -51,7 +51,10 @@ namespace ProjectWitch.Field
             if (FieldController.FlagClickable)
                 mcButton.interactable = true;
             else
+            {
+                CloseAreaName();
                 mcButton.interactable = false;
+            }
         }
 
         //メニューを開く
@@ -111,12 +114,7 @@ namespace ProjectWitch.Field
         //マウスが外れた時のイベント
         public void OnPointerExit(PointerEventData e)
         {
-            if (FieldUIController.SelectedTerritory == mTerritoryID &&
-                FieldUIController.ActionPanelLock == false)
-            {
-                Destroy(mInstAreaName);
-                FieldUIController.SelectedTerritory = -1;
-            }
+            CloseAreaName();
         }
 
         //AreaNameウィンドウを表示
@@ -133,5 +131,15 @@ namespace ProjectWitch.Field
             comp.Init();
         }
 
+        //エリア名を閉じる
+        private void CloseAreaName()
+        {
+            if (FieldUIController.SelectedTerritory == mTerritoryID &&
+                FieldUIController.ActionPanelLock == false)
+            {
+                Destroy(mInstAreaName);
+                FieldUIController.SelectedTerritory = -1;
+            }
+        }
     }
 }

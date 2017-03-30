@@ -429,7 +429,7 @@ namespace ProjectWitch.Talk.WorkSpace
                     return error;
                 }));
 
-            //戦闘データのセット
+            //編成画面を表示しない
             vm.AddCommandDelegater (
 				"SetBattleNonPre",
 				new CommandDelegater (false, 0, delegate(object[] arguments) {
@@ -438,7 +438,7 @@ namespace ProjectWitch.Talk.WorkSpace
 					return error;
 				}));
 			
-			//戦闘データのセット
+			//オートバトルを有効にする
 			vm.AddCommandDelegater (
 				"SetBattleAuto",
 				new CommandDelegater (false, 0, delegate(object[] arguments) {
@@ -446,6 +446,28 @@ namespace ProjectWitch.Talk.WorkSpace
 					BattleAuto(out error);
 					return error;
 				}));
+
+            //バトルを行わない
+            vm.AddCommandDelegater(
+                "SetBattleDisable",
+                new CommandDelegater(false, 0, delegate (object[] arguments)
+                {
+                    Game.GetInstance().BattleIn.IsEnable = false;
+                    return null;
+                }));
+
+            //バトルBGMを一時的に変更する
+            vm.AddCommandDelegater(
+                "SetBattleBGM",
+                new CommandDelegater(false, 1, delegate (object[] arguments)
+                {
+                    string error;
+                    var name = Converter.ObjectToString(arguments[0], out error);
+                    if (error != null) return error;
+
+                    Game.GetInstance().BattleIn.BGM = name;
+                    return error;
+                }));
 
 			//エンディング呼び出し
 			vm.AddCommandDelegater (

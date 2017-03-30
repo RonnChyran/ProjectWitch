@@ -23,6 +23,8 @@ namespace ProjectWitch.Talk.Compiler{
 			patternList.Add (new CreateSetBattleAreaCommand ());
 			patternList.Add (new CreateSetBattleNonPreCommand ());
 			patternList.Add (new CreateSetAutoBattleCommand ());
+            patternList.Add(new CreateBattleDisableCommand());
+            patternList.Add(new CreateBattleBGMCommand());
 			patternList.Add (new CreateCallEndingCommand ());
 
 			patternList.Add (new CreateIfAliveCommand ());
@@ -171,6 +173,61 @@ namespace ProjectWitch.Talk.Compiler{
 			return commandList.GetArray ();
 		}
 	}
+
+    //次の戦闘を無効にする
+    public class CreateBattleDisableCommand : Pattern_TagFormat
+    {
+        protected override string TagName()
+        {
+            return "battle_disable";
+        }
+
+        protected override CommandFormat[] CreateCommand(ArgumentDictionary arguments, int line, int index)
+        {
+            CommandList commandList = new CommandList();
+
+            commandList.Add(new RunOrderCommand("SetBattleDisable"));
+
+            if(arguments.Count>0)
+            {
+                CompilerLog.Log(line, index, "無効な引数があります。");
+                return null;
+            }
+            return commandList.GetArray();
+        }
+    }
+
+    //次の戦闘のBGMを変更する
+    public class CreateBattleBGMCommand:Pattern_TagFormat
+    {
+        protected override string TagName()
+        {
+            return "battle_bgm";
+        }
+
+        protected override CommandFormat[] CreateCommand(ArgumentDictionary arguments, int line, int index)
+        {
+            CommandList commandList = new CommandList();
+
+            if (arguments.ContainName("ref"))
+            {
+                commandList.Add(arguments.Get("ref"));
+            }
+            else
+            {
+                CompilerLog.Log(line, index, "ref引数が不足しています。");
+                return null;
+            }
+            commandList.Add(new RunOrderCommand("SetBattleBGM"));
+
+            if(arguments.Count>0)
+            {
+                CompilerLog.Log(line, index, "無効な引数があります。");
+                return null;
+            }
+            return commandList.GetArray();
+        }
+    }
 
 	//エンディングを呼び出す
 	public class CreateCallEndingCommand : Pattern_TagFormat

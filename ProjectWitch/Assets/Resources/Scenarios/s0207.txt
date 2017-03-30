@@ -37,3 +37,7 @@
 
 [stopbgm]
 [sys_memset index=207 value="1"]
+
+;戦闘データを設定
+[battle_unit_in p0=0 p1=0 p2=0 e0=5 e1=-1 e2=-1]
+[battle_bgm ref="005_battle2"]

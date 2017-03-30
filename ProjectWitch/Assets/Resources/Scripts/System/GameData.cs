@@ -1599,6 +1599,7 @@ namespace ProjectWitch
             IsInvasion = true;
             IsAuto = false;
             IsEvent = false;
+            IsEnable = true;
 
             PlayerUnits[0] = 296;
             PlayerUnits[1] = 297;
@@ -1637,6 +1638,9 @@ namespace ProjectWitch
 
         //イベント戦闘か否か
         public bool IsEvent { get; set; }
+        
+        //バトルを行うかどうか
+        public bool IsEnable { get; set; }
 
         //バトルBGM
         public string BGM { get; set; }

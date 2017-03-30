@@ -142,6 +142,9 @@ namespace ProjectWitch.Field
                 //時間が変化するまで待機
                 while (currentTime == game.GameData.CurrentTime) yield return null;
 
+                //カメラ操作を無効にする
+                CameraController.IsPlayable = false;
+
                 //メニュー操作を無効にする
                 MenuClickable = false;
                 FlagClickable = false;
@@ -248,6 +251,13 @@ namespace ProjectWitch.Field
         //侵攻戦の開始
         public void DominationBattle(int area, int territory)
         {
+            //カメラ操作を無効にする
+            CameraController.IsPlayable = false;
+
+            //メニュー操作を無効にする
+            MenuClickable = false;
+            FlagClickable = false;
+
             //戦闘開始
             StartCoroutine(_DominationBattle(area, territory));
         }
@@ -261,18 +271,22 @@ namespace ProjectWitch.Field
             yield return StartCoroutine(EventExecute(eventlist));
             while (game.IsTalk) yield return null;
 
-            if (!game.BattleIn.IsEvent)
+
+            if (game.BattleIn.IsEnable)
             {
-                //防衛戦を担当する敵グループを取得
-                var group = GetDefenseGroup(area, territory);
+                if (!game.BattleIn.IsEvent)
+                {
+                    //防衛戦を担当する敵グループを取得
+                    var group = GetDefenseGroup(area, territory);
 
-                //グループからユニットをセット
-                SetEnemy(group, false);
+                    //グループからユニットをセット
+                    SetEnemy(group, false);
+                }
+
+                //先頭の開始
+                yield return StartCoroutine(CallBattle(area, territory, true));
+                yield return null;
             }
-
-            //先頭の開始
-            yield return StartCoroutine(CallBattle(area, territory, true));
-            yield return null;
 
             //時間を進める
             game.GameData.CurrentTime++;
@@ -541,6 +555,9 @@ namespace ProjectWitch.Field
                 game.CallScript(eventlist[i]);
                 yield return null;
                 while (game.IsTalk) yield return null;
+
+                //UIの更新
+                mFieldUIController.AreaPointReset();
 
                 //スクリプトを一つ実行したら終了
                 yield break;

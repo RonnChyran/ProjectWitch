@@ -137,6 +137,7 @@ namespace ProjectWitch.Field
             //侵攻戦の開始
             FieldController.DominationBattle(AreaID, game.GameData.Area[AreaID].Owner);
 
+
             //メニューを閉じる
             Close();
         }
@@ -169,6 +170,7 @@ namespace ProjectWitch.Field
 
             //メニューを開けるようにする
             FieldController.MenuClickable = true;
+            FieldController.FlagClickable = true;
 
             //メニューを閉じる
             Close();
@@ -178,8 +180,6 @@ namespace ProjectWitch.Field
         public void Close()
         {
             //メニューを開けるようにする
-            FieldController.MenuClickable = true;
-            FieldController.FlagClickable = true;
             FieldUIController.ActionPanelLock = false;
             FieldUIController.SelectedTerritory = -1;
             Destroy(NameWindow);

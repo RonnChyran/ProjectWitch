@@ -15,9 +15,9 @@ namespace ProjectWitch.Field
         //カメラが操作可能か
         public bool IsPlayable { get; set; }
 
-        //自動操縦カメラのスピード
+        //目的地に到達するまでの時間
         [SerializeField]
-        private float mAutoCameraSpeed = 1.0f;
+        private float mDuration = 0.5f;
 
         void Start()
         {
@@ -106,14 +106,19 @@ namespace ProjectWitch.Field
         //カメラ移動（ターゲット指定）
         public IEnumerator MoveTo(Vector2 targetpos)
         {
-            var dir = targetpos - (Vector2)mCamera.transform.position;
-            var moveVec = dir.normalized;
-            while (dir.magnitude > mAutoCameraSpeed/50.0f)
+            var pastpos = mCamera.transform.position;
+
+            var progress = mDuration;
+
+            while (progress >= 0.0f)
             {
-                mCamera.transform.position += new Vector3(moveVec.x, moveVec.y, 0.0f) / 100.0f * mAutoCameraSpeed;
-                dir = targetpos - (Vector2)mCamera.transform.position;
-                moveVec = dir.normalized;
-                yield return new WaitForSeconds(0.01f);
+
+                //線形補間で位置を出す
+                mCamera.transform.position = new Vector3(pastpos.x * progress + targetpos.x * (1 - progress),
+                                                         pastpos.y * progress + targetpos.y * (1 - progress),0.0f);
+                
+                progress -= Time.deltaTime;
+                yield return null;
             }
 
             yield return null;
