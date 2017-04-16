@@ -425,8 +425,14 @@ namespace ProjectWitch.Field
             //戦闘情報をリセット
             game.BattleIn.Reset();
 
+            //フィールドUIを再ロード
+            ShowUI();
+            yield return null;
+            game.HideNowLoading();
+            yield return null;
+
             //戦闘後スクリプトの開始
-            if(game.BattleOut.IsWin)    //戦闘勝利時のスクリプト
+            if (game.BattleOut.IsWin)    //戦闘勝利時のスクリプト
             {
                 var exescript = game.ScenarioIn.NextA;
                 if(exescript>=0)
@@ -442,14 +448,7 @@ namespace ProjectWitch.Field
 
             }
             while (game.IsTalk) yield return null;
-
-
-            //フィールドUIを再ロード
-            ShowUI();
-            yield return null;
-            game.HideNowLoading();
-            yield return null;
-
+            
             //UIの更新
             FieldUIController.AreaPointReset();
 

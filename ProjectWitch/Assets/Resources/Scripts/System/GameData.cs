@@ -1320,10 +1320,10 @@ namespace ProjectWitch
             //iniで読み込むようにする
             TextSpeed = 50.0f;
 
-            BGMVolume = 0.5f;
-            SEVolume = 0.5f;
+            BGMVolume = 0.3f;
+            SEVolume = 0.3f;
             VoiceVolume = 1.0f;
-            MasterVolume = 0.3f;
+            MasterVolume = 0.5f;
         }
 
         #region data_member
@@ -2428,7 +2428,7 @@ namespace ProjectWitch
                         card.ShopFlag = -1;
                     else
                         card.ShopFlag = int.Parse(data[9]);
-                    card.Description = data[7];
+                    card.Description = data[10];
 
                 }
                 catch (ArgumentNullException e)

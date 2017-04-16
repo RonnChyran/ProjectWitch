@@ -19,6 +19,11 @@ namespace ProjectWitch.Field
         [SerializeField]
         private float mDuration = 0.5f;
 
+        //カメラの移動用内部変数
+        private float mProgress = -1.0f;
+        private Vector2 mTargetPos = Vector2.zero;
+        private Vector3 mCurrentPos = Vector2.zero;
+        
         void Start()
         {
             var collider = GetComponent<BoxCollider>();
@@ -30,6 +35,11 @@ namespace ProjectWitch.Field
             //カメラを取得
             mCamera = Camera.main;
             
+        }
+
+        void Update()
+        {
+            DeltaMove();
         }
 
         //変数入力
@@ -106,22 +116,25 @@ namespace ProjectWitch.Field
         //カメラ移動（ターゲット指定）
         public IEnumerator MoveTo(Vector2 targetpos)
         {
-            var pastpos = mCamera.transform.position;
+            mTargetPos = targetpos;
+            mCurrentPos = mCamera.transform.position;
+            mProgress = mDuration;
 
-            var progress = mDuration;
+            while (mProgress >= 0) yield return null;
+            yield return null;
+        }
 
-            while (progress >= 0.0f)
+        private void DeltaMove()
+        {
+            if(mProgress >= 0.0f)
             {
 
                 //線形補間で位置を出す
-                mCamera.transform.position = new Vector3(pastpos.x * progress + targetpos.x * (1 - progress),
-                                                         pastpos.y * progress + targetpos.y * (1 - progress),0.0f);
-                
-                progress -= Time.deltaTime;
-                yield return null;
-            }
+                mCamera.transform.position = new Vector3(mCurrentPos.x * mProgress + mTargetPos.x * (1 - mProgress),
+                                                         mCurrentPos.y * mProgress + mTargetPos.y * (1 - mProgress), mCurrentPos.z);
 
-            yield return null;
+                mProgress -= Time.deltaTime;
+            }
         }
     }
 

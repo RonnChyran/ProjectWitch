@@ -190,100 +190,109 @@ namespace ProjectWitch.Talk.Compiler
 		//if文、elif文、else文、endif文を関連付け
 		public CommandFormat[] LinkIfAndEndif(CommandFormat[] commandArray)
 		{
-			CompilerLog.Log ("if文、elif文、else文、endif文を関連付け");
+            CompilerLog.Log("if文、elif文、else文、endif文を関連付け");
 
-			CommandFormat[] adjustedCommandArray = new CommandFormat[commandArray.Length];
-			Array.Copy (commandArray, 0, adjustedCommandArray, 0, commandArray.Length);
+            CommandFormat[] adjustedCommandArray = new CommandFormat[commandArray.Length];
+            Array.Copy(commandArray, 0, adjustedCommandArray, 0, commandArray.Length);
 
-			Stack<IFBlockInfo> ibInfoStack = new Stack<IFBlockInfo> ();
-			IFBlockInfo ibInfo_tmp = null;
-			Dictionary<int, string> errorMessageDic = new Dictionary<int, string> ();
+            Stack<IFBlockInfo> ibInfoStack = new Stack<IFBlockInfo>();
+            Dictionary<int, string> errorMessageDic = new Dictionary<int, string>();
 
-			for (int i = adjustedCommandArray.Length - 1; i >= 0; i--) {
-				CommandFormat command = adjustedCommandArray [i];
+            for (int i = adjustedCommandArray.Length - 1; i >= 0; i--)
+            {
+                CommandFormat command = adjustedCommandArray[i];
 
-				if (command is RunOrderCommand)
-				{
-					RunOrderCommand roCommand = command as RunOrderCommand;
-					if (roCommand.orderCode == "endif")
-					{
-						IFBlockInfo ibInfo = new IFBlockInfo ();
-						ibInfo.NextIfIndex = i + 1;
-						ibInfo.NextEndIfIndex = i;
-						ibInfoStack.Push (ibInfo);
-						ibInfo_tmp = null;
-					}
-					if (roCommand.orderCode == "jump_endif")
-					{
-						if (ibInfo_tmp == null) {
-							if (ibInfoStack.Count > 0)
-								ibInfo_tmp = ibInfoStack.Pop ();
-							else {
-								errorMessageDic [i] = "対応するendifが見つかりません。";
-								ibInfo_tmp = new IFBlockInfo ();
-							}
-						}
-						IFBlockInfo ibInfo = ibInfo_tmp;
-						ibInfo.NextIfIndex = i + 1;
-						adjustedCommandArray [i - 1] = new SetArgumentCommand(ibInfo.NextEndIfIndex);
-						ibInfoStack.Push (ibInfo);
-						ibInfo_tmp = null;
-					}
-					if (roCommand.orderCode == "if")
-					{
-						IFBlockInfo ibInfo = null;
-						if (ibInfoStack.Count > 0)
-							ibInfo = ibInfoStack.Pop ();
-						else {
-							errorMessageDic [i] = "対応するendifが見つかりません。";
-							continue;
-						}
-						adjustedCommandArray [i - 1] = new SetArgumentCommand(ibInfo.NextIfIndex);
-						ibInfo_tmp = ibInfo;
-					}
-				}
-			}
+                if (command is RunOrderCommand)
+                {
+                    RunOrderCommand roCommand = command as RunOrderCommand;
+                    if (roCommand.orderCode == "endif")
+                    {
+                        IFBlockInfo ibInfo = new IFBlockInfo();
+                        ibInfo.NextIfIndex = i + 1;
+                        ibInfo.NextEndIfIndex = i;
+                        ibInfoStack.Push(ibInfo);
+                    }
+                    if (roCommand.orderCode == "jump_endif")
+                    {
+                        IFBlockInfo ibInfo;
+                        if (ibInfoStack.Count > 0)
+                            ibInfo = ibInfoStack.Pop();
+                        else {
+                            errorMessageDic[i] = "対応するendifが見つかりません。";
+                            ibInfo = new IFBlockInfo();
+                        }
+                        ibInfo.NextIfIndex = i + 1;
+                        adjustedCommandArray[i - 1] = new SetArgumentCommand(ibInfo.NextEndIfIndex);
+                        ibInfoStack.Push(ibInfo);
+                    }
+                    if (roCommand.orderCode == "elif")
+                    {
+                        IFBlockInfo ibInfo = null;
+                        if (ibInfoStack.Count > 0)
+                            ibInfo = ibInfoStack.Pop();
+                        else {
+                            errorMessageDic[i] = "対応するendifが見つかりません。";
+                            continue;
+                        }
+                        adjustedCommandArray[i - 1] = new SetArgumentCommand(ibInfo.NextIfIndex);
+                        adjustedCommandArray[i] = new RunOrderCommand("if");//elifをifに置き換える
+                        ibInfoStack.Push(ibInfo);
+                    }
+                    if (roCommand.orderCode == "if")
+                    {
+                        IFBlockInfo ibInfo = null;
+                        if (ibInfoStack.Count > 0)
+                            ibInfo = ibInfoStack.Pop();
+                        else {
+                            errorMessageDic[i] = "対応するendifが見つかりません。";
+                            continue;
+                        }
+                        adjustedCommandArray[i - 1] = new SetArgumentCommand(ibInfo.NextIfIndex);
+                    }
+                    //Debug.Log(roCommand.orderCode + " " + ibInfoStack.Count);
+                }
+            }
 
-			if (ibInfoStack.Count > 0)
-			{
-				while (ibInfoStack.Count > 0)
-				{
-					IFBlockInfo ibInfo = ibInfoStack.Pop ();
-					errorMessageDic [ibInfo.NextIfIndex] = "対応するifが見つかりません。";
-				}
-			}
+            if (ibInfoStack.Count > 0)
+            {
+                while (ibInfoStack.Count > 0)
+                {
+                    IFBlockInfo ibInfo = ibInfoStack.Pop();
+                    errorMessageDic[ibInfo.NextIfIndex] = "対応するifが見つかりません。";
+                }
+            }
 
-			if (errorMessageDic.Count == 0)
-			{
-				CompilerLog.Log ("完了");
-				return adjustedCommandArray;
-			}
-			else
-			{
-				int line = 0;
-				int index = 0;
-				for (int i = 0; i < commandArray.Length; i++)
-				{
-					string error;
-					CommandFormat command = commandArray [i];
-					if (command is RunOrderCommand)
-					{
-						RunOrderCommand roCommand = command as RunOrderCommand;
-						if (roCommand.orderCode == "referFrom")
-						{
-							line	= (int)(commandArray [i - 2] as SetArgumentCommand).Value;
-							index	= (int)(commandArray [i - 1] as SetArgumentCommand).Value;
-						}
-					}
-					if (errorMessageDic.TryGetValue (i, out error))
-						CompilerLog.Log (line, index, error);
-				}
-				CompilerLog.Log ("失敗");
-			}
+            if (errorMessageDic.Count == 0)
+            {
+                CompilerLog.Log("完了");
+                return adjustedCommandArray;
+            }
+            else
+            {
+                int line = 0;
+                int index = 0;
+                for (int i = 0; i < commandArray.Length; i++)
+                {
+                    string error;
+                    CommandFormat command = commandArray[i];
+                    if (command is RunOrderCommand)
+                    {
+                        RunOrderCommand roCommand = command as RunOrderCommand;
+                        if (roCommand.orderCode == "referFrom")
+                        {
+                            line = (int)(commandArray[i - 2] as SetArgumentCommand).Value;
+                            index = (int)(commandArray[i - 1] as SetArgumentCommand).Value;
+                        }
+                    }
+                    if (errorMessageDic.TryGetValue(i, out error))
+                        CompilerLog.Log(line, index, error);
+                }
+                CompilerLog.Log("失敗");
+            }
 
-			return null;
-		}
-	}
+            return null;
+        }
+    }
 
 	//未検出のタグをエラーとして検出
 	public class ErrorTagPattern : Pattern_CreateCommand

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
-using System.Linq;
+using System.Collections;
 using UnityEngine.EventSystems;
 
 namespace ProjectWitch.Field
@@ -70,12 +70,12 @@ namespace ProjectWitch.Field
 
             //フラグメニューの２重起動防止
             FieldController.FlagClickable = false;
-            
+
             //メニュー操作無効
             FieldController.MenuClickable = false;
 
             //オーナーパネルをロック
-            FieldUIController.ActionPanelLock = true;
+            FieldUIController.AreaNameLock = true;
         }
 
         //エリアウィンドウの表示処理
@@ -92,19 +92,23 @@ namespace ProjectWitch.Field
             comp.AreaID = AreaID;
             comp.FieldController = FieldController;
             comp.FieldUIController = FieldUIController;
-            comp.NameWindow = mInstAreaName;
+            comp.AreaNamePrefab = mAreaNamePrefab;
             comp.Init();
+
+            //エリアウィンドウ側で再生成するので、ネームウィンドウは削除
+            CloseAreaName();
         }
 
         //マウスがポップしたときのイベント
         public void OnPointerEnter(PointerEventData e)
         {
             var game = Game.GetInstance();
-            
+
             //ホバー音再生
             game.SoundManager.PlaySE(SE.Hover);
 
-            if (FieldUIController.ActionPanelLock == false)
+
+            if (FieldUIController.AreaNameLock == false)
             {
                 FieldUIController.SelectedTerritory = mTerritoryID;
                 ShowAreaName();
@@ -124,7 +128,7 @@ namespace ProjectWitch.Field
             var canvas = FieldUIController.CameraCanvas;
 
             mInstAreaName = Instantiate(mAreaNamePrefab);
-            mInstAreaName.transform.SetParent(canvas.transform,false);
+            mInstAreaName.transform.SetParent(canvas.transform, false);
 
             var comp = mInstAreaName.GetComponent<AreaName>();
             comp.AreaID = AreaID;
@@ -134,12 +138,8 @@ namespace ProjectWitch.Field
         //エリア名を閉じる
         private void CloseAreaName()
         {
-            if (FieldUIController.SelectedTerritory == mTerritoryID &&
-                FieldUIController.ActionPanelLock == false)
-            {
-                Destroy(mInstAreaName);
-                FieldUIController.SelectedTerritory = -1;
-            }
+            Destroy(mInstAreaName);
+            FieldUIController.SelectedTerritory = -1;
         }
     }
 }

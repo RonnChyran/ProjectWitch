@@ -1,21 +1,29 @@
-﻿;script 106
-
+﻿;s0106
+;script yuichi
+;direction yuichi
 ;アリス領　アリスの館
 ;条件　なし
 ;タイミング　■場面6の続き
+
+[field_area_hilight id=1]
+[wait time=200]
+
 ;データロード
 [loadcg id=0 ref="alice"]
 [loadcg id=1 ref="chishire"]
+
+[filter name="fade" time=500]
 [drawbg ref="1002m"]
 [bgm ref="003_alice2"]
-[drawcg id=0 pos="right"]
-[drawcg id=1 pos="left" dir="right"]
+[filter name="clear" time=500]
 
+[drawcg id=0 pos="right" state="2"]
+[drawcg id=1 pos="left" dir="right"]
+[show_message]
 #チシャ
 [voice ref="010031"]
 お疲れ様でございました。[n]
 今日は良い茶葉が入りましたよ、どうぞ。[p]
-[changecg id=0 state=2]
 #アリス
 [voice ref="010032"]
 あーーーー！！[n]
@@ -41,13 +49,13 @@
 魔導砲でございますか。[p]
 #アリス
 [voice ref="010036"]
-ババアも厄介なものを残してくれたもんだ。[p]
-[voice ref="010036a"]
+ババアも厄介なものを残してくれたもんだ。[n]
 作ろうにも、短期間で作れる代物じゃないし……。[p]
 #チシャ
 [voice ref="010037"]
 抜け道でもあったらいいのですが、[n]
-あ……いえ、 そんなものあったら砦の意味がないですが。[p]
+あ……いえ、[n]
+そんなものあったら砦の意味がないですが。[p]
 #アリス
 [changecg id=0 state=1]
 [voice ref="010038"]
@@ -57,6 +65,13 @@
 [voice ref="010039"]
 え？[n]
 アリス様……それは一体。[p]
-
 [hide_message]
+
+[filter name="fade" time=500]
+[clearbg]
+[clearcg id=0]
+[clearcg id=1]
+[filter name="clear" time=500]
+
+[stopbgm]
 [sys_memset index=106 value="1"]

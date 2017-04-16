@@ -2,7 +2,24 @@
 ;script: nikai
 ;timing: 地点46もしくは51番初戦闘時
 
-[cn]
+;フィールドスクロール
+[field_area_hilight id=49]
+[wait time=200]
+
+;ロード
+[loadcg id=0 ref="charlotte"]
+[loadcg id=1 ref="kasumi"]
+[loadcg id=2 ref="emil"]
+[loadcg id=3 ref="ema"]
+
+[filter name="fade" time=500]
+[drawbg ref="1043m"]
+[bgm ref="011_charlotte"]
+[filter name="clear" time=500]
+
+[show_message]
+[drawcg id=0 pos=5 state=1]
+[drawcg id=1 pos=3 dir="right"]
 ロレーヌ城。[p]
 アリスの前に不利を悟り、
 一度引いたシャルロッテはカスミと話し合いをしていた[p]
@@ -35,6 +52,8 @@
 [cn]
 シャルロッテとカスミが話しているのを、[n]
 扉を隔てて聞いている二つの影があった。[p]
+[drawcg id=2 posx=-40 dir="right"]
+[drawcg id=3 posx=-30 dir="right"]
 #エミル
 [voice ref="050061"]
 ねえっ、まずいよ姉さん。[p]
@@ -90,10 +109,19 @@
 [voice ref="050078"]
 ちょ、ちょっとだけだよ？[p]
 [cn]
+
+[filter name="fade" time=500]
+[clearcg id=0]
+[clearcg id=1]
+[clearcg id=2]
+[clearcg id=3]
 ……………。[p]
+[filter name="clear" time=500]
 
 ;場面転換
 姉弟の部屋。[p]
+[drawcg id=2 pos=3]
+[drawcg id=3 pos=2 dir="right"]
 #エミル
 [voice ref="050079"]
 はい、これね。[p]
@@ -128,6 +156,7 @@
 [voice ref="050087"]
 う、うん……。[n]
 なんか風邪薬みたいな味だったけど、本当にこんなので効果出るのかなあ。[p]
+[move id=3 y=-15 time=800]
 #エミル
 [voice ref="050088"]
 味はシロップ味って言ったでしょ？[n]
@@ -170,3 +199,13 @@
 [voice ref="050100"]
 ……姉さん。[n]
 大丈夫だよね……、きっと。[p]
+
+[hide_message]
+[filter name="fade" time=500]
+[clearbg]
+[clearcg id=2]
+[clearcg id=3]
+[filter name="clear" time=500]
+
+[stopbgm]
+[sys_memset index=503 value="1"]

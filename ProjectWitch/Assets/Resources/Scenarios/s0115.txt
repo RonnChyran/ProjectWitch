@@ -1,4 +1,9 @@
-;script 115
+;s0115
+;script yuichi
+;direction yuichi
+
+[field_area_hilight id=1]
+[wait time=200]
 
 ;リソースロード
 [loadcg id=0 ref="alice"]
@@ -11,11 +16,14 @@
 ;アリス領　アリスの館
 ;条件　メイジー生存
 ;タイミング　内乱鎮圧直後　ターン開始時
-[drawbg ref="1004m"]
+[filter name="fade" time=500]
+[drawbg ref="1002m"]
 [bgm ref="003_alice2"]
+[filter name="clear" time=500]
+
 [drawcg id=0 pos="right"]
 [drawcg id=2 pos="left" dir="right"]
-
+[show_message]
 #アリス
 [voice ref="010125"]
 気分はどうだ、メイジー。[p]
@@ -24,6 +32,7 @@
 ……姉さん、私姉さんを裏切ったのよ。[n]
 なのに、なんでこんな普通にしていられるの……？[p]
 #アリス
+[changecg id=0 state=2]
 [voice ref="010127"]
 あん？　しまった、お仕置きが足りなかったか……。[p]
 #メイジー
@@ -31,6 +40,7 @@
 ま、まって……ごめんなさい！[n]
 そういう意味じゃなくて……。[p]
 #アリス
+[changecg id=0 state=0]
 [voice ref="010129"]
 また裏切るなら殺す。[n]
 だが、今は人材が必要なんだ。 だから生かしておいてやる。[p]
@@ -54,6 +64,7 @@
 私は魔女だ。 だったらやることは一つ。[p]
 [voice ref="010134a"]
 ほかの魔女を貶(おとし)め、蹂躙(じゅうりん)し、征服することだ。[p]
+[changecg id=0 state=1]
 [voice ref="010135"]
 クフフフフフッ！[n]
 それに、そっちの方が楽しそうだしな。[p]
@@ -61,6 +72,7 @@
 [voice ref="010136"]
 そんなことのために多くの兵士を死なせることになるのよ！[p]
 #アリス
+[changecg id=0 state=0]
 [voice ref="010137"]
 どっちにしろ北の大地で戦争が始まった。 [n]
 こっちにもその影響があるかもしれない。[p]
@@ -105,14 +117,14 @@
 わかったわ。[n]
 ……姉さんに協力する。[p]
 #アリス
+[changecg id=0 state=1]
 [voice ref="010147"]
 クフフフッ！ いい返事だ。[n]
 メイジー、期待してるぜ。[p]
-[move id=0 x=50 y=0 time=500]
+
 [clearcg id=0]
-[move id=2 x=100 y=0 time=700]
 [clearcg id=2]
-[drawcg id=3 pos="1"]
+[drawcg id=3 pos="1" dir="right"]
 
 #クロ
 [voice ref="010148"]
@@ -125,16 +137,25 @@
 もしや、アリス様ならば、先代様もなしえなかった[n]
 この世界の統一を本当にやってのけるやも……。）[p]
 
+[hide_message]
+[filter name="fade" time=500]
+[clearbg]
+[clearcg id=3]
+[filter name="clear" time=500]
+
 [else]
 
 ;アリス領　アリスの館
 ;条件　メイジー死亡
 ;タイミング　内乱鎮圧直後　ターン開始時
+[filter name="fade" time=500]
 [drawbg ref="1002m"]
 [bgm ref="003_alice2"]
-[drawcg id=0 pos="right"]
-[drawcg id=1 pos="left" dir="right"]
+[filter name="clear" time=500]
 
+[drawcg id=0 pos="right" state=1]
+[drawcg id=1 pos="left" dir="right"]
+[show_message]
 #アリス
 [voice ref="010112"]
 さてと、まずどこに攻め込んでやろうかなっと……。[p]
@@ -183,10 +204,18 @@
 [voice ref="010124"]
 ああ……胃が痛い……。 [p]
 
+[hide_message]
+[filter name="fade" time=500]
+[clearbg]
+[clearcg id=0]
+[clearcg id=1]
+[clearcg id=2]
+[filter name="clear" time=500]
+
 [endif]
 
-[hide_message]
 
+[stopbgm]
 [sys_memset index=115 value="1"]
 ;侵攻可能フラグ
 [sys_memset index=10020 value="1"]

@@ -1,10 +1,44 @@
 ﻿;script 0603
+;script: nikai
+;direction: yuichi
+;timing:アリス領初戦戦闘前
+[field_area_hilight id=61]
+[wait time=500]
+
+[loadcg id=0 ref="pumpking"]
+[loadcg id=1 ref="akari"]
+[loadcg id=2 ref="pump_red"]
+[loadcg id=3 ref="pump_blue"]
+[loadcg id=4 ref="pump_pink"]
+[loadcg id=5 ref="pump_silver"]
+[loadcg id=6 ref="alice"]
+[loadcg id=7 ref="kuro"]
 
 
-;場面3あと　アリス領初戦戦闘前
-[cn]
+[filter name="fade" time=500]
+[drawbg ref="1054m"]
+[bgm ref="012_pumpking"]
+[filter name="clear" time=500]
+[drawcg id=2 pos=1 dir="right"]
+[drawcg id=3 pos="center" dir="right"]
+[drawcg id=4 pos=5]
+[drawcg id=5 pos=2]
+[drawcg id=0 pos=3]
+
+[show_message]
 アカリのいなくなったお菓子の家では[n]
 飲んで騒いでの宴が開催されていた。[p]
+[moveto id=2 x=50 y=50 time=200]
+[moveto id=3 x=80 y=50 time=200]
+[move id=3 x=0 y=10 time=50]
+[scale id=3 sx=-1time=0]
+[move id=3 x=0 y=-10 time=50]
+[moveto id=4 x=50 y=50 time=200]
+[moveto id=5 x=80 y=50 time=200]
+[move id=5 x=0 y=10 time=50]
+[scale id=5 sx=-1 time=0]
+[move id=5 x=0 y=-10 time=50]
+
 #パンプキング
 [voice ref="060027"]
 ゲヒャヒャヒャヒャヒャヒャッ！！[n]
@@ -15,6 +49,15 @@
 [voice ref="060029"]
 面白いなァお前たち！[n]
 さあ、もっと飲め飲めェッ！！[p]
+[move id=5 x=0 y=10 time=50]
+[move id=5 x=0 y=-10 time=50]
+[move id=3 x=0 y=10 time=50]
+[move id=3 x=0 y=-10 time=50]
+[move id=4 x=0 y=10 time=50]
+[move id=4 x=0 y=-10 time=50]
+[move id=2 x=0 y=10 time=50]
+[move id=2 x=0 y=-10 time=50]
+
 #パンプキング部下（赤）
 [voice ref="060030"]
 キャッ、キャッ、キャッ！！[p]
@@ -22,8 +65,18 @@
 ;場面転換
 彼らは生物ではない、そのため眠ることはない。[p]
 宴は文字通り一日中続けられていた。[p]
+[filter name="fade" time=500]
+[drawbg ref="1004m"]
+[clearcg id=0]
+[clearcg id=2]
+[clearcg id=3]
+[clearcg id=4]
+[clearcg id=5]
+[filter name="clear" time=500]
+
 そんななか、地下ではその声を聞きながら横たわる[n]
 一人の魔女がいた。[p]
+[drawcg id=1 pos=4]
 アカリである。[p]
 #アカリ
 [voice ref="060031"]
@@ -39,8 +92,25 @@
 この暇をいかにつぶすかということの方が重要のようだった。[p]
 そんななか、アリス軍が領内に攻め込んだ[n]
 との情報が入った……。[p]
-…………。[p]
+
+[hide_message]
+[filter name="fade" time=500]
+[clearcg id=1]
+[clearbg]
+[bgm ref="002_alice1"]
+[filter name="clear" time=500]
+
+[field_area_hilight id=56]
+[wait time=200]
+
+[filter name="fade" time=500]
+[bgm ref="018_event3"]
+[drawbg ref="1021m"]
+[drawcg id=6 pos=3 state=1]
+[filter name="clear" time=500]
+
 ;場面転換
+[show_message]
 パンプキング領、国境付近[p]
 #アリス
 [voice ref="060033"]
@@ -58,20 +128,45 @@
 [cn]
 戦いは一方的な展開を見せていた。[p]
 熟練度で勝るアリス軍がパンプキング軍を圧倒していた。[p]
+[filter name="fade" time=500]
+[clearcg id=6]
+[drawcg id=2 pos=3 dir="right"]
+[drawcg id=3 pos=3 dir="right"]
+[drawcg id=4 pos=3 dir="right"]
+[drawcg id=5 pos=3 dir="right"]
+[move id=2 x=-80 y=0 time=0]
+[move id=3 x=-80 y=0 time=0]
+[move id=4 x=-80 y=0 time=0]
+[move id=5 x=-80 y=0 time=0]
+[filter name="clear" time=500]
+
+[moveto id=2 x=75 y=50 time=200]
+[moveto id=4 x=30 y=50 time=200]
 #パンプキン部下（赤）
 [voice ref="060036"]
 きゃー、きゃー！[p]
+[moveto id=3 x=50 y=50 time=200]
+[moveto id=5 x=15 y=50 time=200]
 #パンプキン部下（青）
 [voice ref="060037"]
 にげろー！　にげろー！！[p]
 [cn]
 そのままアリス軍が優勢のまま決着するかに見えた。[p]
+[drawcg id=0 pos=5]
 #パンプキング
 [voice ref="060038"]
 てめえらァ！！！！[n]
 なぁに逃げてんだオラアアアァァーー！！[p]
 [cn]
 突如として敵の大将であるパンプキングが現れた。[p]
+[move id=3 x=0 y=10 time=50]
+[move id=3 x=0 y=-10 time=50]
+[move id=2 x=0 y=10 time=50]
+[move id=2 x=0 y=-10 time=50]
+[move id=4 x=0 y=10 time=50]
+[move id=4 x=0 y=-10 time=50]
+[move id=5 x=0 y=10 time=50]
+[move id=5 x=0 y=-10 time=50]
 #パンプキング部下（ピンク）
 [voice ref="060039"]
 きゃー！　パンプキング様だ！[p]
@@ -84,9 +179,28 @@
 #パンプキング部下（青）
 [voice ref="060042"]
 引き返せ！[p]
-#パンプキング部下（ピンク）
+#パンプキング部下（銀）
 [voice ref="060043"]
 突撃だー！[p]
+[scale id=4 sx=-1 time=100]
+[move id=4 x=-100 y=0 time=500]
+[scale id=2 sx=-1 time=100]
+[move id=2 x=-100 y=0 time=500]
+[scale id=3 sx=-1 time=100]
+[move id=3 x=-100 y=0 time=500]
+[scale id=5 sx=-1 time=100]
+[move id=5 x=-100 y=0 time=500]
+[filter name="fade" time=500]
+[clearcg id=0]
+[clearcg id=2]
+[clearcg id=3]
+[clearcg id=4]
+[clearcg id=5]
+[drawcg id=6 pos=3]
+[drawcg id=7 pos=1 dir="right"]
+[wait time=500]
+[filter name="clear" time=500]
+
 #アリス
 [voice ref="060044"]
 あいつ……、なんだ？　[n]
@@ -98,6 +212,7 @@
 #アリス
 [voice ref="060046"]
 なるほどな……。[n]
+[changecg id=6 state=1 time=0]
 しかし、なら余計に殺しておいて損はないわけだ。[p]
 #クロ
 [voice ref="060047"]
@@ -110,3 +225,14 @@
 のがすなよーー！！[p]
 ;戦闘開始
 ;戦闘に勝利すると、ごり押しルート
+[hide_message]
+[filter name="fade" time="500"]
+[clearbg]
+[clearcg id=6]
+[clearcg id=7]
+[wait time=500]
+[filter name="clear" time="500"]
+[stopbgm]
+[wait time=500]
+
+[sys_memset index=603 value="1"]

@@ -23,28 +23,35 @@
 [drawcg id=0 posx=10 dir="right" state=1]
 [drawcg id=1 posx=-10 dir="right"]
 #アリス
-よし、いよいよ森の魔女だな……。[p]
+[voice ref="020580"]
+よし、いよいよ森の魔女だな……。[n]
 クフフフッ！　腕がなるぜ。[p]
 #クロ
+[voice ref="020581"]
 アリス様！　あれを！[p]
 [cn]
 目の前に、[n]
 陣を横に広げたトリアイナが待ち構えていた。[p]
 [drawcg id=2 posx=40 mode="slidein"]
 #トリアイナ
-待っていたわ、華の魔女アリス。[p]
+[voice ref="020582"]
+待っていたわ、華の魔女アリス。[n]
 さあ、おとなしくわが兵の餌食となりなさい！[p]
 #アリス
+[voice ref="020583"]
 ふん！　誰がてめえなんぞに負けるかよ！！[p]
 [drawcg id=3 posx=-30 mode="slidein" dir="right"]
 #マルゲル
+[voice ref="020584"]
 ええ、一人ならば負けるかもしれない。[p]
 [drawcg id=4 posx=-40 layer="front" mode="slidein" dir="right"]
 #オリヴィア
+[voice ref="020585"]
 み、みんなでやれば強い！　……から。[p]
 [scale id=1 sx=-1 time=0]
 [move id=1 x=10 time=300]
 #クロ
+[voice ref="020586"]
 三方から囲まれた！？[n]
 しまった、伏兵か。[p]
 [cn]
@@ -53,7 +60,8 @@
 その背後からオリヴィアとマルゲルの部隊が襲い掛かる形となったのだった。[p]
 [changecg id=0 state=2]
 #アリス
-ふん！　小細工を弄したところで雑魚は雑魚だ！[p]
+[voice ref="020587"]
+ふん！　小細工を弄したところで雑魚は雑魚だ！[n]
 おとなしく死ね！！！！[p]
 
 ;クリア処理

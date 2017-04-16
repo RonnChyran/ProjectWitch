@@ -9,6 +9,10 @@ namespace ProjectWitch.Field
         [SerializeField]
         private FieldController mFieldController = null;
 
+        //フィールドUIコントローラ
+        [SerializeField]
+        private FieldUIController mFieldUIController = null;
+
         //エリアウィンドウのプレハブ
         [SerializeField]
         private GameObject mAreaWindow = null;
@@ -52,7 +56,7 @@ namespace ProjectWitch.Field
             cAreaWindow.AreaID = area;
             cAreaWindow.FieldController = mFieldController;
             cAreaWindow.FieldUIController = mFieldController.FieldUIController;
-            cAreaWindow.NameWindow = mInstAreaName;
+            cAreaWindow.AreaNamePrefab = mInstAreaName;
             cAreaWindow.Init();
 
             //seの再生
@@ -115,10 +119,14 @@ namespace ProjectWitch.Field
 
             //移動
             yield return StartCoroutine(cameraCtrl.MoveTo(pos));
+            
+            //ハイライトエフェクト表示
+            yield return StartCoroutine(mFieldUIController.ShowHiLightEffect(pos));
 
             //終了通知
-            if(callback != null)
+            if (callback != null)
                 callback();
+
 
             yield return null;
         }

@@ -4,14 +4,17 @@
 ;タイミング:侵攻戦戦闘前、防衛戦戦闘前
 ;メモ：　敵はハート平原方面から侵攻を進めてくる。メイジーは兵士が0になると撤退する
 
-;リソースロード
-[loadcg id=0 ref="alice"]
-[loadcg id=1 ref="kuro"]
-[drawbg ref="1020m"]
-[bgm ref="018_event3"]
-[drawcg id=1 pos="left" dir="right"]
-[drawcg id=0 pos="right"]
+[field_area_hilight id=6]
+[wait time=200]
 
+;リソースロード
+
+[filter name="fade" time=500]
+[drawbg ref="Event/702"]
+[bgm ref="018_event3"]
+[filter name="clear" time=200]
+
+[show_message]
 #クロ
 [voice ref="010000"]
 アリス様、敵は鶴翼に布陣。こちらを待ち受けています。 [p]
@@ -39,4 +42,9 @@
 クフフフフ……アッハッハッハッハ！！ [p]
 
 [hide_message]
+[filter name="fade" time=500]
+[clearbg]
+[filter name="clear" time=500]
+
+[stopbgm]
 [sys_memset index=100 value="1"]

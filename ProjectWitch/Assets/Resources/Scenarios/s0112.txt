@@ -1,18 +1,26 @@
-﻿;script 112
-
+﻿;s0112
+;script yuichi
+;direction yuichi
 ;アリス領　ニルギリ砦
 ;条件　ニルギリ砦に侵攻
 ;タイミング　戦闘前
 ;メモ　ワーウルフの首を見て、兵士の士気が低下している ワーウルフの首を見せつけられたメイジー軍の士気は、 すでに落ちるところまで落ちており、 逃亡する兵士まで現れる始末だった。
+
+[field_area_hilight id=10]
+[wait time=200]
+
+;リソースロード
 [loadcg id=0 ref="alice"]
 [loadcg id=1 ref="kuro"]
 [loadcg id=2 ref="meisie"]
-[loadcg id=3 ref="soldier"]
+
+[filter name="fade" time=500]
 [drawbg ref="1048m"]
 [bgm ref="017_event2"]
-[drawcg id=2 pos="center"]
-[drawcg id=3 pos="1" dir="right"]
+[filter name="clear" time=500]
 
+[drawcg id=2 pos="center"]
+[show_message]
 #メイジー
 [voice ref="010079"]
 ワーウルフ……。[p]
@@ -27,22 +35,24 @@
 [voice ref="010082"]
 ……いかがなさいますか。[p]
 #メイジー
+…………。[p]
 [voice ref="010083"]
 ……門を開いて。 全員で打って出るわ。[p]
 #部下
 [voice ref="010084"]
 はっ。[n]
 開門！！　総員突撃用意！！[p]
+[cn]
+
 [filter name="fade" time=500]
 [clearcg id=2]
-[clearcg id=3]
-[cn]
 ……………。[p]
 ;場面転換
 [drawbg ref="1047m"]
+[filter name="clear" time=500]
+
 [drawcg id=0 pos="right"]
 [drawcg id=1 pos="left" dir="right"]
-[filter name="clear" time=500]
 #クロ
 [voice ref="010085"]
 アリス様。[n]
@@ -56,6 +66,13 @@
 ;戦闘　VS メイジー
 
 [hide_message]
+[filter name="fade" time=500]
+[clearbg]
+[clearcg id=0]
+[clearcg id=1]
+[filter name="clear" time=500]
 
+[stopbgm]
+[battle_bgm ref="005_battle2"]
 [sys_memset index=112 value="1"]
 [sys_memset index=10100 value="1"]

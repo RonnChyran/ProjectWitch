@@ -1,11 +1,106 @@
 ;s0609
+;script: nikai
+;direction: yuichi
+;timing:s0608の次のターン
+
+[field_area_hilight id=1]
+[wait time=500]
+
+[loadcg id=0 ref="alice"]
+[loadcg id=1 ref="chishire"]
+[loadcg id=2 ref="meisie"]
+
+[if_alive unit=2]
+
+[filter name="fade" time=500]
+[drawbg ref="1002m"]
+[bgm ref="003_alice2"]
+[drawcg id=0 pos=4 state=2]
+[move id=0 x=50 y=0 time=0]
+[drawcg id=2 pos=2 dir="right"]
+[move id=2 x=-50 y=0 time=0]
+[wait time=500]
+[filter name="clear" time=500]
+
+[moveto id=0 x=70 y=30 time=500]
+#アリス
+[voice ref="060111"]
+かぼちゃ、かぼちゃ、かぼちゃ……。[p]
+[moveto id=2 x=30 y=30 time=500]
+#メイジー
+[voice ref="060112"]
+姉さん？　[n]
+どうしたの、ぶつぶつ独り言なんかいっちゃって。[p]
+[voice ref="060113"]
+珍しい……。[p]
+#アリス
+[voice ref="060114"]
+お前こそ、その手に持っているものはなんだよ。[p]
+#メイジー
+[voice ref="060115"]
+ふふっ！　かわいいでしょ。[p]
+[scale id=2 sx=-1 time=500]
+[scale id=2 sx=-1 time=500]
+[voice ref="060116"]
+今町で仮想大会やっててね！[p]
+[voice ref="060117"]
+これは「塔の上のお姫様と金色の妖精」に出てくる、[n]
+金色の妖精ティティの衣装なのよ！[p]
+[changecg id=0 state=1 time=0]
+#アリス
+[voice ref="060118"]
+クフフッ！[n]
+馬子にも衣裳だな。 服に着られてるぜ、メイジー。[p]
+[move id=2 x=0 y=5 time=50]
+[move id=2 x=0 y=-5 time=50]
+#メイジー
+[voice ref="060119"]
+なっ、なんですってー！[p]
+[changecg id=0 state=2 time=0]
+#アリス
+[voice ref="060120"]
+しかし仮装か……。[p]
+[voice ref="060121"]
+オイ、メイジー、よくやった。[n]
+お前もたまには役に立つじゃねえか……。[p]
+[move id=2 x=-5 y=0 time=50]
+#メイジー
+[voice ref="060122"]
+へっ！？[n]
+あの、何のこと？[p]
+[scale id=0 sx=-1 time=200]
+[clearcg id=0 mode="slideout"]
+[move id=2 x=10 y=0 time=100]
+[voice ref="060123"]
+えっ、ちょっと姉さん？[p]
+[cn]
+困惑するメイジーをよそにアリスは何かを思いついたようで、
+その足で町へと向かった。[p]
+
+[hide_message]
+[filter name="fade" time="500"]
+[clearbg]
+[clearcg id=2]
+[wait time=500]
+[filter name="clear" time="500"]
+
+[else]
+
+[filter name="fade" time=500]
+[drawbg ref="1002m"]
+[bgm ref="003_alice2"]
+[drawcg id=0 pos=4 state=2]
+[drawcg id=1 pos=2 dir="right"]
+
+[filter name="clear" time=500]
 
 ;場面10翌ターン
-;アリスの館。
+[show_message]
+アリスの館。[p]
 #アリス
 [voice ref="060104"]
-畜生。 あのうっとうしいかぼちゃどもを[n]
-なんとかしたいが……。[p]
+畜生。[n]
+あのうっとうしいかぼちゃどもをなんとかしたいが……。[p]
 [voice ref="060105"]
 どうしたものか。[p]
 #チシャ
@@ -23,49 +118,20 @@
 [voice ref="060110"]
 まあそうだな、[n]
 ちょっと屋敷の周りを散歩するくらいならいいかな。[p]
+[move id=0 x=0 y=10 time=200]
+[move id=0 x=0 y=-10 time=200]
+[scale id=0 sx=-1 time=300]
+[move id=0 x=80 y=0 time=800]
 [cn]
 そういってアリスは席を立ち屋敷の周りを歩くことにした。[p]
-…………。[p]
+[hide_message]
 ;場面転換
-#アリス
-[voice ref="060111"]
-かぼちゃ、かぼちゃ、かぼちゃ……。[p]
-#メイジー
-[voice ref="060112"]
-姉さん？　[n]
-どうしたの、ぶつぶつ独り言なんかいっちゃって。[p]
-[voice ref="060113"]
-珍しい……。[p]
-#アリス
-[voice ref="060114"]
-お前こそ、その手に持っているものはなんだよ。[p]
-#メイジー
-[voice ref="060115"]
-ふふっ！　かわいいでしょ。[p]
-[voice ref="060116"]
-今町で仮想大会やっててね！[p]
-[voice ref="060117"]
-これは「塔の上のお姫様と金色の妖精」に出てくる、[n]
-金色の妖精ティティの衣装なのよ！[p]
-#アリス
-[voice ref="060118"]
-クフフッ！[n]
-馬子にも衣裳だな。 服に着られてるぜ、メイジー。[p]
-#メイジー
-[voice ref="060119"]
-なっ、なんですってー！[p]
-#アリス
-[voice ref="060120"]
-しかし仮装か……。[p]
-[voice ref="060121"]
-オイ、メイジー、よくやった。[n]
-お前もたまには役に立つじゃねえか……。[p]
-#メイジー
-[voice ref="060122"]
-へっ！？[n]
-あの、何のこと？[p]
-[voice ref="060123"]
-えっ、ちょっと姉さん？[p]
-[cn]
-困惑するメイジーをよそにアリスは何かを思いついたようで、[n]
-その足で町へと向かった。[p]
+[filter name="fade" time=500]
+[clearcg id=1]
+[clearbg]
+[filter name="clear" time=500]
+
+[endif]
+
+[stopbgm]
+[sys_memset index=609 value="1"]

@@ -1,18 +1,29 @@
 ﻿;script 103
-
 ;アリス領　どこでも
 ;条件：　初回戦闘後戦闘に敗北した　かつ　アリス、クロが生存している
 ;タイミング：　侵攻戦戦闘後、防衛戦戦闘後
 
-[loadcg id=0 ref="alice"]
-[drawbg ref="1020e"]
-[bgm ref="017_event2"]
-[drawcg id=0 pos="right" state="1"]
+[field_area_hilight id=6]
+[wait time=200]
 
+[loadcg id=0 ref="alice"]
+
+[filter name="fade" time=500]
+[drawbg ref="1047m"]
+[bgm ref="018_event3"]
+[filter name="clear" time=500]
+
+[show_message]
+[drawcg id=0 pos="right" state="2"]
 #アリス
 [voice ref="010016"]
 くっ……、撤退だ！！　畜生、メイジーめ、覚えてろよー！！[p]
 
 [hide_message]
+[filter name="fade" time=500]
+[clearcg id=0]
+[clearbg]
+[filter name="clear" time=500]
 
+[stopbgm]
 [sys_memset index=103 value="1"]

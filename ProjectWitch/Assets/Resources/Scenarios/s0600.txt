@@ -1,10 +1,23 @@
 ﻿;s0600
 ;script: nikai
+;direction: yuichi
 ;timing: ターンはじめイベント
+[field_area_hilight id=61]
+[wait time=500]
 
-[cn]
+[loadcg id=0 ref="akari"]
+[loadcg id=1 ref="pumpking"]
+
+[filter name="fade" time=500]
+[drawbg ref="1054m"]
+[bgm ref="012_pumpking"]
+[filter name="clear" time=500]
+
+[drawcg id=0 pos=4]
+[drawcg id=1 pos=2 dir="right" state=1]
+[show_message]
 アカリ領、お菓子の家。[p]
-アカリ領はこの世界の最東端に位置する場所にあった。[p]
+アカリ領はこの世界の最東端に位置する場所にあった[p]
 領主のアカリは人形術を操る魔女として有名で、[n]
 部下はすべて彼女が作った人形たちだった。[p]
 #アカリ
@@ -27,7 +40,7 @@
 淡々と肯定を繰り返すのだ。[p]
 #かぼちゃの人形
 [voice ref="060003"]
-キョウノユウショクハ、タイノ、オカシラツキ、デス。[p]
+キョウノユウショクハ、タイノ、オカシラツキ、デス[p]
 #アカリ
 [voice ref="060004"]
 ええ、楽しみ……。[p]
@@ -38,5 +51,20 @@
 なんともなしに肯定する。[p]
 普通に見れば異常な光景だが、[n]
 これがアカリの日常だった。[p]
+
+
+[filter name="fade" time="500"]
+[clearbg]
+[clearcg id=0]
+[clearcg id=1]
+[stopbgm]
+
+
 その日常がある一つの小包で変わろうとは、[n]
 この時のアカリは思いもしなかったのである。[p]
+[hide_message]
+[wait time=500]
+[filter name="clear" time="500"]
+[wait time=500]
+
+[sys_memset index=600 value="1"]

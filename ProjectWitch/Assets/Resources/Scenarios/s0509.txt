@@ -2,6 +2,23 @@
 ;script: nikai
 ;timing:　地点49再戦
 
+[field_area_hilight id=49]
+[wait time=200]
+
+;load
+[loadcg id=0 ref="alice"]
+[loadcg id=1 ref="kuro"]
+[loadcg id=2 ref="ema"]
+
+;trans
+[filter name="fade" time=500]
+[drawbg ref="1047m"]
+[bgm ref="005_battle2"]
+[filter name="clear" time=500]
+
+[show_message]
+[drawcg id=0 pos=3 dir="right" state=2]
+[drawcg id=1 pos=2 dir="right"]
 #クロ
 [voice ref="050265"]
 穴掘り隊、かかれッ！[p]
@@ -15,12 +32,37 @@
 [voice ref="050267"]
 よし、誘導隊行くぞ！　私に続け！！[p]
 [cn]
+
+[hide_message]
+[move id=0 x=100 time=500]
+[filter name="color" color="FFFFFF" time=300]
+[drawbg ref="1030m"]
+[clearcg id=1]
+[filter name="clear" time=300]
+
+[drawcg id=2 pos=5 state=1]
+[drawcg id=0 pos=2 mode="slidein" dir="right" state=2]
+[show_message]
 アリスは砦に突入した。[p]
 そこにはエマが変わらず待ち構えていた。[p]
 #エマ
 [voice ref="050268"]
 ウゥウウウゥウ……[n]
+[filter name="color" color="FF0000" time=300]
+[se ref="109_fx_grummanA"]
 ウアアァッァッッ！！[p]
+[filter name="clear" time=300]
+
 #アリス
 [voice ref="050269"]
 よしっ、行くぞお前たち！　時間を稼ぐんだ！！[p]
+
+[hide_message]
+[filter name="fade" time=500]
+[clearbg]
+[clearcg id=0]
+[clearcg id=2]
+[filter name="clear" time=500]
+
+[stopbgm]
+[sys_memset index=509 value="1"]

@@ -1,17 +1,25 @@
-﻿;script 105
-
-;アリス領　アッサム砦
+﻿;s0105
+;script:yuichi
+;direction:yuichi
 ;条件　■場面5の後の戦闘で敗北する　かつ　アリス、クロが生存している
 ;タイミング　戦闘後
+
+[field_area_hilight id=9]
+[wait time=200]
+
 ;データロード
 [loadcg id=0 ref="alice"]
 [loadcg id=1 ref="kuro"]
+
+[filter name="fade" time=500]
 [drawbg ref="1047e"]
-[bgm ref="017_event2"]
+[bgm ref="018_event3"]
+[filter name="clear" time=500]
+
 [drawcg id=0 pos="right" state="2"]
 [drawcg id=1 pos="left" dir="right"]
+[show_message]
 ;拠点に設置された魔導砲にコテンパンにやられる。
-
 #クロ
 [voice ref="010029"]
 アリス様！[n]
@@ -22,4 +30,11 @@
 撤退だーーーー！！！ [p]
 
 [hide_message]
+[filter name="fade" time=500]
+[clearbg]
+[clearcg id=0]
+[clearcg id=1]
+[filter name="clear" time=500]
+
+[stopbgm]
 [sys_memset index=105 value="1"]

@@ -1,32 +1,95 @@
 ﻿;s0606
 ;script: nikai
+;direction: yuichi
 ;timing: s0605あと　パンプキング決戦前
+[field_area_hilight id=61]
+[wait time=500]
 
+[loadcg id=0 ref="pumpking"]
+[loadcg id=1 ref="pump_red"]
+[loadcg id=2 ref="pump_blue"]
+[loadcg id=3 ref="pump_pink"]
+[loadcg id=4 ref="pump_silver"]
+
+[filter name="fade" time=500]
+[drawbg ref="1009m"]
+[bgm ref="012_pumpking"]
+[filter name="clear" time=500]
+
+[drawcg id=0 pos=4]
+[drawcg id=1 pos=1 dir="right"]
+[drawcg id=3 pos=1 dir="right"]
+[drawcg id=2 pos=1 dir="right"]
+[drawcg id=4 pos=1 dir="right"]
+[show_message]
+
+[move id=1 x=0 y=10 time=50]
+[move id=1 x=0 y=-10 time=50]
 #パンプキン部下（赤）
 [voice ref="060055"]
 パンプキング様！　魔女たちがもうすぐそこまで！[p]
+[move id=2 x=0 y=10 time=50]
+[move id=2 x=0 y=-10 time=50]
 #パンプキン部下（青）
 [voice ref="060056"]
 やばいよ！[p]
+[move id=3 x=0 y=10 time=50]
+[move id=3 x=0 y=-10 time=50]
 #パンプキン部下（ピンク）
 [voice ref="060057"]
 まけるよ！[p]
-#パンプキン部下（紫）
+[move id=4 x=0 y=10 time=50]
+[move id=4 x=0 y=-10 time=50]
+#パンプキン部下（銀）
 [voice ref="060058"]
 どうしよーー！！[p]
+[move id=0 x=0 y=-30 time=400]
+[move id=0 x=0 y=2 time=10]
+[move id=0 x=0 y=-2 time=10]
+[move id=0 x=0 y=2 time=10]
+[move id=0 x=0 y=-2 time=10]
 #パンプキング
 [voice ref="060059"]
 ぐぬーーー！！[n]
 畜生、魔女のやつめええぇーー！！[p]
 [voice ref="060060"]
 せっかく領主になったってのに！！[p]
+[move id=1 x=0 y=10 time=50]
+[move id=1 x=0 y=-10 time=50]
 #パンプキング部下（赤）
 [voice ref="060061"]
 ああっ！　ほら、もうすぐそこまで！！[p]
+[move id=0 x=0 y=30 time=100]
 #パンプキング
 [voice ref="060062"]
 ああーー！！[n]
 こうなったらヤケだ！！[p]
 [voice ref="060063"]
 全員一緒に突撃だーーー！！[p]
+[scale id=1 sx=-1 time=100]
+[clearcg id=1 mode="slideout"]
+[scale id=2 sx=-1 time=100]
+[clearcg id=2 mode="slideout"]
+[scale id=3 sx=-1 time=100]
+[clearcg id=3 mode="slideout"]
+[scale id=4 sx=-1 time=100]
+[clearcg id=4 mode="slideout"]
+[move id=0 x=-100 y=0 time=1000]
 ;戦闘開始
+
+
+[hide_message]
+[filter name="fade" time="500"]
+[clearbg]
+[clearcg id=0]
+[clearcg id=1]
+[clearcg id=2]
+[clearcg id=3]
+[clearcg id=4]
+[wait time=500]
+[filter name="clear" time="500"]
+[stopbgm]
+[wait time=500]
+
+[battle_bgm ref="012_pumpking"]
+[sys_memset index=606 value="1"]

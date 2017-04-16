@@ -3,16 +3,32 @@
 ;timing: ベガ戦後
 
 ;マップスクロール
-[field_area_hilight id=1]
+[field_area_hilight id=42]
 [wait time=200]
+
+;ロード
+[loadcg id=0 ref="alice"]
+[loadcg id=1 ref="kuro"]
+[loadcg id=2 ref="vega"]
+[loadcg id=3 ref="messer"]
+[loadcg id=4 ref="chishire"]
+
+[filter name="fade" time=500]
+[drawbg ref="1006e"]
+[filter name="clear" time=500]
 
 [if_alive unit=9]
 ;通常のベガルート
+[bgm ref="021_event6"]
+[drawcg id=0 pos=2 state=1 dir="right"]
+[drawcg id=1 pos=1 dir="right"]
+[drawcg id=2 pos=4 posy=-20]
+[drawcg id=3 pos=5 posy=-20 layer="front"]
 #アリス
 クフフフフッ！！　アーッハッハッハッハ！！[p]
 山の魔女ほかーーーく！！[p]
 #ベガ
-くっ……。
+くっ……。[p]
 #アリス
 ドラゴンって種族は強いと聞いていたが、[n]
 所詮私の敵ではなかったということだな。[p]
@@ -21,11 +37,14 @@
 私が……私に力があれば、お前など……。[p]
 #メッサーシュミット
 ベガぁっ……。[p]
+[scale id=2 sx=-1 time=0]
 #ベガ
 メッサーシュミット！！　[n]
 動くな、ダメだ、死んでしまうぞ！！[p]
+[changecg id=0 state=0]
 #アリス
 何だ、子供のドラゴンか？[p]
+[scale id=2 sx=-1 time=0]
 #ベガ
 メッサーシュミットに触れるな！！[p]
 あいつは関係ない。私を連れていけばいいだろう！！[p]
@@ -57,6 +76,7 @@
 負けた分際でよく言うぜ……。[p]
 #ベガ
 それは…………。[p]
+[changecg id=0 state=1]
 #アリス
 クフフフフッ！　自分の立場が分かったようだな。[p]
 お前はこれから、私の部下になるのだ。[p]
@@ -64,11 +84,13 @@
 さっきのチビもな。[p]
 #ベガ
 ……私は、お父様にどう言い訳したらよいのだ。[p]
+[changecg id=0 state=0]
 #アリス
 あん？　なんだ、突然。[p]
 #クロ
 アリス様。どうやらこのベガという魔女は、[n]
 先の領主のドラゴンと旅の魔女の間にできた子供のようです。[p]
+[changecg id=0 state=2]
 #アリス
 魔女が子供を産むだって？　なんて馬鹿なことを……。[p]
 魔女はヤッちまうと魔法を使えなくなるんだぞ。[p]
@@ -90,6 +112,7 @@
 #クロ
 差し出がましいようでございますが、[p]
 察するに、お父様はあなた様にそのようなことを期待なされていたわけではありますまい。[p]
+[changecg id=0 state=0]
 #アリス
 まあそうだな。[p]
 領主にでもしとかないと、[n]
@@ -108,8 +131,31 @@
 この地に国ができてから数千年。[p]
 長きにわたり栄華を極めたドラゴンの王国は、[n]
 その歴史に幕を閉じた。[p]
-…………。[p]
+
+[hide_message]
+[filter name="fade" time=500]
+[clearbg]
+[clearcg id=0]
+[clearcg id=1]
+[clearcg id=2]
+[clearcg id=3]
+[filter name="clear" time=500]
+[bgm ref="002_alice1"]
+
+[field_area_hilight id=1]
+[wait time=200]
+
+[filter name="fade" time=500]
+[drawbg ref="1002e"]
+[bgm ref="003_alice2"]
+[filter name="clear" time=500]
+
 ;場面転換
+[drawcg id=0 pos=2 dir="right" state=1]
+[drawcg id=1 pos=1 dir="right"]
+[drawcg id=4 posx=-10 dir="right" layer="front"]
+[drawcg id=2 pos=5]
+[show_message]
 アリスの館。[p]
 #ベガ
 ここに血判を押すのだな。[p]
@@ -118,10 +164,12 @@
 確かに受け取ったぞ、契約完了だ。[p]
 #チシャ
 アリス様も知らなかったではないですか。契約の書の事。[p]
+[changecg id=0 state=2]
 #アリス
 あん？　すりつぶしてネコ缶にするぞ。[p]
 #チシャ
 ねっ、ネコ缶って意味違いますよぅ……。[p]
+[changecg id=0 state=0]
 #アリス
 ともかくだ。[p]
 お前がもし私にたてついたら、[n]
@@ -129,17 +177,22 @@
 これでいいな？[p]
 #ベガ
 拒否権なんてないのだ。わざわざ聞かないでくれ。[p]
+[changecg id=0 state=1]
 #アリス
 クフフ……まあそうだな。[p]
 それじゃあこっちも人質を解放しよう。[p]
 クロ、あのチビを連れてこい。[p]
 #クロ
 はっ。[p]
+[scale id=1 sx=-1 time=0]
+[move id=1 x=-50 time=800]
 [cn]
 クロが部屋を出ていき、しばらくすると、[n]
 翼をしきりに羽ばたかせる音が聞こえてきた。[p]
 その音に、今まで固く結んでいたベガの口が、[n]
 初めて緩んだ。[p]
+[drawcg id=3 posx=-100 dir="right" layer="front"]
+[move id=3 x=120 time=500]
 #メッサーシュミット
 ベガ！！[p]
 #ベガ
@@ -171,6 +224,7 @@
 #ベガ
 ああ、そうだな。[p]
 共に行こう、メッサーシュミット。[p]
+[changecg id=0 state=0]
 #アリス
 こういうクサい友情はあんま好きじゃねえんだけどなぁ……。[p]
 #チシャ
@@ -183,10 +237,23 @@
 ベガは生まれて初めての街に内心胸を躍らせながら歩いてゆく。[p]
 その足取りは軽く、表情は晴れ晴れとしていた。[p]
 
+[hide_message]
+[filter name="fade" time=500]
+[clearbg]
+[clearcg id=0]
+[clearcg id=1]
+[clearcg id=2]
+[clearcg id=3]
+[clearcg id=4]
+[filter name="clear" time=500]
+
 [else]
 
 ;タイミング：ベガ戦後
 ;条件：ベガ死亡
+[bgm ref="019_event4"]
+[drawcg id=2 pos=2 posy=-20 dir="right"]
+[drawcg id=3 pos=4 posy=-20 layer="front"]
 #メッサーシュミット
 ベガ……。[p]
 #ベガ
@@ -208,8 +275,16 @@
 メッサー……シュミッ……ト…………。[p]
 ………………。[p]
 [cn]
+
+[filter name="fade" time=500]
 この地に国ができてから数千年。[p]
 栄華を極めたドラゴンの王国はこの日、その長い歴史に幕を閉じた。[p]
+[hide_message]
+[clearcg id=2]
+[clearcg id=3]
+[clearbg]
+[filter name="clear" time=500]
+
 [endif] ;[if_alive unit=9]
 
 ;終了処理

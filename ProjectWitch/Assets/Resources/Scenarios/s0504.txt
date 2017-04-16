@@ -1,6 +1,20 @@
 ;s0504
 ;script: nikai
 ;timing:　地点47初戦闘
+;direction yuichi
+
+;フィールドスクロール
+[field_area_hilight id=47]
+[wait time=200]
+
+;ロード
+[loadcg id=0 ref="ema"]
+[loadcg id=1 ref="emil"]
+
+[filter name="fade" time=500]
+[drawbg ref="Event/702"]
+[bgm ref="018_event3"]
+[filter name="clear" time=500]
 
 #アリス
 [voice ref="050101"]
@@ -24,8 +38,23 @@
 ご苦労！！[n]
 クフフフフッ、いいぞいいぞー！ このまま占領だ！！[p]
 [cn]
-……………。[p]
-;場面転換
+
+[hide_message]
+[filter name="fade" time=500]
+[clearbg]
+[filter name="clear" time=500]
+
+[field_area_hilight id=49]
+[wait time=200]
+
+[filter name="fade" time=500]
+[drawbg ref="1043m"]
+[bgm ref="011_charlotte"]
+[filter name="clear" time=500]
+
+[show_message]
+[drawcg id=0 pos=2 dir="right"]
+[drawcg id=1 pos=4]
 #エマ
 [voice ref="050107"]
 うっ、ううん……。[p]
@@ -65,11 +94,20 @@
 [voice ref="050118"]
 えーい、ファイアーボール！！[n]
 ……なーんて、きゃあっ！！！[p]
+
+[se ref="132_fx_fireball"]
+[filter name="flush" color="FF0000" time=500]
+
 [cn]
 なんとなくかざしたエマの手から[n]
 サッカーボールほどの火球が飛び出した。[p]
 火球は窓を突き破り、雲を突き抜け[n]
 彼方へと消えていった。[p]
+
+[move id=0 x=-10 time=500]
+[wait time=500]
+[move id=0 x=-10 time=500]
+
 #エマ
 [voice ref="050119"]
 はぁ……、はぁ……。[p]
@@ -84,6 +122,10 @@
 私、この魔法で魔女を倒してくるわ！！[p]
 [voice ref="050123"]
 ありがとっ、エミル！！[p]
+
+[scale id=0 sx=-1 time=0]
+[move id=0 x=-100 time=500]
+
 #エミル
 [voice ref="050124"]
 あっ、ちょっと待って！！[n]
@@ -91,3 +133,13 @@
 [voice ref="050125"]
 でも本当に成功するなんて。[n]
 ふふふ、天才かぁ……。[p]
+
+[hide_message]
+[filter name="fade" time=500]
+[clearbg]
+[clearcg id=0]
+[clearcg id=1]
+[filter name="clear" time=500]
+
+[stopbgm]
+[sys_memset index=504 value="1"]

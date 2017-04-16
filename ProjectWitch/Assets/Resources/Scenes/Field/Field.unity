@@ -3470,7 +3470,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58e7d080540278e4d8905e17f7aeb729, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mAutoCameraSpeed: 5
+  mDuration: 1
 --- !u!65 &1737240089
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3748,6 +3748,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mFieldController: {fileID: 946525115}
+  mFieldUIController: {fileID: 1680660968}
   mAreaWindow: {fileID: 1000013053250180, guid: 141cbc9374ca37c42b48dde5f4e04093,
     type: 2}
   mAreaNameWindow: {fileID: 1000011992281112, guid: 85cb3ac6a0abd404e97a95f42a8e44bd,

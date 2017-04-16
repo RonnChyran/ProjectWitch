@@ -1,19 +1,58 @@
 ;s0608
+;script: nikai
+;direction: yuichi
+;timing:s0603あと　戦闘敗北
+[field_area_hilight id=56]
+[wait time=500]
+
+[loadcg id=0 ref="pumpking"]
+[loadcg id=1 ref="alice"]
+[loadcg id=2 ref="kuro"]
+[loadcg id=3 ref="pump_red"]
+[loadcg id=4 ref="pump_blue"]
+[loadcg id=5 ref="pump_pink"]
+[loadcg id=6 ref="pump_silver"]
+
+[filter name="fade" time=500]
+[drawbg ref="1021m"]
+[bgm ref="012_pumpking"]
+[drawcg id=2 pos=1 dir="right"]
+[drawcg id=1 pos=2 dir="right" state=2]
+[drawcg id=3 pos=3]
+[drawcg id=4 pos=3]
+[drawcg id=5 pos=3]
+[drawcg id=6 pos=3]
+[drawcg id=0 pos=3]
+
+[filter name="clear" time=500]
 
 ;戦闘に負けると、暗殺ルート
 ;ただし、メイジーが死んでいたらそのまま強行突破ルート
-;場面4あと　戦闘敗北
+[show_message]
+
 #アリス
 [voice ref="060095"]
 畜生！　なんだあの爆発！！[p]
 [voice ref="060096"]
 撤退だ！！　立て直すぞーー！！[p]
+[scale id=1 sx=-1 time=200]
+[clearcg id=1 mode="slideout"]
+[clearcg id=2 mode="slideout"]
+[move id=3 x=0 y=10 time=50]
+[move id=3 x=0 y=-10 time=50]
+[move id=3 x=0 y=10 time=50]
+[move id=3 x=0 y=-10 time=50]
+
 #パンプキン部下（赤）
 [voice ref="060097"]
 敵が逃げていくぞーー！[p]
+[move id=4 x=0 y=10 time=50]
+[move id=4 x=0 y=-10 time=50]
 #パンプキン部下（青）
 [voice ref="060098"]
 逃げていくぞーー！！[p]
+[move id=5 x=0 y=10 time=50]
+[move id=5 x=0 y=-10 time=50]
 #パンプキン部下（ピンク）
 [voice ref="060099"]
 わーい！　わーい！[p]
@@ -23,13 +62,32 @@
 [voice ref="060101"]
 オラ、てめえらぼけぼけしてねえで[n]
 さっさと追撃して来い！！[p]
-#パンプキン部下（紫）
+#パンプキン部下（銀）
 [voice ref="060102"]
 きゃーー！！[p]
+[move id=6 x=-100 y=0 time=500]
+[move id=4 x=-100 y=0 time=500]
 #パンプキン部下（赤）
 [voice ref="060103"]
 きゃーー！！[p]
+[move id=3 x=-100 y=0 time=500]
+[move id=5 x=-100 y=0 time=500]
 [cn]
 かぼちゃたちの爆発攻撃の前にアリス軍は撤退。[p]
 後から追ってきたかぼちゃたちによる被害により、[n]
 アリス軍はさらなるダメージを受けた。[p]
+
+[hide_message]
+[filter name="fade" time="500"]
+[clearbg]
+[clearcg id=0]
+[clearcg id=3]
+[clearcg id=4]
+[clearcg id=5]
+[clearcg id=6]
+[wait time=500]
+[filter name="clear" time="500"]
+[stopbgm]
+[wait time=500]
+
+[sys_memset index=608 value="1"]

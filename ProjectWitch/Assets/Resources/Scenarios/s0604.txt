@@ -1,7 +1,33 @@
 ﻿;s0604
 ;script: nikai
-;timing: s0603あと　戦闘勝利
+;direction: yuichi
+;timing:s0603あと　戦闘勝利
+[field_area_hilight id=56]
+[wait time=500]
 
+[loadcg id=0 ref="pumpking"]
+[loadcg id=1 ref="alice"]
+[loadcg id=2 ref="kuro"]
+[loadcg id=3 ref="pump_red"]
+[loadcg id=4 ref="pump_blue"]
+[loadcg id=5 ref="pump_pink"]
+[loadcg id=6 ref="pump_silver"]
+
+
+[filter name="fade" time=500]
+[drawbg ref="1021m"]
+[bgm ref="012_pumpking"]
+[drawcg id=2 pos=1 dir="right"]
+[drawcg id=1 pos=2 dir="right" state=1]
+[drawcg id=3 pos=3 ]
+[drawcg id=4 pos=3 ]
+[drawcg id=5 pos=3 ]
+[drawcg id=6 pos=3 ]
+[drawcg id=0 pos=3 ]
+
+[filter name="clear" time=500]
+
+[show_message]
 #アリス
 [voice ref="060049"]
 アッハッハッハッハーー！！！[p]
@@ -10,10 +36,43 @@
 この私はたおせーーーん！！！[p]
 [voice ref="060051"]
 それっ、追撃だーーーー！！[p]
+[move id=3 x=0 y=10 time=50]
+[move id=3 x=0 y=-10 time=50]
+[move id=4 x=0 y=10 time=50]
+[move id=4 x=0 y=-10 time=50]
+[move id=5 x=0 y=10 time=50]
+[move id=5 x=0 y=-10 time=50]
+[move id=6 x=0 y=10 time=50]
+[move id=6 x=0 y=-10 time=50]
+[move id=0 x=10 y=0 time=100]
 #パンプキング
 [voice ref="060052"]
 ヤベエッ！！[n]
 おら、てめえら! ずらかるぞォ！[p]
+[scale id=0 sx=-1 time=100]
+[clearcg id=0 mode="slideout"]
+[scale id=6 sx=-1 time=100]
+[clearcg id=6 mode="slideout"]
+[scale id=5 sx=-1 time=100]
+[clearcg id=5 mode="slideout"]
+[scale id=4 sx=-1 time=100]
+[clearcg id=4 mode="slideout"]
+[scale id=3 sx=-1 time=100]
+[move id=3 x=20 y=0 time=100]
+[rotate id=3 angle=-30 time=50]
+[move id=3 x=0 y=-20 time=100]
+
 [cn]
 パンプキングの猛攻をアリスはあっさりとはねのけ、[n]
 パンプキング軍にさらなる打撃を与えたのだった。[p]
+[hide_message]
+[filter name="fade" time="500"]
+[clearbg]
+[clearcg id=1]
+[clearcg id=2]
+[clearcg id=3]
+[wait time=500]
+[filter name="clear" time="500"]
+[stopbgm]
+
+[sys_memset index=604 value="1"]

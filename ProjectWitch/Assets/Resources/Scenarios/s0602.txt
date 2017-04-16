@@ -1,8 +1,27 @@
 ﻿;script 0602
+;script: nikai
+;direction: yuichi
+;timing: s0601あと　ターンはじめイベント
+[field_area_hilight id=61]
+[wait time=500]
 
+[loadcg id=0 ref="pumpking"]
+[loadcg id=1 ref="akari"]
+[loadcg id=2 ref="pump_red"]
+[loadcg id=3 ref="pump_blue"]
+[loadcg id=4 ref="pump_pink"]
+[loadcg id=5 ref="pump_silver"]
 
-;場面2　翌ターンはじめ
-;お菓子の家
+[filter name="fade" time=500]
+[drawbg ref="1054m"]
+[bgm ref="012_pumpking"]
+[drawcg id=1 pos=4]
+[filter name="clear" time=500]
+
+[show_message]
+お菓子の家[p]
+[drawcg id=0 pos=2 mode="slidein" dir="right" state=1]
+
 #かぼちゃの人形
 [voice ref="060014"]
 アカリサマ……、オチャヲオモチシマシタ。[p]
@@ -12,47 +31,88 @@
 [voice ref="060016"]
 ……なに、これ。[n]
 ヘンな……味……。[p]
+[rotate id=1 angle=30 time=50]
 [cn]
 どさりとアカリの体が倒れた。[p]
+[move id=1 x=0 y=-50 time=100]
 #アカリ
 [voice ref="060017"]
 くう……。[p]
+[clearcg id=1]
+[clearcg id=0]
+[drawcg id=0 pos=2 dir="right"]
+
 #かぼちゃの人形
 [voice ref="060018"]
 ゲヒヒヒヒヒヒ……、案外簡単に眠ったな。[n]
 魔女ってのも案外大したことねえや。[p]
+[scale id=0 sx=-1 time=0]
+[move id=0 x=0 y=10 time=50]
+[move id=0 x=0 y=-10 time=50]
 [voice ref="060019"]
 オイ、野郎ども！！　[n]
 こいつを地下牢につないでおけ！[p]
 [cn]
 かぼちゃの人形が指示すると[n]
 小さなかぼちゃたちがわらわらと部屋に入ってきた。[p]
+[scale id=0 sx=-1 time=200]
+[drawcg id=2 pos=2 mode="slidein" dir="right" layer="front"]
 #小さなかぼちゃ（赤）
 [voice ref="060020"]
 キャー！　魔女様が倒れてるー！[p]
+[drawcg id=3 pos=2 mode="slidein" dir="right" layer="front"]
 #小さなかかぼちゃ（青）
 [voice ref="060021"]
 倒れてるー！！[p]
+[drawcg id=4 pos=2 mode="slidein" dir="right" layer="front"]
 #小さなかぼちゃ（ピンク）
 [voice ref="060022"]
 そーれ、はこべー！！[p]
-#小さなかぼちゃ（紫）
+[drawcg id=5 pos=2 mode="slidein"dir="right"  layer="front"]
+#小さなかぼちゃ（銀）
 [voice ref="060023"]
 はこべー！！[p]
+[move id=2 x=100 y=0 time=400]
+[move id=3 x=100 y=0 time=400]
+[move id=4 x=100 y=0 time=400]
+[move id=5 x=100 y=0 time=400]
+[clearcg id=2]
+[clearcg id=3]
+[clearcg id=4]
+[clearcg id=5]
+
 [cn]
 小さなかぼちゃたちはアカリをあっという間に担ぎ、[n]
 どこかへ運んで行ってしまった。[p]
-かぼちゃたちはかぼちゃの人形がアカリの部下から適当に選んで、[n]
+かぼちゃたちはかぼちゃの人形がアカリの部下から適当に選んで、
 宝石の力を分け与えたかぼちゃの人形直属の部下だった。[p]
+[moveto id=0 x=50 y=50 time=300]
 #かぼちゃの人形
 [voice ref="060024"]
 ゲヒヒヒヒヒヒッ！！[n]
 これでこの領地は俺様、パンプキング様のものだ！！[p]
 [voice ref="060025"]
 ゲヒヒ……、ゲヘヘヘヘヘヘヘッ！！！！[p]
+[move id=0 x=0 y=5 time=50]
+[move id=0 x=0 y=-5 time=50]
+[move id=0 x=0 y=5 time=50]
+[move id=0 x=0 y=-5 time=50]
 [voice ref="060026"]
 アーッヒャッヒャッヒャッヒャッヒャッ！！！！[p]
 [cn]
 かぼちゃの人形、改めパンプキングの高笑いがあたりに響き渡った。[p]
 この時から領主アカリは地下深くに閉じ込められ、[n]
-アカリの領地はパンプキングが統治することとなった。[p]
+アカリの領地はパンプキングが統治することとなった[p]
+
+[hide_message]
+[filter name="fade" time="500"]
+[clearbg]
+[clearcg id=0]
+[clearcg id=2]
+[clearcg id=3]
+[wait time=500]
+[filter name="clear" time="500"]
+[stopbgm]
+[wait time=500]
+
+[sys_memset index=602 value="1"]

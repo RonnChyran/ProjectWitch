@@ -1,27 +1,34 @@
 ;script 0109
+;script yuichi
+;direction yuichi
 
+[field_area_hilight id=9]
+[wait time=200]
+
+;リソースロード
 [loadcg id=0 ref="alice"]
 [loadcg id=1 ref="kuro"]
 [loadcg id=2 ref="werewolf"]
-[loadcg id=3 ref="soldier"]
+
+[filter name="fade" time=500]
 [drawbg ref="1047n"]
+[bgm ref="005_battle2"]
+[filter name="clear" time=500]
+
+[show_message]
 [drawcg id=1 pos="center"]
-
-;アリス領　アッサム砦（夜）
-;戦闘VSワーウルフ軍 数ターンで戦闘中断　2ユニットまで　アリスは出せない　敗北しても進む
-
 #クロ
 [voice ref="010053"]
 引けっ、引けーーー！！！ [p]
+[cn]
+
 [filter name="fade" time=500]
 [clearcg id=1]
-[cn]
 …………。[p]
-;[drawcg id=2 pos="2" dir="right"]
-[drawcg id=3 pos="4"]
 [drawbg ref="1048n"]
 [filter name="clear" time=500]
 
+[drawcg id=2 pos="2" dir="right"]
 #伝令
 [voice ref="010054"]
 ワーウルフ様、アリス軍が撤退を始めました！[p]
@@ -44,11 +51,9 @@
 なっ、貴様、何者だ！！[p]
 [moveto id=1 x=20 y=50 time=200]
 [clearcg id=3]
-[drawcg id=0 pos="4"]
+[drawcg id=0 pos="4" state=1]
 
-[bgm ref="021_event6"]
 #アリス
-[changecg id=0 state=1]
 [voice ref="010060"]
 クフフッ[n]
 まあ、気づくのが遅かったな。[p]
@@ -59,13 +64,20 @@
 [voice ref="010062"]
 お前の負けだ、いぬっコロ！[n]
 破壊光線ーーーーーーッ！！！[p]
-[se ref="bomb3"]
-[move id=2 x=-100 y=30 time=100]
-[clearcg id=2]
+
+[hide_message]
+[se ref="051_b_bomb2"]
+[filter name="color" color="FFFFFF" time=800]
+[show_message]
 
 #ワーウルフ
 [voice ref="010063"]
 ぎゃあああああーーーーーッ！！[p]
+[cn]
+[clearcg id=2]
+
+[filter name="clear" time=4000]
+
 #アリス
 [changecg id=0 state=2]
 [voice ref="010064"]
@@ -74,21 +86,24 @@
 #アリス軍兵士
 [voice ref="010064a"]
  オオオオオオォォォォォーーーーッ！！！[p]
+
 [filter name="fade" time=500]
 [cn]
 …………。[p]
 [clearcg id=0]
 [drawbg ref="1030m"]
+[filter name="clear" time=500]
+
+[bgm ref="021_event6"]
+
 ;[drawcg id=2 pos="2" dir="right"]
 [drawcg id=0 pos="5"]
 [drawcg id=1 pos="1" dir="right"]
-[filter name="clear" time=500]
-
+[show_message]
 #クロ
 [voice ref="010065"]
 アリス様、敵の大将です。[p]
 #アリス
-[changecg id=0 state=1]
 [voice ref="010066"]
 ふん、手間を取らせやがって。[n]
 オイ、メイジーはどこにいる。[p]
@@ -97,6 +112,7 @@
 貴様なんぞ、メイジー様にかかれば。[p]
 #アリス
 [move id=0 x=-5 y=0 time=50]
+[changecg id=0 state=2]
 [voice ref="010068"]
 私の質問に答えろ！！[n]
 それとも今すぐ死にたいか。[p]
@@ -104,6 +120,7 @@
 [voice ref="010068a"]
 死は覚悟している。 貴様なんぞに話すことはない。[p]
 #アリス
+[changecg id=0 state=0]
 [voice ref="010069"]
 チッ、ずいぶん嫌われたもんだ。[n]
 しかし、そうか……メイジーが反乱と聞いた時は耳を疑ったが、
@@ -124,19 +141,22 @@
 メイジー様は誰よりも部下を愛し、大切になさる優しいお方。[n]
 それなのに、先代様はなぜ！！[p]
 #アリス
+[changecg id=0 state=2]
 [voice ref="010074"]
 そんなこと、あの世でババアに聞きな。[p]
+
 [moveto id=0 x=50 time=500]
-[rotate id=0 angle=5 time=50]
-[rotate id=0 angle=-5 time=50]
-;アリス、ワーウルフにとどめを刺す
-;切断
+[se ref="150"]
+[filter name="flush" color="FF0000" time=300]
+
 #ワーウルフ
 [voice ref="010075"]
 ぐっ……、メイジー様……。[p]
+
 ;倒れる
 [move id=2 x=0 y=-10 time=400]
 [clearcg id=2]
+
 #アリス
 [voice ref="010076"]
 クロ、コイツの首をはねて、北の方に向けてさらせ。[n]
@@ -150,5 +170,12 @@
 フン、領主はこの私だ。 絶対に譲らんぞ。 [p]
 
 [hide_message]
+[filter name="fade" time=500]
+[clearbg]
+[clearcg id=0]
+[clearcg id=1]
+[filter name="clear" time=500]
+
+[stopbgm]
 [sys_memset index=109 value="1"]
 [change_area_owner area=9 owner=0]

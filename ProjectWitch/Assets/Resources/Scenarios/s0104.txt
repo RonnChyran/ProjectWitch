@@ -1,19 +1,33 @@
 ﻿;script 104
+;script:yuichi
+;direction:yuichi
+
+[field_area_hilight id=9]
+[wait time=200]
+
 ;データロード
 [loadcg id=0 ref="alice"]
 [loadcg id=1 ref="kuro"]
 [loadcg id=2 ref="werewolf"]
+
+[filter name="fade" time=500]
 [drawbg ref="1048m"]
 [bgm ref="018_event3"]
-;[drawcg id=2 pos="3"]
+[filter name="clear" time=500]
+
+[show_message]
+[drawcg id=2 pos="3"]
 #ワーウルフ
 [voice ref="010017"]
 来たか。[n]
 メイジー様、お力を……。[p]
+
+[cn]
+[filter name="fade" time=500]
 [clearcg id=2]
-[drawbg ref="1047m"]
-[drawcg id=0 pos="right"]
-[drawcg id=1 pos="left" dir="right"]
+…………。[p]
+[drawbg ref="Event/702"]
+[filter name="clear" time=500]
 
 #アリス
 [voice ref="010018"]
@@ -33,10 +47,12 @@
 [voice ref="010022"]
 当然ひねりつぶす、全軍とつげ……[n]
 いや、待て。 何か言ってるみたいだな。[p]
-[clearcg id=0]
-[clearcg id=1]
+
+[filter name="fade" time=500]
 [drawbg ref="1048m"]
-;[drawcg id=2 pos="center"]
+[filter name="clear" time=500]
+
+[drawcg id=2 pos="center"]
 #ワーウルフ
 [voice ref="010023"]
 敵軍に告ぐ！！[n]
@@ -46,10 +62,12 @@
 民をないがしろにするような畜生を我らは領主とは認めない！！[p]
 [voice ref="010025"]
 我らの領主にふさわしいのはメイジー様を置いてほかになし！！[p]
+
+[filter name="fade" time=500]
 [clearcg id=2]
-[drawbg ref="1047m"]
-[drawcg id=0 pos="right"]
-[drawcg id=1 pos="left"]
+[drawbg ref="Event/702"]
+[filter name="clear" time=500]
+
 #アリス
 [voice ref="010026"]
 ちっ、ああいう輩が一番面倒なんだ……。[n]
@@ -62,6 +80,12 @@
 貴様らのやっていることが如何に下らん革命ゴッコなのか、[n]
 その身にしっかりと教えてやろう。[n]
 クフフフフフフ……。[p]
-
 [hide_message]
+
+
+[filter name="fade" time=500]
+[clearbg]
+[filter name="clear" time=500]
+
+[stopbgm]
 [sys_memset index=104 value="1"]

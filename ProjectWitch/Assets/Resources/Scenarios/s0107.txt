@@ -1,19 +1,26 @@
-﻿;script 107
-
+﻿;s0107
+;script yuichi
+;direction yuichi
 ;アリス領　アッサム砦（夜）
 ;条件　なし
 ;タイミング　■場面7のつづき アッサム砦西、高台。 アリスはアッサム砦を崖の上から一望しながら、いつもの笑みを浮かべていた。
+
+[field_area_hilight id=9]
+[wait time=200]
+
 ;リソースロード
 [loadcg id=0 ref="alice"]
 [loadcg id=1 ref="kuro"]
 [loadcg id=2 ref="werewolf"]
-[loadcg id=3 ref="soldier"]
-[loadcg id=4 ref="soldier"]
+
+[filter name="fade" time=500]
 [drawbg ref="1047n"]
 [bgm ref="018_event3"]
+[filter name="clear" time=500]
+
 [drawcg id=0 pos="right" state="1"]
 [drawcg id=1 pos="left" dir="right"]
-
+[show_message]
 #アリス
 [voice ref="010040"]
 クフフフフッ！！[n]
@@ -48,13 +55,10 @@
 [filter name="fade" time=500]
 [clearcg id=0]
 [clearcg id=1]
-[bgm ref="018_event3"]
 [drawbg ref="1048n"]
 [cn]
 …………。[p]
 ;[drawcg id=2 pos="center"]
-[drawcg id=3 pos="1"]
-[drawcg id=4 pos="5"]
 [filter name="clear" time=500]
 
 #伝令
@@ -76,23 +80,30 @@
 [voice ref="010051"]
 よし！　ある程度ひきつけたら一斉掃射しろ！[n]
 敵は大軍だ、全員で攻撃にあたれ！！ [p]
+[cn]
+
 [filter name="fade" time=500]
 [clearcg id=2]
-[clearcg id=3]
-[clearcg id=4]
-[cn]
 …………。[p]
-
 [drawbg ref="1047n"]
-[drawcg id=1 pos="center"]
 [filter name="clear" time=500]
+
+[drawcg id=1 pos="center"]
 #クロ
 [voice ref="010052"]
 全軍前ヘッ！！[n]
 いいかっ、合図があったら一斉に引くのだ！　[n]
-深入りはするなっ！！
+深入りはするなっ！！[p]
 #アリス軍
 オオオオオォォォーー！！！[p]
 
+
 [hide_message]
+[filter name="fade" time=500]
+[clearbg]
+[clearcg id=1]
+[filter name="clear" time=500]
+
+[stopbgm]
+[battle_bgm ref="005_battle2"]
 [sys_memset index=107 value="1"]

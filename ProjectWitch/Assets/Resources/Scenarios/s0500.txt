@@ -2,20 +2,39 @@
 ;script: nikai
 ;timing: ロレーヌ領侵入時
 
-;シャルロッテ領　ロレーヌ城
-;タイミング　シャルロッテ領初戦闘前
+;マップスクロール
+[field_area_hilight id=43]
+[wait time=200]
+
+;ロード
+[loadcg id=0 ref="emil"]
+[loadcg id=1 ref="ema"]
+[loadcg id=2 ref="charlotte"]
+[loadcg id=3 ref="kasumi"]
+
+;場面転換
+[filter name="fade" time=500]
+[drawbg ref="1043n"]
+[filter name="clear" time=500]
+[bgm ref="011_charlotte"]
+
+[show_message]
+
 [cn]
 ロレーヌ城[n]
 領主シャルロッテの居城の一室。[p]
 ここはシャルロッテの部下、[n]
 エマとエミル姉弟の部屋であった。[p]
+[drawcg id=0 pos=4 dir="right"]
 #エミル
 [voice ref="050000"]
 えっと……、ここで玉虫の羽を3枚、と……。[p]
+[drawcg id=1 pos=2 dir="right"]
 #エマ
 [voice ref="050001"]
 エミルぅ？ ……まだ起きてたの。[n]
 もう真夜中だよォ？[p]
+[scale id=0 sx=-1 time=0]
 #エミル
 [voice ref="050002"]
 あっ、姉さん！ [n]
@@ -53,9 +72,18 @@
 [voice ref="050012"]
 あら……[n]
 二人とも、まだ起きていたんですの？[p]
+
+[se ref="155"]
+[move id=0 x=10 time=300]
+[move id=1 x=30 time=500]
+[scale id=1 sx=-1 time=0]
+[drawcg id=2 pos=1 mode="slidein" dir="right" layer="front"]
+
 #エミル
 [voice ref="050013"]
 ロッテ様！[p]
+[cn]
+領主シャルロッテが部屋に入ってきた。[p]
 #シャルロッテ
 [voice ref="050014"]
 あら……[n]
@@ -80,6 +108,8 @@
 勝手に図書館から持ち出して。[p]
 [voice ref="050021"]
 でも、ぼくでもロッテ様のお役に立てるかなって。[p]
+[move id=2 x=50 time=800]
+[move id=2 y=-10 time=300]
 [cn]
 シャルロッテはエミルに近づくと[n]
 しゃがみ込んでそっと、彼を抱きしめた。[p]
@@ -92,6 +122,12 @@
 #エミル
 [voice ref="050024"]
 ロッテ様……。[p]
+
+[move id=2 y=10 time=300]
+[scale id=2 sx=-1 time=0]
+[move id=2 x=-50 time=500]
+[scale id=2 sx=-1 time=0]
+
 #シャルロッテ
 [voice ref="050025"]
 さ、もう寝ましょう。[n]
@@ -99,7 +135,12 @@
 #エマ
 [voice ref="050026"]
 は、はい！ ロッテ様。[p]
+
 ;シャルロッテ退出
+[se ref="155"]
+[scale id=2 sx=-1 time=0]
+[move id=2 x=-30 time=500]
+
 #エマ
 [voice ref="050027"]
 寝よっか。 エミル……。[p]
@@ -109,8 +150,22 @@
 [voice ref="050029"]
 （でも僕、少しでもロッテ様のお役に立ちたいんです……。）[p]
 [cn]
+
+[filter name="fade" time=500]
+[clearbg]
+[clearcg id=0]
+[clearcg id=1]
+[clearcg id=2]
 ……………。[p]
+[drawbg ref="1043m"]
+[filter name="clear" time=500]
+
 ;場面転換
+
+[drawcg id=2 pos=4]
+[drawcg id=3 pos=2 dir="right"]
+シャルロッテの部屋。[p]
+シャルロッテと、部下のカスミが話している。[p]
 #カスミ
 [voice ref="050030"]
 前々から油断のならないやつだとは思ってたっすけど
@@ -151,3 +206,14 @@
 わたくしはまだまだ未熟ですもの。[p]
 [voice ref="050041"]
 いつか、師匠のように素晴らしい魔女になることができたその時は、胸を張ってあの帽子をかぶるのですわ[p]
+
+[hide_message]
+[filter name="fade" time=500]
+[clearbg]
+[clearcg id=2]
+[clearcg id=3]
+[filter name="clear" time=500]
+
+[stopbgm]
+[sys_memset index=500 value="1"]
+[sys_memset index=10014 value="1"]

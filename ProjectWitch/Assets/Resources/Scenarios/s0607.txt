@@ -1,7 +1,137 @@
 ﻿;s0607
+;script: nikai
+;direction: yuichi
+;timing:s0606あと　戦闘勝利
 
-;場面7あと　パンプキング死亡
+[field_area_hilight id=61]
+[wait time=500]
+
+;画像ロード
+[loadcg id=0 ref="pumpking"]
+[loadcg id=1 ref="alice"]
+[loadcg id=2 ref="kuro"]
+[loadcg id=3 ref="akari"]
+
+[bgm ref="021_event6"]
+
+[filter name="fade" time=500]
+[if_alive unit=17]
+;script 608
+;パンプキング捕獲
+;描画
+[drawbg ref="1013m"]
+[drawcg id=2 pos=4 dir="right"]
+[drawcg id=0 pos=5]
+[drawcg id=1 pos=1 dir="right"]
+[filter name="clear" time=500]
+[rotate id=0 angle=5 time=25]
+[move id=2 x=2 y=0 time=10]
+[rotate id=0 angle=-10 time=50]
+[move id=2 x=-2 y=0 time=10]
+[rotate id=0 angle=10 time=50]
+[move id=2 x=2 y=0 time=10]
+[rotate id=0 angle=-10 time=50]
+[move id=2 x=-2 y=0 time=10]
+[rotate id=0 angle=5 time=25]
+
+#パンプキング
+[voice ref="060076"]
+はーなーせー！！[n]
+俺様をはーなーせー！！[p]
+[changecg id=1 state=2 time=0]
+#アリス
+[voice ref="060077"]
+だー！[n]
+もう、うるせえぞ！！[p]
+[voice ref="060078"]
+そんなにシチューにされてえか！！[p]
+#パンプキング
+[voice ref="060079"]
+…………。[p]
+[changecg id=1 state=0 time=0]
+#アリス
+[voice ref="060080"]
+急に黙ったな……。まあいいや。[p]
+[voice ref="060081"]
+でもなあ。 こいつ正直ほしくないし……[n]
+うるさくなくてもシチューにするしか。[p]
+[move id=0 x=-10 y=0 time=100]
+[move id=0 x=5 y=0 time=20]
+#パンプキング
+[voice ref="060082"]
+逃がすって選択肢はお前にはないのか！！[p]
+[changecg id=1 state=2 time=0]
+[move id=1 x=5 y=0 time=50]
+#アリス
+[voice ref="060083"]
+逃がすくらいなら殺す！！[p]
+[move id=0 x=5 y=0 time=50]
+#パンプキング
+[voice ref="060084"]
+ひどい！！[p]
+[changecg id=1 state=0 time=0]
+#アリス
+[voice ref="060085"]
+というわけで……、覚悟しろ。[p]
+[cn]
+アリスはそういうと、調理用の包丁を取り出した。[p]
+[rotate id=0 angle=5 time=25]
+[move id=2 x=2 y=0 time=10]
+[rotate id=0 angle=-10 time=50]
+[move id=2 x=-2 y=0 time=10]
+[rotate id=0 angle=5 time=25]
+#パンプキング
+[voice ref="060086"]
+わーー！　わーー！！[n]
+わかった！　わかった！[p]
+[voice ref="060087"]
+はい！　私アリス様に服従を誓います！[n]
+何でもします！！[p]
+[voice ref="060088"]
+だから許してーーー！！[p]
+#アリス
+[voice ref="060089"]
+服従？[n]
+[changecg id=1 state=1 time=0]
+ではお前は今日から私の奴隷ということだな。[p]
+#パンプキング
+[voice ref="060090"]
+ぐっ……[n]
+そっ、そうでございます。[p]
+#アリス
+[voice ref="060091"]
+クフフフフッ！[n]
+そうかそうか。[p]
+[voice ref="060092"]
+そこまで言うのなら仕方ない。お前を私の奴隷にしてやる。[n]
+しっかり働けよ？　[p]
+[voice ref="060093"]
+少しでも逆らったら問答無用で[n]
+切り刻んで夕飯のおかずにしてやるからな。[p]
+[move id=0 x=0 y=-10 time=300]
+#パンプキング
+[voice ref="060094"]
+ぐっ……[n]
+がまんだ、がまん……。[p]
+[cn]
+こうして、多少の不安は残ったものの、[n]
+パンプキングが部下に加わることになった。[p]
+
+[hide_message]
+[filter name="fade" time=500]
+[clearbg]
+[clearcg id=0]
+[clearcg id=1]
+[clearcg id=2]
+[filter name="clear" time=500]
+
+
+[else]
+
+;パンプキング死亡
 ;ECG　かぼちゃパーティー
+[drawbg ref="1009m"]
+[filter name="clear" time=500]
 #アリス
 [voice ref="060064"]
 うーん、うまいっ！！[n]
@@ -44,11 +174,19 @@
 [cn]
 アリスは空に賢者の石を透かしてみた。[p]
 宝石の中で炎のようなものがゆらゆらと渦巻いていた。[p]
-…………。[p]
+[hide_message]
+[filter name="fade" time=500]
+[drawbg ref="1004m"]
+[bgm ref="012_pumpking"]
+[drawcg id=3 pos=4]
+[wait time=500]
+[filter name="clear" time=500]
+[show_message]
+
 お菓子の家、地下牢。[p]
 #アカリ
 [voice ref="060074"]
-…………。[p]
+…………[p]
 [cn]
 領主アカリは相変わらず牢の中で読書に励んでいた。[p]
 #アカリ
@@ -57,76 +195,19 @@
 [cn]
 もう一日くらい食事の係が来ていない。[p]
 三日くらいは食べなくても特に支障のないアカリは、[n]
-次の食事が出てくるまでに455ページまで読もうという自分の目標を立てて、[n]
+次の食事が出てくるまでに455ページまで読もうという自分の目標を立てて
 本を読み始めたのだった。[p]
 
-;script 608
+;クリア処理
+[hide_message]
+[filter name="fade" time=500]
+[clearbg]
+[clearcg id=3]
+[filter name="clear" time=500]
 
-;場面8あと　パンプキング捕獲
-#パンプキング
-[voice ref="060076"]
-はーなーせー！！[n]
-俺様をはーなーせー！！[p]
-#アリス
-[voice ref="060077"]
-だー！[n]
-もう、うるせえぞ！！[p]
-[voice ref="060078"]
-そんなにシチューにされてえか！！[p]
-#パンプキング
-[voice ref="060079"]
-…………。[p]
-#アリス
-[voice ref="060080"]
-急に黙ったな……。まあいいや。
-[voice ref="060081"]
-でもなあ。 こいつ正直ほしくないし……[n]
-うるさくなくてもシチューにするしか。[p]
-#パンプキング
-[voice ref="060082"]
-逃がすって選択肢はお前にはないのか！！[p]
-#アリス
-[voice ref="060083"]
-逃がすくらいなら殺す！！[p]
-#パンプキング
-[voice ref="060084"]
-ひどい！！[p]
-#アリス
-[voice ref="060085"]
-というわけで……、覚悟しろ。[p]
-[cn]
-アリスはそういうと、調理用の包丁を取り出した。[p]
-#パンプキング
-[voice ref="060086"]
-わーー！　わーー！！[n]
-わかった！　わかった！[p]
-[voice ref="060087"]
-はい！　私アリス様に服従を誓います！[n]
-何でもします！！[p]
-[voice ref="060088"]
-だから許してーーー！！[p]
-#アリス
-[voice ref="060089"]
-服従？[n]
-ではお前は今日から私の奴隷ということだな。[p]
-#パンプキング
-[voice ref="060090"]
-ぐっ……[n]
-そっ、そうでございます。[p]
-#アリス
-[voice ref="060091"]
-クフフフフッ！[n]
-そうかそうか。[p]
-[voice ref="060092"]
-そこまで言うのなら仕方ない。お前を私の奴隷にしてやる。[n]
-しっかり働けよ？　[p]
-[voice ref="060093"]
-少しでも逆らったら問答無用で[n]
-切り刻んで夕飯のおかずにしてやるからな。[p]
-#パンプキング
-[voice ref="060094"]
-ぐっ……[n]
-がまんだ、がまん……。[p]
-[cn]
-こうして、多少の不安は残ったものの、[n]
-パンプキングが部下に加わることになった。[p]
+
+[endif]
+
+[stopbgm]
+[wait time=500]
+[sys_memset index=607 value="1"]

@@ -1,9 +1,25 @@
 ;s0508
 ;script: nikai
 ;timing:　地点49戦闘敗北
-
-
 ;タイミング：地点49敗北翌ターンはじめ
+
+[field_area_hilight id=49]
+[wait time=200]
+
+[loadcg id=0 ref="kasumi"]
+[loadcg id=1 ref="charlotte"]
+[loadcg id=2 ref="alice"]
+[loadcg id=3 ref="kuro"]
+[loadcg id=4 ref="chishire"]
+
+[filter name="fade" time=500]
+[drawbg ref="1042m"]
+[bgm ref="011_charlotte"]
+[filter name="clear" time=500]
+
+[show_message]
+[drawcg id=0 pos=2 dir="right"]
+[drawcg id=1 pos=4 state=1]
 [cn]
 ロレーヌ城。[p]
 #カスミ
@@ -18,6 +34,7 @@
 エマの行方はいま部下に探らせているところで……。[p]
 [cn]
 カスミの言葉を遮るように伝令が飛び込んできた。[p]
+[scale id=0 sx=-1 time=0]
 #部下
 [voice ref="050204"]
 申し上げます！！[p]
@@ -44,6 +61,7 @@
 [voice ref="050211"]
 はっ……[n]
 遠目からではよくわからなかったのですが、アリス軍は何かと戦って撤退したようです。[p]
+[scale id=0 sx=-1 time=0]
 #カスミ
 [voice ref="050212"]
 エマだ！　ロッテさん……！[p]
@@ -54,8 +72,26 @@
 [voice ref="050214"]
 すぐに支度を。[p]
 [cn]
-……………。[p]
-;場面転換
+
+[hide_message]
+[filter name="fade" time=500]
+[clearcg id=0]
+[clearcg id=1]
+[clearbg]
+[filter name="clear" time=500]
+[bgm ref="002_alice1"]
+
+[field_area_hilight id=1]
+[wait time=200]
+
+[filter name="fade" time=500]
+[bgm ref="003_alice2"]
+[drawbg ref="1002m"]
+[filter name="clear" time=500]
+
+[drawcg id=2 pos=4 state=2]
+[drawcg id=4 pos=2 dir="right"]
+[show_message]
 アリスの館。[p]
 #アリス
 [voice ref="050215"]
@@ -72,6 +108,17 @@
 #チシャ
 [voice ref="050219"]
 はっ、ハイただいま！[p]
+
+[scale id=4 sx=-1 time=0]
+[move id=4 x=-100 time=800]
+
+[drawcg id=3 posx=-100 dir="right"]
+[move id=3 x=70 time=800]
+[scale id=3 sx=-1 time=0]
+[wait time=1000]
+[scale id=3 sx=-1 time=0]
+[wait time=300]
+
 #クロ
 [voice ref="050220"]
 アリス様。[n]
@@ -81,21 +128,42 @@
 #アリス
 [voice ref="050222"]
 そうだな……。[p]
+
+[hide_message]
+[filter name="fade" time=500]
+[clearcg id=2]
+[clearcg id=3]
+[clearcg id=4]
+[clearbg]
+[filter name="clear" time=500]
+[bgm ref="002_alice1"]
+
+[field_area_hilight id=2]
+[wait time=200]
+
+[filter name="fade" time=500]
+[bgm ref="007_town"]
+[drawbg ref="1029m"]
+[filter name="clear" time=500]
+
+[show_message]
 [cn]
-……………。[p]
-;場面転換
 街。[p]
+[drawcg id=2 pos=2 dir="right" state=0]
 #アリス
 [voice ref="050223"]
 とはいったものの……、[n]
 特に見たいと思うもんもないしなぁ……。[p]
+[move id=2 x=30 time=1000]
 #露店主
 [voice ref="050224"]
 おっ、アリスちゃん！　新しい紅茶が入ったんだ！　[n]
 買っていかないかい。[p]
+[scale id=2 sx=-1 time=0]
 #アリス
 [voice ref="050225"]
 あー、今はそういう気分じゃねえんだ。[p]
+[changecg id=2 state=2]
 [voice ref="050226"]
 つか、私もう領主だからな！[n]
 ちゃんと様づけてよべよなぁー？[p]
@@ -104,6 +172,7 @@
 これは失敬、アリス様！[p]
 [voice ref="050228"]
 それで、どれにいたしますか？[p]
+[changecg id=2 state=0]
 #アリス
 [voice ref="050229"]
 ったく、いらねえって言ってんのに……。[p]
@@ -113,6 +182,7 @@
 #露店主
 [voice ref="050231"]
 毎度あり！！[p]
+[scale id=2 sx=-1 time=0]
 #アリス
 [voice ref="050232"]
 うーん……[n]
@@ -121,6 +191,7 @@
 [voice ref="050233"]
 びっくり魔法かい？　[n]
 びっくり魔法といえば今有名な手品師が来ていてねぇ[p]
+[scale id=2 sx=-1 time=0]
 #アリス
 [voice ref="050234"]
 手品師だって？[p]
@@ -134,9 +205,15 @@
 [voice ref="050237"]
 せっかく気分転換に来たんだ、見ていくか。[p]
 [cn]
+
+[filter name="fade" time=500]
+[clearcg id=2]
 ……………。[p]
+[filter name="clear" time=500]
+
 ;場面転換
 街の広場。[p]
+[drawcg id=2 pos=2 mode="slidein" dir="right"]
 #アリス
 [voice ref="050238"]
 へえ、結構にぎわってんなぁ……。[p]
@@ -158,6 +235,7 @@
 #観客
 [voice ref="050243"]
 アリスちゃん！　呼ばれてるよ！[p]
+[changecg id=2 state=2]
 #アリス
 [voice ref="050244"]
 あん？　私はサクラじゃないぞ。[n]
@@ -166,6 +244,7 @@
 [voice ref="050245"]
 赤い帽子でピンクの髪のお嬢さん！[n]
 どうぞステージへ。[p]
+[changecg id=2 state=0]
 #アリス
 [voice ref="050246"]
 ……まじか。[p]
@@ -175,9 +254,12 @@
 #観客
 [voice ref="050248"]
 今日もかわいいよー！！[p]
+[changecg id=2 state=2]
 #アリス
 [voice ref="050249"]
 うっせー！　ぶっ殺すぞてめえら！！[p]
+[move id=2 x=60 time=1000]
+[scale id=2 sx=-1 time=0]
 #手品師
 [voice ref="050250"]
 さて……[n]
@@ -185,6 +267,7 @@
 [voice ref="050251"]
 それでは、今からここにいるお嬢さんを
 あっという間に消してごらんに入れます。[p]
+[changecg id=2 state=0]
 #アリス
 [voice ref="050252"]
 あん？　消すって何を……。[p]
@@ -197,23 +280,33 @@
 [voice ref="050254"]
 さあ、行きますよ。[n]
 サン、ニイ、イチ、はいっ！！[p]
+
+[filter name="color" color="FFFFFF" time=300]
 #アリス
 [voice ref="050255"]
 どわっ！！！[p]
+[clearcg id=2]
+[filter name="clear" time=1000]
+
 [cn]
 オオーーー、という観客の歓声が広場に響き渡った。[p]
 舞台上からアリスは消えていた。[p]
+[drawcg id=2 pos=5 posy=-50]
 #アリス
 [voice ref="050256"]
 ……なるほど、落とし穴になっていたのか。[p]
 #黒子
 [voice ref="050257"]
 すいません、早くこちらへ。[p]
+[scale id=2 sx=-1 time=0]
+[changecg id=2 state=2]
 #アリス
 [voice ref="050258"]
 あん？[n]
 あっ、おい、どこへ連れていくんだよ！[p]
 [cn]
+[move id=2 x=50 time=300]
+[clearcg id=2]
 アリスは黒子に連れられて、[n]
 広場の裏の仮設階段から噴水の上へ移動した。[p]
 #手品師
@@ -223,19 +316,35 @@
 [voice ref="050260"]
 みなさん！　後ろをご覧ください！[p]
 [cn]
+[filter name="color" color="FFFFFF" time=300]
+[drawcg id=2 pos=3 posy=-20]
+[filter name="clear" time=300]
 派手なシンバルの音が鳴り[n]
 アリスのいる噴水の上へ視線が集まる。[p]
 途端に、大きな歓声が再び広場を包んだ。[p]
 #観客
 [voice ref="050261"]
 アリスちゃんかわいいよーーー！！[p]
+[changecg id=2 state=2]
 #アリス
 [voice ref="050262"]
 うっさいしね！！[n]
 それしか言うことねえのか、クソ童○ども！！！[p]
+[changecg id=2 state=0]
 [voice ref="050263"]
 ……しかし、落とし穴か。[n]
 結構使えるかもな。[p]
+[changecg id=2 state=1]
 [voice ref="050264"]
 クフフフフフッ！[n]
 帰ったら早速作戦を練り直すか。[p]
+
+[hide_message]
+[filter name="fade" time=500]
+[clearbg]
+[clearcg id=1]
+[clearcg id=2]
+[filter name="clear" time=500]
+
+[stopbgm]
+[sys_memset index=508 value="1"]

@@ -57,8 +57,9 @@ namespace ProjectWitch.Field
         public FieldController FieldController { get; set; }
         public FieldUIController FieldUIController { get; set; }
 
-        //名前ウィンドウの参照
-        public GameObject NameWindow { get; set; }
+        //呼び出し元のFlagButtonへの参照
+        public GameObject AreaNamePrefab { get; set; }
+        private GameObject mInstNameWindow = null;
 
         void Update()
         {
@@ -84,6 +85,13 @@ namespace ProjectWitch.Field
             try
             {
                 var game = Game.GetInstance();
+
+                //名前ウィンドウ再生成
+                mInstNameWindow = Instantiate(AreaNamePrefab);
+                mInstNameWindow.transform.SetParent(this.transform.parent,false);
+                var comp = mInstNameWindow.GetComponent<AreaName>();
+                comp.AreaID = AreaID;
+                comp.Init();
 
                 //areaデータ取得
                 if (AreaID == -1) throw new ProjectWitchException("エリアIDをセットしてください");
@@ -136,10 +144,14 @@ namespace ProjectWitch.Field
 
             //侵攻戦の開始
             FieldController.DominationBattle(AreaID, game.GameData.Area[AreaID].Owner);
-
-
+            
             //メニューを閉じる
             Close();
+
+
+            //メニューを開けるようにする
+            FieldController.MenuClickable = false;
+            FieldController.FlagClickable = false;
         }
 
         //臨時徴収を呼びだす
@@ -168,10 +180,7 @@ namespace ProjectWitch.Field
             //時間を進める
             game.GameData.CurrentTime++;
 
-            //メニューを開けるようにする
-            FieldController.MenuClickable = true;
-            FieldController.FlagClickable = true;
-
+            
             //メニューを閉じる
             Close();
         }
@@ -179,10 +188,12 @@ namespace ProjectWitch.Field
         //ウィンドウを閉じる
         public void Close()
         {
-            //メニューを開けるようにする
-            FieldUIController.ActionPanelLock = false;
+            //メニューを開けるようにする 
+            FieldController.MenuClickable = true;
+            FieldController.FlagClickable = true;
+            FieldUIController.AreaNameLock = false;
             FieldUIController.SelectedTerritory = -1;
-            Destroy(NameWindow);
+            Destroy(mInstNameWindow);
             Destroy(this.gameObject);
         }
 

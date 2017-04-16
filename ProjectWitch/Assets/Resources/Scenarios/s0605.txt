@@ -1,15 +1,27 @@
 ﻿;s0605
 ;script: nikai
+;direction: yuichi
 ;timing: s0604翌ターンはじめ
+[field_area_hilight id=61]
+[wait time=500]
 
-お菓子の家。
+[loadcg id=0 ref="akari"]
+
+[filter name="fade" time=500]
+[drawbg ref="1004m"]
+[bgm ref="012_pumpking"]
+[filter name="clear" time=500]
+
+[drawcg id=0 pos=4]
+[show_message]
+お菓子の家。[p]
 #アカリ
 [voice ref="060053"]
 ……、静かになった。[p]
 [cn]
 お菓子の家ではちょうどパンプキングたちが出払っていたところだった。[p]
 アカリはこの場所がだんだん居心地のいい場所に思えてきた。[p]
-勝手に食事は出てくるし、薄暗くてひんやりして過ごしやすいし、[n]
+勝手に食事は出てくるし、薄暗くてひんやりして過ごしやすいし、
 本も頼んだら持ってきてくれたし、[p]
 ちょこっとかび臭いことを除けば[n]
 ここは自分にとてもあっていると、アカリは思った。[p]　
@@ -18,5 +30,16 @@
 …………。[p]
 [cn]
 そしてまた彼女は読書に戻る。[p]
-かぼちゃが今どうしているかなど本当にどうでもよくなって、[n]
+かぼちゃが今どうしているかなど本当にどうでもよくなって、
 アカリは本の世界に入り込んでいった。[p]
+
+[hide_message]
+[filter name="fade" time="500"]
+[clearbg]
+[clearcg id=0]
+[wait time=500]
+[filter name="clear" time="500"]
+[stopbgm]
+[wait time=500]
+
+[sys_memset index=605 value="1"]

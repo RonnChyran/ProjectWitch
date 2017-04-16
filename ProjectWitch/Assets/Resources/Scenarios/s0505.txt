@@ -1,6 +1,26 @@
 ;s0505
 ;script: nikai
 ;timing:　地点47占領直後
+;direction yuichi
+
+[field_area_hilight id=49]
+[wait time=200]
+
+[loadcg id=0 ref="ema"]
+[loadcg id=1 ref="charlotte"]
+[loadcg id=2 ref="kasumi"]
+[loadcg id=3 ref="emil"]
+
+[filter name="fade" time=500]
+[drawbg ref="1042m"]
+[bgm ref="011_charlotte"]
+[filter name="clear" time=500]
+
+[show_message]
+[drawcg id=0 posx=-60 dir="right"]
+[move id=0 x=20 time=800]
+[wait time=500]
+[move id=0 x=20 time=800]
 
 #エマ
 [voice ref="050127"]
@@ -8,9 +28,12 @@
 [cn]
 エマはアリスの軍勢から逃げ出し、[n]
 何とかロレーヌの館にたどり着いていた。[p]
+[drawcg id=1 posx=100 state=1]
+[move id=1 x=-80 time=800]
 #シャルロッテ
 [voice ref="050128"]
 エマ……？　エマっ！！[n]
+[move id=1 x=-20 time=500]
 どうしたのです！[p]
 #エマ
 [voice ref="050129"]
@@ -21,8 +44,18 @@
 ああ……、なんてケガ。[n]
 エミル！　エミルはどこですか！！[p]
 [cn]
+
+[filter name="fade" time=500]
+[clearcg id=0]
+[clearcg id=1]
+[drawbg ref="1043m"]
 ……………。[p]
-;場面転換
+[filter name="clear" time=500]
+
+[drawcg id=0 pos=5 posy=-20]
+[drawcg id=3 pos=3 dir="right"]
+[drawcg id=1 pos=2 dir="right" state=1]
+[drawcg id=2 pos=1 dir="right"]
 #エミル
 [voice ref="050131"]
 姉さん……。[p]
@@ -66,3 +99,15 @@
 いいですね？[p]
 #エミル
 はい……、わかりました。[p]
+
+[hide_message]
+[filter name="fade" time=500]
+[clearbg]
+[clearcg id=0]
+[clearcg id=1]
+[clearcg id=2]
+[clearcg id=3]
+[filter name="clear" time=500]
+
+[stopbgm]
+[sys_memset index=505 value="1"]

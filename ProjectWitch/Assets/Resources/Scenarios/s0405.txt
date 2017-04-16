@@ -2,6 +2,24 @@
 ;author: yuichi
 ;timing: s0404あと
 
+;フィールドスクロール
+[field_area_hilight id=40]
+[wait time=200]
+
+;ロード系
+[loadcg id=0 ref="alice"]
+[loadcg id=1 ref="kuro"]
+[loadcg id=2 ref="shiden"]
+
+;場面転換
+[filter name="fade" time=500]
+[drawbg ref="1028m"]
+[bgm ref="010_vega"]
+[filter name="clear" time=500]
+
+[drawcg id=0 pos=2 dir="right" state=2]
+[drawcg id=1 pos=1 dir="right" layer="front"]
+[show_message]
 ;地点40番初戦闘
 #アリス
 はあっ、はあっ、山頂はまだかーー！！[p]
@@ -15,6 +33,7 @@
 #アリス
 ちぇっ……こっちは汗だくだってのに。[p]
 早く帰って風呂に入りたいぜ……。[p]
+[drawcg id=2 mode="slidein" pos=5]
 #シデン
 待たれい！　そこの御仁と女人よ！！[p]
 #アリス
@@ -51,6 +70,7 @@
 なんと、準備もせずにここまで来たとは笑止！[p]
 それもおぬしの失態ぞ。[n]
 いざ、参る！！[p]
+[move id=2 x=-20 time=100]
 #アリス
 待て待て！！[p]
 お前もその同胞の魂ってやつを背負ってるんなら、[n]
@@ -58,6 +78,7 @@
 同胞たちも報われるんじゃないか？[p]
 #シデン
 ふむ……、まあ確かに。[p]
+[move id=2 x=20 time=1000]
 #アリス
 大丈夫。すぐに戻ってくるから、ちょっとそこで、[p]
 うん、その崖の前あたりがいいかな……。[p]
@@ -65,11 +86,21 @@
 #シデン
 承知した。[p]
 ただし、わしは気が短いので早めに戻ってくるのだぞ。[p]
+[changecg id=0 state=1]
 #アリス
 わかったよ。急いで用を済ませてくるさ……[n]
 クフフフフフフッ！[p]
 [cn]
+
+[filter name="fade" time=500]
+[clearcg id=2]
+[clearcg id=0]
+[clearcg id=1]
 ……………。[p]
+[filter name="clear" time=500]
+
+[drawcg id=0 pos=2 dir="right"]
+[drawcg id=1 pos=1 dir="right" layer="front"]
 #クロ
 アリス様。一体どういうおつもりですか。[p]
 撤退せずとも、我らの準備は万全だというのに。[p]
@@ -81,6 +112,7 @@
 #クロ
 崖の下からいったい何をなさるおつもりですか。[p]
 まさか崖をよじ登るわけでもありますまい。[p]
+[changecg id=0 state=2]
 #アリス
 バカ野郎、そんな疲れることができるか！[n]
 まあ見ていろ。[p]
@@ -88,6 +120,7 @@
 そういうとアリスは、小さなツボを取り出した。[p]
 #クロ
 それは一体。[p]
+[changecg id=0 state=1]
 #アリス
 この前街で買った煙ツボに毒を混ぜてみた。[p]
 クフフフフフッ……即席の毒ガス兵器ってところだな。[p]
@@ -99,14 +132,22 @@
 よし、仕掛けたぞ。離れろ。[p]
 私たちまで巻き添えになるからな。[p]
 [cn]
+
+[filter name="fade" time=500]
+[clearcg id=0]
+[clearcg id=1]
 ……………。[p]
+[filter name="clear" time=500]
+
+[drawcg id=2 pos=5]
 #シデン
 遅いッ！！
 あの小娘、やはり逃げおったな！[p]
 このワシをコケにしおった。[n]
 許せん……！！[p]
 [cn]
-シデンが腹を立てていると、彼の背後からどす黒い煙がもうもうと立ち上り、あっという間に一帯を包んでしまった。[p]
+[filter name="color" trans=70 color="FFFFFF" time=3000]
+シデンが腹を立てていると、彼の背後から濃い煙がもうもうと立ち上り、あっという間に一帯を包んでしまった。[p]
 #シデン
 なっ、何事だ！？　煙？[p]
 おい、お前たち。どうした！[p]
@@ -115,9 +156,13 @@
 #シデン
 これは……毒か。[p]
 しまったあの小娘……。ゴホッ、ゴホッ！！[p]
+[move id=2 y=-20 time=500]
+[filter name="clear" time=3000]
 [cn]
 煙が晴れると、あたりは毒でしびれ、動けなくなったドラゴンで埋め尽くされていた。[p]
 膝をつき、苦しそうにうめくシデンの前にニヤニヤとほくそ笑むアリスが現れた。[p]
+[drawcg id=0 pos=2 dir="right" state=1]
+[drawcg id=1 pos=1 layer="front" dir="right"]
 #アリス
 クフフフフフッ！！　待たせたな。[p]
 さあ、正々堂々と勝負してやるぜ！[p]
@@ -128,9 +173,11 @@
 アーーッハッハッハッハ！！！！[p]
 #シデン
 ぐぬっ、ぬううううんっ！！！！[p]
+[move id=2 y=20 time=200]
 [cn]
 アリスが高笑いをすると、シデンは頭にきたのか、[n]
 満身の力を込めて立ち上がり、戦闘態勢に入った。[p]
+[changecg id=0 state=2]
 #アリス
 げっ！　まだ立ち上がれるのかよ。化け物め……。[p]
 #シデン
@@ -140,3 +187,14 @@
 #アリス
 ええいっ、お前たち戦闘準備だ！！！[p]
 来るぞッ！！[p]
+
+[hide_message]
+[filter name="fade" time=500]
+[clearbg]
+[clearcg id=0]
+[clearcg id=1]
+[clearcg id=2]
+[filter name="clear" time=500]
+
+[stopbgm]
+[sys_memset index=405 value="1"]

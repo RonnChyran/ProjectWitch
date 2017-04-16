@@ -2,6 +2,25 @@
 ;script: nikai
 ;timing:　再戦後翌ターン
 
+[field_area_hilight id=1]
+[wait time=200]
+
+;load
+[loadcg id=0 ref="alice"]
+[loadcg id=1 ref="kuro"]
+[loadcg id=2 ref="emil"]
+[loadcg id=3 ref="charlotte"]
+[loadcg id=4 ref="kasumi"]
+
+;trans
+[filter name="fade" time=500]
+[drawbg ref="1002m"]
+[bgm ref="003_alice2"]
+[filter name="clear" time=500]
+
+[show_message]
+[drawcg id=0 pos=4]
+[drawcg id=1 pos=2 dir="right"]
 #アリス
 [voice ref="050330"]
 クロ、何かわかったか。[p]
@@ -13,6 +32,7 @@
 基本的に元に戻す方法はありません。[n]
 ロレーヌの領主ですらその方法は知らなかったとか。[p]
 #アリス
+[changecg id=0 state=2]
 [voice ref="050333"]
 ちっ、何が協力しろだよ。[p]
 [voice ref="050334"]
@@ -22,6 +42,7 @@
 [voice ref="050335"]
 いかがいたしますか。[p]
 #アリス
+[changecg id=0 state=0]
 [voice ref="050336"]
 うーん、こっそりロレーヌの城に忍び込んで[n]
 あいつぶっ殺してこようかな……。[p]
@@ -33,20 +54,41 @@
 #アリス
 [voice ref="050339"]
 よし、じゃあさくっと行ってくるか。[p]
-[cn]
-……………。[p]
+
+[hide_message]
+[filter name="fade" time=500]
+[clearbg]
+[clearcg id=0]
+[clearcg id=1]
+[filter name="clear" time=500]
+[bgm ref="002_alice1"]
+
+[field_area_hilight id=49]
+[wait time=200]
+
 ;場面転換
+[filter name="fade" time=500]
+[drawbg ref="1043n"]
+[bgm ref="011_charlotte"]
+[filter name="clear" time=500]
+
+[show_message]
 ロレーヌ城[n]
 夜、姉弟の部屋。[p]
+
+[drawcg id=2 pos=2]
 #エミル
 [voice ref="050340"]
 姉さん……[n]
 僕が、僕があんな薬作らなかったら……。[p]
 [cn]
 エミルは電気も付けず、一人ベッドで泣いていた。[p]
+[se ref="155"]
 そこへ、ガチャリという音がして窓が開いた。[p]
 風でカーテンが舞い上がり、その向こうに[n]
 赤いフリルスカートの少女の姿が見えた。[p]
+
+[drawcg id=0 pos=4 state=1]
 #アリス
 [voice ref="050341"]
 よし、侵入成功っと！[p]
@@ -54,20 +96,36 @@
 [voice ref="050342"]
 だっ、誰！？[p]
 #アリス
+[changecg id=0 state=2]
 [voice ref="050343"]
 げっ、誰かいたのか。[n]
 クロ！[p]
 #クロ
 [voice ref="050344"]
 はっ……。[p]
+
+[drawcg id=1 pos=5]
+[move id=1 x=-60 time=200]
+[scale id=1 sx=-1 time=0]
+[filter name="flush" color="FFFFFF" time=300]
+[se ref="151"]
+
 [cn]
 アリスの後ろに隠れていたクロが[n]
 目にもとまらぬ速さでエミルの前に現れ、[n]
 あっという間に羽交い絞めにしてしまった。[p]
+
+[move id=2 y=10 time=100]
+[move id=2 y=-10 time=100]
+[wait time=200]
+[move id=2 y=10 time=100]
+[move id=2 y=-10 time=100]
+
 #エミル
 [voice ref="050345"]
 ムグ……！[n]
 ウウーン！！　ウゥー！！[p]
+[changecg id=0 state=0]
 #アリス
 [voice ref="050346"]
 大丈夫だ。 殺したりはせん。[n]
@@ -81,10 +139,14 @@
 #クロ
 [voice ref="050349"]
 はっ。[p]
+
+[move id=1 x=-10 time=200]
+[scale id=2 sx=-1 time=0]
 #エミル
 [voice ref="050350"]
 あっ、あの……[n]
 あなた一体。[p]
+[changecg id=0 state=1]
 #アリス
 [voice ref="050351"]
 私はアリス。 華の魔女、アリス様だ。[p]
@@ -110,6 +172,7 @@
 #クロ
 [voice ref="050358"]
 アリス様。 これを見てください。[p]
+[changecg id=0 state=0]
 #アリス
 [voice ref="050359"]
 何だ、クロ。[n]
@@ -117,6 +180,7 @@
 #クロ
 [voice ref="050360"]
 これは君のものか？[p]
+[scale id=2 sx=-1 time=0]
 #エミル
 [voice ref="050361"]
 えっ、ええ……、そうです。[p]
@@ -130,6 +194,7 @@
 [voice ref="050364"]
 オイ、もしかして魔法が使えるようになる薬ってのも[n]
 お前が作ったんじゃないだろうな？[p]
+[scale id=2 sx=-1 time=0]
 #エミル
 [voice ref="050365"]
 あっ……。[n]
@@ -150,6 +215,7 @@
 [voice ref="050370"]
 はい……。[p]
 #アリス
+[changecg id=0 state=1]
 [voice ref="050371"]
 ……クフフフッ[n]
 なんかこっちのほうがおもしろそうだな。[p]
@@ -165,6 +231,7 @@
 #クロ
 [voice ref="050375"]
 はあ……、わかりました。[p]
+[move id=1 x=10 time=100]
 #エミル
 [voice ref="050376"]
 えっ！　ちょっと、何するんですかー！！[n]
@@ -173,10 +240,23 @@
 [voice ref="050377"]
 クフフフフッ、おとなしくついてこい。[p]
 [cn]
+
+[filter name="fade" time=500]
 見事な手際でアリスとクロはエミルを縛り上げると、[n]
 もと来た窓から立ち去った。[p]
-……………。[p]
-;場面転換
+[hide_message]
+[clearcg id=0]
+[clearcg id=1]
+[clearcg id=2]
+[clearbg]
+[filter name="clear" time=500]
+[bgm ref="002_alice1"]
+
+[field_area_hilight id=1]
+[wait time=200]
+
+[filter name="fade" time=500]
+[filter name="clear" time=500]
 アリスの館。[p]
 #エミル
 [voice ref="050378"]

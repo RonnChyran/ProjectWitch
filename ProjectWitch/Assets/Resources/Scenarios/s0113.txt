@@ -1,19 +1,25 @@
-;script 113
+;s0113
+;script yuichi
+;diretion yuichi
+
+[field_area_hilight id=1]
+[wait time=200]
 
 ;リソースロード
 [loadcg id=0 ref="alice"]
 [loadcg id=1 ref="kuro"]
 [loadcg id=2 ref="chishire"]
-[loadcg id=3 ref="soldier"]
-[loadcg id=4 ref="Event/701"]
 
 [if_alive unit=2]
 ;アリス領　アリスの館、地下の牢獄
 ;条件　メイジーを捕獲
 ;タイミング　戦闘後
+[filter name="fade" time=500]
 [bgm ref="021_event6"]
-[drawcg id=4 pos="event"]
+[drawbg ref="Event/701"]
+[filter name="clear" time=500]
 
+[show_message]
 #アリス
 [voice ref="010100"]
 クフフフフッ、アッハッハッハッハッハ！！[n]
@@ -59,16 +65,24 @@
 あっ、ああ……。[n]
 おいたわしやメイジー様。なむなむ。[p]
 
+[hide_message]
+[filter name="fade" time=500]
+[clearbg]
+[filter name="clear" time=500]
+
 [else]
 ;場面15　アリス領　ニルギリ砦
 ;条件　メイジーを撃破
 ;タイミング　戦闘後
+[filter name="fade" time=500]
 [drawbg ref="1030e"]
 [bgm ref="019_event4"]
+[filter name="clear" time=500]
+
 [drawcg id=1 pos="2" dir="right"]
 [drawcg id=0 pos="5"]
 [drawcg id=3 pos="3"]
-
+[show_message]
 [cn]
 戦いの終わった砦にはおびただしい数の死体が散らばっている。[p]
 その死体なかに、赤い頭巾の少女の姿はあった。[p]
@@ -89,8 +103,6 @@
 #部下
 [voice ref="010091"]
 はっ。[p]
-[move id=3 x=-70 y=0 time=600]
-[clearcg id=3]
 #クロ
 [voice ref="010092"]
 アリス様……。[p]
@@ -107,11 +119,12 @@
 #クロ
 [voice ref="010096"]
 …………はっ、かしこまりました。[p]
+[scale id=1 sx=-1 time=0]
 [move id=1 x=-70 y=0 time=600]
 [clearcg id=1]
 
 #アリス
-[moveto id=0 x=50 y=50 time=600]
+[moveto id=0 x=50 time=600]
 [voice ref="010097"]
 メイジー……。[n]
 私は戦争をするぞ。[n]
@@ -123,8 +136,15 @@
 だから、せいぜい土の下から見ていろ。 [n]
 この私が世界最強の魔女。 大魔女になるところをな。 [p]
 
+[hide_message]
+[filter name="fade" time=500]
+[clearbg]
+[clearcg id=0]
+[clearcg id=1]
+[filter name="clear" time=500]
+
 [endif]
 
-
+[stopbgm]
 [sys_memset index=113 value="1"]
 [sys_memset index=10000 value="1"]
