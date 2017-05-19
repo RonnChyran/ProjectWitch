@@ -2,6 +2,22 @@
 ;script: nikai
 ;timing:　場面17後、エルメェス砦戦闘前
 
+[field_area_hilight id=48]
+[wait time=200]
+
+[loadcg id=0 ref="alice"]
+[loadcg id=1 ref="kuro"]
+[loadcg id=2 ref="emil"]
+
+[filter name="fade" time=500]
+[drawbg ref="1030m"]
+[bgm ref="018_event3"]
+[filter name="clear" time=500]
+
+[drawcg id=2 pos=3 dir="right" state=1]
+[drawcg id=0 pos=2 dir="right" state=2]
+[drawcg id=1 pos=1 dir="right"]
+[show_message]
 [cn]
 エルメェス砦。[n]
 かつてエマだった怪物は、砦の中央に立っていた。[p]
@@ -49,3 +65,16 @@
 #クロ
 [voice ref="050520"]
 はっ。[p]
+
+[hide_message]
+[filter name="fade" time=500]
+[clearbg]
+[clearcg id=0]
+[clearcg id=1]
+[clearcg id=2]
+[filter name="clear" time=500]
+
+[battle_bgm ref="005_battle2"]
+
+[stopbgm]
+[sys_memset index=516 value="1"]

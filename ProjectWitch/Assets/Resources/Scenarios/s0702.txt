@@ -1,38 +1,44 @@
-﻿;script 702
-
+﻿;s0702
 ;タイミング:場面2翌ターンはじめイベント
+;地点70侵攻前
 ;魔女の沼。地下室
 ;リソースロード
-[loadcg id=0 ref="006_cv_lilyA"]
-[loadcg id=1 ref="030_cv_migA"]
+
+[field_area_hilight id=76]
+[wait time=500]
+
+[filter name="fade" time=500]
+[loadcg id=0 ref="lily"]
+[loadcg id=1 ref="mig"]
 [bgm ref="013_lily"]
-[drawbg ref="1009"]
-[drawcg id=0 pos="right"]
+[drawbg ref="1053m"]
+[filter name="clear" time=500]
 
-
+[drawcg id=0 pos="right" dir="right"]
 #リリィ
 ここへきて材料が切れるとはねぇ……。[n]
 仕方がない……集めに行くかね。[p]
-[drawcg id=1 pos="left"]
-[move id=1 x=-50 y=0 time=0]
-[moveto id=1 x=20 y=50 time=300]
+[drawcg id=1 pos="left" dir="right"]
 #ミグ
 お出かけするの？[n]
 ミグも行きたい！[p]
+[scale id=0 sx=-1 time=300]
 #リリィ
 アンタもめざといねぇ……。[n]
 ついてくるのなら、さっさと支度しな。[p]
 #ミグ
 うん！分かった！[p]
-[move id=1 x=-50 y=0 time=300]
+[scale id=1 sx=-1 time=200]
+[move id=1 x=-50 time=300]
 #リリィ
 ……お待ち。[p]
-[moveto id=1 x=10 y=50 time=400]
+[scale id=1 sx=-1 time=200]
+[moveto id=1 x=10 time=400]
 #ミグ
 なに？　おばあちゃん。[p]
 #リリィ
 その、手に持っている本は、いったい何だい。[p]
-[moveto id=1 x=30 y=50 time=400]
+[moveto id=1 x=30 time=400]
 #ミグ
 あっ！　これね！[p]
 ふふふー……！[n]
@@ -49,11 +55,11 @@
 ゾンビなんてきもちわるいのいらなくなるんだよ！[p]
 #リリィ
 お黙り！！！！[p]
+[move id=1 x=-10 time=200]
 #ミグ
 ひっ……。[n]
-[moveto id=1 x=30 y=45 time=100]
-[moveto id=1 x=30 y=50 time=100]
 えっ、ぐす……ご、ごべんな……ざい。[p]
+[changecg id=1 state=1]
 うああああぁーーーん！！！[p]
 #リリィ
 ああもう……うるさいねえ！[n]
@@ -68,31 +74,49 @@
 （しかし、あの資料をいまだに捨てられないあたり、[n]
 まだ未練があるということなのかねぇ……。）[p]
 [cn]
-……………。[p]
-[drawbg ref="1010"]
+
+[hide_message]
+[filter name="fade" time=500]
+[clearcg id=0]
+[clearcg id=1]
+[clearbg]
+[filter name="clear" time=500]
+
+[field_area_hilight id=74]
+[wait time=200]
+
+[filter name="fade" time=500]
+[drawbg ref="1027m"]
 [filter name="clear" time=500]
 
 ;ナタデーコ沼地東。
-[bgm ref="007_town"]
-[moveto id=1 x=30 y=60 time=100]
-[moveto id=1 x=30 y=50 time=100]
+[drawcg id=0 posx=-80 dir="right"]
+[drawcg id=1 posx=-80 dir="right"]
+[show_message]
+ナタデーコ沼東。[p]
+[moveto id=0 x=20 time=1000]
+[moveto id=1 x=70 time=1000]
 #ミグ
 ぞんびがいっぴきおりました～♪[n]
 
-[moveto id=1 x=30 y=60 time=100]
-[moveto id=1 x=30 y=50 time=100]
+[scale id=1 sx=-1 time=300]
+[moveto id=1 x=50 time=300]
 そこへいっぴきわいてでて～♪[n]
 
-[moveto id=1 x=30 y=60 time=100]
-[moveto id=1 x=30 y=50 time=100]
+[scale id=1 sx=-1 time=300]
+[moveto id=1 x=70 time=300]
 またまたいっぴきわきました～♪[p]
 
-[moveto id=1 x=30 y=60 time=100]
-[moveto id=1 x=30 y=50 time=100]
+[move id=1 y=10 time=100]
+[move id=1 y=-10 time=100]
+[wait time=100]
+[move id=1 y=10 time=100]
+[move id=1 y=-10 time=100]
 さんびきあわせてぞんぞんぞんび～♪[p]
 #リリィ
 へんてこな歌うたってないで、[n]
 さっさと材料をあつめんか。[p]
+[scale id=1 sx=-1 time=100]
 #ミグ
 はーい！[p]
 えーっと、むらさきシマキノコ、ヨモの葉、[n]
@@ -113,6 +137,11 @@
 まったく……。[p]
 もう少し大きくなったら教えてやるから、[n]
 それまではおとなしく基礎の勉強をしていることだね。[p]
+[move id=1 y=10 time=100]
+[move id=1 y=-10 time=100]
+[wait time=100]
+[move id=1 y=10 time=100]
+[move id=1 y=-10 time=100]
 #ミグ
 むぅー！[p]
 [cn]
@@ -120,9 +149,16 @@
 リリィはそれを受け流し、材料集めに戻ってしまった。[p]
 ミグもしばらくほほを膨らませていたが、[n]
 疲れてしまったのでそのまま材料集めを続けることにした。[p]
+
 [filter name="fade" time=500]
+[clearcg id=0]
+[clearcg id=1]
+[drawbg ref="1027e"]
 ……………。[p]
 [filter name="clear" time=500]
+
+[drawcg id=0 pos=4]
+[drawcg id=1 pos=2 dir="right"]
 #リリィ
 ふん……これだけあれば、1000体は作れるねぇ。[p]
 #ミグ
@@ -141,4 +177,12 @@
 泥だらけになりながら、ミグは満面の笑みを浮かべた。[n]
 それを見たリリィの顔も、つられて思わず緩んでしまうのだった。[p]
 
+[hide_message]
+[filter name="fade" time=500]
+[clearcg id=0]
+[clearcg id=1]
+[clearbg]
+[filter name="clear" time=500]
 
+[stopbgm]
+[sys_memset index="702" value="1"]

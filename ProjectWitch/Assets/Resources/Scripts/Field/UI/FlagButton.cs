@@ -23,6 +23,10 @@ namespace ProjectWitch.Field
         [SerializeField]
         private GameObject mAreaNamePrefab = null;
 
+        //押したときのSE
+        [SerializeField]
+        private string mPushSEName = "161";
+
         //各コントローラ
         public FieldUIController FieldUIController { get; set; }
         public FieldController FieldController { get; set; }
@@ -63,7 +67,7 @@ namespace ProjectWitch.Field
             var game = Game.GetInstance();
 
             //クリック音再生
-            game.SoundManager.PlaySE(SE.Click);
+            game.SoundManager.Play(mPushSEName, SoundType.SE);
 
             //メニューを開く
             ShowMenu(mAreaPrefab);

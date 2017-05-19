@@ -72,6 +72,8 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 446326}
+  - component: {fileID: 114146071072477936}
+  - component: {fileID: 114419682879542870}
   m_Layer: 9
   m_Name: 263_fx_pumpkingA
   m_TagString: Untagged
@@ -16800,7 +16802,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4688002309153678}
-  - component: {fileID: 114967527542238332}
   m_Layer: 9
   m_Name: 263_fx_pumpkingA
   m_TagString: Untagged
@@ -16823,12 +16824,12 @@ Transform:
   m_Father: {fileID: 446326}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114967527542238332
+--- !u!114 &114146071072477936
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000224749442028}
+  m_GameObject: {fileID: 113980}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e8e96deee70cdeb4d906845053c42fca, type: 3}
@@ -16841,3 +16842,16 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
+--- !u!114 &114419682879542870
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 113980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2671f59bd20713447b039517450fafa4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mCueName: 112_fx_pumpkingA
+  mPlayOnStart: 1

@@ -1,14 +1,23 @@
-﻿;script 705
+﻿;s0705
 ;場面５翌ターンはじめ
 ;アリスの館。
 
-[loadcg id=0 ref="000_cv_aliceA"]
-[loadcg id=1 ref="008_cv_kuroA"]
-[drawbg ref="1000"]
-[bgm ref="003_alice2"]
-[drawcg id=0 pos="right"]
-[drawcg id=1 pos="left"]
+[field_area_hilight id=1]
+[wait time=200]
 
+;load
+[loadcg id=0 ref="alice"]
+[loadcg id=1 ref="kuro"]
+
+;trans
+[filter name="fade" time=500]
+[drawbg ref="1002m"]
+[bgm ref="003_alice2"]
+[filter name="clear" time=500]
+
+[drawcg id=0 pos=5]
+[drawcg id=1 pos=1 dir="right"]
+[se ref="160"]
 #クロ
 アリス様！　一大事にございます。[p]
 #アリス
@@ -21,6 +30,7 @@
 さらに、各地でゾンビが活性化をはじめ、[n]
 常駐の軍を次々に襲っている模様。[p]
 沼のほとんどの土地と連絡が取れなくなっております。[p]
+[changecg id=0 state=2]
 #アリス
 なに……？[p]
 あのおいぼれババァは死んだんだぞ？[n]
@@ -30,21 +40,44 @@
 大変なことになりまするぞ……。[p]
 #アリス
 ちっ！　急いで兵を向かわせる。[p]
-支度をしろ！
+支度をしろ！[p]
 #クロ
-はっ！
+はっ！[p]
+[hide_message]
+[filter name="fade" time=500]
+[clearcg id=0]
+[clearcg id=1]
+[clearbg]
 
-;script 706
+;占領処理
+[change_area_owner area=64 owner=6]
+[change_area_owner area=65 owner=6]
+[change_area_owner area=66 owner=6]
+[change_area_owner area=67 owner=6]
+[change_area_owner area=68 owner=6]
+[change_area_owner area=69 owner=6]
+[change_area_owner area=70 owner=6]
+[change_area_owner area=71 owner=6]
+[change_area_owner area=72 owner=6]
+[change_area_owner area=73 owner=6]
+[change_area_owner area=74 owner=6]
+[change_area_owner area=75 owner=6]
+[change_area_owner area=76 owner=6]
+[change_area_owner area=77 owner=6]
+
+[filter name="clear" time=500]
+
 
 ;場面6後、リリィ領内侵攻戦闘前
-[loadcg id=0 ref="000_cv_aliceA"]
-[loadcg id=1 ref="008_cv_kuroA"]
-[drawbg ref="1006"]
+[field_area_hilight id=64]
+[wait time=200]
+
+[filter name="fade" time=500]
+[drawbg ref="Event/703"]
 [bgm ref="018_event3"]
-[drawcg id=0 pos="right"]
-[drawcg id=1 pos="left"]
+[filter name="clear" time=500]
 
-
+[show_message]
 #アリス
 一体どうなってやがる……。[p]
 [cn]
@@ -61,3 +94,27 @@
 わかった。[n]
 考えてても仕方ない。[p]
 今はとりあえず、あそこまでいくことが先決だな。[p]
+
+;地点リセット
+[change_area_owner area=64 owner=6]
+[change_area_owner area=65 owner=6]
+[change_area_owner area=66 owner=6]
+[change_area_owner area=67 owner=6]
+[change_area_owner area=68 owner=6]
+[change_area_owner area=69 owner=6]
+[change_area_owner area=70 owner=6]
+[change_area_owner area=71 owner=6]
+[change_area_owner area=72 owner=6]
+[change_area_owner area=73 owner=6]
+[change_area_owner area=74 owner=6]
+[change_area_owner area=75 owner=6]
+[change_area_owner area=76 owner=6]
+
+[hide_message]
+[filter name="fade" time=500]
+[clearbg]
+[filter name="clear" time=500]
+[stopbgm]
+
+[sys_memset index=705 value="1"]
+[sys_memset index=10108 value="1"]

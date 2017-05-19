@@ -34,10 +34,6 @@ namespace ProjectWitch.Menu
         [SerializeField]
         private Text mAgi = null;
 
-        [Header("レベルアップ単位")]
-        [SerializeField]
-        private int mLvUpExperience = 10;
-
         //プロパティ
         public int UnitID { get; set; }
         public StatusWindow StatusWindow { get; set; }
@@ -58,13 +54,13 @@ namespace ProjectWitch.Menu
             var unit = game.GameData.Unit[UnitID];
 
             //上昇するレベルを計算
-            int upLv = unit.Experience / mLvUpExperience;
+            int upLv = unit.Experience / UnitDataFormat.REQUIPRED_EXPERIENCE_TO_LVUP;
             if(unit.MaxLevel != -1)
                 upLv = Math.Min(unit.MaxLevel, upLv);
 
             //新たなステータスを計算
             mNewUnit.Level += upLv;
-            mNewUnit.Experience -= upLv * mLvUpExperience;
+            mNewUnit.Experience -= upLv * UnitDataFormat.REQUIPRED_EXPERIENCE_TO_LVUP;
 
             //表示の更新
             Func<int, int, string> LvParamToString =

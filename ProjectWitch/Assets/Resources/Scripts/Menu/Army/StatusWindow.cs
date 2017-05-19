@@ -88,10 +88,6 @@ namespace ProjectWitch.Menu
         [SerializeField]
         private int mPowerRankC = 200;
 
-        [Header("経験値境界値")]
-        [SerializeField]
-        private int mThresholdExperience = 10;
-
         //プロパティ
         public int UnitID { get; set; }
 
@@ -170,7 +166,7 @@ namespace ProjectWitch.Menu
             mSubImage.sprite = (sprite) ? sprite : mDefSubImage;
 
             //button
-            if (unit.Experience >= mThresholdExperience &&
+            if (unit.CanDoLevelUp() &&
                 (unit.Level < unit.MaxLevel || unit.MaxLevel == -1))
             {
                 mLvUpButton.interactable = true;

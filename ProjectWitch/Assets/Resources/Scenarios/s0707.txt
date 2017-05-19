@@ -1,19 +1,19 @@
 ;script 708
-
-
 ;魔女の沼戦前
-[loadcg id=0 ref="000_cv_aliceA"]
-[loadcg id=1 ref="008_cv_kuroA"]
-[drawbg ref="1006"]
-[bgm ref="018_event3"]
-[drawcg id=0 pos="right"]
-[drawcg id=1 pos="left"]
 
+[field_area_hilight id=76]
+[wait time=200]
+
+[filter name="fade" time=500]
+[drawbg ref="Event/704"]
+[bgm ref="013_lily"]
+[filter name="clear" time=500]
+
+[show_message]
 #アリス
 くそ……近くで見るとさらに馬鹿でけえな。[p]
 #クロ
-アリス様、現在弓矢と遠距離魔法で[n]
-けん制しておりますが。[p]
+アリス様、現在弓矢と遠距離魔法でけん制しておりますが、[n]
 たいした効果はない模様。[p]
 やはり、直接近距離でたたくほか方法はないかと……。[p]
 #アリス
@@ -32,7 +32,15 @@
 [cn]
 アリス軍はまずゾンビリリィの左腕の前に布陣した。[p]
 近くまで来ると、すさまじい瘴気が兵士たちを襲った。[p]
-マスクをしていないものは、なすすべもなく体を侵食[n]
-され、骨だけの姿となった。[p]
+マスクをしていないものは、なすすべもなく体を侵食され、骨だけの姿となった。[p]
 しかし、そんなことに構っていることはできず、[n]
 開戦の火ぶたは、まもなく切って落とされた。[p]
+
+[hide_message]
+[filter name="fade" time=500]
+[clearbg]
+[filter name="clear" time=500]
+
+[stopbgm]
+[sys_memset index=707 value="1"]
+[battle_bgm ref="013_lily"]

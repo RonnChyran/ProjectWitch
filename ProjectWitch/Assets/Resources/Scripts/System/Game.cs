@@ -49,11 +49,6 @@ namespace ProjectWitch
         private SoundManager mSoundManager = null;
         public SoundManager SoundManager { get { return mSoundManager; } private set { } }
 
-        //インゲームデバッグ出力
-        [SerializeField]
-        private InGameConsole mDebugMessage = null;
-        public InGameConsole DebugMessage { get { return mDebugMessage; } private set { } }
-
         //Talkシーンのコマンド
         [SerializeField]
         private TalkCommandHelper mTalkCommand = null;
@@ -153,6 +148,8 @@ namespace ProjectWitch
             //システムデータ初期化
             SystemData = new SystemData();
             SystemData.Reset();
+            SystemData.Load();
+            
         }
 
         //ダイアログを表示

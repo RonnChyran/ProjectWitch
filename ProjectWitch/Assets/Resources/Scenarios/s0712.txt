@@ -1,15 +1,21 @@
-;script 713
-
-
+;s0712
 ;場面13後　勝利
-[loadcg id=0 ref="000_cv_aliceA"]
-[loadcg id=1 ref="008_cv_kuroA"]
-[loadcg id=2 ref="030_cv_migA"]
-[drawbg ref="1011"]
-[bgm ref="018_event3"]
-[drawcg id=0 pos="right"]
-[drawcg id=1 pos="left"]
 
+[field_area_hilight id=76]
+[wait time=200]
+
+[loadcg id=0 ref="alice"]
+[loadcg id=1 ref="kuro"]
+[loadcg id=2 ref="mig"]
+
+[filter name="fade" time=500]
+[drawbg ref="1010e"]
+[bgm ref="021_event6"]
+[filter name="clear" time=500]
+
+[drawcg id=0 pos=3 dir="right" state=1]
+[drawcg id=1 pos=2 dir="right"]
+[show_message]
 #アリス
 クフフフッ！[n]
 アッハッハッハッハ！！！[p]
@@ -18,10 +24,13 @@
 おいクロ……、今回のはさすがにしんどかったな。[p]
 ちょっと疲れた……、眠るわ……、[n]
 後は、任せた……。[p]
-[moveto id=1 x=80 y=50 time=500]
+
+[changecg id=0 state=4]
+[move id=0 x=-10 time=100]
+[move id=1 x=10 time=100]
+
 #クロ
 アリス様。[p]
-[moveto id=2 x=75 y=45 time=200]
 [cn]
 膝から崩れ落ちたアリスを、クロは受け止めた。[p]
 #クロ
@@ -30,45 +39,46 @@
 アリスは安らかな寝息を立てていた。[p]
 その満足そうな表情に、[n]
 クロのほほも珍しく緩むのだった。[p]
+
 [filter name="fade" time=500]
-……………。[p]
-[move id=0 x=100 y=0 time=0]
-[move id=1 x=100 y=0 time=0]
-[drawcg id=2 pos="left"]
-[moveto id=2 x=10 y=30 time=0]
-
+翌朝。[p]
+[clearcg id=0]
+[clearcg id=1]
+[drawbg ref="1053n"]
 [filter name="clear" time=500]
-
+[bgm ref="013_lily"]
 ;場面転換
+[drawcg id=0 pos=4]
+[drawcg id=1 pos=5]
+[drawcg id=2 pos=1 posy=-20]
 戦後処理の終わった沼にホツンとたたずむ館。[p]
 その地下室にアリスは訪れていた。[p]
-[moveto id=0 x=70 y=50 time=300]
-[moveto id=1 x=90 y=50 time=300]
 #アリス
 さてと…………。[n]
 あのバケモンを作ったのは、まさかとは思っていたが。[p]
 お前か……ガキ。[p]
 [cn]
 部屋の隅で、ミグが小さくなっていた。[p]
+[moveto id=0 x=50 time=1000]
 #アリス
 ……たいそうな魔法陣だ。[p]
 このガキが……まさかあんな化け物を召喚できるとは[n]
 信じられんな。[p]
+[changecg id=0 state=2]
 おい、ガキ！！[p]
+[move id=2 y=10 time=100]
+[scale id=2 sx=-1 time=0]
+[move id=2 y=-10 time=100]
 #ミグ
 ヒッ！[p]
-[rotate id=2 angle=10 time=100]
-[rotate id=2 angle=-20 time=100]
-[rotate id=2 angle=10 time=100]
-
 #アリス
 おまえ……ここで何をした。[p]
 一体何を生み出そうとしたんだ……？[p]
 #ミグ
 ミグ……なんにもしてない。[p]
+[changecg id=2 state=1]
 ごめんなさい……私、おばあちゃん……。[n]
 うっ……うええぇ。[p]
-[moveto id=0 x=30 y=50 time=300]
 #アリス
 泣くなっ！！[p]
 立て、これを見ろ！！[p]
@@ -77,14 +87,19 @@
 言えッ！！！！[p]
 #クロ
 アリス様……相手は子供なのですから……。[p]
+[scale id=0 sx=-1 time=50]
 #アリス
 うるさいっ！！！！[p]
 ……こんなガキが、[n]
 あの質量のものを生み出せるはずがないんだ。[p]
 どう考えても異常なんだよ……こんなのは。[p]
+[scale id=0 sx=-1 time=50]
 ガキ……お前が手に持ってる本、[n]
 もしかして。[p]
-[moveto id=0 x=50 y=50 time=200]
+[moveto id=0 x=20 time=500]
+[scale id=0 sx=-1 time=300]
+[move id=0 x=20 time=500]
+[scale id=0 sx=-1 time=300]
 [cn]
 アリスは泣きじゃくるミグから無理やり本を引っぺがし、中身を恐ろしい速さでめくっていった。[p]
 #アリス
@@ -95,12 +110,12 @@
 #ミグ
 えっ……？[p]
 #アリス
-死んだ人間を生き返らせる、[n]
-なんてのはこういう程度の低い魔法書の[n]
-常套句なんだよ。[p]
+「死んだ人間を生き返らせる」[n]
+なんてのは、こういう程度の低い魔法書の常套句なんだよ。[p]
 大抵中身はインチキ臭い代物だ。[p]
 ふん、ミミズ、ゴーレム、ポンプ草、骨、賢者の石に、石板……。[n]
 こんなもので生き返るわけが……。[p]
+[changecg id=0 state=0]
 [cn]
 そこでアリスは言葉を切った。[p]
 アリスの顔から表情が消えた。[p]
@@ -119,35 +134,40 @@
 少し気になることがある。[p]
 #クロ
 承知しました。[p]
-[move id=1 x=50 y=0 time=200]
 #アリス
 おいガキ。[n]
 いつまでそこでめそめそしているつもりだ。[p]
 てめえの師匠はもう死んだんだぞ。[p]
 #ミグ
 ……しんで、ないもん。[p]
+[changecg id=0 state=2]
 #アリス
 まだいうか。[p]
-[moveto id=0 x=30 y=50 time=200]
+[moveto id=0 x=20 time=500]
+[move id=2 y=10 time=500]
 ちっ……ほら、たてよ[n]。
 お前、とりあえずうちの屋敷に来い。[p]
 #ミグ
 いや！！[p]
-[rotate id=2 angle=10 time=100]
-[rotate id=2 angle=-10 time=100]
+[move id=2 x=-10 time=200]
+[move id=0 x=20 time=200]
 [cn]
 ミグはアリスの手を無理やり振り払った。[p]
 #ミグ
 おまえおばあちゃん殺した！！[n]
 ミグ、許さないもん！！[p]
-[moveto id=0 x=50 y=50 time=300]
+[changecg id=0 state=1]
 #アリス
 ……じゃあ私を殺すか？[n]
 クフフフッ！[p]
-お前にやれるかな……。[n]
+お前にやれるかな……。[p]
 #ミグ
 で、できるもん……！[n]
 ファイヤーボール！！[p]
+
+[se ref="132_fx_fireball"]
+[filter name="flush" color="FF0000" time=500]
+
 [cn]
 ミグ渾身のファイアーボールがアリスめがけて放たれた。[p]
 しかし、それはアリスの手によって受け止められ、[n]
@@ -167,9 +187,11 @@
 まあ、どれだけ強くなったとしても、[n]
 私以上になることは絶対にないけどな。[p]
 #ミグ
-……うん。[n]
-じゃあ……行く。[n]
 …………。[p]
+……うん。[n]
+じゃあ……行く。[p]
+…………。[p]
+[changecg id=2 state=0]
 私……強くなって、魔女様を倒す！[n]
 それで、おばあちゃんも生き返らせる！[p]
 #アリス
@@ -177,8 +199,21 @@
 クフフフフッ！！[p]
 さあいくぞ、明日から忙しくなると思え！[p]
 #ミグ
-うんっ！[p]
+うん！[p]
 [cn]
+[filter name="fade" time=500]
+[clearbg]
 地下室は閉ざされ、アリス軍は撤退を始めた。[p]
-帰り道。ミグと並んで歩くアリスの表情は、[p]
+帰り道。ミグと並んで歩くアリスの表情は、[n]
 何だか妙に楽しそうだった。[p]
+[hide_message]
+[clearcg id=0]
+[clearcg id=1]
+[clearcg id=2]
+[filter name="clear" time=500]
+
+[stopbgm]
+[sys_memset index=712 value="1"]
+[sys_memset index=10016 value="1"]
+
+[unit_employ unit=33]

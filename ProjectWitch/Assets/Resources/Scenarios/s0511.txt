@@ -256,8 +256,15 @@
 [wait time=200]
 
 [filter name="fade" time=500]
+[drawbg ref="1002n"]
+[bgm ref="003_alice2"]
 [filter name="clear" time=500]
+
+[show_message]
 アリスの館。[p]
+[drawcg id=0 pos=4 state=1]
+[drawcg id=1 pos=5 ]
+[drawcg id=2 pos=2 dir="right"]
 #エミル
 [voice ref="050378"]
 ぷはっ！[p]
@@ -280,6 +287,7 @@
 そんなっ！　[n]
 あの薬の解毒薬はまだ誰も作れていないんだよ！[p]
 #アリス
+[changecg id=0 state=0]
 [voice ref="050384"]
 そんなことは知っている。[p]
 [voice ref="050385"]
@@ -306,8 +314,19 @@
 はっ。[n]
 さあ、こちらへ。[p]
 [cn]
+
+[filter name="fade" time=500]
 クロに案内され、エミルは調合部屋へと向かった。[p]
+[clearcg id=0]
+[clearcg id=1]
+[clearcg id=2]
+[drawbg ref="1003n"]
+[filter name="clear" time=500]
+
 ;場面転換
+[se ref="155"]
+[drawcg id=1 pos=2 mode="slidein" dir="right"]
+[drawcg id=2 posx=-1 mode="slidein" dir="right"]
 #クロ
 [voice ref="050392"]
 この部屋です。[p]
@@ -338,10 +357,31 @@
 #クロ
 [voice ref="050401"]
 それでは失礼します。[p]
+[scale id=1 sx=-1 time=300]
+[move id=1 x=-100 time=800]
 [cn]
-そういったクロの言葉はエミルにはもはや届いていないようだった。[p]
-……………。[p]
+クロの言葉はエミルにはもはや届いていないようだった。[p]
+
+[hide_message]
+[filter name="fade" time=500]
+[clearcg id=1]
+[clearcg id=2]
+[clearbg]
+[filter name="clear" time=500]
+[bgm ref="002_alice1"]
+
+[field_area_hilight id=49]
+[wait time=200]
+
+[filter name="fade" time=500]
+[drawbg ref="1042m"]
+[bgm ref="011_charlotte"]
+[filter name="clear" time=500]
+
 ;場面転換
+[show_message]
+[drawcg id=3 pos=4 state=1]
+[drawcg id=4 posx=-120 dir="right"]
 ロレーヌ城。[p]
 #シャルロッテ
 [voice ref="050402"]
@@ -349,6 +389,8 @@
 見つけなくてはならないというのに……。[p]
 [voice ref="050403"]
 何をすればよいか……。[p]
+[se ref="155"]
+[move id=4 x=100 time=800]
 #カスミ
 [voice ref="050404"]
 ロッテさん、エミルを見ませんでしたかー？[p]
@@ -370,3 +412,13 @@
 [voice ref="050409"]
 お金に困ってほとんど売ってしまったのだけれど、[n]
 まだ手掛かりになるようなものが残っているかもしれませんわね。[p]
+
+[hide_message]
+[filter name="fade" time=500]
+[clearcg id=3]
+[clearcg id=4]
+[clearbg]
+[filter name="clear" time=500]
+
+[stopbgm]
+[sys_memset index=511 value="1"]

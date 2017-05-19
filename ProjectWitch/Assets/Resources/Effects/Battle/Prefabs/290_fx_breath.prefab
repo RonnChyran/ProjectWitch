@@ -111,6 +111,7 @@ GameObject:
   m_Component:
   - component: {fileID: 493366}
   - component: {fileID: 11484356}
+  - component: {fileID: 114675770931538702}
   m_Layer: 9
   m_Name: 290_fx_breath
   m_TagString: Untagged
@@ -16366,3 +16367,16 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 172920}
   m_IsPrefabParent: 1
+--- !u!114 &114675770931538702
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 172920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2671f59bd20713447b039517450fafa4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mCueName: 133_fx_breath
+  mPlayOnStart: 1

@@ -60,7 +60,16 @@ namespace ProjectWitch.Talk.Compiler{
 				return null;
 			}
 
-			if (arguments.Count > 0) {
+            if (arguments.ContainName("time"))
+            {
+                commandList.Add(arguments.Get("time"));
+            }
+            else {
+                commandList.Add(new SetArgumentCommand("0"));
+            }
+
+
+            if (arguments.Count > 0) {
 				CompilerLog.Log(line, index, "無効な引数があります。");
 				return null;
 			}
@@ -82,6 +91,15 @@ namespace ProjectWitch.Talk.Compiler{
 
             commandList.Add(new SetArgumentCommand("0"));
             commandList.Add(new SetArgumentCommand("1"));
+
+
+            if (arguments.ContainName("time"))
+            {
+                commandList.Add(arguments.Get("time"));
+            }
+            else {
+                commandList.Add(new SetArgumentCommand("0"));
+            }
 
             if (arguments.Count > 0)
             {
@@ -232,7 +250,7 @@ namespace ProjectWitch.Talk.Compiler{
 			if (arguments.ContainName ("mode")) {
 				commandList.Add(arguments.Get ("mode"));
 			} else {
-				commandList.Add(new SetArgumentCommand ("fadeout"));
+				commandList.Add(new SetArgumentCommand ("none"));
 			}
 			commandList.Add(new RunOrderCommand("HideCG"));
 			commandList.Add (new RunOrderCommand ("SetUpdater"));

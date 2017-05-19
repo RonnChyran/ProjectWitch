@@ -60,6 +60,7 @@ GameObject:
   m_Component:
   - component: {fileID: 468148}
   - component: {fileID: 11479354}
+  - component: {fileID: 114236798536276700}
   m_Layer: 9
   m_Name: 275_fx_attack_down
   m_TagString: Untagged
@@ -10918,3 +10919,16 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 189238}
   m_IsPrefabParent: 1
+--- !u!114 &114236798536276700
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 189238}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2671f59bd20713447b039517450fafa4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mCueName: 137_fx_status_down
+  mPlayOnStart: 1

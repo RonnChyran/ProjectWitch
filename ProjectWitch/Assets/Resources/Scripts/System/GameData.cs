@@ -420,10 +420,17 @@ namespace ProjectWitch
         //データをシステムファイルから読み込む
         public void Load()
         {
-            var inst = new SystemData();
-            inst.Copy(this);
-            FileIO.LoadBinary(GamePath.SystemSaveFilePath(), metaData, inst);
-            this.Copy(inst);
+            if (System.IO.File.Exists(GamePath.SystemSaveFilePath()))
+            {
+                var inst = new SystemData();
+                inst.Copy(this);
+                FileIO.LoadBinary(GamePath.SystemSaveFilePath(), metaData, inst);
+                this.Copy(inst);
+            }
+            else
+            {
+                Debug.Log("システムファイルが見つかりません。初回起動モードで実行します。");
+            }
         }
 
         //コピーメソッド
@@ -471,13 +478,17 @@ namespace ProjectWitch
         {
             Love = 0;
             IsAlive = true;
-            Experience = 10;
+            Experience = 0;
             SoldierCost = 2;
             HPCost = 8;
             SoldierLimitCost = 35;
         }
 
         #region data_member
+
+        //レベルアップに必要な経験値
+        public static readonly int REQUIPRED_EXPERIENCE_TO_LVUP = 1;
+
         //ID
         [System.Xml.Serialization.XmlAttribute("id")]
         public int ID { get; set; }
@@ -486,7 +497,8 @@ namespace ProjectWitch
         public string Name { get; set; }
 
         //レベル
-        public int Level { get; set; }
+        private int mLevel = 0;
+        public int Level { get { return (mLevel > MaxLevel && MaxLevel > 0) ? MaxLevel : mLevel; } set { mLevel = value; } }
 
         //レベル成長限界
         public int MaxLevel { get; set; }
@@ -588,6 +600,10 @@ namespace ProjectWitch
 
         //アリスのコメント
         public string Comment { get; set; }
+
+        //戦闘に出したかのフラグ。ターン開始時にリセットされる
+        public bool IsBattled { get; set; }
+
         #endregion
 
         #region query
@@ -620,6 +636,16 @@ namespace ProjectWitch
         #endregion
 
         #region method 
+
+        //レベルアップ可能化の判定
+        public bool CanDoLevelUp()
+        {
+            //レベル上限∞のキャラはレベル判定をスキップさせる
+            var bLevelCheck = true;
+            if (MaxLevel > 0) bLevelCheck = Level < MaxLevel;
+
+            return (Experience >= REQUIPRED_EXPERIENCE_TO_LVUP) && bLevelCheck;
+        }
 
         //コピーメソッド
         public UnitDataFormat Clone()
@@ -658,6 +684,7 @@ namespace ProjectWitch
             outdata.AddRange(BitConverter.GetBytes(IsAlive));
             outdata.AddRange(BitConverter.GetBytes(Love));
             outdata.AddRange(BitConverter.GetBytes(Equipment));
+            outdata.AddRange(BitConverter.GetBytes(IsBattled));
 
             return outdata.ToArray();
         }
@@ -676,7 +703,7 @@ namespace ProjectWitch
             IsAlive = BitConverter.ToBoolean(data, offset); offset += 1;
             Love = BitConverter.ToInt32(data, offset); offset += 4;
             Equipment = BitConverter.ToInt32(data, offset); offset += 4;
-
+            IsBattled = BitConverter.ToBoolean(data, offset); offset += 1;
 
             return offset;
         }
@@ -1027,6 +1054,40 @@ namespace ProjectWitch
             }
         }
 
+        //特定のユニットを雇う
+        public void AddUnit(int unit)
+        {
+            var game = Game.GetInstance();
+            var groupID = GroupList[0];
+            var unitList = game.GameData.Group[groupID].UnitList;
+
+
+            //すでに雇っていた場合は無効にする
+            if (unitList.Contains(unit)) return;
+
+            //雇う
+            unitList.Add(unit);
+
+            //ユニットリストをID昇順に並び替える
+            unitList.Sort();
+        }
+
+        //全ユニットをバトルに出せるようにする
+        public void ResetIsBattleFlag()
+        {
+            var game = Game.GetInstance();
+            var groups = game.GameData.Group.GetFromIndex(GroupList);
+
+            //すべてのグループのユニットのIsBattledフラグをリセット
+            foreach(var group in groups)
+            {
+                foreach(var unit in group.UnitList)
+                {
+                    game.GameData.Unit[unit].IsBattled = false;
+                }
+            }
+        }
+
         //セーブするデータをbyte配列にパックして取得
         public override byte[] GetSaveBytes()
         {
@@ -1095,7 +1156,7 @@ namespace ProjectWitch
         //防衛タイプ
         public BattleType DefenseType { get; set; }
 
-        //防衛優先度
+        //防衛優先度（値が小さいほど優先される
         public int DefensePriority { get; set; }
 
         //リストの選択方法列挙
@@ -1139,11 +1200,18 @@ namespace ProjectWitch
             {
                 var game = Game.GetInstance();
 
+                //アクティブ化処理
                 if (state == GroupState.Ready)
+                {
                     if (BeginDominationFlagIndex == -1)
                         state = GroupState.Active;
                     else if (!game.GameData.Memory.IsZero(BeginDominationFlagIndex))
                         state = GroupState.Active;
+                }
+                //インアクティブ化処理
+                else if (state == GroupState.Active && BeginDominationFlagIndex != -1)
+                    if (game.GameData.Memory.IsZero(BeginDominationFlagIndex))
+                        state = GroupState.Ready;
 
                 return state;
             }
@@ -1223,7 +1291,7 @@ namespace ProjectWitch
         //自営団のIDを取得
         public static int GetDefaultID()
         {
-            return 49;
+            return 53;
         }
 
         //セーブするデータをbyte配列にパックして取得
@@ -1318,7 +1386,8 @@ namespace ProjectWitch
         public ConfigDataFormat()
         {
             //iniで読み込むようにする
-            TextSpeed = 50.0f;
+            TextSpeed = TextSpeedEnum.Fast;
+            Resolution = ResolutionEnum.Native;
 
             BGMVolume = 0.3f;
             SEVolume = 0.3f;
@@ -1326,18 +1395,88 @@ namespace ProjectWitch
             MasterVolume = 0.5f;
         }
 
-        #region data_member
-        //解像度
-        public Vector2 Resolution { get; set; }
-        //フルスクリーンか否か
-        public bool IsFullScreen { get; set; }
-        //グラフィックの質
+        #region type
+
+        public enum ResolutionEnum : int
+        {
+            Quarter, //480x280
+            Harf,   //960x540
+            Native, //1280x720
+            Full   //FullHD
+        }
+        public static readonly Dictionary<ResolutionEnum, Vector2> ResolutionValues = new Dictionary<ResolutionEnum, Vector2>
+        {
+            {ResolutionEnum.Full,       new Vector2(1920,1080) },
+            {ResolutionEnum.Native,     new Vector2(1280,720) },
+            {ResolutionEnum.Harf,       new Vector2(960,540) },
+            {ResolutionEnum.Quarter,    new Vector2(480,270) }
+        };
+
         public enum GraphicQualityEnum : int
         {
             High = 0,
-            Low = 1
+            Middle = 1,
+            Low = 2
         };
-        public GraphicQualityEnum GraphicQuality { get; set; }
+
+        public enum TextSpeedEnum : int
+        {
+            Slow = 0,
+            Normal = 1,
+            Fast=2,
+            Fastest=3
+        };
+        public static readonly Dictionary<TextSpeedEnum, float> TextSpeedValues = new Dictionary<TextSpeedEnum, float>
+        {
+            {TextSpeedEnum.Slow, 12.5f },
+            {TextSpeedEnum.Normal, 25.0f },
+            {TextSpeedEnum.Fast, 50.0f },
+            {TextSpeedEnum.Fastest, 200.0f }
+        };
+
+        #endregion
+
+        #region private_member
+        private bool mIsFullScreen = false;
+        private ResolutionEnum mResolution = ResolutionEnum.Native;
+        private GraphicQualityEnum mGraphicQuality = GraphicQualityEnum.High;
+        #endregion
+
+        #region data_member
+
+        //フルスクリーンか否か
+        public bool IsFullScreen
+        {
+            get { return mIsFullScreen; }
+            set
+            {
+                mIsFullScreen = value;
+                Screen.fullScreen = value;
+            }
+        }
+        
+        //解像度
+        public ResolutionEnum Resolution
+        {
+            get { return mResolution; }
+            set
+            {
+                Screen.SetResolution(
+                    (int)ResolutionValues[value].x,
+                    (int)ResolutionValues[value].y,
+                    Screen.fullScreen);
+                mResolution = value;
+            }
+        }
+        //グラフィックの質
+        public GraphicQualityEnum GraphicQuality {
+            get { return mGraphicQuality; }
+            set
+            {
+                QualitySettings.SetQualityLevel((int)value);
+                mGraphicQuality = value;
+            }
+        }
 
         //全体の音量
         public float MasterVolume { get; set; }
@@ -1352,7 +1491,7 @@ namespace ProjectWitch
         public int BattleSpeed { get; set; }
 
         //テキストスピード
-        public float TextSpeed { get; set; }
+        public TextSpeedEnum TextSpeed { get; set; }
         #endregion
 
         #region method
@@ -1362,15 +1501,14 @@ namespace ProjectWitch
             var outdata = new List<byte>();
 
             //セーブするデータ（ゲーム内で変更の可能性のあるデータ）を追加
-            outdata.AddRange(BitConverter.GetBytes(Resolution.x));
-            outdata.AddRange(BitConverter.GetBytes(Resolution.y));
+            outdata.AddRange(BitConverter.GetBytes((int)Resolution));
             outdata.AddRange(BitConverter.GetBytes(IsFullScreen));
             outdata.AddRange(BitConverter.GetBytes((int)GraphicQuality));
             outdata.AddRange(BitConverter.GetBytes(MasterVolume));
             outdata.AddRange(BitConverter.GetBytes(BGMVolume));
             outdata.AddRange(BitConverter.GetBytes(SEVolume));
             outdata.AddRange(BitConverter.GetBytes(BattleSpeed));
-            outdata.AddRange(BitConverter.GetBytes(TextSpeed));
+            outdata.AddRange(BitConverter.GetBytes((int)TextSpeed));
 
             return outdata.ToArray();
         }
@@ -1380,19 +1518,19 @@ namespace ProjectWitch
         {
             int offset = _offset;
 
-            var resolution = new Vector2();
-            resolution.x = BitConverter.ToSingle(data, offset); offset += 4;
-            resolution.y = BitConverter.ToSingle(data, offset); offset += 4;
-            Resolution = resolution;
+            Resolution = EnumConverter.ToEnum<ResolutionEnum>(
+                                BitConverter.ToInt32(data, offset)); offset += 4;
 
             IsFullScreen = BitConverter.ToBoolean(data, offset); offset += 1;
             GraphicQuality = EnumConverter.ToEnum<GraphicQualityEnum>(
                                 BitConverter.ToInt32(data, offset)); offset += 4;
+
             MasterVolume = BitConverter.ToSingle(data, offset); offset += 4;
             BGMVolume = BitConverter.ToSingle(data, offset); offset += 4;
             SEVolume = BitConverter.ToSingle(data, offset); offset += 4;
             BattleSpeed = BitConverter.ToInt32(data, offset); offset += 4;
-            TextSpeed = BitConverter.ToSingle(data, offset); offset += 4;
+            TextSpeed = EnumConverter.ToEnum<TextSpeedEnum>(
+                                BitConverter.ToInt32(data, offset)); offset += 4;
 
             return offset;
         }
@@ -1726,7 +1864,7 @@ namespace ProjectWitch
             //ユニットデータに格納（0番目はキャプションなので読み飛ばす
             for (int i = 1; i < rowData.Count; i++)
             {
-                if (rowData[i].Count != 45) continue;
+                if (rowData[i].Count < 45) continue;
 
                 //データの順番
                 //[0]ID         [1]名前       [2]レベル      [3]レベル成長限界          [4]HP
@@ -1805,6 +1943,7 @@ namespace ProjectWitch
                     unit.OnEscapedSerif = data[44];
 
                     unit.IsAlive = true;
+                    unit.IsBattled = false;
 
                 }
                 catch (ArgumentNullException e)
@@ -1978,17 +2117,17 @@ namespace ProjectWitch
                 }
                 catch (ArgumentNullException e)
                 {
-                    Debug.Log("イベントデータの読み取りに失敗：データが空です");
+                    Debug.Log("イベントデータの読み取りに失敗：データが空です。: L" + i.ToString());
                     Debug.Log(e.Message);
                 }
                 catch (FormatException e)
                 {
-                    Debug.Log("イベントデータの読み取りに失敗：データの形式が違います");
+                    Debug.Log("イベントデータの読み取りに失敗：データの形式が違います。: L"+i.ToString());
                     Debug.Log(e.Message);
                 }
                 catch (OverflowException e)
                 {
-                    Debug.Log("イベントデータの読み取りに失敗：データがオーバーフローしました");
+                    Debug.Log("イベントデータの読み取りに失敗：データがオーバーフローしました。: L" + i.ToString());
                     Debug.Log(e.Message);
                 }
 
@@ -2490,6 +2629,6 @@ namespace ProjectWitch
         public static readonly string SaveFolderPath = Application.dataPath + "/SaveData/";
 
         public static string GameSaveFilePath(int index) { return SaveFolderPath + "save" + index.ToString() + ".dat"; }
-        public static string SystemSaveFilePath() { return SaveFolderPath + "sys_save"; }
+        public static string SystemSaveFilePath() { return SaveFolderPath + "sys_save.dat"; }
     }
 }

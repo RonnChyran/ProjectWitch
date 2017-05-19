@@ -4,6 +4,7 @@ using System;
 
 namespace ProjectWitch.Field
 {
+    [RequireComponent(typeof(Animator))]
     public class AreaWindow : MonoBehaviour
     {
 
@@ -48,6 +49,9 @@ namespace ProjectWitch.Field
         [SerializeField]
         private Sprite[] mcOwnerIconResources = null;
 
+        //閉じるときのSE
+        [SerializeField]
+        private string mCloseSEName = "162";
 
         //エリアID
         private int mAreaID = -1;
@@ -61,6 +65,14 @@ namespace ProjectWitch.Field
         public GameObject AreaNamePrefab { get; set; }
         private GameObject mInstNameWindow = null;
 
+        //アニメータの参照
+        private Animator mAnimator = null;
+
+        void Start()
+        {
+            mAnimator = GetComponent<Animator>();
+        }
+
         void Update()
         {
             var game = Game.GetInstance();
@@ -73,9 +85,6 @@ namespace ProjectWitch.Field
 
             if (Input.GetButtonDown("Cancel"))
             {
-                //キャンセル音再生
-                game.SoundManager.PlaySE(SE.Cancel);
-
                 Close();
             }
         }
@@ -146,7 +155,7 @@ namespace ProjectWitch.Field
             FieldController.DominationBattle(AreaID, game.GameData.Area[AreaID].Owner);
             
             //メニューを閉じる
-            Close();
+            Close(true);
 
 
             //メニューを開けるようにする
@@ -186,14 +195,38 @@ namespace ProjectWitch.Field
         }
 
         //ウィンドウを閉じる
-        public void Close()
+        public void Close(bool noAnim = false)
+        {
+            Destroy(mInstNameWindow);
+
+            if (noAnim)
+            {
+                //メニューを開けるようにする 
+                FieldController.MenuClickable = true;
+                FieldController.FlagClickable = true;
+                FieldUIController.AreaNameLock = false;
+                FieldUIController.SelectedTerritory = -1;
+                Destroy(this.gameObject);
+            }
+            else
+            {
+                //SE再生
+                var game = Game.GetInstance();
+                game.SoundManager.Play(mCloseSEName, SoundType.SE);
+
+                //アニメーション再生
+                mAnimator.SetTrigger("close");
+            }
+        }
+
+        //クローズアニメーションが終わったら呼ぶ処理
+        public void EndAnimation()
         {
             //メニューを開けるようにする 
             FieldController.MenuClickable = true;
             FieldController.FlagClickable = true;
             FieldUIController.AreaNameLock = false;
             FieldUIController.SelectedTerritory = -1;
-            Destroy(mInstNameWindow);
             Destroy(this.gameObject);
         }
 
@@ -232,5 +265,7 @@ namespace ProjectWitch.Field
 
             }
         }
+
+
     }
 }

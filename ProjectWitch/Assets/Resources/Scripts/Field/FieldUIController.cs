@@ -17,10 +17,6 @@ namespace ProjectWitch.Field
         [SerializeField]
         private Canvas mPanel = null;
 
-        //ヘルプウィンドウを表示するボタン
-        [SerializeField]
-        private Button mHelpButton = null;
-
         ////自動操作時のカメラスピード
         //[SerializeField]
         //private float mCameraSpeed = 1.0f;
@@ -81,16 +77,10 @@ namespace ProjectWitch.Field
         {
             if(mFieldController.MenuClickable)
             {
-                mHelpButton.interactable = true;
-
                 if (Input.GetButtonDown("Cancel"))
                 {
                     ShowMenu();
                 }
-            }
-            else
-            {
-                mHelpButton.interactable = false;
             }
         }
 

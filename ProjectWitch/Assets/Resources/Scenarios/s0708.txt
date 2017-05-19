@@ -1,20 +1,35 @@
-;script 709
-
-
+;s0709
 ;魔女の沼戦後　勝利
-[loadcg id=0 ref="000_cv_aliceA"]
-[drawbg ref="1011"]
-[bgm ref="018_event3"]
-[drawcg id=0 pos="center"]
 
+[field_area_hilight id=76]
+[wait time=200]
+
+[filter name="fade" time=500]
+[drawbg ref="Event/704"]
+[bgm ref="013_lily"]
+[filter name="clear" time=500]
+
+[show_message]
 #アリス
 よし、左腕を切ったな！[n]
 前軍撤退だ！！[p]
-[move id=0 x=100 y=0 time=500]
 [cn]
 アリスの指示で、一斉に兵が退散した。[p]
 左手をもがれたゾンビリリィは、[n]
 苦し紛れに頭をふるった。[p]
-頭から落とされた肉片が、アリス軍の兵士に襲い掛かり、[n]
-多少の被害が出たものの、[n]
+頭から落とされた肉片が、アリス軍の兵士に襲い掛かり、多少の被害が出たものの、[n]
 アリス軍はその高い機動力で何とか戦場を脱出した。[p]
+[hide_message]
+
+[filter name="fade" time=500]
+[clearbg]
+[filter name="clear" time=500]
+
+[stopbgm]
+[sys_memset index=708 value="1"]
+
+;リリィ右腕　始動
+[sys_memset index=10109 value="1"]
+
+;リリィ領キープ
+[change_area_owner area=76 owner=6]

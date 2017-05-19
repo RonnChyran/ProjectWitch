@@ -107,6 +107,7 @@ GameObject:
   - component: {fileID: 4000012324517676}
   - component: {fileID: 114000011319517036}
   - component: {fileID: 95221427131917408}
+  - component: {fileID: 114142065032205344}
   m_Layer: 0
   m_Name: 266_fx_akariB
   m_TagString: Untagged
@@ -304,6 +305,19 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
+--- !u!114 &114142065032205344
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000013836024968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2671f59bd20713447b039517450fafa4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mCueName: 115_fx_akariB
+  mPlayOnStart: 1
 --- !u!198 &198000010527108350
 ParticleSystem:
   m_ObjectHideFlags: 1

@@ -209,5 +209,6 @@
 [endif]
 
 [stopbgm]
-[wait time=500]
+
 [sys_memset index=607 value="1"]
+[sys_memset index=10005 value="1"]

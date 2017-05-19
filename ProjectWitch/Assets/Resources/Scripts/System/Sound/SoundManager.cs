@@ -88,6 +88,11 @@ namespace ProjectWitch
 
             var source = GetSource(type);
 
+            //対象がBGMかつ、もし同じものを再生中なら、再スタートしない
+            if (type==SoundType.BGM && IsPlaying(SoundType.BGM) &&
+                source.cueName == name)
+                return;
+
             source.cueSheet = mCueSheetList[type];
             source.cueName = name;
 

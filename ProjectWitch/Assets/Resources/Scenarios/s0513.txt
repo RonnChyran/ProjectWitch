@@ -2,10 +2,25 @@
 ;script: nikai
 ;timing:　場面14翌ターンはじめ
 
+[field_area_hilight id=1]
+[wait time=200]
+
+[loadcg id=0 ref="alice"]
+[loadcg id=1 ref="kuro"]
+[loadcg id=2 ref="emil"]
+
+[filter name="fade" time=500]
+[bgm ref="003_alice2"]
+[drawbg ref="1003m"]
+[filter name="clear" time=500]
+
+[show_message]
+[drawcg id=0 pos=2 dir="right"]
 #アリス
 [voice ref="050425"]
 おい、起きろ。[n]
 薬はできたのか？[p]
+[drawcg id=2 pos=4]
 #エミル
 [voice ref="050426"]
 うーん……、アリス様。[n]
@@ -21,7 +36,10 @@
 [voice ref="050430"]
 は……、はい。[p]
 [cn]
+[scale id=0 sx=-1 time=300]
+[move id=0 x=-100 time=800]
 そういうとアリスは部屋を後にした。[p]
+[scale id=2 sx=-1 time=300]
 #エミル
 [voice ref="050431"]
 ……この組み合わせは試した。[p]
@@ -35,9 +53,18 @@
 [voice ref="050435"]
 あきらめたら、姉さんもロッテ様達も……。[p]
 [cn]
+
+[filter name="fade" time=500]
 ……………。[p]
+[drawbg ref="1002m"]
+[clearcg id=0]
+[clearcg id=2]
+[filter name="clear" time=500]
+
 ;場面転換
 アリスの執務室[p]
+[drawcg id=0 pos=4]
+[drawcg id=1 pos=2 dir="right"]
 #クロ
 [voice ref="050436"]
 アリス様。[n]
@@ -53,6 +80,7 @@
 #クロ
 [voice ref="050440"]
 そういうことでございましたか……。[p]
+[changecg id=0 state=1]
 #アリス
 [voice ref="050441"]
 クフフフフッ！[n]
@@ -64,3 +92,13 @@
 #アリス
 [voice ref="050443"]
 さて、明日までに終わるか、見ものだな……。[p]
+
+[hide_message]
+[filter name="fade" time=500]
+[clearcg id=0]
+[clearcg id=1]
+[clearbg]
+[filter name="clear" time=500]
+[stopbgm]
+
+[sys_memset index=513 value="1"]

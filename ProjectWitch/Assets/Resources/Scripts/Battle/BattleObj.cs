@@ -364,7 +364,7 @@ namespace ProjectWitch.Battle
             mDamageDisplayEnemy.SetActive(false);
 
             // BGM再生
-            mGame.SoundManager.Play(BattleDataIn.BGM, SoundType.BGM);
+            //mGame.SoundManager.Play(BattleDataIn.BGM, SoundType.BGM);
 
             // 戦闘開始
             StartCoroutine("CoBattleStart");

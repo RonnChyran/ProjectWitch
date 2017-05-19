@@ -114,10 +114,10 @@ namespace ProjectWitch.Field
             }
 
             //プレイヤー３ターン
-            for (int i = 0; i < 3; i++)
+            while(game.GameData.CurrentTime < 3)
             {
                 //ターン数更新
-                game.GameData.Territory[0].ActionCount = 3 - i;
+                game.GameData.Territory[0].ActionCount = 3 - game.GameData.CurrentTime;
 
                 //カメラ操作を無効にする
                 CameraController.IsPlayable = false;
@@ -242,6 +242,7 @@ namespace ProjectWitch.Field
             mCameraController.IsPlayable = true;
             game.GameData.CurrentTime = 0;
             game.GameData.CurrentTurn++;
+            game.GameData.Territory[0].ResetIsBattleFlag();
 
             mIsCoroutineExec = false;
 
@@ -288,8 +289,8 @@ namespace ProjectWitch.Field
                 yield return null;
             }
 
-            //時間を進める
-            game.GameData.CurrentTime++;
+            ////時間を進める
+            //game.GameData.CurrentTime++;
             
 
         }
@@ -311,7 +312,17 @@ namespace ProjectWitch.Field
                     ChangeAreaOwner(game.BattleIn.AreaID, game.BattleIn.EnemyTerritory);
             }
 
-
+            //戦闘に出したユニットの戦闘済み判定
+            //戦闘済みフラグは味方全ユニットと、捕獲したユニットに立てる
+            foreach(var unit in game.BattleIn.PlayerUnits)
+            {
+                if(unit >= 0)
+                    game.GameData.Unit[unit].IsBattled = true;
+            }
+            foreach(var unit in game.BattleOut.CapturedUnits)
+            {
+                game.GameData.Unit[unit].IsBattled = true;
+            }
 
             //ユニットの死亡処理
             foreach(var unit in game.BattleOut.DeadUnits)
@@ -340,8 +351,8 @@ namespace ProjectWitch.Field
                 territory.RemoveUnit(unit);
 
                 //味方領地に追加
-                var groupID = game.GameData.Territory[game.BattleIn.PlayerTerritory].GroupList[0];
-                game.GameData.Group[groupID].UnitList.Add(unit);
+                territory = game.GameData.Territory[game.BattleIn.PlayerTerritory];
+                territory.AddUnit(unit);
             }
 
             //ユニットの逃走処理
@@ -455,6 +466,10 @@ namespace ProjectWitch.Field
             game.BattleIn.Reset();
             game.BattleOut.Reset();
             game.ScenarioIn.Reset();
+
+            //時間を進める
+            if (game.GameData.CurrentTime <= 2)
+                game.GameData.CurrentTime++;
 
             yield return null;
         }

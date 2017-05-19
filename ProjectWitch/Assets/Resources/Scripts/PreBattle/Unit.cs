@@ -81,6 +81,24 @@ namespace ProjectWitch.PreBattle
             var game = Game.GetInstance();
             var unit = game.GameData.Unit[UnitID];
 
+            //テキストをセット
+            mName.text = unit.Name;
+            mLv.text = unit.Level.ToString();
+            SetRace(unit);
+            SetSoldierNum(unit);
+            SetHP(unit);
+            mGAtk.text = (unit.GroupPAtk + unit.GroupMAtk).ToString();
+            mLAtk.text = (unit.LeaderPAtk + unit.LeaderMAtk).ToString();
+
+
+            //IsBattledフラグがtrueだったら、バトルに出せないようにする
+            if (game.GameData.Unit[UnitID].IsBattled)
+            {
+                mButton.interactable = false;
+                mPositionText.text = "";
+                yield break;
+            }
+
             //もし出撃ユニットに含まれていたら、無効にして、位置を表示
             var battleID = Controller.UnitList.IndexOf(UnitID);
             if (battleID != -1)
@@ -100,16 +118,6 @@ namespace ProjectWitch.PreBattle
                 mButton.interactable = true;
                 mPositionPrefab.SetActive(false);
             }
-
-
-            //テキストをセット
-            mName.text = unit.Name;
-            mLv.text = unit.Level.ToString();
-            SetRace(unit);
-            SetSoldierNum(unit);
-            SetHP(unit);
-            mGAtk.text = (unit.GroupPAtk + unit.GroupMAtk).ToString();
-            mLAtk.text = (unit.LeaderPAtk + unit.LeaderMAtk).ToString();
 
             yield return new WaitForSeconds(0.1f);
 

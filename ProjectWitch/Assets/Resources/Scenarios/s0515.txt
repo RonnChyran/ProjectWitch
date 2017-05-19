@@ -2,12 +2,30 @@
 ;script: nikai
 ;timing:　場面16よくターンはじめ
 
+[field_area_hilight id=1]
+[wait time=200]
+
+[loadcg id=0 ref="alice"]
+[loadcg id=1 ref="kuro"]
+[loadcg id=2 ref="emil"]
+
+[filter name="fade" time=500]
+[drawbg ref="1003n"]
+[bgm ref="003_alice2"]
+[filter name="clear" time=500]
+
+[drawcg id=2 pos=4 dir="right" state=1]
+[show_message]
 #アリス
 [voice ref="050497"]
 ……エミル。 入るぞ。[p]
+[se ref="155"]
+[drawcg id=0 pos=2 dir="right" mode="slidein"]
+[drawcg id=1 pos=1 dir="right" mode="slidein"]
 [cn]
 夜。[n]
 アリスは館に帰るとその足でエミルの研究室を訪ねた[p]
+[scale id=2 sx=-1 time=200]
 #エミル
 [voice ref="050498"]
 あっ……。[p]
@@ -37,3 +55,14 @@
 #アリス
 [voice ref="050505"]
 ガキ、お前も行くぞ。 ついてこい。[p]
+
+[hide_message]
+[filter name="fade" time=500]
+[clearcg id=0]
+[clearcg id=1]
+[clearcg id=2]
+[clearbg]
+[filter name="clear" time=500]
+
+[stopbgm]
+[sys_memset index=515 value="1"]

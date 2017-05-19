@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4000011710796688}
   - component: {fileID: 114000011533303928}
-  - component: {fileID: 114108127429696712}
+  - component: {fileID: 114904346552417174}
   m_Layer: 9
   m_Name: 265_fx_akariA
   m_TagString: Untagged
@@ -121,7 +121,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
---- !u!114 &114108127429696712
+--- !u!114 &114904346552417174
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -129,18 +129,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1000010584344370}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d1e631c3b9947b54c823c6853a05529c, type: 3}
+  m_Script: {fileID: 11500000, guid: 2671f59bd20713447b039517450fafa4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playOnStart: 1
-  _cueName: 114_fx_akariA
-  _cueSheet: SE
-  _use3dPositioning: 0
-  _loop: 0
-  _volume: 0.5
-  _pitch: 0
-  _androidUseLowLatencyVoicePool: 0
-  need_to_player_update_all: 1
+  mCueName: 114_fx_akariA
+  mPlayOnStart: 1
 --- !u!198 &198000011424897510
 ParticleSystem:
   m_ObjectHideFlags: 1

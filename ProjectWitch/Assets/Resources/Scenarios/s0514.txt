@@ -2,7 +2,21 @@
 ;script: nikai
 ;timing:　場面15翌ターンはじめ
 
+[field_area_hilight id=1]
+[wait time=200]
 
+[loadcg id=0 ref="alice"]
+[loadcg id=1 ref="chishire"]
+[loadcg id=2 ref="emil"]
+[loadcg id=3 ref="meisie"]
+[loadcg id=4 ref="kuro"]
+
+[filter name="fade" time=500]
+[drawbg ref="Event/700"]
+[bgm ref="003_alice2"]
+[filter name="clear" time=500]
+
+[show_message]
 [cn]
 アリスの館、早朝。[n]
 東の空は白み、庭では元気にセミたちが鳴いていた。[p]
@@ -54,7 +68,14 @@
 [voice ref="050456"]
 いたいっ！　たたかないで下さいよォーー！！[p]
 [cn]
+
+[filter name="fade" time=500]
+[drawbg ref="1003m"]
 数分後……[p]
+[filter name="clear" time=500]
+
+[drawcg id=0 pos=4]
+[drawcg id=1 pos=2 dir="right"]
 #アリス
 [voice ref="050457"]
 ふん、それで？[n]
@@ -64,18 +85,29 @@
 いてて……[n]
 はい、それが……、エミルさんが。[p]
 [cn]
+
+[filter name="fade" time=500]
+[clearcg id=0]
+[clearcg id=1]
 ……………。[p]
+[filter name="clear" time=500]
+
+
+[if_alive unit=2]
+
+[drawcg id=2 pos=4 state=1]
+[drawcg id=3 pos=3 dir="right"]
 #エミル
 [voice ref="050459"]
 うー……ん。[p]
-
-[if_alive unit=1]
 #メイジー
 [voice ref="050460"]
 大丈夫？　わっ、すごい熱。[p]
+[drawcg id=0 pos=2 dir="right" mode="slidein"]
 #アリス
 [voice ref="050461"]
 おい、エミルの様子は。[p]
+[scale id=3 sx=-1 time=300]
 #メイジー
 [voice ref="050462"]
 姉さん！[n]
@@ -88,11 +120,18 @@
 [voice ref="050465"]
 薬ならもう飲ませたわよ。[n]
 それでもまだ寝ていないと……。[p]
+
+[move id=2 x=-5 time=500]
+[wait time=500]
+[move id=2 x=-5 time=500]
 #エミル
 [voice ref="050466"]
 アリスさん……、ごめんなさい。[n]
 薬、すぐ作るから……[n]
 げほっ、げほっ！[p]
+
+[changecg id=0 state=2]
+[move id=0 x=-10 time=500]
 #アリス
 [voice ref="050467"]
 ちっ、うつるだろうが、しゃべるんじゃねえ……。[n]
@@ -114,10 +153,32 @@
 #アリス
 [voice ref="050473"]
 うるさい！　さっさと行くぞ！！[p]
+
+[scale id=0 sx=-1 time=300]
+[move id=0 x=-100 time=800]
+
+[move id=3 x=-20 time=500]
 #メイジー
 [voice ref="050474"]
 ね、姉さん……。[p]
+
+[hide_message]
+[scale id=3 sx=-1 time=300]
+[wait time=800]
+[scale id=3 sx=-1 time=300]
+[move id=3 x=-100 time=800]
+
+[clearcg id=0]
+[clearcg id=3]
+
 [else]
+
+[drawcg id=2 pos=4 state=1]
+[drawcg id=1 pos=3 dir="right"]
+#エミル
+[voice ref="050459"]
+うー……ん。[p]
+[drawcg id=0 pos=2 dir="right" mode="slidein"]
 #アリス
 [voice ref="050475"]
 おい、エミル、具合はどうだ。[p]
@@ -130,6 +191,7 @@
 今朝研究室で倒れていまして、すごい熱で……。[n]
 当分は安静にしていないと。[p]
 #アリス
+[changecg id=0 state=2]
 [voice ref="050478"]
 ふん、情けないやつだ。[n]
 いいか、期限は延ばさんからな。[p]
@@ -144,16 +206,39 @@
 させまいとどっちでもいいんだ。[p]
 [voice ref="050482"]
 チシャ、行くぞ。[p]
+[scale id=0 sx=-1 time=200]
+[move id=0 x=-20 time=300]
+[scale id=1 sx=-1 time=300]
+[move id=1 x=-10 time=300]
 #チシャ
 [voice ref="050483"]
 あ、アリス様……。[p]
+[scale id=0 sx=-1 time=300]
 #アリス
 [voice ref="050484"]
 なんか文句があるのか？[p]
 #チシャ
 [voice ref="050485"]
 い、いえ……、すいません。[p]
+[hide_message]
+[scale id=0 sx=-1 time=300]
+[move id=0 x=-100 time=800]
+[se ref="155"]
+
+[scale id=1 sx=-1 time=300]
+[move id=1 y=-10 time=200]
+[move id=1 y=10 time=200]
+[wait time=200]
+[scale id=1 sx=-1 time=300]
+[move id=1 x=-100 time=800]
+[se ref="155"]
+
+[clearcg id=0]
+[clearcg id=1]
+
 [endif]
+
+[show_message]
 [cn]
 アリスたちが出ていき、部屋は途端に静かになった。[p]
 #エミル
@@ -166,11 +251,20 @@
 あとちょっと……[n]
 あと一日、それだけあればできそうなんだ……。[p]
 [cn]
+
+[filter name="fade" time=500]
+[clearcg id=2]
+[drawbg ref="1002m"]
 ……………。[p]
+[filter name="clear" time=500]
+
+[drawcg id=0 pos=4]
+[drawcg id=1 pos=2 dir="right"]
 #チシャ
 [voice ref="050489"]
 アリス様。[n]
 一日くらい伸ばしてあげてもよかったんじゃないですか？[p]
+[changecg id=0 state=2]
 #アリス
 [voice ref="050490"]
 できなかったらそれまでだ。決めたことだ。[n]
@@ -178,10 +272,12 @@
 #チシャ
 [voice ref="050491"]
 アリス様……。[p]
+[changecg id=0 state=0]
 #アリス
 [voice ref="050492"]
 ああそうだ。[n]
 おい！　クロ！[p]
+[drawcg id=4 pos=1 mode="slidein" dir="right"]
 #クロ
 [voice ref="050493"]
 はっ、アリス様。[p]
@@ -192,7 +288,19 @@
 #クロ
 [voice ref="050495"]
 はあ、何をお買いになられるのですか。[p]
+[changecg id=0 state=1]
 #アリス
 [voice ref="050496"]
 まあちょっとな……[n]
 クフフフフフッ。[p]
+
+[hide_message]
+[filter name="fade" time=500]
+[clearcg id=0]
+[clearcg id=1]
+[clearcg id=4]
+[clearbg]
+[filter name="clear" time=500]
+
+[stopbgm]
+[sys_memset index=514 value="1"]

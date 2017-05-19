@@ -1,14 +1,31 @@
-;script 711
-
-
+;s0710
 ;場面11戦闘後　勝利
-[loadcg id=0 ref="000_cv_aliceA"]
-[drawbg ref="1011"]
-[bgm ref="018_event3"]
-[drawcg id=0 pos="center"]
 
+[field_area_hilight id=76]
+[wait time=200]
+
+[filter name="fade" time=500]
+[drawbg ref="Event/704"]
+[bgm ref="013_lily"]
+[filter name="clear" time=500]
+
+[show_message]
 [cn]
 両腕を失ったゾンビリリィが地面に突っ伏す。[p]
 #アリス
 よし！　今回はこれで十分だ！！[n]
 撤退して回復するぞ！！[p]
+
+[hide_message]
+[filter name="fade" time=500]
+[clearbg]
+[filter name="clear" time=500]
+
+[stopbgm]
+[sys_memset index=710 value="1"]
+
+;ゾンビリリィ頭　始動
+[sys_memset index=10110 value="1"]
+
+;リリィ領キープ
+[change_area_owner area=76 owner=6]

@@ -15,6 +15,8 @@ namespace ProjectWitch.Menu
         private Text mSoldier = null;
         [SerializeField]
         private Text mHP = null;
+        [SerializeField]
+        private GameObject mLvUpIcon = null;
 
         [Space(1)]
         [SerializeField]
@@ -53,7 +55,9 @@ namespace ProjectWitch.Menu
         // Use this for initialization
         void Start()
         {
-
+            var game = Game.GetInstance();
+            if (game.GameData.Unit[UnitID].CanDoLevelUp()) mLvUpIcon.SetActive(true);
+            else mLvUpIcon.SetActive(false);
         }
 
         // Update is called once per frame
@@ -75,7 +79,10 @@ namespace ProjectWitch.Menu
             SetRace(unit);
             SetSoldierNum(unit);
             SetHP(unit);
-
+            
+            //レベルアップアイコンをセット
+            if (game.GameData.Unit[UnitID].CanDoLevelUp()) mLvUpIcon.SetActive(true);
+            else mLvUpIcon.SetActive(false);
 
             yield return new WaitForSeconds(0.1f);
 

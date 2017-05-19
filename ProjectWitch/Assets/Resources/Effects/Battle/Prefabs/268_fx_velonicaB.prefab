@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4000014079782466}
   - component: {fileID: 114000012040324810}
   - component: {fileID: 95602763242400688}
-  - component: {fileID: 114177435889682204}
+  - component: {fileID: 114721568175936992}
   m_Layer: 9
   m_Name: 268_fx_velonicaB
   m_TagString: Untagged
@@ -431,7 +431,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
---- !u!114 &114177435889682204
+--- !u!114 &114721568175936992
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -439,18 +439,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1000011003299922}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d1e631c3b9947b54c823c6853a05529c, type: 3}
+  m_Script: {fileID: 11500000, guid: 2671f59bd20713447b039517450fafa4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playOnStart: 1
-  _cueName: 117_fx_velonicaB
-  _cueSheet: SE
-  _use3dPositioning: 0
-  _loop: 0
-  _volume: 0.5
-  _pitch: 0
-  _androidUseLowLatencyVoicePool: 0
-  need_to_player_update_all: 1
+  mCueName: 117_fx_velonicaB
+  mPlayOnStart: 1
 --- !u!198 &198000012302927866
 ParticleSystem:
   m_ObjectHideFlags: 1

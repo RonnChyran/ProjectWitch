@@ -163,19 +163,21 @@ namespace ProjectWitch.Talk.WorkSpace
 			//背景を表示
 			vm.AddCommandDelegater(
 				"SetBackground",
-				new CommandDelegater(false, 2, delegate(object[] arguments){
+				new CommandDelegater(false, 3, delegate(object[] arguments){
 					string error;
 					string name = Converter.ObjectToString(arguments[0], out error);
                     var isClear = Converter.ObjectToInt(arguments[1], out error);
+                    var time_ms = Converter.ObjectToInt(arguments[2], out error);
 					if (error != null) return error;
 
 					string path = mBackgroundPath + name;
                     if(isClear==0)
     					mBackgroundSprite.GetComponent<RawImage>().texture = Resources.Load (path) as Texture2D;
 
+                    float time=(time_ms>0) ? (time_ms / 1000.0f) : 0.0f;
+
                     if (mNeedsToFadeBackGround)
 					{
-						float time = 0.5f;
 						RawImage img = mBackgroundSprite.GetComponent<RawImage>();
 						Color prevColor = img.color;
 						mSWS.SetUpdater(new CGAnimationUpdater(time, delegate(float progress) {
@@ -406,6 +408,14 @@ namespace ProjectWitch.Talk.WorkSpace
                                     image.color = new Color(cp.r, cp.g, cp.b, (1.0f - progress) * cp.a);
                                     if (progress > 0.99)
                                         mCGLayer.HideStandCG(id, out error);
+                                });
+                            }
+                            break;
+                        case "none":
+                            {
+                                mCGLayer.HideStandCG(id, out error);
+                                updater = new CGAnimationUpdater(0.0f, delegate (float progress)
+                                {
                                 });
                             }
                             break;

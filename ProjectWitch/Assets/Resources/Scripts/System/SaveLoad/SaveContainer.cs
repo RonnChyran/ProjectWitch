@@ -12,6 +12,7 @@ namespace ProjectWitch
         {
             var game = Game.GetInstance();
             game.GameData.Save(mFileIndex);
+            game.SystemData.Save();
 
             Reset();
         }

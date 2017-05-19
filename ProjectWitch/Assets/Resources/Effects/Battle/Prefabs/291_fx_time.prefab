@@ -88,6 +88,7 @@ GameObject:
   - component: {fileID: 212000011644614916}
   - component: {fileID: 95000012350645360}
   - component: {fileID: 114000013531879614}
+  - component: {fileID: 114915104071384368}
   m_Layer: 0
   m_Name: 291_fx_time
   m_TagString: Untagged
@@ -229,6 +230,19 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
+--- !u!114 &114915104071384368
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000012787428550}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2671f59bd20713447b039517450fafa4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mCueName: 134_fx_time
+  mPlayOnStart: 1
 --- !u!198 &198000012504624312
 ParticleSystem:
   m_ObjectHideFlags: 1

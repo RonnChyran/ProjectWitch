@@ -1,15 +1,30 @@
-﻿;script 703
+﻿;s0703
+;script nikai
+;direction yuichi
 
-[loadcg id=0 ref="000_cv_aliceA"]
-[loadcg id=1 ref="006_cv_lilyA"]
-[drawbg ref="1010"]
-[bgm ref="018_event3"]
-[drawcg id=0 pos="right"]
-[drawcg id=1 pos="left"]
+[field_area_hilight id=76]
+[wait time=200]
 
+;load
+[loadcg id=0 ref="alice"]
+[loadcg id=1 ref="lily"]
+[loadcg id=2 ref="kuro"]
+
+;trans
+[filter name="fade" time=500]
+[drawbg ref="1010m"]
+[bgm ref="005_battle2"]
+[filter name="clear" time=500]
+
+[drawcg id=0 pos=2 dir="right"]
+[drawcg id=2 pos=1 dir="right"]
+[drawcg id=1 pos=5]
 ;魔女の沼戦闘前
+
+[show_message]
 #アリス
 てめえがキモイゾンビたちの親玉か。[p]
+[changecg id=0 state=1]
 クフフ……なるほど、[n]
 「らしい」見た目してるじゃねえか。[p]
 #リリィ
@@ -21,3 +36,14 @@
 ふん！　その減らず口、すぐに聞けなくしてやるよ！[p]
 さあゾンビたち、そこの魔女をやっちまいな！！[p]
 
+[hide_message]
+[filter name="fade" time=500]
+[clearbg]
+[clearcg id=0]
+[clearcg id=1]
+[clearcg id=2]
+[filter name="clear" time=500]
+
+[battle_bgm ref="005_battle2"]
+[stopbgm]
+[sys_memset index=703 value="1"]

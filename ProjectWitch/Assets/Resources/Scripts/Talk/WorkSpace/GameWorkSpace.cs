@@ -271,17 +271,12 @@ namespace ProjectWitch.Talk.WorkSpace
 		{
 			error = null;
             var game = Game.GetInstance();
-            var groupID = game.GameData.Territory[0].GroupList[0];
-            var unitList = game.GameData.Group[groupID].UnitList;
+            var territory = game.GameData.Territory[0];
 
             foreach (var unitID in unitIDs)
             {
-                //すでに雇っていた場合は無効にする
-                if (unitList.Contains(unitID))
-                    continue;
-
                 //ユニットを自領地に含める
-                unitList.Add(unitID);
+                territory.AddUnit(unitID);
             }
 
         }

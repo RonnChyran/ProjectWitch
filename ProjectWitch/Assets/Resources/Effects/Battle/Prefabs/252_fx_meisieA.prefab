@@ -224,7 +224,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4000012617879604}
   - component: {fileID: 114000013724560634}
-  - component: {fileID: 114824853153730158}
+  - component: {fileID: 114906669946748488}
   m_Layer: 9
   m_Name: 252_fx_meisieA
   m_TagString: Untagged
@@ -1729,7 +1729,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
---- !u!114 &114824853153730158
+--- !u!114 &114906669946748488
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -1737,18 +1737,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1000010843779684}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d1e631c3b9947b54c823c6853a05529c, type: 3}
+  m_Script: {fileID: 11500000, guid: 2671f59bd20713447b039517450fafa4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playOnStart: 1
-  _cueName: 101_fx_meisieA
-  _cueSheet: SE
-  _use3dPositioning: 0
-  _loop: 0
-  _volume: 0.5
-  _pitch: 0
-  _androidUseLowLatencyVoicePool: 0
-  need_to_player_update_all: 1
+  mCueName: 101_fx_meisieA
+  mPlayOnStart: 1
 --- !u!198 &198000010222529780
 ParticleSystem:
   m_ObjectHideFlags: 1

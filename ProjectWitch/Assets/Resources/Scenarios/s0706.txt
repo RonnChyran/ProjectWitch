@@ -1,14 +1,20 @@
-
-;script 707
-
+;s0707
+;script nikai
+;direction yuichi
 ;場面7後　ターンはじめ
 
-[drawbg ref="1011"]
-[bgm ref="019_event4"]
+[field_area_hilight id=76]
+[wait time=200]
 
+[filter name="fade" time=500]
+[drawbg ref="Event/704"]
+[bgm ref="013_lily"]
+[filter name="clear" time=500]
+
+[show_message]
 [cn]
-巨大な紫色の塊が、沼の上空を覆っていた。[n]
-その塊は、時折ウオオンとうなり声をあげている。[n]
+巨大な紫色の塊が、沼の上空を覆っていた。[p]
+その塊は、時折ウオオンとうなり声をあげている。[p]
 動く様子はない。[p]
 しかし、時折ふらふらと現れるゾンビを見つけると、[n]
 その巨体には似合わない速さでそのゾンビを捕食する。[p]
@@ -16,6 +22,14 @@
 #ゾンビリリィ
 ウオオオォォォン……！！！[p]
 [cn]
-とてもゾンビとは思えぬ、獣のような鳴き声が、あたりの大地を震わせた。[n]
-鳴き声とともにまき散らした瘴気が、一帯の生物を一瞬で屍へと変えてしまう。[n]
+とてもゾンビとは思えぬ、獣のような鳴き声が、あたりの大地を震わせた。[p]
+鳴き声とともにまき散らした瘴気が、一帯の生物を一瞬で屍へと変えてしまう。[p]
 魔女の沼一帯は、まさに地獄の様相だった。[p]
+
+[hide_message]
+[filter name="fade" time=500]
+[clearbg]
+[filter name="clear" time=500]
+
+[stopbgm]
+[sys_memset index=706 value="1"]

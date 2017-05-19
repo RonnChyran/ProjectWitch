@@ -1,0 +1,17 @@
+;ss0611
+;subscript
+;侵攻食い止めよう
+
+[setskin ref="skin1"]
+;[skip_enable enable=0]
+
+[loadfg id=0 ref="alice"]
+
+[show_message]
+[drawfg id=0]
+#アリス
+正面から乗り込んだらまた返り打ちだ。[p]
+ムカつくが、今は侵攻しない方がいいな。[p]
+
+[hide_message]
+[battle_disable]

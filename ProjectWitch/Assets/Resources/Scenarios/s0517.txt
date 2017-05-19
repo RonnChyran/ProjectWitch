@@ -2,19 +2,43 @@
 ;script: nikai
 ;timing:　場面18戦闘後、勝利、敗北にかかわらず
 
+[field_area_hilight id=48]
+[wait time=200]
+
+[loadcg id=0 ref="alice"]
+[loadcg id=1 ref="kuro"]
+[loadcg id=2 ref="emil"]
+[loadcg id=3 ref="ema"]
+[loadcg id=4 ref="charlotte"]
+[loadcg id=5 ref="kasumi"]
+
+[filter name="fade" time=500]
+[drawbg ref="1030e"]
+[bgm ref="005_battle2"]
+[filter name="clear" time=500]
+
+[show_message]
+[drawcg id=2 pos=3 dir="right" state=1]
+[drawcg id=0 pos=2 dir="right"]
+[drawcg id=1 pos=1 dir="right"]
+[drawcg id=3 pos=5 state=1]
 #暴走エマ
 [voice ref="050521"]
 ウォォォォ……ンンッ！！！[p]
+[changecg id=0 state=2]
 #アリス
 [voice ref="050522"]
 よしっ！　いまだ！！[p]
 [cn]
 アリスが命じると待ち構えていた伏兵がエマの上空から捕獲用の網を放った。[p]
+[filter name="color" color="FFFFFF" time=800]
 #暴走エマ
 [voice ref="050523"]
 ウオオオォォォ……。[p]
 [cn]
+[filter name="clear" time=500]
 網にかかったエマは見事にその場で身動きが取れなくなった。[p]
+[changecg id=0 state=1]
 #アリス
 [voice ref="050524"]
 クフフッ！！ 案外うまくいくもんだな。[p]
@@ -25,6 +49,7 @@
 #エミル
 [voice ref="050527"]
 姉さん……！[p]
+[changecg id=0 state=2]
 #アリス
 [voice ref="050528"]
 エミル、薬をかせ。[p]
@@ -32,12 +57,28 @@
 [voice ref="050529"]
 はっ、ハイ！[p]
 [cn]
+
+[move id=0 x=30 time=300]
+[wait time=200]
+[move id=0 y=5 time=100]
+[move id=0 y=-5 time=100]
+[move id=0 y=5 time=100]
+[move id=0 y=-5 time=100]
+[scale id=0 sx=-1 time=300]
+[move id=0 x=-30 time=300]
+[scale id=0 sx=-1 time=300]
+
 エミルから薬を受け取ったアリスは[n]
 じたばたともがくエマを押さえつけ、薬を飲ませた。[p]
+[filter name="flush" color="FF0000" time=300]
+[move id=3 x=5 time=300]
+[wait time=300]
+[move id=3 x=5 time=300]
 #エマ
 [voice ref="050530"]
 グッ……ガァ！！[n]
 ンっ、ング……。[p]
+[move id=3 y=-10 time=100]
 [cn]
 薬を飲んだエマは力を失い、その場に倒れた。[p]
 #エミル
@@ -51,9 +92,25 @@
 [voice ref="050533"]
 はっ、承知しました。[p]
 [cn]
+[stopbgm]
+
+[filter name="fade" time=500]
 アリスたちはその場で野営の支度をし、[n]
 １時間が経った[p]
 しかしエマの様子は一向に変わらずさらに１時間が経過した。[p]
+
+[drawbg ref="1030n"]
+[clearcg id=0]
+[clearcg id=1]
+[clearcg id=2]
+[clearcg id=3]
+[bgm ref="017_event2"]
+[filter name="clear" time=500]
+
+[drawcg id=2 pos=3 dir="right" state=1]
+[drawcg id=0 pos=2 dir="right"]
+[drawcg id=1 pos=1 dir="right"]
+[drawcg id=3 pos=5 state=1]
 #アリス
 [voice ref="050534"]
 それで、いまだに変化なしと。[p]
@@ -65,6 +122,7 @@
 [voice ref="050536"]
 ……このまま首を切り落としちまうか。[n]
 せっかく相手が動けない好機だからな。[p]
+[scale id=2 sx=-1 time=100]
 #エミル
 [voice ref="050537"]
 まっ、待ってください！！[n]
@@ -92,6 +150,8 @@
 殺したついでにロレーヌの魔女の城も占領しに行くぞ[p]
 [voice ref="050545"]
 忍び込む手間が省けたな。[p]
+[move id=0 x=30 time=800]
+[scale id=2 sx=-1 time=100]
 #エミル
 [voice ref="050546"]
 待ってください！！[n]
@@ -104,15 +164,18 @@
 #エミル
 [voice ref="050548"]
 いやです！！　離しません！！[p]
+[changecg id=0 state=2]
 #アリス
 [voice ref="050549"]
 離せと言っているんだ、人間風情がッッッ！！！！！[p]
+[move id=2 x=-10 time=100]
 #エミル
 [voice ref="050550"]
 ひっ！？[p]
 [cn]
 聞いたこともないようなアリスの怒号に[n]
 エミルをはじめ、周りの部下たちはすくみ上った。[p]
+[scale id=0 sx=-1 time=300]
 #アリス
 [voice ref="050551"]
 お前たち人間が魔女になろうなんて思いあがるな！！[p]
@@ -160,6 +223,9 @@
 #エミル
 [voice ref="050567"]
 へっ、兵器って……。[p]
+[scale id=0 sx=-1 time=300]
+[move id=0 x=10 time=500]
+[changecg id=0 state=0]
 #アリス
 [voice ref="050568"]
 ババァの書庫を調べさせた。[n]
@@ -183,6 +249,23 @@
 [voice ref="050574"]
 エミル！[n]
 ああ……、どこに行ったのかと思えば。[p]
+[bgm ref="011_charlotte"]
+[changecg id=0 state=0]
+
+[scale id=2 sx=-1 time=200]
+[move id=2 x=-35 time=200]
+[scale id=2 sx=-1 time=200]
+
+[scale id=0 sx=-1 time=200]
+[move id=0 x=-45 time=200]
+[scale id=0 sx=-1 time=200]
+
+[move id=1 x=25 time=200]
+[move id=3 x=10 time=200]
+
+[drawcg id=4 mode="slidein" posx=10 layer="front"]
+[drawcg id=5 mode="slidein" posx=25 layer="front"]
+
 #クロ
 [voice ref="050575"]
 アリス様、お下がりください。[p]
@@ -203,6 +286,7 @@
 連絡なんて取れるわけねえだろ……。[p]
 [voice ref="050582"]
 この魔女も相当にやばい奴だな…。[p]
+[changecg id=4 state=1]
 #シャルロッテ
 [voice ref="050583"]
 そうですわ。[n]
@@ -225,6 +309,7 @@
 そっ、そんなことないですわ！[p]
 [voice ref="050589"]
 すごい薬ですもの、エミルの才能がなくてはできないことですわ。[p]
+[changecg id=0 state=0]
 #アリス
 [voice ref="050590"]
 はあ……、こいつが甘やかすから。[n]
@@ -243,6 +328,7 @@
 #アリス
 [voice ref="050595"]
 よし、さてと……。[p]
+[changecg id=4 state=0]
 #シャルロッテ
 [voice ref="050596"]
 あら、それは？[p]
@@ -261,6 +347,17 @@
 #アリス
 [voice ref="050601"]
 ほんと警戒心のない奴だなぁ……。[p]
+
+[move id=0 x=30 time=300]
+[wait time=200]
+[move id=0 y=5 time=100]
+[move id=0 y=-5 time=100]
+[move id=0 y=5 time=100]
+[move id=0 y=-5 time=100]
+[scale id=0 sx=-1 time=300]
+[move id=0 x=-30 time=300]
+[scale id=0 sx=-1 time=300]
+
 [cn]
 シャルロッテはアリスから受け取った液体を飲み干した。[p]
 #アリス
@@ -269,6 +366,17 @@
 #シャルロッテ
 [voice ref="050603"]
 では……、ウィンドカッター！[p]
+
+[se ref="130_fx_shockwave"]
+[filter name="flush" color="22EF22" time=100]
+[filter name="flush" color="22EF22" time=100]
+[filter name="flush" color="22EF22" time=100]
+
+[changecg id=0 state=2]
+[move id=0 y=-10 time=100]
+[move id=0 y=10 time=100]
+[move id=0 y=-10 time=100]
+[move id=0 y=10 time=100]
 #アリス
 [voice ref="050604"]
 わっ！　バカ！[n]
@@ -276,9 +384,11 @@
 #シャルロッテ
 [voice ref="050605"]
 あら、ごめんなさい……。[p]
+[changecg id=4 state=1]
 [voice ref="050606"]
 きゃっ、なんですの？[n]
 いきなり大きなドラゴンが……。[p]
+[changecg id=0 state=0]
 #アリス
 [voice ref="050607"]
 それが仮想の敵だ。[n]
@@ -287,21 +397,40 @@
 [voice ref="050609"]
 無限に出てくるから、やめるときは、[n]
 「土にかえれ、モンストルシャルマン！」っていうんだ。[p]
+[changecg id=4 state=0]
 #シャルロッテ
 [voice ref="050610"]
-ゴールドシャワー！　きゃっ！　[p]
+ゴールドシャワー！　
+[se ref="110_fx_charlotteA"]
+[filter name="flush" color="FFFF00" time=100]
+[filter name="flush" color="FFFF00" time=100]
+きゃっ！　[p]
 [voice ref="050611"]
 一体倒しましたわ！[n]
+[scale id=4 sx=-1 time=300]
 ああっ、後ろからもう一体！[p]
 [voice ref="050612"]
 忙しいですわね！　さあ、来なさい！！[p]
+[changecg id=0 state=2]
 #アリス
 [voice ref="050613"]
 私の話聞けよ！！[p]
+[changecg id=0 state=0]
 [voice ref="050614"]
 ……ちぇっ、まあいいや。[p]
 [voice ref="050615"]
 これをこいつに飲ませてっと。[p]
+
+[move id=0 x=50 time=300]
+[wait time=200]
+[move id=0 y=5 time=100]
+[move id=0 y=-5 time=100]
+[move id=0 y=5 time=100]
+[move id=0 y=-5 time=100]
+[scale id=0 sx=-1 time=300]
+[move id=0 x=-50 time=300]
+[scale id=0 sx=-1 time=300]
+
 [cn]
 アリスはエマに近づき「モンスターＧＯ」を彼女に飲ませた。[p]
 #エミル
@@ -338,7 +467,19 @@
 とりあえず、ここは危ない。[n]
 全員撤退だ。[p]
 [cn]
+
+[filter name="fade" time=500]
 …………………。[p]
+[clearcg id=0]
+[clearcg id=1]
+[clearcg id=2]
+[clearcg id=3]
+[clearcg id=4]
+[clearcg id=5]
+[drawbg ref="Event/706A"]
+[bgm ref="005_battle2"]
+[filter name="clear" time=500]
+
 数時間後。[p]
 誰もいなくなった砦の真ん中でエマが目を覚ました。[p]
 #エマ
@@ -377,6 +518,7 @@
 [cn]
 エマの前に例の仮想敵が姿を現した。[p]
 無数のモンスターたちがエマの脳内に投影されていた[p]
+[drawbg ref="Event/706B"]
 #アリス
 [voice ref="050632"]
 クフフッ！　始まったか。[p]
@@ -385,9 +527,14 @@
 #エミル
 [voice ref="050634"]
 姉さん……。[p]
+
+[stopbgm]
 [cn]
-……………。[p]
+[filter name="fade" time=500]
 エマの暴走は日が明けるまで続いた。[p]
+[drawbg ref="Event/702"]
+[filter name="color" color="FFFFFF" time=500]
+[bgm ref="003_alice2"]
 #クロ
 [voice ref="050635"]
 アリス様。 朝でございます。[p]
@@ -400,6 +547,7 @@
 [voice ref="050638"]
 ……あ、ああそっか。[n]
 あのまま寝ちまったのか。[p]
+[filter name="clear" time=500]
 #クロ
 [voice ref="050639"]
 暴走がおさまったようでございます。[p]
@@ -413,9 +561,25 @@
 [voice ref="050642"]
 さあ、アリス様もこちらへ。[p]
 [cn]
+
+[filter name="fade" time=500]
+……………。[p]
+[drawbg ref="1030m"]
+[filter name="clear" time=500]
+[bgm ref="010_charlotte"]
+
 エマは砦の中央で倒れていた。[p]
 魔力はすっかり切れたようで、[n]
 以前までの圧力のようなものはなくなっていた。[p]
+
+[move id=3 y=10 time=0]
+[drawcg id=2 posx=0 dir="right" state=1]
+[drawcg id=3 pos=4]
+[drawcg id=4 pos=5]
+[drawcg id=1 posx=-45 dir="right"]
+[drawcg id=0 posx=-30 dir="right"]
+[drawcg id=5 posx=-10 dir="right"]
+
 #アリス
 [voice ref="050643"]
 オイ、そいつ……。[p]
@@ -449,29 +613,74 @@
 [voice ref="050655"]
 ねえさん……うぇえ……、ごめんなさい……。[n]
 ごめん……。[p]
+[move id=3 y=10 time=100]
+[move id=3 y=-10 time=100]
+[move id=3 y=10 time=100]
+[move id=3 y=-10 time=100]
 #エマ
 [voice ref="050656"]
 あっ、エミル！[n]
 どうしたの、ねえ！[p]
 [voice ref="050657"]
 わっ、すごい熱じゃない！！[p]
+[changecg id=4 state=1]
 #シャルロッテ
 [voice ref="050658"]
 あっ、本当ですわ！[p]
+[changecg id=4 state=0]
 [voice ref="050659"]
 アリスさん、エミルをお城まで運びますから、[n]
 ついてきてくださる？[p]
 [voice ref="050660"]
 お礼もしたいですから。[p]
+[move id=4 x=-40 time=300]
+[scale id=4 sx=-1 time=300]
+[changecg id=0 state=2]
 #アリス
 [voice ref="050661"]
 あっ、オイ勝手に……。[n]
 ちょっと、ひっぱんなっての……、オイッ！！[p]
 [cn]
+[move id=4 x=10 time=300]
+[move id=0 x=10 time=300]
+[move id=4 x=10 time=300]
+[move id=0 x=10 time=300]
+[move id=4 x=10 time=300]
+[move id=0 x=10 time=300]
+[move id=4 x=10 time=300]
+[move id=0 x=10 time=300]
+[move id=4 x=10 time=300]
+[move id=0 x=10 time=300]
+[move id=4 x=10 time=300]
+[move id=0 x=10 time=300]
+
+[filter name="fade" time=500]
 シャルロッテに（無理やり）連れられて、アリスたちはロレーヌの城へ向かった。[p]
-……………。[p]
-;場面転換
+[hide_message]
+[clearcg id=0]
+[clearcg id=1]
+[clearcg id=2]
+[clearcg id=3]
+[clearcg id=4]
+[clearcg id=5]
+[clearbg]
+[filter name="clear" time=500]
+[bgm ref="002_alice1"]
+
+[field_area_hilight id=49]
+[wait time=200]
+
+[filter name="fade" time=500]
+[drawbg ref="1043m"]
+[bgm ref="011_charlotte"]
+[filter name="clear" time=500]
+
+[show_message]
 ロレーヌの城。[p]
+[drawcg id=0 pos=2 dir="right"]
+[drawcg id=1 pos=1 dir="right"]
+[drawcg id=5 pos=4]
+[drawcg id=4 posx=40]
 #カスミ
 [voice ref="050662"]
 どうぞっす。[n]
@@ -496,6 +705,7 @@
 土地の契約書が２枚、[n]
 政権譲渡書類が３枚、[n]
 債務の譲渡書類１０枚と……。[p]
+[changecg id=0 state=2]
 #アリス
 [voice ref="050670"]
 まてまてまて！[n]
@@ -522,9 +732,19 @@
 [voice ref="050677"]
 くそぉぉぉ……。[p]
 [cn]
+
+[filter name="fade" time=500]
 ……………。[p]
+[clearcg id=0]
+[clearcg id=1]
+[clearcg id=4]
+[clearcg id=5]
+[filter name="clear" time=500]
+
 ;場面転換
 ロレーヌ城、姉弟の部屋。[p]
+[drawcg id=2 pos=5]
+[drawcg id=3 pos=4 dir="right"]
 #エミル
 [voice ref="050678"]
 うっ、ううん……。[p]
@@ -557,15 +777,22 @@
 #アリス
 [voice ref="050687"]
 その通りだ。[p]
+
+[se ref="155"]
+[drawcg id=0 pos=2 dir="right" mode="slidein"]
+
+[scale id=3 sx=-1 time=300]
 #エミル
 [voice ref="050688"]
 アリスさん！[p]
 #アリス
+[changecg id=0 state=2]
 [voice ref="050689"]
 ちっ、シャルロッテの野郎[p]
 [voice ref="050690"]
 めんどくさいことやらせやがって……。[n]
 あー、疲れたぜ。[p]
+[changecg id=0 state=0]
 [voice ref="050691"]
 おい、エマとか言ったか。[n]
 ちょっと確認したいことがあるんだ。[p]
@@ -580,8 +807,15 @@
 え、はい……。[n]
 ふぁ、ファイヤーボール！[p]
 [cn]
+
+[se ref="132_fx_fireball"]
+[filter name="flush" color="FF0000" time=100]
+[filter name="flush" color="FF0000" time=100]
+[filter name="flush" color="FF0000" time=100]
+
 すると、魔法を使えなくなったはずのエマの手から火球が勢いよく飛び出し、[n]
 アリスめがけて飛んで行った！[p]
+[filter name="flush" color="FFFFFF" time=300]
 #アリス
 [voice ref="050695"]
 ふんっ！[p]
@@ -605,6 +839,7 @@
 #アリス
 [voice ref="050701"]
 定期的に魔力を発散してやれば暴走することはない。[p]
+[changecg id=0 state=1]
 [voice ref="050702"]
 クフフフフッ！　[n]
 安心しろ、私のところに来れば死ぬまで敵軍と戦わせてやるよ。[p]
@@ -612,6 +847,7 @@
 [voice ref="050703"]
 ま、魔法……。[n]
 私本当に魔女に……、フフフフ。[p]
+[changecg id=0 state=0]
 #アリス
 [voice ref="050704"]
 ……一応言っておくが、今度暴走したときはマジで殺すからな？[p]
@@ -623,13 +859,18 @@
 [voice ref="050706"]
 はあ、本当にわかってるんだか。[p]
 [voice ref="050707"]
-じゃあ、私は行くから後でシャルロッテのやつと一緒に私の屋敷へ来い。[p]
+じゃあ、私は行くから、[n]
+後でシャルロッテのやつと一緒に私の屋敷へ来い。[p]
 [voice ref="050708"]
 これからはそこで暮らしてもらうからな。[p]
 #エマ・エミル
 [voice ref="050709"]
 はっ、はい！[p]
-;アリス出ていく
+
+[se ref="155"]
+[scale id=0 sx=-1 time=300]
+[move id=0 x=-50 time=500]
+
 #エミル
 [voice ref="050710"]
 （アリスさんって、やっぱりいい人なのかな……。）[p]
@@ -637,3 +878,26 @@
 ロレーヌ一派。[p]
 魔女の流派の中で最も権威のある名門はこうして滅亡した[p]
 暖炉の上の帽子をついにシャルロッテが被ることはなく、帽子はその役目を終えたのだった。[p]
+
+[hide_message]
+[filter name="fade" time=500]
+[clearbg]
+[clearcg id=0]
+[clearcg id=2]
+[clearcg id=3]
+[filter name="clear" time=500]
+
+[stopbgm]
+[sys_memset index=517 value="1"]
+
+;ユニットを加入
+[unit_employ unit=13]
+[unit_employ unit=14]
+[unit_employ unit=15]
+[unit_employ unit=16]
+[unit_heal unit=13]
+[unit_heal unit=14]
+[unit_heal unit=15]
+[unit_heal unit=16]
+
+[change_area_owner area=49 owner=0]

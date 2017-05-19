@@ -1,12 +1,24 @@
-;script 710
-
-
+;s0710
 ;場面10後　魔女の沼戦闘前
-[loadcg id=0 ref="000_cv_aliceA"]
-[drawbg ref="1011"]
-[bgm ref="018_event3"]
-[drawcg id=0 pos="right"]
 
+[field_area_hilight id=76]
+[wait time=200]
+
+[filter name="fade" time=500]
+[drawbg ref="Event/704"]
+[bgm ref="013_lily"]
+[filter name="clear" time=500]
+
+[show_message]
 #アリス
 よし、次は右腕だな。[p]
 お前ら！　気合い入れて行けよーー！！！[p]
+
+[hide_message]
+[filter name="fade" time=500]
+[clearbg]
+[filter name="clear" time=500]
+
+[stopbgm]
+[sys_memset index=709 value="1"]
+[battle_bgm ref="013_lily"]

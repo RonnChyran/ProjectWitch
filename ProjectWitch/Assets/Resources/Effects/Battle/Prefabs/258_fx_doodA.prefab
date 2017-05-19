@@ -9,6 +9,7 @@ GameObject:
   m_Component:
   - component: {fileID: 443372}
   - component: {fileID: 114000013603987222}
+  - component: {fileID: 114817876688356418}
   m_Layer: 9
   m_Name: 258_fx_doodA
   m_TagString: Untagged
@@ -2805,3 +2806,16 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
+--- !u!114 &114817876688356418
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 124736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2671f59bd20713447b039517450fafa4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mCueName: 107_fx_doodA
+  mPlayOnStart: 1

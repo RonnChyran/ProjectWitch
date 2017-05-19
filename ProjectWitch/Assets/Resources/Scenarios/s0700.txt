@@ -2,32 +2,41 @@
 ;script: nikai
 ;timing：メイジー領占領後、翌ターンはじめイベント
 
+[field_area_hilight id=76]
+[wait time=200]
+
 ;リソースロード
-[loadcg id=0 ref="006_cv_lilyA"]
-[loadcg id=1 ref="030_cv_migA"]
-[loadcg id=2 ref="044_cv_zombie"]
-[drawbg ref="1009"]
+[loadcg id=0 ref="lily"]
+[loadcg id=1 ref="mig"]
+
+[filter name="fade" time=500]
+[drawbg ref="1053m"]
 [bgm ref="013_lily"]
-[drawcg id=0 pos="center"]
-[drawcg id=1 pos="left"]
+[filter name="clear" time=500]
 
 [cn]
+[drawcg id=0 pos=4]
+[drawcg id=1 pos=2 dir="right"]
+[show_message]
 リリィは地下研究室で今日もカチャカチャと音を立て、なにやら怪しい実験を行っていた。[p]
-[moveto id=1 x=20 y=50 time=400]
+[moveto id=1 x=20 time=400]
 
 研究室の棚には、人間の手のはく製や目玉のホルマリン漬けなど、[n]
 不気味なものが所狭しと並んでいる。[p]
-[moveto id=1 x=80 y=50 time=400]
+[moveto id=1 x=80 time=400]
 
 リリィは部屋の中央に置かれた丸テーブルの上で不気味な液体を混ぜ合わせていた。[p]
-[moveto id=1 x=20 y=50 time=400]
+[scale id=1 sx=-1 time=300]
+[moveto id=1 x=20 time=400]
 
 その液体からは紫色の煙が立ち上り、部屋に腐った卵のようなにおいを充満させている。[p]
-[moveto id=1 x=80 y=50 time=400]
+[scale id=1 sx=-1 time=300]
+[moveto id=1 x=80 time=400]
 
 リリィの側では弟子のミグがせっせと動き回って掃除に[n]
 いそしんでいた。[p]
-[moveto id=1 x=20 y=50 time=400]
+[scale id=1 sx=-1 time=300]
+[moveto id=1 x=20 time=400]
 #ミグ
 えーっと……これはこっちで……これは？[p]
 #リリィ
@@ -42,9 +51,10 @@
 [cn]
 ミグは慌てて伸ばしていた手をひっこめ勢い余ってしりもちをついた。[p]
 そこへ勢いよく扉を開き一体のゾンビが中に入って来た。[p]
-[drawcg id=2 pos="right"]
 #斥候ゾンビ
 ……ア、ルジ、さマ……タイヘン…デす…。[p]
+[scale id=1 sx=-1 time=300]
+[scale id=0 sx=-1 time=300]
 #リリィ
 なんだい騒がしいね……[n]
 夕飯にはまだ早いんじゃないかい？[p]
@@ -71,6 +81,7 @@
 私の邪魔をした報い、受けてもらおうじゃないかい。[p]
 #ミグ
 ねぇ、おばあちゃん！[p]
+[scale id=0 sx=-1 time=300]
 #リリィ
 ん、なんだい？[n]
 私は忙しいんだよ。[p]
@@ -94,7 +105,17 @@
 分かったら、私の気が変わる前にさっさと支度しな。[p]
 #ミグ
 はーい！[p]
-[move id=1 x=-50 y=0 time=500]
+[move id=1 x=100 y=0 time=500]
 [clearcg id=1]
 [cn]
 そういうとミグはパタパタと足音を立てながら元気よく出て行った。[p]
+
+[hide_message]
+[filter name="fade" time=500]
+[clearbg]
+[clearcg id=0]
+[clearcg id=1]
+[filter name="clear" time=500]
+
+[stopbgm]
+[sys_memset index=700 value="1"]
