@@ -64,6 +64,7 @@ namespace ProjectWitch.Talk.WorkSpace
         [SerializeField]
         //自動遷移モードフラグ
         private bool mAutoMode;
+        public bool AutoMode { get { return mAutoMode; } private set { } }
 
         //スキップ禁止フラグ
         private bool mSkipIsEnable = true;
