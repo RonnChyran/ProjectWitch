@@ -64,6 +64,25 @@ namespace ProjectWitch.Extention
         }
     }
 
+    //Dictionary<T>の拡張
+    public static class DictionaryEX
+    {
+        public static byte[] GetBytes(this Dictionary<int,int> dict)
+        {
+            List<byte> outData = new List<byte>();
+
+            outData.AddRange(BitConverter.GetBytes(dict.Count));
+
+            foreach(var value in dict)
+            {
+                outData.AddRange(BitConverter.GetBytes(value.Key));
+                outData.AddRange(BitConverter.GetBytes(value.Value));
+            }
+
+            return outData.ToArray();
+        }
+    }
+
     //List<T>の拡張
     public static class ListEX
     {
@@ -88,6 +107,19 @@ namespace ProjectWitch.Extention
             }
 
             return outdata.ToArray();
+        }
+
+        public static byte[] GetBytes(this List<List<int>> list)
+        {
+            List<byte> outData = new List<byte>();
+
+            foreach(var item in list)
+            {
+                outData.AddRange(BitConverter.GetBytes(item.Count));
+                outData.AddRange(item.GetBytes());
+            }
+
+            return outData.ToArray();
         }
 
         public static byte[] GetBytes<T>(this List<T> list)

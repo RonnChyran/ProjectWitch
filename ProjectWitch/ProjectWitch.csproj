@@ -13,11 +13,13 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Full v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile></CompilerResponseFile>
+    <CompilerResponseFile>
+    </CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows64:19</UnityBuildTarget>
     <UnityVersion>5.5.3f1</UnityVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <LangVersion>4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -193,7 +195,19 @@
     <Compile Include="Assets\Resources\Scripts\Menu\TalkCommandHelper.cs" />
     <Compile Include="Assets\Resources\Scripts\Menu\Top\InfoBoxText.cs" />
     <Compile Include="Assets\Resources\Scripts\Menu\Top\TopMenu.cs" />
-    <Compile Include="Assets\Resources\Scripts\Menu\TownMenu\TownMenu.cs" />
+    <Compile Include="Assets\Resources\Scripts\Shop\Buy\BuyItem.cs" />
+    <Compile Include="Assets\Resources\Scripts\Shop\Buy\BuyList.cs" />
+    <Compile Include="Assets\Resources\Scripts\Shop\Buy\BuyMenu.cs" />
+    <Compile Include="Assets\Resources\Scripts\Shop\Buy\ItemInfo.cs" />
+    <Compile Include="Assets\Resources\Scripts\Shop\CurrentManaWindow.cs" />
+    <Compile Include="Assets\Resources\Scripts\Shop\MessageBox.cs" />
+    <Compile Include="Assets\Resources\Scripts\Shop\NextManaWindow.cs" />
+    <Compile Include="Assets\Resources\Scripts\Shop\Sell\SellItem.cs" />
+    <Compile Include="Assets\Resources\Scripts\Shop\Sell\SellList.cs" />
+    <Compile Include="Assets\Resources\Scripts\Shop\Sell\SellMenu.cs" />
+    <Compile Include="Assets\Resources\Scripts\Shop\Talk\TalkSystem.cs" />
+    <Compile Include="Assets\Resources\Scripts\Shop\ShopController.cs" />
+    <Compile Include="Assets\Resources\Scripts\Menu\Town\TownMenu.cs" />
     <Compile Include="Assets\Resources\Scripts\Opening_Ending\EndMovieController.cs" />
     <Compile Include="Assets\Resources\Scripts\Opening_Ending\Ending.cs" />
     <Compile Include="Assets\Resources\Scripts\Opening_Ending\Opening.cs" />
@@ -224,6 +238,7 @@
     <Compile Include="Assets\Resources\Scripts\SetBattleTester\SetUnitUI.cs" />
     <Compile Include="Assets\Resources\Scripts\SetBattleTester\UIEvent.cs" />
     <Compile Include="Assets\Resources\Scripts\SetBattleTester\UnityFileManager.cs" />
+    <Compile Include="Assets\Resources\Scripts\Shop\Top\TopMenu.cs" />
     <Compile Include="Assets\Resources\Scripts\System\Game.cs" />
     <Compile Include="Assets\Resources\Scripts\System\GameData.cs" />
     <Compile Include="Assets\Resources\Scripts\System\GoTitleWindow.cs" />
@@ -602,6 +617,7 @@
     <None Include="Assets\uREPL\Resources\uREPL\Xmls\Help.txt" />
     <None Include="Assets\uREPL\Resources\uREPL\Xmls\UnityEngineClasses.xml" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
 </Project>

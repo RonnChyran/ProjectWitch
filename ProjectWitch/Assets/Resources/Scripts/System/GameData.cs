@@ -255,6 +255,10 @@ namespace ProjectWitch
             FieldEvent = DataLoader.LoadEventData(GamePath.Data + "event_data_field");
             TownEvent = DataLoader.LoadEventData(GamePath.Data + "event_data_town");
 
+            //装備データの総量に基づき、Territroyの装備データを確保
+            Territory[0].EquipmentList = new List<List<int>>();
+            for (int i = 0; i < Equipment.Count; i++)
+                Territory[0].EquipmentList.Add(new List<int>());
         }
 
         //データをセーブファイルに書き出す
@@ -947,6 +951,7 @@ namespace ProjectWitch
     {
         public TerritoryDataFormat()
         {
+            EquipmentList = new List<List<int>>();
         }
 
         #region data_member
@@ -1037,6 +1042,11 @@ namespace ProjectWitch
         //そのターンの行動数(アクションパネルの表示用
         public int ActionCount { get; set; }
 
+        //所持している装備品と装備者のリスト
+        //Listは装備品IDに対応
+        //Dictionaryはkeyの数が所持数、valueが装備者にあたる。-1は装備者なし
+        public List<List<int>> EquipmentList { get; set; }
+
         #endregion
 
         #region method
@@ -1099,6 +1109,8 @@ namespace ProjectWitch
             outdata.AddRange(AreaList.GetBytes());
             outdata.AddRange(BitConverter.GetBytes((int)State));
             outdata.AddRange(BitConverter.GetBytes(ActionCount));
+            outdata.AddRange(BitConverter.GetBytes(EquipmentList.Count));
+            outdata.AddRange(EquipmentList.GetBytes());
 
             return outdata.ToArray();
         }
@@ -1120,6 +1132,21 @@ namespace ProjectWitch
             State = EnumConverter.ToEnum<TerritoryState>(
                         BitConverter.ToInt32(data, offset)); offset += 4;
             ActionCount = BitConverter.ToInt32(data, offset); offset += 4;
+
+            var equipmentListCount = BitConverter.ToInt32(data,offset); offset += 4;
+            EquipmentList = new List<List<int>>();
+            for(int i=0;i<equipmentListCount;i++)
+            {
+                EquipmentList.Add(new List<int>());
+
+                var listCount = BitConverter.ToInt32(data, offset); offset += 4;
+                for (int j = 0; j < listCount; j++)
+                {
+                    EquipmentList[i].Add(BitConverter.ToInt32(data, offset)); offset += 4;
+                }
+            }
+            
+
 
             return offset;
         }

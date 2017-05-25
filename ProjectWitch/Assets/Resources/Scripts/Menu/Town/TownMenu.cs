@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 namespace ProjectWitch.Menu
@@ -52,6 +53,17 @@ namespace ProjectWitch.Menu
             yield return new WaitForSeconds(0.2f);
             mTopMenu.SetBool("IsShow", true);
             yield return new WaitForSeconds(0.2f);
+
+        }
+
+        public void Click_ToolShop()
+        {
+            Closable = false;
+            SceneManager.LoadScene("ToolShop",LoadSceneMode.Additive);
+        }
+
+        public void Click_MagicShop()
+        {
 
         }
     }
