@@ -13,7 +13,8 @@ namespace ProjectWitch.Menu
         private LvUpWindow mLvUpWindow = null;
         [SerializeField]
         private SoldierEditWindow mSoldierEditWindow = null;
-
+        [SerializeField]
+        private EquipmentEditWindow mEquipmentEditWindow = null;
 
         [Space(1)]
         [Header("フォルダパス")]
@@ -123,11 +124,17 @@ namespace ProjectWitch.Menu
             mSoldierEditWindow.Show(UnitID);
         }
 
+        public void onClickEquipmentEdit()
+        {
+            mEquipmentEditWindow.StatusWindow = this;
+            mEquipmentEditWindow.Show(UnitID);
+        }
+
         private void SetState()
         {
             var game = Game.GetInstance();
             var unit = game.GameData.Unit[UnitID];
-
+ 
             //mainwindow
             mName.text = unit.Name;
             var maxLv = (unit.MaxLevel == -1) ? "∞" : unit.MaxLevel.ToString();

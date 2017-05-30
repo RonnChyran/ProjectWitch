@@ -7,10 +7,7 @@ using UnityEngine;
 
 using System.Collections.Generic;
 using System;
-
-using ProjectWitch.Talk.Compiler;
-using ProjectWitch.Talk.Command;
-using ProjectWitch.Talk.WorkSpace;
+using System.Reflection;
 
 using ProjectWitch.Extention;
 using System.Linq;
@@ -581,6 +578,37 @@ namespace ProjectWitch.Talk.WorkSpace
 					UnitEmploy(unitIds, out error);
 					return error;
 				}));
+
+            //ユニットデータの変更
+            vm.AddCommandDelegater(
+                "ChangeUnitData",
+                new CommandDelegater(false, 3, delegate (object[] arguments)
+                {
+                    string error = null;
+                    string type = "";
+
+                    int id = Converter.ObjectToInt(arguments[0], out error);
+                    if (error != null) return error;
+                    string member = Converter.ObjectToString(arguments[1], out error);
+                    if (error != null) return error;
+                    object value = Converter.AutoConvert(arguments[2], out type, out error);
+                    if (error != null) return error;
+
+                    //リフレクションを用いて、ユニットデータをセット
+                    var game = Game.GetInstance();
+                    var t = Type.GetType("ProjectWitch.UnitDataFormat");
+
+                    try
+                    {
+                        t.GetProperty(member).SetValue(game.GameData.Unit[id], value, null);
+                    }
+                    catch(TargetException)
+                    {
+                        error = "メンバの型と値の型が一致しません。値の型：" + type;
+                    }
+
+                    return error;
+                }));
 
             //戦闘データのセット
             vm.AddCommandDelegater(

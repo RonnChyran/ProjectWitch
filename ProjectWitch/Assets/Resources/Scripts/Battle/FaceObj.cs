@@ -159,9 +159,9 @@ namespace ProjectWitch.Battle
                     var icon = BattleData.Instantiate(mStatusUpDown, mStatusUpDown.name, mStatusContainer);
                     icon.localPosition = new Vector3(-95 + (iconNum % 4) * 65, 210 + (iconNum / 4) * 85, 0);
                     icon.localScale = mStatusUpDown.transform.localScale;
-                    var arrow = icon.FindChild("Arrow").GetComponent<Image>();
-                    var type = icon.FindChild("Type").GetComponent<Image>();
-                    var text = icon.FindChild("Text").GetComponent<Text>();
+                    var arrow = icon.Find("Arrow").GetComponent<Image>();
+                    var type = icon.Find("Type").GetComponent<Image>();
+                    var text = icon.Find("Text").GetComponent<Text>();
                     arrow.sprite = (mPreStatusDataUpDown[i] > 0 ? mSpriteStatusUp : mSpriteStatusDown);
                     type.sprite = SpriteUpDownType[i];
                     text.text = (int)mPreStatusDataUpDown[i] + "%";
@@ -340,7 +340,7 @@ namespace ProjectWitch.Battle
 				return;
 			var turnUnit = BattleObj.TurnUnit;
 			string atkSkillName = "", defSkillName = "";
-			bool isCapture = (!Unit.IsPlayer && Unit.UnitData.Deathable && !Unit.IsExistSoldier);
+			bool isCapture = (!Unit.IsPlayer && Unit.UnitData.Catchable && !Unit.IsExistSoldier);
 			if (turnUnit.IsPlayer == Unit.IsPlayer)
 			{
 				// 味方

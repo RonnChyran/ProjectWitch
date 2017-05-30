@@ -72,7 +72,7 @@ namespace ProjectWitch.BattleTester
 				var button = Instantiate(m_PrefabSelectButton, m_TrContentParent).GetComponent<Button>();
 				Buttons.Add(button);
 				var rect = button.GetComponent<RectTransform>();
-				var text = button.transform.FindChild("Text").GetComponent<Text>();
+				var text = button.transform.Find("Text").GetComponent<Text>();
 				var uiEvent = button.GetComponent<UIEvent>();
 				rect.localScale = new Vector3(1, 1, 1);
 				text.text = "ID:" + String.Format("{0:D3}", area.ID) + "\t\t" + area.Name;

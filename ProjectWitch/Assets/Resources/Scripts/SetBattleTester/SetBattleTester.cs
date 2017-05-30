@@ -50,10 +50,10 @@ namespace ProjectWitch.BattleTester
 			public int FirstLevel { get; set; }
 			public int Pos { get; private set; }
 			public bool IsPlayer { get; private set; }
-			public Image ImageFace { get { return Transform.FindChild("ImFace").GetComponent<Image>(); } }
-			public Text TextName { get { return Transform.FindChild("TeName").GetComponent<Text>(); } }
-			public Slider SliderHP { get { return Transform.FindChild("SlHP").GetComponent<Slider>(); } }
-			public Slider SliderSoldierNum { get { return Transform.FindChild("SlSoldierNum").GetComponent<Slider>(); } }
+			public Image ImageFace { get { return Transform.Find("ImFace").GetComponent<Image>(); } }
+			public Text TextName { get { return Transform.Find("TeName").GetComponent<Text>(); } }
+			public Slider SliderHP { get { return Transform.Find("SlHP").GetComponent<Slider>(); } }
+			public Slider SliderSoldierNum { get { return Transform.Find("SlSoldierNum").GetComponent<Slider>(); } }
 			public UnitDataFormat Data { get { return SBT.Game.GameData.Unit[ID]; } }
 			private int mID;
 			public int ID
@@ -128,11 +128,11 @@ namespace ProjectWitch.BattleTester
 			public void ChangeHP(float _value)
 			{
 				if (ID == -1)
-					SliderHP.transform.FindChild("TeValue").GetComponent<Text>().text = "0/0";
+					SliderHP.transform.Find("TeValue").GetComponent<Text>().text = "0/0";
 				else
 				{
 					Data.HP = (int)_value;
-					SliderHP.transform.FindChild("TeValue").GetComponent<Text>().text =
+					SliderHP.transform.Find("TeValue").GetComponent<Text>().text =
 						Data.HP.ToString() + String.Format("/{0,5}", Data.MaxHP);
 				}
 			}
@@ -140,11 +140,11 @@ namespace ProjectWitch.BattleTester
 			public void ChangeSoldierNum(float _value)
 			{
 				if (ID == -1)
-					SliderSoldierNum.transform.FindChild("TeValue").GetComponent<Text>().text = "0/0";
+					SliderSoldierNum.transform.Find("TeValue").GetComponent<Text>().text = "0/0";
 				else
 				{
 					Data.SoldierNum = (int)_value;
-					SliderSoldierNum.transform.FindChild("TeValue").GetComponent<Text>().text =
+					SliderSoldierNum.transform.Find("TeValue").GetComponent<Text>().text =
 						Data.SoldierNum.ToString() + String.Format("/{0,5}", Data.MaxSoldierNum);
 				}
 			}
@@ -158,8 +158,8 @@ namespace ProjectWitch.BattleTester
 			public Transform Transform { get; private set; }
 			public int Num { get; private set; }
 			public bool IsPlayer { get; private set; }
-			public Image ImageCard { get { return Transform.FindChild("ImCard").GetComponent<Image>(); } }
-			public Text TextName { get { return Transform.FindChild("TeName").GetComponent<Text>(); } }
+			public Image ImageCard { get { return Transform.Find("ImCard").GetComponent<Image>(); } }
+			public Text TextName { get { return Transform.Find("TeName").GetComponent<Text>(); } }
 			public CardDataFormat Data { get { return SBT.Game.GameData.Card[ID]; } }
 			private int mID;
 			public int ID
@@ -211,10 +211,10 @@ namespace ProjectWitch.BattleTester
 			Cards = new List<CardData>();
 			for (int i = 0; i < 3; i++)
 			{
-				PlayerUnits.Add(new UnitData(m_TrPlayer.FindChild("Units").FindChild("Unit" + i.ToString()), i, true, this));
-				EnemyUnits.Add(new UnitData(m_TrEnemy.FindChild("Units").FindChild("Unit" + i.ToString()), i, false, this));
-				PlayerCards.Add(new CardData(m_TrPlayer.FindChild("Cards").FindChild("Card" + i.ToString()), i, true, this));
-				EnemyCards.Add(new CardData(m_TrEnemy.FindChild("Cards").FindChild("Card" + i.ToString()), i, false, this));
+				PlayerUnits.Add(new UnitData(m_TrPlayer.Find("Units").Find("Unit" + i.ToString()), i, true, this));
+				EnemyUnits.Add(new UnitData(m_TrEnemy.Find("Units").Find("Unit" + i.ToString()), i, false, this));
+				PlayerCards.Add(new CardData(m_TrPlayer.Find("Cards").Find("Card" + i.ToString()), i, true, this));
+				EnemyCards.Add(new CardData(m_TrEnemy.Find("Cards").Find("Card" + i.ToString()), i, false, this));
 			}
 			AreaID = 1;
 			SetSkillList();
@@ -326,6 +326,7 @@ namespace ProjectWitch.BattleTester
 				uIni[idStr, "回復100"] = unit.Cur100.ToString();
 				uIni[idStr, "兵士数"] = unit.MaxSoldierNum.ToString();
 				uIni[idStr, "死亡可"] = (unit.Deathable ? "1" : "0");
+                uIni[idStr, "捕獲可"] = (unit.Catchable ? "1" : "0");
 				uIni[idStr, "好感度"] = unit.Love.ToString();
 				uIni[idStr, "ス L ATK"] = unit.LAtkSkill.ToString();
 				uIni[idStr, "ス L DEF"] = unit.LDefSkill.ToString();
@@ -513,6 +514,7 @@ namespace ProjectWitch.BattleTester
 					unit.Cur100 = uIni.Parse<int>(idStr, "回復100");
 					unit.MaxSoldierNum = uIni.Parse<int>(idStr, "兵士数");
 					unit.Deathable = (uIni[idStr, "死亡可"] == "1");
+                    unit.Catchable = (uIni[idStr, "捕獲可"] == "1");
 					unit.Love = uIni.Parse<int>(idStr, "好感度");
 					unit.LAtkSkill = uIni.Parse<int>(idStr, "ス L ATK");
 					unit.LDefSkill = uIni.Parse<int>(idStr, "ス L DEF");

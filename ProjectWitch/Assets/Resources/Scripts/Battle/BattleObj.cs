@@ -992,9 +992,9 @@ namespace ProjectWitch.Battle
             yield return unit.SlideIn();
             mLastSerifUI.SetActive(true);
             mMessageUI.SetActive(false);
-            var imSerif = mLastSerifUI.transform.FindChild("Image");
+            var imSerif = mLastSerifUI.transform.Find("Image");
 //            var imMessage = mMessageUI.transform.FindChild("Image");
-            var text = imSerif.FindChild("Text").GetComponent<Text>();
+            var text = imSerif.Find("Text").GetComponent<Text>();
             imSerif.localPosition = new Vector3(unit.Face.transform.localPosition.x, imSerif.localPosition.y, imSerif.localPosition.z);
             // 固有メッセージ表示
             if (type == DeleteUnitType.Dead)
@@ -1006,7 +1006,7 @@ namespace ProjectWitch.Battle
             yield return WaitInputOrSeconds(2);
             mLastSerifUI.SetActive(false);
             mMessageUI.SetActive(true);
-            text = mMessageUI.transform.FindChild("Text").GetComponent<Text>();
+            text = mMessageUI.transform.Find("Text").GetComponent<Text>();
             // メッセージ表示
             if (type == DeleteUnitType.Dead)
                 text.text = unit.UnitData.Name + "は戦場に散った";
@@ -1296,7 +1296,7 @@ namespace ProjectWitch.Battle
                     TurnUnit.IsExistSoldier ? TurnUnit.GetGroupMagDamage() : TurnUnit.GetLeaderMagDamage()));
 				// 捕獲音再生
 				Music.PlayCaptureGauge();
-				var text = mCaptureGauge.transform.FindChild("Text").GetComponent<Text>();
+				var text = mCaptureGauge.transform.Find("Text").GetComponent<Text>();
 				float time = 0;
 				var endTime = mCaptureGaugeTime / BattleSpeedMagni;
 				while (time < endTime)
@@ -1463,7 +1463,7 @@ namespace ProjectWitch.Battle
 			// エフェクトの終わるまで待つ
 			yield return StartCoroutine("CoWaitEffect");
             mMessageUI.SetActive(true);
-            mMessageUI.transform.FindChild("Text").GetComponent<Text>().text = (IsInvasion ? 2 : 1) + (isWin ? 1 : 0) + "ポイントの経験値を得た";
+            mMessageUI.transform.Find("Text").GetComponent<Text>().text = (IsInvasion ? 2 : 1) + (isWin ? 1 : 0) + "ポイントの経験値を得た";
             yield return WaitInputOrSeconds(2);
             mMessageUI.SetActive(false);
 
@@ -1603,7 +1603,7 @@ namespace ProjectWitch.Battle
 		public void SetSkillCaption(string skillName, bool isAttack)
         {
             mSkillCaption.GetComponent<Image>().sprite = (isAttack ? mSC_Atk : mSC_Def);
-            mSkillCaption.transform.FindChild("Text").GetComponent<Text>().text = skillName;
+            mSkillCaption.transform.Find("Text").GetComponent<Text>().text = skillName;
             mSkillCaption.SetActive(true);
         }
 
@@ -1636,7 +1636,7 @@ namespace ProjectWitch.Battle
         public void PushConfig()
         {
             mConfigUI.SetActive(true);
-            var slider = mConfigUI.transform.FindChild("Slider").GetComponent<Slider>();
+            var slider = mConfigUI.transform.Find("Slider").GetComponent<Slider>();
             slider.value = BattleSpeed;
         }
 

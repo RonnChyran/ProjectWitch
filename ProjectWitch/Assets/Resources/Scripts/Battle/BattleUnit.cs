@@ -76,8 +76,6 @@ namespace ProjectWitch.Battle
         public SkillDataFormat GAtkSkill { get { return mGame.GameData.Skill[UnitData.GAtkSkill]; } }
         // AI
         public AIDataFormat AI { get { return mGame.GameData.AI[UnitData.AIID]; } }
-        // 装備
-        public EquipmentDataFormat Equipment { get { return (UnitData.Equipment != -1 ? mGame.GameData.Equipment[UnitData.Equipment] : null); } }
         // 顔グラ
         public FaceObj Face { get; set; }
 
@@ -90,7 +88,7 @@ namespace ProjectWitch.Battle
         // 表示兵士数
         public int DisplaySoldierNum { get; private set; }
         // 最大HP
-        public int MaxHP { get { return UnitData.MaxHP + (IsEquipment ? Equipment.MaxHP : 0); } }
+        public int MaxHP { get { return UnitData.MaxHP; } }
         // 捕獲ゲージ量
         public float CaptureGauge { get; private set; }
 
@@ -111,26 +109,26 @@ namespace ProjectWitch.Battle
         private float AreaCorAgility { get { return Area.CorAgility * AreaCoePercentCoe; } }
 
         // 物理攻撃力
-        public float LPAtk { get { return (UnitData.LeaderPAtk + (IsEquipment ? Equipment.LeaderPAtk : 0)) * PhyAtkPercentCoe; } }
+        public float LPAtk { get { return (UnitData.LeaderPAtk) * PhyAtkPercentCoe; } }
         // 魔法攻撃力
-        public float LMAtk { get { return (UnitData.LeaderMAtk + (IsEquipment ? Equipment.LeaderMAtk : 0)) * MagAtkPercentCoe; } }
+        public float LMAtk { get { return (UnitData.LeaderMAtk) * MagAtkPercentCoe; } }
         // 物理防御力
-        public float LPDef { get { return (UnitData.LeaderPDef + (IsEquipment ? Equipment.LeaderPDef : 0)) * (IsDefense ? 2 : 1) * PhyDefPercentCoe; } }
+        public float LPDef { get { return (UnitData.LeaderPDef) * (IsDefense ? 2 : 1) * PhyDefPercentCoe; } }
         // 魔法防御力
-        public float LMDef { get { return (UnitData.LeaderMDef + (IsEquipment ? Equipment.LeaderMDef : 0)) * (IsDefense ? 2 : 1) * MagDefPercentCoe; } }
+        public float LMDef { get { return (UnitData.LeaderMDef) * (IsDefense ? 2 : 1) * MagDefPercentCoe; } }
         // 指揮力
-        public float Leadership { get { return (UnitData.Leadership + (IsEquipment ? Equipment.Leadership : 0)) * AreaCorLeadership * LeadershipPercentCoe; } }
+        public float Leadership { get { return (UnitData.Leadership) * AreaCorLeadership * LeadershipPercentCoe; } }
         // 機動力
-        public float Agility { get { return (UnitData.Agility + (IsEquipment ? Equipment.Agility : 0)) * AreaCorAgility * AgilityPercentCoe; } }
+        public float Agility { get { return (UnitData.Agility) * AreaCorAgility * AgilityPercentCoe; } }
 
         // 集団物理攻撃力
-        public float GPAtk { get { return (UnitData.GroupPAtk + (IsEquipment ? Equipment.GroupPAtk : 0)) * PhyAtkPercentCoe; } }
+        public float GPAtk { get { return (UnitData.GroupPAtk) * PhyAtkPercentCoe; } }
         // 集団魔法攻撃力
-        public float GMAtk { get { return (UnitData.GroupMAtk + (IsEquipment ? Equipment.GroupMAtk : 0)) * MagAtkPercentCoe; } }
+        public float GMAtk { get { return (UnitData.GroupMAtk) * MagAtkPercentCoe; } }
         // 集団物理防御力
-        public float GPDef { get { return (UnitData.GroupPDef + (IsEquipment ? Equipment.GroupPDef : 0)) * (IsDefense ? 2 : 1) * PhyDefPercentCoe; } }
+        public float GPDef { get { return (UnitData.GroupPDef) * (IsDefense ? 2 : 1) * PhyDefPercentCoe; } }
         // 集団魔法防御力
-        public float GMDef { get { return (UnitData.GroupMDef + (IsEquipment ? Equipment.GroupMDef : 0)) * (IsDefense ? 2 : 1) * MagDefPercentCoe; } }
+        public float GMDef { get { return (UnitData.GroupMDef) * (IsDefense ? 2 : 1) * MagDefPercentCoe; } }
 
         // ポジション
         public Position Position { get; set; }
@@ -294,8 +292,6 @@ namespace ProjectWitch.Battle
 
         // 陣営(trueで自軍)
         public bool IsPlayer { get; private set; }
-        // 装備品があるかどうか
-        public bool IsEquipment { get { return UnitData.Equipment != -1; } }
         // 兵士が生き残っているか
         public bool IsExistSoldier { get { return UnitData.SoldierNum > 0; } }
         // 防御中かどうか
@@ -512,7 +508,7 @@ namespace ProjectWitch.Battle
 
             // オブジェクト生成
             // リーダー生成
-            var leaderPos = transform.FindChild("LeaderMediumPos");
+            var leaderPos = transform.Find("LeaderMediumPos");
             print("リーダーオブジェクトロード：" + UnitData.BattleLeaderPrefabPath);
             var leader = (GameObject)Resources.Load("Prefabs/Battle/" + UnitData.BattleLeaderPrefabPath);
             if (leader)
@@ -542,7 +538,7 @@ namespace ProjectWitch.Battle
             mSoldierObj = new List<GameObject>();
             if (soldierPrefab)
             {
-                var soldier = transform.FindChild("soldier");
+                var soldier = transform.Find("soldier");
                 switch (UnitData.GUnitSize)
                 {
                     case 0:

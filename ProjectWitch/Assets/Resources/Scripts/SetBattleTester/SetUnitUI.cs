@@ -24,36 +24,36 @@ namespace ProjectWitch.BattleTester
 
 		public static void SetInactive(this Transform _transform)
 		{
-			_transform.FindChild("INLv0").GetComponent<InputNumber>().SetInactive();
-			_transform.FindChild("INLv100").GetComponent<InputNumber>().SetInactive();
-			_transform.FindChild("TeValue").GetComponent<Text>().text = "";
+			_transform.Find("INLv0").GetComponent<InputNumber>().SetInactive();
+			_transform.Find("INLv100").GetComponent<InputNumber>().SetInactive();
+			_transform.Find("TeValue").GetComponent<Text>().text = "";
 		}
 
 		public static void SetActive(this Transform _transform, int _num0, int _num100, int _num)
 		{
-			var INLv0 = _transform.FindChild("INLv0").GetComponent<InputNumber>();
-			var INLv100 = _transform.FindChild("INLv100").GetComponent<InputNumber>();
+			var INLv0 = _transform.Find("INLv0").GetComponent<InputNumber>();
+			var INLv100 = _transform.Find("INLv100").GetComponent<InputNumber>();
 			INLv0.MaxInt = 99999 - _num100;
 			INLv100.MaxInt = 99999 - _num0;
 			INLv0.SetActive(_num0);
 			INLv100.SetActive(_num100);
-			_transform.FindChild("TeValue").GetComponent<Text>().text = _num.ToString();
+			_transform.Find("TeValue").GetComponent<Text>().text = _num.ToString();
 		}
 
 		public static void SetValue(this Transform _transform, int _value)
 		{
-			_transform.FindChild("TeValue").GetComponent<Text>().text = _value.ToString();
+			_transform.Find("TeValue").GetComponent<Text>().text = _value.ToString();
 		}
 
 		public static void SetMin(this Transform _transform, int _value, int _num)
 		{
-			_transform.FindChild("INLv100").GetComponent<InputNumber>().MaxInt = 99999 - _value;
+			_transform.Find("INLv100").GetComponent<InputNumber>().MaxInt = 99999 - _value;
 			_transform.SetValue(_num);
 		}
 
 		public static void SetMax(this Transform _transform, int _value, int _num)
 		{
-			_transform.FindChild("INLv0").GetComponent<InputNumber>().MaxInt = 99999 - _value;
+			_transform.Find("INLv0").GetComponent<InputNumber>().MaxInt = 99999 - _value;
 			_transform.SetValue(_num);
 		}
 
@@ -71,8 +71,8 @@ namespace ProjectWitch.BattleTester
 
 		public static void SetInactiveSkill(this Transform _transform)
 		{
-			var dd = _transform.FindChild("Dropdown").GetComponent<Dropdown>();
-			var button = _transform.FindChild("Button").GetComponent<Button>();
+			var dd = _transform.Find("Dropdown").GetComponent<Dropdown>();
+			var button = _transform.Find("Button").GetComponent<Button>();
 			dd.interactable = false;
 			button.interactable = false;
 			dd.value = 0;
@@ -80,8 +80,8 @@ namespace ProjectWitch.BattleTester
 
 		public static void SetActiveSkill(this Transform _transform, SkillDataFormat _skill, UnityAction _action)
 		{
-			var dd = _transform.FindChild("Dropdown").GetComponent<Dropdown>();
-			var button = _transform.FindChild("Button").GetComponent<Button>();
+			var dd = _transform.Find("Dropdown").GetComponent<Dropdown>();
+			var button = _transform.Find("Button").GetComponent<Button>();
 			dd.interactable = true;
 			button.interactable = true;
 			button.onClick.AddListener(_action);
@@ -90,7 +90,7 @@ namespace ProjectWitch.BattleTester
 
 		public static void SetSliderValueText(this Slider _slider, int _value, int _max)
 		{
-			_slider.transform.FindChild("TeValue").GetComponent<Text>().text = _value.ToString() + String.Format("/{0,5}", _max);
+			_slider.transform.Find("TeValue").GetComponent<Text>().text = _value.ToString() + String.Format("/{0,5}", _max);
 		}
 
 		public static void SetInactive(this Slider _slider)
@@ -130,6 +130,8 @@ namespace ProjectWitch.BattleTester
 		private InputNumber m_INLevelFirst = null, m_INLevelMax = null, m_INSoldierNum = null, m_INLove = null;
 		[SerializeField]
 		private Toggle m_ToDeathable = null;
+        [SerializeField]
+        private Toggle m_ToCatchable = null;
 		[SerializeField]
 		private Transform m_TrHP = null;
 		[SerializeField]
@@ -233,6 +235,8 @@ namespace ProjectWitch.BattleTester
 					m_INLove.SetActive(Unit.Data.Love);
 					m_ToDeathable.isOn = Unit.Data.Deathable;
 					m_ToDeathable.interactable = true;
+                    m_ToCatchable.isOn = Unit.Data.Catchable;
+                    m_ToCatchable.interactable = true;
 
 					m_TrLPAtk.SetActive(Unit.Data.LPAtk0, Unit.Data.LPAtk100, Unit.Data.LeaderPAtk);
 					m_TrLMAtk.SetActive(Unit.Data.LMAtk0, Unit.Data.LMAtk100, Unit.Data.LeaderMAtk);
@@ -309,9 +313,9 @@ namespace ProjectWitch.BattleTester
 
 		public void SetSkillDropDown()
 		{
-			var ddLA = m_TrSkillLA.FindChild("Dropdown").GetComponent<Dropdown>();
-			var ddLD = m_TrSkillLD.FindChild("Dropdown").GetComponent<Dropdown>();
-			var ddGA = m_TrSkillGA.FindChild("Dropdown").GetComponent<Dropdown>();
+			var ddLA = m_TrSkillLA.Find("Dropdown").GetComponent<Dropdown>();
+			var ddLD = m_TrSkillLD.Find("Dropdown").GetComponent<Dropdown>();
+			var ddGA = m_TrSkillGA.Find("Dropdown").GetComponent<Dropdown>();
 			ddLA.ClearOptions();
 			ddLD.ClearOptions();
 			ddGA.ClearOptions();
@@ -388,8 +392,8 @@ namespace ProjectWitch.BattleTester
 			if (ID == -1)
 				return;
 			Unit.Data.HP0 = _value;
-			m_TrHP.FindChild("INLv100").GetComponent<InputNumber>().MaxInt = 999999 - _value;
-			m_TrHP.FindChild("TeValue").GetComponent<Text>().text = Unit.Data.MaxHP.ToString();
+			m_TrHP.Find("INLv100").GetComponent<InputNumber>().MaxInt = 999999 - _value;
+			m_TrHP.Find("TeValue").GetComponent<Text>().text = Unit.Data.MaxHP.ToString();
 			m_SlHP.maxValue = Unit.Data.MaxHP;
 			m_SlHP.SetSliderValueText(Unit.Data.HP, Unit.Data.MaxHP);
 		}
@@ -398,8 +402,8 @@ namespace ProjectWitch.BattleTester
 			if (ID == -1)
 				return;
 			Unit.Data.HP100 = _value;
-			m_TrHP.FindChild("INLv0").GetComponent<InputNumber>().MaxInt = 999999 - _value;
-			m_TrHP.FindChild("TeValue").GetComponent<Text>().text = Unit.Data.MaxHP.ToString();
+			m_TrHP.Find("INLv0").GetComponent<InputNumber>().MaxInt = 999999 - _value;
+			m_TrHP.Find("TeValue").GetComponent<Text>().text = Unit.Data.MaxHP.ToString();
 			m_SlHP.maxValue = Unit.Data.MaxHP;
 			m_SlHP.SetSliderValueText(Unit.Data.HP, Unit.Data.MaxHP);
 		}
@@ -422,6 +426,12 @@ namespace ProjectWitch.BattleTester
 				return;
 			Unit.Data.Deathable = _value;
 		}
+        public void ChangeCatchable(bool _value)
+        {
+            if (ID == -1)
+                return;
+            Unit.Data.Catchable = _value;
+        }
 
 		public void ChangeLPAtkLv0(int _value)
 		{

@@ -8,7 +8,7 @@ namespace ProjectWitch.Battle
 	{
 		private BattleObj mBattleObj;
 		private int mTurnNum = 0;
-		private Text TurnNumText { get { return transform.FindChild("TurnNum").GetComponent<Text>(); } }
+		private Text TurnNumText { get { return transform.Find("TurnNum").GetComponent<Text>(); } }
 
 		public void SetUp(BattleObj battleObj)
 		{

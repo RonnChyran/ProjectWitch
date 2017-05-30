@@ -61,10 +61,10 @@ namespace ProjectWitch.Battle
 			orderDiplayObj.Setup(buttleUnit, mDisplayObject.GetComponent<RectTransform>(), this);
 			mOrderDiplayObj.Add(orderDiplayObj);
 
-			var backImage = dispObj.transform.FindChild("Back").GetComponent<Image>();
+			var backImage = dispObj.transform.Find("Back").GetComponent<Image>();
 			if (backImage)
 				backImage.sprite = (orderDiplayObj.BattleUnit.IsPlayer ? mSpriteBannerPlayer : mSpriteBannerEnemy);
-			var text = dispObj.transform.FindChild("Text").GetComponent<Text>();
+			var text = dispObj.transform.Find("Text").GetComponent<Text>();
 			if (text)
 				text.color = (orderDiplayObj.BattleUnit.IsPlayer ? mTextColorPlayer: mTextColorEnemy);
 		}

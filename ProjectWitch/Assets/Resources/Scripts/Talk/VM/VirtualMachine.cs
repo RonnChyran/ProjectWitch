@@ -599,6 +599,51 @@ namespace ProjectWitch.Talk.WorkSpace
             return list;
         }
 
+        //自動的に型判別してオブジェクト型で返す
+        public static object AutoConvert(object value, out string type, out string error)
+        {
+            error = null;
+            object result = "";
+            type = "error";
+
+            string str = "" + value + "";
+            int iVal=0;
+            float fVal = 0.0f;
+            double dVal = 0.0;
+
+            //boolean
+            if(str.Equals("false") || str.Equals("true"))
+            {
+                type = "bool";
+                result = (str.Equals("true")) ? true : false;
+            }
+            //int
+            else if(int.TryParse(str, out iVal))
+            {
+                type = "int";
+                result = iVal;
+            }
+            //float
+            else if(float.TryParse(str, out fVal))
+            {
+                type = "float";
+                result = fVal;
+            }
+            //double
+            else if( double.TryParse(str, out dVal))
+            {
+                type = "double";
+                result = dVal;
+            }
+            //string
+            else
+            {
+                type = "string";
+                result = str;
+            }
+            return result;
+        }
+
         //変換表を作成
         private static Dictionary<string, int> gCodeTable;
         private static void CreateCodeTable()

@@ -8,7 +8,7 @@ namespace ProjectWitch.Battle
     {
         private Game mGame;
         public GameObject CardObj { get; private set; }
-        public GameObject Flame { get { return CardObj.transform.FindChild("Flame").gameObject; } }
+        public GameObject Flame { get { return CardObj.transform.Find("Flame").gameObject; } }
         public CardDataFormat CardData { get; private set; }
         public SkillDataFormat Skill { get; private set; }
         public Image Image { get { return CardObj.GetComponent<Image>(); } }

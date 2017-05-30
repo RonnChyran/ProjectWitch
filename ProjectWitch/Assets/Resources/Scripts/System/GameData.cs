@@ -510,7 +510,6 @@ namespace ProjectWitch
         //HP
         public int HP { get; set; }
         //最大HP
-        public int MaxHP { get { return (int)(HP0 + HP100 / 100.0f * Level); } private set { } }
         public int HP0 { get; set; }
         public int HP100 { get; set; }     //HP成長率
 
@@ -552,8 +551,11 @@ namespace ProjectWitch
         public int SoldierNum { get; set; }
         public int MaxSoldierNum { get; set; }
 
-        //撤退するか死ぬか ture:死ぬ　false：撤退する（捕獲コマンドが無効
+        //撤退するか死ぬか ture:死ぬ　false：撤退する
         public bool Deathable { get; set; }
+
+        //捕獲可能か不可能か
+        public bool Catchable { get; set; }
 
         //生きているか
         public bool IsAlive { get; set; }
@@ -612,34 +614,99 @@ namespace ProjectWitch
 
         #region query
 
-        //リーダーのステータス
-        [System.Xml.Serialization.XmlIgnore]
-        public int LeaderPAtk { get { return (int)(LPAtk0 + LPAtk100 / 100.0f * Level); } private set { } } //物理攻撃
-        [System.Xml.Serialization.XmlIgnore]
-        public int LeaderMAtk { get { return (int)(LMAtk0 + LMAtk100 / 100.0f * Level); } private set { } } //魔法攻撃
-        [System.Xml.Serialization.XmlIgnore]
-        public int LeaderPDef { get { return (int)(LPDef0 + LPDef100 / 100.0f * Level); } private set { } } //物理防御
-        [System.Xml.Serialization.XmlIgnore]
-        public int LeaderMDef { get { return (int)(LMDef0 + LMDef100 / 100.0f * Level); } private set { } } //魔法防御
+        //装備を含めたステータス
+        public int MaxHP { get { return BaseMaxHP + EquipmentData.MaxHP; } private set { } }
+        public int LeaderPAtk { get { return BaseLPAtk + EquipmentData.LeaderPAtk; } private set { } } //物理攻撃
+        public int LeaderMAtk { get { return BaseLMAtk + EquipmentData.LeaderMAtk; } private set { } } //魔法攻撃
+        public int LeaderPDef { get { return BaseLPDef + EquipmentData.LeaderPDef; } private set { } } //物理防御
+        public int LeaderMDef { get { return BaseLMDef + EquipmentData.LeaderMDef; } private set { } } //魔法防御
+        public int GroupPAtk { get { return BaseGPAtk + EquipmentData.GroupPAtk; } private set { } }  //物理攻撃
+        public int GroupMAtk { get { return BaseGMAtk + EquipmentData.GroupMAtk; } private set { } }  //魔法攻撃
+        public int GroupPDef { get { return BaseGPDef + EquipmentData.GroupPDef; } private set { } }  //物理防御
+        public int GroupMDef { get { return BaseGMDef + EquipmentData.GroupMDef; } private set { } }  //魔法防御
+        public int Leadership { get { return BaseLeader + EquipmentData.Leadership; } private set { } }  //指揮力
+        public int Curative { get { return BaseCur + EquipmentData.Curative; } private set { } }       //回復力
+        public int Agility { get { return BaseAgi + EquipmentData.Agility; } private set { } }        //機動力
 
-        //兵士のステータス
-        [System.Xml.Serialization.XmlIgnore]
-        public int GroupPAtk { get { return (int)(GPAtk0 + GPAtk100 / 100.0f * Level); } private set { } }  //物理攻撃
-        [System.Xml.Serialization.XmlIgnore]
-        public int GroupMAtk { get { return (int)(GMAtk0 + GMAtk100 / 100.0f * Level); } private set { } }  //魔法攻撃
-        [System.Xml.Serialization.XmlIgnore]
-        public int GroupPDef { get { return (int)(GPDef0 + GPDef100 / 100.0f * Level); } private set { } }  //物理防御
-        [System.Xml.Serialization.XmlIgnore]
-        public int GroupMDef { get { return (int)(GMDef0 + GMDef100 / 100.0f * Level); } private set { } }  //魔法防御
-        [System.Xml.Serialization.XmlIgnore]
-        public int Leadership { get { return (int)(Lead0 + Lead100 / 100.0f * Level); } private set { } }  //指揮力
-        [System.Xml.Serialization.XmlIgnore]
-        public int Curative { get { return (int)(Cur0 + Cur100 / 100.0f * Level); } private set { } }       //回復力
-        [System.Xml.Serialization.XmlIgnore]
-        public int Agility { get { return (int)(Agi0 + Agi100 / 100.0f * Level); } private set { } }        //機動力
+
+        //装備を含めないステータス
+        public int BaseMaxHP { get { return (int)(HP0 + HP100 / 100.0f * Level); } private set { } }
+        public int BaseLPAtk { get { return (int)(LPAtk0 + LPAtk100 / 100.0f * Level); } private set { } } //物理攻撃
+        public int BaseLMAtk { get { return (int)(LMAtk0 + LMAtk100 / 100.0f * Level); } private set { } } //魔法攻撃
+        public int BaseLPDef { get { return (int)(LPDef0 + LPDef100 / 100.0f * Level); } private set { } } //物理防御
+        public int BaseLMDef { get { return (int)(LMDef0 + LMDef100 / 100.0f * Level); } private set { } } //魔法防御
+        public int BaseGPAtk { get { return (int)(GPAtk0 + GPAtk100 / 100.0f * Level); } private set { } }  //物理攻撃
+        public int BaseGMAtk { get { return (int)(GMAtk0 + GMAtk100 / 100.0f * Level); } private set { } }  //魔法攻撃
+        public int BaseGPDef { get { return (int)(GPDef0 + GPDef100 / 100.0f * Level); } private set { } }  //物理防御
+        public int BaseGMDef { get { return (int)(GMDef0 + GMDef100 / 100.0f * Level); } private set { } }  //魔法防御
+        public int BaseLeader { get { return (int)(Lead0 + Lead100 / 100.0f * Level); } private set { } }  //指揮力
+        public int BaseCur { get { return (int)(Cur0 + Cur100 / 100.0f * Level); } private set { } }       //回復力
+        public int BaseAgi { get { return (int)(Agi0 + Agi100 / 100.0f * Level); } private set { } }        //機動力
+
+        //装備品のデータ
+        public EquipmentDataFormat EquipmentData
+        {
+            get
+            {
+                return (Equipment == -1) ? 
+                    EquipmentDataFormat.Zero : 
+                    Game.GetInstance().GameData.Equipment[Equipment];
+            }
+            private set { }
+        }
+
         #endregion
 
         #region method 
+
+        //装備を変更する（ユニットが自領地にいるときのみ有効
+        public void ChangeEquipment(int ItemID)
+        {
+            var game = Game.GetInstance();
+
+            //ユニットが自領地にいるかどうか判定
+            if (!game.GameData.Group[game.GameData.Territory[0].GroupList[0]].UnitList.Contains(ID))
+                return;
+
+            //装備を外す
+            var currentItemID = Equipment;
+            var list = new List<int>();
+            if (currentItemID != -1)
+            {
+                bool isHaving = false;
+                list = game.GameData.Territory[0].EquipmentList[currentItemID];
+                for (int i = 0; i < list.Count; i++)
+                {
+                    if (list[i] == ID)
+                    {
+                        list[i] = -1;
+                        isHaving = true;
+                        break;
+                    }
+                }
+
+                //返却時に見つからない場合は新たに追加する
+                if (!isHaving) list.Add(-1);
+            }
+
+
+            //ユニットに新しい装備をセット
+            Equipment = ItemID;
+
+            //装備品リストを更新
+            if (ItemID != -1)
+            {
+                list = game.GameData.Territory[0].EquipmentList[ItemID];
+                for (int i = 0; i < list.Count; i++)
+                {
+                    if (list[i] == -1)
+                    {
+                        list[i] = ID;
+                        break;
+                    }
+                }
+            }
+        }
 
         //レベルアップ可能化の判定
         public bool CanDoLevelUp()
@@ -685,6 +752,7 @@ namespace ProjectWitch
             outdata.AddRange(BitConverter.GetBytes(Experience));
             outdata.AddRange(BitConverter.GetBytes(SoldierNum));
             outdata.AddRange(BitConverter.GetBytes(Deathable));
+            outdata.AddRange(BitConverter.GetBytes(Catchable));
             outdata.AddRange(BitConverter.GetBytes(IsAlive));
             outdata.AddRange(BitConverter.GetBytes(Love));
             outdata.AddRange(BitConverter.GetBytes(Equipment));
@@ -704,6 +772,7 @@ namespace ProjectWitch
             Experience = BitConverter.ToInt32(data, offset); offset += 4;
             SoldierNum = BitConverter.ToInt32(data, offset); offset += 4;
             Deathable = BitConverter.ToBoolean(data, offset); offset += 1;
+            Catchable = BitConverter.ToBoolean(data, offset); offset += 1;
             IsAlive = BitConverter.ToBoolean(data, offset); offset += 1;
             Love = BitConverter.ToInt32(data, offset); offset += 4;
             Equipment = BitConverter.ToInt32(data, offset); offset += 4;
@@ -973,7 +1042,7 @@ namespace ProjectWitch
         public int MainArea { get; set; }
 
         //所有地点リスト
-        [System.Xml.Serialization.XmlIgnore]
+
         public List<int> AreaList
         {
             get
@@ -1220,7 +1289,7 @@ namespace ProjectWitch
             Dead    //死亡
         }
         private GroupState state = GroupState.Ready;
-        [System.Xml.Serialization.XmlIgnore]
+
         public GroupState State
         {
             get
@@ -1405,6 +1474,30 @@ namespace ProjectWitch
 
         //説明
         public string Description { get; set; }
+
+        //殻のデータ
+        static public EquipmentDataFormat Zero
+        {
+            get
+            {
+                var outdata = new EquipmentDataFormat();
+                outdata.MaxHP = 0;
+                outdata.LeaderPAtk = 0;
+                outdata.LeaderPDef = 0;
+                outdata.LeaderMAtk = 0;
+                outdata.LeaderMDef = 0;
+                outdata.GroupPAtk = 0;
+                outdata.GroupPDef = 0;
+                outdata.GroupMAtk = 0;
+                outdata.GroupMDef = 0;
+                outdata.Leadership = 0;
+                outdata.Agility = 0;
+                outdata.Curative = 0;
+
+                return outdata;
+            }
+            private set { }
+        }
     }
 
     //コンフィグ
@@ -1599,7 +1692,7 @@ namespace ProjectWitch
         }
 
         //配列サイズの取得
-        [System.Xml.Serialization.XmlIgnore]
+
         public int Count
         {
             get
@@ -1891,7 +1984,7 @@ namespace ProjectWitch
             //ユニットデータに格納（0番目はキャプションなので読み飛ばす
             for (int i = 1; i < rowData.Count; i++)
             {
-                if (rowData[i].Count < 45) continue;
+                if (rowData[i].Count < 46) continue;
 
                 //データの順番
                 //[0]ID         [1]名前       [2]レベル      [3]レベル成長限界          [4]HP
@@ -1901,17 +1994,18 @@ namespace ProjectWitch
                 //[18]成GATK    [19]成GMAT    [20]成GDEF     [21]成GMDE     [22]指揮力　[23]機動力
                 //[24]成指揮    [25]成機動
                 //[26]回復力　  [27]回復力成長率
-                //[28]兵士数    [29]死ぬか撤退か　[30]好感度 
-                //[31]リーダー攻撃スキル
-                //[32]リーダー防御スキル
-                //[33]兵士攻撃スキル   [34]兵士サイズ
-                //[35]装備             [36]AI番号
-                //[37]立ち絵画像名     [38]顔アイコン画像    
-                //[39]戦闘リーダープレハブ名
-                //[40]戦闘兵士プレハブ名 [41]キャラ説明
-                //[42]死亡時セリフ
-                //[43]捕獲時セリフ
-                //[44]逃走時セリフ
+                //[28]兵士数    [29]死ぬか撤退か [30]捕獲可能か
+                //[31]好感度 
+                //[32]リーダー攻撃スキル
+                //[33]リーダー防御スキル
+                //[34]兵士攻撃スキル   [35]兵士サイズ
+                //[36]装備             [37]AI番号
+                //[38]立ち絵画像名     [39]顔アイコン画像    
+                //[40]戦闘リーダープレハブ名
+                //[41]戦闘兵士プレハブ名 [42]キャラ説明
+                //[43]死亡時セリフ
+                //[44]捕獲時セリフ
+                //[45]逃走時セリフ
                 var unit = new UnitDataFormat();
                 var data = rowData[i];
 
@@ -1925,7 +2019,7 @@ namespace ProjectWitch
                     unit.MaxLevel = int.Parse(data[3]);
                     unit.HP0 = int.Parse(data[4]);
                     unit.HP100 = int.Parse(data[5]);
-                    unit.HP = unit.MaxHP;
+                    unit.HP = unit.BaseMaxHP;
                     unit.LPAtk0 = int.Parse(data[6]);
                     unit.LMAtk0 = int.Parse(data[7]);
                     unit.LPDef0 = int.Parse(data[8]);
@@ -1951,23 +2045,24 @@ namespace ProjectWitch
                     unit.SoldierNum = int.Parse(data[28]);
                     unit.MaxSoldierNum = unit.SoldierNum;
                     unit.Deathable = (data[29] == "0") ? false : true;
-                    unit.Love = int.Parse(data[30]);
-                    unit.LAtkSkill = int.Parse(data[31]);
-                    unit.LDefSkill = int.Parse(data[32]);
-                    unit.GAtkSkill = int.Parse(data[33]);
-                    unit.GUnitSize = int.Parse(data[34]);
-                    unit.Equipment = int.Parse(data[35]);
-                    unit.AIID = int.Parse(data[36]);
+                    unit.Catchable = (data[30] == "0") ? false : true;
+                    unit.Love = int.Parse(data[31]);
+                    unit.LAtkSkill = int.Parse(data[32]);
+                    unit.LDefSkill = int.Parse(data[33]);
+                    unit.GAtkSkill = int.Parse(data[34]);
+                    unit.GUnitSize = int.Parse(data[35]);
+                    unit.Equipment = int.Parse(data[36]);
+                    unit.AIID = int.Parse(data[37]);
 
-                    unit.StandImagePath = data[37];
-                    unit.FaceIamgePath = data[38];
-                    unit.BattleLeaderPrefabPath = data[39];
-                    unit.BattleGroupPrefabPath = data[40];
-                    unit.Comment = data[41];
+                    unit.StandImagePath = data[38];
+                    unit.FaceIamgePath = data[39];
+                    unit.BattleLeaderPrefabPath = data[40];
+                    unit.BattleGroupPrefabPath = data[41];
+                    unit.Comment = data[42];
 
-                    unit.OnDeadSerif = data[42];
-                    unit.OnCapturedSerif = data[43];
-                    unit.OnEscapedSerif = data[44];
+                    unit.OnDeadSerif = data[43];
+                    unit.OnCapturedSerif = data[44];
+                    unit.OnEscapedSerif = data[45];
 
                     unit.IsAlive = true;
                     unit.IsBattled = false;

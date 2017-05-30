@@ -30,7 +30,7 @@ namespace ProjectWitch.Battle
 			mBaseRect = baseRect;
 			OrderCtrl = orderCtrl;
 
-			var child = transform.FindChild("Text").GetComponent<Text>();
+			var child = transform.Find("Text").GetComponent<Text>();
 			child.text = BattleUnit.UnitData.Name;
 
 			Rect.localPosition = mBaseRect.localPosition + new Vector3(mBaseRect.sizeDelta.x * OrderController.DisplayOutCount, 0, 0);

@@ -33,6 +33,7 @@ namespace ProjectWitch.Talk.Compiler{
 			patternList.Add (new CreateHealUnitCommand ());
 			patternList.Add (new CreateKillUnitCommand ());
 			patternList.Add (new CreateEmployUnitCommand ());
+            patternList.Add(new CreateChangeUnitDataCommand());
 			patternList.Add (new CreateChangeAreaOwnerCommand ());
             patternList.Add(new CreateWaitTimerCommand());
 
@@ -401,7 +402,7 @@ namespace ProjectWitch.Talk.Compiler{
 		}
 	}
 
-	//指定領地のユニット回復
+	//ユニットを雇う
 	public class CreateEmployUnitCommand : Pattern_TagFormat
 	{
 		protected override string TagName(){
@@ -428,7 +429,58 @@ namespace ProjectWitch.Talk.Compiler{
 		}
 	}
 
-	//指定領地のユニット回復
+    //ユニットデータを変更する
+    public class CreateChangeUnitDataCommand : Pattern_TagFormat
+    {
+        protected override string TagName()
+        {
+            return "unit_data_change";
+        }
+
+        protected override CommandFormat[] CreateCommand(ArgumentDictionary arguments, int line, int index)
+        {
+            CommandList commandList = new CommandList();
+
+            if (arguments.ContainName("id"))
+            {
+                commandList.Add(arguments.Get("id"));
+            }
+            else {
+                CompilerLog.Log(line, index, "id引数が不足しています。");
+                return null;
+            }
+            if (arguments.ContainName("member"))
+            {
+                commandList.Add(arguments.Get("member"));
+            }
+            else
+            {
+                CompilerLog.Log(line, index, "member引数が不足しています。");
+                return null;
+            }
+            if (arguments.ContainName("value"))
+            {
+                commandList.Add(arguments.Get("value"));
+            }
+            else
+            {
+                CompilerLog.Log(line, index, "value引数が不足しています。");
+                return null;
+            }
+
+
+            commandList.Add(new RunOrderCommand("ChangeUnitData"));
+
+            if (arguments.Count > 0)
+            {
+                CompilerLog.Log(line, index, "無効な引数があります。");
+                return null;
+            }
+            return commandList.GetArray();
+        }
+    }
+
+	//指定領地の領主を変更
 	public class CreateChangeAreaOwnerCommand : Pattern_TagFormat
 	{
 		protected override string TagName(){

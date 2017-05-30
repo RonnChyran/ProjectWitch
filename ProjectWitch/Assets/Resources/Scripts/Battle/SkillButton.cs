@@ -26,7 +26,7 @@ namespace ProjectWitch.Battle
 		// ボタンの名称等を設定する
 		public void SetButton(string name, int pos)
 		{
-			var text = transform.FindChild("Text").GetComponent<Text>();
+			var text = transform.Find("Text").GetComponent<Text>();
 			text.text = name;
 			gameObject.GetComponent<RectTransform>().localPosition = new Vector3(mBasePos.x,
 				mBasePos.y + mBaseSize.y * pos * 1f, mBasePos.z);
