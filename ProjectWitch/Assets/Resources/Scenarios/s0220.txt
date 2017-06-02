@@ -212,6 +212,12 @@
 [clearcg id=4]
 [filter name="clear" time=500]
 
+;オリヴィアとトリアイナを死亡可能にする
+[unit_data_change id=5 member="Deathable" value="true"]
+[unit_data_change id=6 member="Deathable" value="true"]
+[unit_data_change id=5 member="Catchable" value="true"]
+[unit_data_change id=6 member="Catchable" value="true"]
+
 ;終了処理
 [stopbgm]
 [sys_memset index=220 value="1"]

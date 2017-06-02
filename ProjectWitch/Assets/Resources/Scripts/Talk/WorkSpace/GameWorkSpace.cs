@@ -251,14 +251,22 @@ namespace ProjectWitch.Talk.WorkSpace
             foreach (var unitID in unitIDs)
             {
                 game.GameData.Unit[unitID].IsAlive = false;
-
-                //すべての領地からユニットを除外
-                foreach (var territory in game.GameData.Territory)
-                {
-                    territory.RemoveUnit(unitID);
-                }
             }
 
+            UnitUnemploy(unitIDs, out error);
+        }
+        
+        //ユニットを解雇する
+        void UnitUnemploy(int[] unitIDs, out string error)
+        {
+            error = null;
+            var game = Game.GetInstance();
+
+            foreach (var unitID in unitIDs)
+            {
+                //自分の領地からユニットを除外
+                game.GameData.Territory[0].RemoveUnit(unitID);
+            }
         }
 
 		//unit_employタグ
@@ -557,7 +565,7 @@ namespace ProjectWitch.Talk.WorkSpace
 						unitIds[i] = Converter.ObjectToInt(list[i], out error);
 						if (error != null) return error;
 					}
-					UnitKill(unitIds, out error);
+					UnitUnemploy(unitIds, out error);
 					return error;
 				}));
 

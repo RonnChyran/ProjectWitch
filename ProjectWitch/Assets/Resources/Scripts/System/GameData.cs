@@ -1126,6 +1126,12 @@ namespace ProjectWitch
             var game = Game.GetInstance();
             var groups = game.GameData.Group.GetFromIndex(GroupList);
 
+            //自領地にいた場合はユニットの装備を外す
+            if(ID==0)
+            {
+                game.GameData.Unit[unit].ChangeEquipment(-1);
+            }
+
             //すべてのグループからユニットを除外
             foreach (var group in groups)
             {

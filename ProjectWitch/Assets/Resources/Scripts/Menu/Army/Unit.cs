@@ -101,13 +101,13 @@ namespace ProjectWitch.Menu
             Color color;
 
             //リーダーのステータスから種を判断
-            if (unit.LeaderPAtk != 0 &&
-                unit.LeaderMAtk != 0)
+            if (unit.BaseLPAtk != 0 &&
+                unit.BaseLMAtk != 0)
             {
                 text = "万";
                 color = mRaceColor_Balance;
             }
-            else if (unit.LeaderPAtk == 0)
+            else if (unit.BaseLPAtk == 0)
             {
                 text = "魔";
                 color = mRaceColor_Magic;
