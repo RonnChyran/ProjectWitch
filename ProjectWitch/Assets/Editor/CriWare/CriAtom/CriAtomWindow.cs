@@ -29,7 +29,7 @@ public sealed class CriAtomWindow : EditorWindow
 	private bool scaling = true;
 	private bool useCopyAssetsFromCriAtomCraft = false;
 	// Public
-	public string searchPath = Application.streamingAssetsPath;
+	public string searchPath = "";
 	public string acfPath = "";
 	public string dspBusSetting = "";
 
@@ -54,7 +54,8 @@ public sealed class CriAtomWindow : EditorWindow
 
 	private void OnEnable()
 	{
-		criAtomWindowPrefs = CriAtomWindowPrefs.Load();
+        searchPath = Application.streamingAssetsPath;
+        criAtomWindowPrefs = CriAtomWindowPrefs.Load();
 	}
 
 	private void OnDisable()

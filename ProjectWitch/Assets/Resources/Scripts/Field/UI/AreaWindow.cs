@@ -260,7 +260,8 @@ namespace ProjectWitch.Field
                 //当該地域の領主が、自領地と交戦できる状態にあるか
                 var territory = game.GameData.Territory[area.Owner];
                 if (territory.State == TerritoryDataFormat.TerritoryState.Ready ||
-                    territory.State == TerritoryDataFormat.TerritoryState.Active)
+                    territory.State == TerritoryDataFormat.TerritoryState.Active ||
+                    territory.State == TerritoryDataFormat.TerritoryState.Dead)
                     mDominationButton.SetActive(true);
 
             }
