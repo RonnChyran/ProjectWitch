@@ -693,7 +693,7 @@ namespace ProjectWitch.Battle
 				damage = (IsExistSoldier ? UnitData.SoldierNum : UnitData.HP) * mBattle.Coe20 * mBattle.Rand9;
 			else
 			{
-				damage = NormalDamage(atkUnit, byLeader, toLeader, type == DamageType.Counter || type == DamageType.CaptureCounter);
+				damage = NormalDamage(atkUnit, byLeader, toLeader || !IsExistSoldier, type == DamageType.Counter || type == DamageType.CaptureCounter);
 				// カウンターダメージなら
 				if (type == DamageType.Counter)
 					damage *= mBattle.Coe16;
