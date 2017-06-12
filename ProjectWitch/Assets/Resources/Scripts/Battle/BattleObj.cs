@@ -725,10 +725,18 @@ namespace ProjectWitch.Battle
 		private IEnumerator DamageProcess(DamageType type, BattleUnit atkUnit, BattleUnit defUnit, bool byLeader, bool toLeader,
 			BattleUnit originTarget = null)
 		{
-			// カウンターダメージの時、対象が、召喚ユニットである・前衛でない・味方である場合反撃しない
+			// カウンターダメージの時、対象が魔法キャラである・前衛でない・味方である・召喚ユニットである場合、反撃側が魔法キャラである場合反撃しない
 			if (type == DamageType.Counter || type == DamageType.CaptureCounter)
-				if (defUnit.IsSummonUnit || defUnit.Position != Position.Front || defUnit.IsPlayer == atkUnit.IsPlayer)
+			{
+				if (defUnit.Position != Position.Front || defUnit.IsPlayer == atkUnit.IsPlayer || defUnit.IsSummonUnit)
 					yield break;
+				else if (atkUnit.IsExistSoldier ? atkUnit.UnitData.GroupMAtk > atkUnit.UnitData.GroupPAtk :
+					 atkUnit.UnitData.LeaderMAtk > atkUnit.UnitData.LeaderPAtk)
+					yield break;
+				else if (defUnit.IsExistSoldier ? defUnit.UnitData.GroupMAtk > defUnit.UnitData.GroupPAtk :
+					 defUnit.UnitData.LeaderMAtk > defUnit.UnitData.LeaderPAtk)
+					yield break;
+			}
 
 			// ターゲットをスライドインさせる、スライドしている間待機
 			yield return defUnit.SlideIn();
@@ -773,22 +781,19 @@ namespace ProjectWitch.Battle
 				// ダメージを受ける
 				DamageNum = defUnit.Damage(type, atkUnit, byLeader, toLeader);
 
-				if (type == DamageType.Normal || type == DamageType.Poison || DamageNum != 0)
+				var damageDisplay = (defUnit.IsPlayer ? mDamageDisplayPlayer : mDamageDisplayEnemy).GetComponent<DamageDisplay>();
+				damageDisplay.Display(DamageNum, true);
+				while (FXCtrl && FXCtrl.LifeTime >= 0.5)
+					yield return null;
+				for (int i = 5; i >= 0; --i)
 				{
-					var damageDisplay = (defUnit.IsPlayer ? mDamageDisplayPlayer : mDamageDisplayEnemy).GetComponent<DamageDisplay>();
-					damageDisplay.Display(DamageNum, true);
-					while (FXCtrl && FXCtrl.LifeTime >= 0.5)
-						yield return null;
-					for (int i = 5; i >= 0; --i)
-					{
-						defUnit.ApproachDisplay(i);
-						defUnit.SetDisplaySoldier();
-						Bar.SetBar(defUnit, 0, 0, 0);
-						yield return WaitSeconds(0.05f);
-					}
+					defUnit.ApproachDisplay(i);
+					defUnit.SetDisplaySoldier();
+					Bar.SetBar(defUnit, 0, 0, 0);
 					yield return WaitSeconds(0.05f);
-					yield return damageDisplay.Hide();
 				}
+				yield return WaitSeconds(0.05f);
+				yield return damageDisplay.Hide();
 
 				// チュートリアルイベント呼び出し
 				var isNotSolNumZero = !defUnit.IsPlayer && defUnit.UnitData.SoldierNum != 0;
@@ -1421,10 +1426,6 @@ namespace ProjectWitch.Battle
 			}
 			if (BattleDataIn.IsTutorial)
 			{
-                //実行中のスクリプトの終了待ち
-                while (mGame.IsTalk)
-                    yield return null;
-
 				// チュートリアルイベント呼び出し
 				EventDataFormat e = new EventDataFormat();
 				e.FileName = "s9804";
