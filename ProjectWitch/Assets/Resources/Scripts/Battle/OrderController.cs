@@ -22,6 +22,10 @@ namespace ProjectWitch.Battle
 		// オブジェクトの左右移動スピード必要秒
 		[SerializeField]
 		private float mMoveTimeX = 0.5f, mMoveTimeY = 0.5f;
+		// 1ターン毎の行動値減少数
+
+		[SerializeField]
+		private int mMinusOrderValueByTurn = 10;
 		// オブジェクトの左右移動スピード
 		//		public float MoveSpeedX { get { return BaseRect.sizeDelta.x * DisplayOutCount / mMoveTimeX; } }
 		public float GetMoveSpeedX(int _fromPos, int _toTos)
@@ -37,7 +41,7 @@ namespace ProjectWitch.Battle
 		public static int NextOrderValue { get; set; }
 		public BattleUnit TurnUnit { get { return (mOrderDiplayObj.Count != 0 ? mOrderDiplayObj[0].BattleUnit : null); } }
 		public List<OrderDiplayObj> OrderDiplayObj { get { return mOrderDiplayObj; } }
-		
+
 		// アニメーション中かどうか
 		public bool IsAnimation
 		{
@@ -66,7 +70,7 @@ namespace ProjectWitch.Battle
 				backImage.sprite = (orderDiplayObj.BattleUnit.IsPlayer ? mSpriteBannerPlayer : mSpriteBannerEnemy);
 			var text = dispObj.transform.Find("Text").GetComponent<Text>();
 			if (text)
-				text.color = (orderDiplayObj.BattleUnit.IsPlayer ? mTextColorPlayer: mTextColorEnemy);
+				text.color = (orderDiplayObj.BattleUnit.IsPlayer ? mTextColorPlayer : mTextColorEnemy);
 		}
 
 		// 各種セットアップ
@@ -89,7 +93,7 @@ namespace ProjectWitch.Battle
 			mOrderDiplayObj.Sort((a, b) => a.BattleUnit.OrderValue - b.BattleUnit.OrderValue);
 			NextOrderValue = TurnUnit.GetActionOrderValue();
 			mImNextArrow.SetActive(false);
-			StartCoroutine("CoStartMove");
+			StartCoroutine(CoStartMove());
 		}
 
 		// スタート時に移動させるコルーチン
@@ -136,7 +140,7 @@ namespace ProjectWitch.Battle
 
 		private IEnumerator MoveNextPos()
 		{
-			yield return StartCoroutine("CoMoveNextPos");
+			yield return StartCoroutine(CoMoveNextPos());
 		}
 
 		// 次の場所の矢印位置を計算
@@ -186,7 +190,7 @@ namespace ProjectWitch.Battle
 
 		public IEnumerator DeadOut(List<BattleUnit> units)
 		{
-			yield return StartCoroutine("CoDeadOut", units);
+			yield return StartCoroutine(CoDeadOut(units));
 		}
 
 		// ターン終了時のコルーチン
@@ -228,7 +232,7 @@ namespace ProjectWitch.Battle
 				}
 			}
 			for (int i = 0; i < mOrderDiplayObj.Count; ++i)
-				mOrderDiplayObj[i].BattleUnit.OrderValue -= 100;
+				mOrderDiplayObj[i].BattleUnit.OrderValue -= mMinusOrderValueByTurn;
 			NextOrderValue = TurnUnit.GetActionOrderValue();
 			while (IsAnimation)
 				yield return null;
@@ -237,7 +241,7 @@ namespace ProjectWitch.Battle
 
 		public IEnumerator TurnEnd()
 		{
-			yield return StartCoroutine("CoTurnEnd");
+			yield return StartCoroutine(CoTurnEnd());
 		}
 
 		// 召喚ユニット追加時のコルーチン
@@ -281,7 +285,7 @@ namespace ProjectWitch.Battle
 
 		public IEnumerator PlusUnit(BattleUnit unit)
 		{
-			yield return StartCoroutine("CoPlusUnit", unit);
+			yield return StartCoroutine(CoPlusUnit(unit));
 		}
 
 		// 順番下げ(単体)のコルーチン
@@ -345,7 +349,7 @@ namespace ProjectWitch.Battle
 
 		public IEnumerator DownOrderSingle(BattleUnit bu)
 		{
-			yield return StartCoroutine("CoDownOrderSingle", bu);
+			yield return StartCoroutine(CoDownOrderSingle(bu));
 		}
 
 		// 順番下げ(陣営)のコルーチン
@@ -355,7 +359,7 @@ namespace ProjectWitch.Battle
 			bool flag = true;
 			for (int i = mOrderDiplayObj.Count - 1; i > 0; i--)
 			{
-				if(i == mOrderDiplayObj.Count - 1)
+				if (i == mOrderDiplayObj.Count - 1)
 				{
 					if (mOrderDiplayObj[i].BattleUnit.OrderValue <= NextOrderValue)
 						flag = false;
@@ -443,7 +447,7 @@ namespace ProjectWitch.Battle
 			}
 			for (int i = 0; i < mOrderDiplayObj.Count; i++)
 			{
-				if(mOrderDiplayObj[i].BattleUnit.IsPlayer != isPlayer)
+				if (mOrderDiplayObj[i].BattleUnit.IsPlayer != isPlayer)
 				{
 					mOrderDiplayObj[i].SlideToPos(i);
 				}
@@ -464,18 +468,7 @@ namespace ProjectWitch.Battle
 
 		public IEnumerator DownOrderAll(bool isPlayer)
 		{
-			yield return StartCoroutine("CoDownOrderAll", isPlayer);
-		}
-
-		// Use this for initialization
-		void Start()
-		{
-		}
-
-		// Update is called once per frame
-		void Update()
-		{
+			yield return StartCoroutine(CoDownOrderAll(isPlayer));
 		}
 	}
-
 }
