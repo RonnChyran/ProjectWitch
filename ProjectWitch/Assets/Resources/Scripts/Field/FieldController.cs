@@ -288,10 +288,13 @@ namespace ProjectWitch.Field
                 yield return StartCoroutine(CallBattle(area, territory, true));
                 yield return null;
             }
-
-            ////時間を進める
-            //game.GameData.CurrentTime++;
-            
+            else
+            {
+                //時間を進める
+                if (game.GameData.CurrentTime <= 2)
+                    game.GameData.CurrentTime++;
+                yield return null;
+            }
 
         }
 

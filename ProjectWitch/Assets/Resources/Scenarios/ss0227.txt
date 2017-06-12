@@ -1,0 +1,23 @@
+;ss0227
+;オリ死ルート　オリ死からベガ占領まで侵攻不可能にする
+
+
+[setskin ref="skin1"]
+
+[loadfg id=0 ref="alice"]
+[loadfg id=1 ref="chishire"]
+
+[show_message]
+[drawfg id=1]
+#チシャ
+アリス様。今はほかの領地と戦争中です。[p]
+あまり手を広げられると、後で大変ですよ？[p]
+[drawfg id=0]
+#アリス
+うーん、それもそうか。[p]
+ちっ、しゃくだが侵攻は中止だ。[p]
+
+[clearfg]
+[hide_message]
+
+[battle_disable]

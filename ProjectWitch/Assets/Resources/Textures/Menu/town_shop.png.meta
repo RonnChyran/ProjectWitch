@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: db715c825dcf23142a52fe166014060a
-timeCreated: 1495503992
+timeCreated: 1497199622
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -18,6 +18,8 @@ TextureImporter:
     21300022: town_shop_11
     21300024: town_shop_12
     21300026: town_shop_13
+    21300028: town_shop_14
+    21300030: town_shop_15
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -73,6 +75,14 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
   - buildTarget: Standalone
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: WebGL
     maxTextureSize: 2048
     textureFormat: -1
     textureCompression: 0
@@ -262,6 +272,32 @@ TextureImporter:
         height: 83
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: town_shop_14
+      rect:
+        serializedVersion: 2
+        x: 1063
+        y: 1512
+        width: 493
+        height: 62
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: town_shop_15
+      rect:
+        serializedVersion: 2
+        x: 1063
+        y: 1445
+        width: 494
+        height: 47
+      alignment: 0
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0

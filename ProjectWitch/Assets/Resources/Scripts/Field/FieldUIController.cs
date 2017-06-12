@@ -108,6 +108,13 @@ namespace ProjectWitch.Field
         {
             var game = Game.GetInstance();
             
+            //既存のゲームオブジェクトを全削除
+            foreach(var area in mBases)
+            {
+                Destroy(area);
+            }
+
+            //再生成
             for (int i = 1; i < game.GameData.Area.Count; i++)
             {
                 AddAreaPoint(i, game.GameData.Area[i].Owner);

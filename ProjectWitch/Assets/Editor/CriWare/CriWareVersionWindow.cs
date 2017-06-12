@@ -17,7 +17,7 @@ using System.Linq;
 
 public sealed class CriWareVersionWindow : EditorWindow
 {
-	private readonly string		pluginsDirectory		= System.IO.Path.Combine(Application.dataPath, "Plugins");
+	private string		pluginsDirectory		= "";
 	private readonly string[][]	pluginBinaryFilenames	= {
 		new string[]{"PC",      "PCx64",          "CRIWARE Monitor Unity(LE)", "x86_64/cri_ware_unity.dll"},
 		new string[]{"PC",      "PCx86",          "CRIWARE Monitor Unity(LE)", "x86/cri_ware_unity.dll"},
@@ -64,7 +64,8 @@ public sealed class CriWareVersionWindow : EditorWindow
 	
 	private void OnEnable()
 	{
-		Reload();
+        pluginsDirectory = System.IO.Path.Combine(Application.dataPath, "Plugins");
+        Reload();
 	}
 	
 	

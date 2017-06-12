@@ -2,15 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SellMenu : MonoBehaviour {
-
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+namespace ProjectWitch.Shop
+{
+    public class SellMenu : BasePurchaseMenu
+    {
+    }
 }

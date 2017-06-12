@@ -7,17 +7,31 @@ namespace ProjectWitch.Shop
 {
     public class MessageBox : MonoBehaviour {
 
+        //名前オブジェクト
         [SerializeField]
         private Text mName = null;
 
+        //メッセージ表示オブジェクト
         [SerializeField]
         private Text mMessage = null;
+
+        //文字送りアイコン
+        [SerializeField]
+        private GameObject mNextIcon = null;
 
         //すべてのテキスト
         private string mAllText = "";
 
         //表示開始からの時間
         private float mTime = 0.0f;
+
+        //現在の状態
+        public enum State
+        {
+            Active, //文字送り中
+            Wait,   //クリック待ち
+        }
+        public State TextState { get; set; }
 
         // Use this for initialization
         void Start() {
@@ -37,6 +51,12 @@ namespace ProjectWitch.Shop
 
             //テキストセット
             mMessage.text = mAllText.Substring(0, numLetter);
+
+            if(mAllText.Length == numLetter && mAllText.Length > 0)
+            {
+                TextState = State.Wait;
+                mNextIcon.SetActive(true);
+            }
         }
 
         //テキストをセットしなおす
@@ -45,6 +65,8 @@ namespace ProjectWitch.Shop
             mName.text = name;
             mAllText = mes;
             mTime = 0.0f;
+            TextState = State.Active;
+            mNextIcon.SetActive(false);
         }
     }
 }

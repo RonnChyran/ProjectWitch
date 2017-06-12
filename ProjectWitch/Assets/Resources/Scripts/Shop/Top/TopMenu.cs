@@ -14,7 +14,7 @@ namespace ProjectWitch.Shop
         private Animator mSellMenu = null;
 
         [SerializeField]
-        private Animator mTalkMenu = null;
+        private TalkMenu mTalkMenu = null;
 
         //コントローラ
         [SerializeField]
@@ -55,7 +55,7 @@ namespace ProjectWitch.Shop
 
         public void Click_Talk()
         {
-            mBuyMenu.SetBool("IsShow", true);
+            mTalkMenu.Begin();
             mcAnimator.SetBool("IsShow", false);
         }
 

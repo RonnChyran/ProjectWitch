@@ -379,7 +379,7 @@ namespace ProjectWitch.Talk.Compiler{
 	public class CreateKillUnitCommand : Pattern_TagFormat
 	{
 		protected override string TagName(){
-			return "unit_kill";
+			return "unit_unemploy";
 		}
 
 		protected override CommandFormat[] CreateCommand(ArgumentDictionary arguments, int line, int index)

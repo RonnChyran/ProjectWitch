@@ -795,3 +795,16 @@
 ;オリヴィアとトリアイナ領占領
 [sys_memset index=10001 value="1"]
 [sys_memset index=10002 value="1"]
+
+;オリヴィア、トリアイナ、カートンを仲間に加える処理
+[if_alive unit=5]
+[unit_employ unit=5]
+[endif]
+
+[if_alive unit=6]
+[unit_employ unit=6]
+[endif]
+
+[if_alive unit=7]
+[unit_employ unit=7]
+[endif]
