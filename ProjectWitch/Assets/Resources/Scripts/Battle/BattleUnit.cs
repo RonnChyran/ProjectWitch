@@ -695,7 +695,8 @@ namespace ProjectWitch.Battle
 			{
 				damage = NormalDamage(atkUnit, byLeader, toLeader, type == DamageType.Counter || type == DamageType.CaptureCounter);
 				// カウンターダメージなら
-				if (type == DamageType.Counter) damage *= mBattle.Coe16;
+				if (type == DamageType.Counter)
+					damage *= mBattle.Coe16;
 				// 捕獲カウンターダメージなら
 				else if (type == DamageType.CaptureCounter) damage *= mBattle.Coe17;
 
