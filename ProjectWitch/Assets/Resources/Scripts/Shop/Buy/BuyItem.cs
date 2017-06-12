@@ -21,26 +21,10 @@ namespace ProjectWitch.Shop
             //個数をセット
             var num = itemList[ItemID].Count;
             mNum.text = num.ToString();
-        }
 
-        public override void OnClicked()
-        {
-            base.OnClicked();
-
-            var game = Game.GetInstance();
-            var item = game.GameData.Equipment[ItemID];
-
-            //文字列にアイテム名を差し込む
-            mMessageA = mMessageA.Replace("[0]", item.Name);
-            mMessageA = mMessageA.Replace("[1]", item.BuyingPrice.ToString());
-            mMessageB = mMessageB.Replace("[0]", item.Name);
-
-            //メッセージセット、マナが足りるか足りないかでメッセージが変わる。
-            var nextMana = game.GameData.PlayerMana - item.BuyingPrice;
-            if (nextMana > 0)
-                MesBox.SetText(mMesNameA, mMessageA);
-            else
-                MesBox.SetText(mMesNameB, mMessageB);
+            //価格をセット
+            var price = game.GameData.Equipment[ItemID].BuyingPrice;
+            mPrice.text = price.ToString();
         }
     }
 }

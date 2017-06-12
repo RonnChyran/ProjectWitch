@@ -4,45 +4,15 @@ using UnityEngine;
 
 namespace ProjectWitch.Shop
 {
-    public class BuyList : MonoBehaviour
+    public class BuyList : BaseList
     {
-        //リストのコンテンツへの参照
-        [SerializeField]
-        private GameObject mListContent = null;
 
-        //コンテンツの親
-        [SerializeField]
-        private GameObject mListContentParent = null;
-
-        //情報ウィンドウへの参照
-        [SerializeField]
-        private ItemInfo mInfoWindow = null;
-
-        //メッセージボックスへの参照
-        [SerializeField]
-        private MessageBox mMessageBox = null;
-
-        // Use this for initialization
-        void Start()
+        public override void Reset()
         {
-            Reset();
-        }
+            base.Reset();
 
-        // Update is called once per frame
-        void Update()
-        {
-        }
-
-        public void Reset()
-        {
             var game = Game.GetInstance();
-
-            //子供を全削除
-            foreach(Transform child in mListContentParent.transform)
-            {
-                Destroy(child.gameObject);
-            }
-
+            
             //子供を追加
             for(int i=0; i< game.GameData.Equipment.Count; i++)
             {

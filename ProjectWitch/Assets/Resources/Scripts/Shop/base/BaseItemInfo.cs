@@ -4,7 +4,7 @@ using UnityEngine.UI;
 namespace ProjectWitch.Shop
 {
     [RequireComponent(typeof(Animator))]
-    public class ItemInfo:MonoBehaviour
+    public class BaseItemInfo:MonoBehaviour
     {
         //アニメータへの参照
         private Animator mAnimator = null;
@@ -37,29 +37,40 @@ namespace ProjectWitch.Shop
         [SerializeField]
         private Text mCur = null;
 
+        //商品選択時に表示するメッセージ
         [SerializeField]
-        private Button mButton = null;
+        protected string mMesNameA = "";
+        [SerializeField, Multiline]
+        protected string mMessageA = "";
+
+        //buy : 商品選択時にマナが足りない場合のメッセージ
+        //sell : 商品売却時のメッセージ
+        [SerializeField]
+        protected string mMesNameB = "";
+        [SerializeField, Multiline]
+        protected string mMessageB = "";
+
+        //buy : 商品購入時のメッセージ
+        //sell : 商品売却時に誰かが装備していた場合の最終警告メッセージ
+        [SerializeField]
+        protected string mMesNameC = "";
+        [SerializeField, Multiline]
+        protected string mMessageC = "";
 
         [SerializeField]
-        private NextManaWindow mNextManaWindow = null;
+        protected NextManaWindow mNextManaWindow = null;
 
         //メッセージボックス
         [SerializeField]
-        private MessageBox mMessageBox = null;
-
-        //購入時に表示するメッセージ
-        [SerializeField]
-        private string mMesName = "";
-        [SerializeField,Multiline]
-        private string mMessage = "";
+        protected MessageBox mMessageBox = null;
 
         //リストへの参照
         [SerializeField]
-        private BuyList mList = null;
+        protected BaseList mList = null;
 
         public int ItemID { get; set; }
 
-        public void Start()
+        public virtual void Start()
         {
             mAnimator = GetComponent<Animator>();
 
@@ -67,7 +78,7 @@ namespace ProjectWitch.Shop
             Reset();
         }
 
-        public void Reset()
+        public virtual void Reset()
         {
             if (ItemID != -1)
             {
@@ -88,12 +99,6 @@ namespace ProjectWitch.Shop
                 mLeader.text = item.Leadership.ToString();
                 mCur.text = item.Curative.ToString();
 
-                var mana = game.GameData.PlayerMana - item.BuyingPrice;
-                mNextManaWindow.SetMana(mana);
-
-                if (mana > 0) mButton.interactable = true;
-                else mButton.interactable = false;
-
                 mAnimator.SetBool("IsShow", true);
 
             }
@@ -101,28 +106,10 @@ namespace ProjectWitch.Shop
                 mAnimator.SetBool("IsShow", false);
         }
 
-        public void Close()
+        public virtual void Close()
         {
             ItemID = -1;
             Reset();
-        }
-
-        public void ClickBuyButton()
-        {
-            //プレイヤーのデータに装備データを入れる
-            var game = Game.GetInstance();
-            game.GameData.Territory[0].EquipmentList[ItemID].Add(-1);
-
-            //マナを減らす
-            game.GameData.PlayerMana -= game.GameData.Equipment[ItemID].BuyingPrice;
-
-            //メッセージを表示
-            mMessageBox.SetText(mMesName, mMessage);
-
-            //データをリセット
-            mList.Reset();
-
-            Close();
         }
     }
 }

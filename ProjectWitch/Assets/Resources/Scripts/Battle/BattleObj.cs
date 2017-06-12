@@ -1451,6 +1451,10 @@ namespace ProjectWitch.Battle
             BattleDataOut.IsWin = isWin;
 			if (BattleDataIn.IsTutorial)
 			{
+                //実行中のスクリプトの終了待ち
+                while (mGame.IsTalk)
+                    yield return null;
+
 				// チュートリアルイベント呼び出し
 				EventDataFormat e = new EventDataFormat();
 				e.FileName = "s9804";

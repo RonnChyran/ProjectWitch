@@ -6,7 +6,7 @@ namespace ProjectWitch.Battle
 {
 	public class TurnNumDisplay : MonoBehaviour
 	{
-		private BattleObj mBattleObj;
+		private BattleObj mBattleObj = null;
 		private int mTurnNum = 0;
 		private Text TurnNumText { get { return transform.Find("TurnNum").GetComponent<Text>(); } }
 
@@ -29,6 +29,8 @@ namespace ProjectWitch.Battle
 		// Update is called once per frame
 		void Update()
 		{
+            if (mBattleObj == null) return;
+
 			if(mTurnNum != mBattleObj.TurnNum)
 			{
 				mTurnNum = mBattleObj.TurnNum;

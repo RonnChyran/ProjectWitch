@@ -24,26 +24,22 @@ namespace ProjectWitch.Shop
             var isEquipment = itemList[ItemID][ItemUniID] == -1 ? false : true;
             if (isEquipment) mIsEquipment.text = "E";
             else mIsEquipment.text = "";
+
+            //価格をセット
+            var price = game.GameData.Equipment[ItemID].SellingPrice;
+            mPrice.text = price.ToString();
         }
 
         public override void OnClicked()
         {
-            base.OnClicked();
-
             var game = Game.GetInstance();
-            var item = game.GameData.Equipment[ItemID];
+            
+            //売却商品情報ウィンドウに装備しているユニットのIDをセット
+            var unitID = game.GameData.Territory[0].EquipmentList[ItemID][ItemUniID];
+            var infoWindow = (SellItemInfo)InfoWindow;
+            infoWindow.UnitID = unitID;
 
-            //文字列にアイテム名を差し込む
-            mMessageA = mMessageA.Replace("[0]", item.Name);
-            mMessageA = mMessageA.Replace("[1]", item.BuyingPrice.ToString());
-            mMessageB = mMessageB.Replace("[0]", item.Name);
-
-            //メッセージセット、マナが足りるか足りないかでメッセージが変わる。
-            var nextMana = game.GameData.PlayerMana - item.BuyingPrice;
-            if (nextMana > 0)
-                MesBox.SetText(mMesNameA, mMessageA);
-            else
-                MesBox.SetText(mMesNameB, mMessageB);
+            base.OnClicked();
         }
     }
 }

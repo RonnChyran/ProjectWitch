@@ -751,6 +751,7 @@ namespace ProjectWitch
             outdata.AddRange(BitConverter.GetBytes(HP));
             outdata.AddRange(BitConverter.GetBytes(Experience));
             outdata.AddRange(BitConverter.GetBytes(SoldierNum));
+            outdata.AddRange(BitConverter.GetBytes(MaxSoldierNum));
             outdata.AddRange(BitConverter.GetBytes(Deathable));
             outdata.AddRange(BitConverter.GetBytes(Catchable));
             outdata.AddRange(BitConverter.GetBytes(IsAlive));
@@ -771,6 +772,7 @@ namespace ProjectWitch
             HP = BitConverter.ToInt32(data, offset); offset += 4;
             Experience = BitConverter.ToInt32(data, offset); offset += 4;
             SoldierNum = BitConverter.ToInt32(data, offset); offset += 4;
+            MaxSoldierNum = BitConverter.ToInt32(data, offset); offset += 4;
             Deathable = BitConverter.ToBoolean(data, offset); offset += 1;
             Catchable = BitConverter.ToBoolean(data, offset); offset += 1;
             IsAlive = BitConverter.ToBoolean(data, offset); offset += 1;
