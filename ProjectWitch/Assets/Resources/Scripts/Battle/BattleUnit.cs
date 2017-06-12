@@ -617,9 +617,9 @@ namespace ProjectWitch.Battle
 		}
 
 		// ダメージ量計算
-		private float NormalDamage(DamageType type, BattleUnit atkUnit, bool isPhy, bool byLeader, bool toLeader)
+		private float NormalDamage(BattleUnit atkUnit, bool byLeader, bool toLeader, bool isCounter)
 		{
-			float damage = 0;
+			float pDamage = 0, mDamage = 0;
 			var AtkData = atkUnit.UnitData;
 			// 防御側: GPDef
 			var DefGPDef = UnitData.GroupPDef * AreaCorPDef;
@@ -636,24 +636,23 @@ namespace ProjectWitch.Battle
 				// 攻撃側: LPAtk
 				var AtkLPAtk = AtkData.LeaderPAtk * AreaCorPAtk;
 				// 攻撃側: LMAtk
-				var AtkLMAtk = (type == DamageType.Counter || type == DamageType.CaptureCounter) ? 0 : AtkData.LeaderMAtk * AreaCorMAtk;
+				var AtkLMAtk = AtkData.LeaderMAtk * AreaCorMAtk;
 
 				if (toLeader)
 				{
 					// 防：リーダー
-					if (isPhy)      // 物理攻撃
-						damage = System.Math.Min(LAtkSkill.Power / 100.0f, (AtkLPAtk / 2 - DefGPDef / 4) / 4) * PositionCoe;
-					else            // 魔法攻撃
-						damage = System.Math.Min(LAtkSkill.Power / 100.0f, (AtkLMAtk / 2 - DefGMDef / 4) / 4);
-
+					// 物理攻撃
+					pDamage = System.Math.Min(LAtkSkill.Power / 100.0f, (AtkLPAtk / 2 - DefGPDef / 4) / 4) * PositionCoe;
+					// 魔法攻撃
+					if (!isCounter) mDamage = System.Math.Min(LAtkSkill.Power / 100.0f, (AtkLMAtk / 2 - DefGMDef / 4) / 4);
 				}
 				else
 				{
 					// 防：集団
-					if (isPhy)      // 物理攻撃
-						damage = System.Math.Min(LAtkSkill.Power, (AtkLPAtk / 2 - DefGPDef / 4) * 10) * PositionCoe;
-					else            // 魔法攻撃
-						damage = System.Math.Min(LAtkSkill.Power, (AtkLMAtk / 2 - DefGMDef / 4) * 10);
+					// 物理攻撃
+					pDamage = System.Math.Min(LAtkSkill.Power, (AtkLPAtk / 2 - DefGPDef / 4) * 10) * PositionCoe;
+					// 魔法攻撃
+					if (!isCounter) mDamage = System.Math.Min(LAtkSkill.Power, (AtkLMAtk / 2 - DefGMDef / 4) * 10);
 				}
 			}
 			else
@@ -663,26 +662,26 @@ namespace ProjectWitch.Battle
 				// 攻撃側: GPAtk
 				var AtkGPAtk = AtkData.GroupPAtk * AreaCorPAtk;
 				// 攻撃側: GMAtk
-				var AtkGMAtk = (type == DamageType.Counter || type == DamageType.CaptureCounter) ? 0 : AtkData.GroupMAtk * AreaCorMAtk;
+				var AtkGMAtk = AtkData.GroupMAtk * AreaCorMAtk;
 
 				if (toLeader)
 				{
 					// 防：リーダー
-					if (isPhy)      // 物理攻撃
-						damage = System.Math.Min(AtkData.SoldierNum / 100, (AtkGPAtk / 2 - DefLPDef / 4) / 4) * PositionCoe;
-					else            // 魔法攻撃
-						damage = (AtkGMAtk / 2 - DefLMDef / 4) / 4;
+					// 物理攻撃
+					pDamage = System.Math.Min(AtkData.SoldierNum / 100, (AtkGPAtk / 2 - DefLPDef / 4) / 4) * PositionCoe;
+					// 魔法攻撃
+					if (!isCounter) mDamage = (AtkGMAtk / 2 - DefLMDef / 4) / 4;
 				}
 				else
 				{
 					// 防：集団
-					if (isPhy)      // 物理攻撃
-						damage = System.Math.Min(AtkData.SoldierNum, (AtkGPAtk / 2 - DefGPDef / 4) * 10) * PositionCoe;
-					else            // 魔法攻撃
-						damage = (AtkGMAtk / 2 - DefGMDef / 4) * 10;
+					// 物理攻撃
+					pDamage = System.Math.Min(AtkData.SoldierNum, (AtkGPAtk / 2 - DefGPDef / 4) * 10) * PositionCoe;
+					// 魔法攻撃
+					if (!isCounter) mDamage = (AtkGMAtk / 2 - DefGMDef / 4) * 10;
 				}
 			}
-			return System.Math.Max(damage, 0);
+			return System.Math.Max(pDamage, 0) + System.Math.Max(mDamage, 0);
 		}
 
 		// ダメージを受ける
@@ -694,10 +693,7 @@ namespace ProjectWitch.Battle
 				damage = (IsExistSoldier ? UnitData.SoldierNum : UnitData.HP) * mBattle.Coe20 * mBattle.Rand9;
 			else
 			{
-				var isPhy = (byLeader ? atkUnit.UnitData.LeaderPAtk > atkUnit.UnitData.LeaderMAtk :
-					atkUnit.UnitData.GroupPAtk > atkUnit.UnitData.GroupMAtk);
-
-				damage = NormalDamage(type, atkUnit, isPhy, byLeader, toLeader);
+				damage = NormalDamage(atkUnit, byLeader, toLeader, type == DamageType.Counter || type == DamageType.CaptureCounter);
 				// カウンターダメージなら
 				if (type == DamageType.Counter) damage *= mBattle.Coe16;
 				// 捕獲カウンターダメージなら
