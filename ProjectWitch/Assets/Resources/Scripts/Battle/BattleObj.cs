@@ -779,10 +779,14 @@ namespace ProjectWitch.Battle
 			else
 			{
 				// ダメージを受ける
+				var preLife = (!defUnit.IsExistSoldier || toLeader ? defUnit.UnitData.HP : defUnit.UnitData.SoldierNum);
 				DamageNum = defUnit.Damage(type, atkUnit, byLeader, toLeader);
 
 				var damageDisplay = (defUnit.IsPlayer ? mDamageDisplayPlayer : mDamageDisplayEnemy).GetComponent<DamageDisplay>();
 				damageDisplay.Display(DamageNum, true);
+
+				DamageNum = System.Math.Min(preLife, DamageNum);
+
 				while (FXCtrl && FXCtrl.LifeTime >= 0.5)
 					yield return null;
 				for (int i = 5; i >= 0; --i)

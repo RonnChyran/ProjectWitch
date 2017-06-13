@@ -699,9 +699,8 @@ namespace ProjectWitch.Battle
 					damage *= mBattle.Coe16;
 				// 捕獲カウンターダメージなら
 				else if (type == DamageType.CaptureCounter) damage *= mBattle.Coe17;
-
-
 			}
+			var reDamage = damage;
 			damage = System.Math.Min(damage, (!IsExistSoldier || toLeader ? UnitData.HP : UnitData.SoldierNum));
 
 			if (!IsExistSoldier || toLeader)
@@ -709,7 +708,7 @@ namespace ProjectWitch.Battle
 			else
 				UnitData.SoldierNum = System.Math.Max(UnitData.SoldierNum - (int)damage, 0);
 			IsDamaged = true;
-			return (int)damage;
+			return (int)reDamage;
 		}
 
 		// 回復する
