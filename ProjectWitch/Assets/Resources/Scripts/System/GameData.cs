@@ -1437,6 +1437,8 @@ namespace ProjectWitch
 	//装備データ
 	public class EquipmentDataFormat
 	{
+        public static readonly int ShopFlagID = 4010;
+
 		//ID
 		public int ID { get; set; }
 
@@ -2506,7 +2508,7 @@ namespace ProjectWitch
 					equipData.BuyingPrice = int.Parse(data[14]);
 					equipData.SellingPrice = int.Parse(data[15]);
 					if (data[16] == "")
-						equipData.ShopFlag = -1;
+						equipData.ShopFlag = 99;
 					else
 						equipData.ShopFlag = int.Parse(data[16]);
 					equipData.Description = data[17];

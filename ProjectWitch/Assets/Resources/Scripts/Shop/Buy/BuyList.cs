@@ -16,6 +16,10 @@ namespace ProjectWitch.Shop
             //子供を追加
             for(int i=0; i< game.GameData.Equipment.Count; i++)
             {
+                //フラグを満たしていない商品は除外
+                var flag = game.GameData.Equipment[i].ShopFlag;
+                if (game.GameData.Memory[EquipmentDataFormat.ShopFlagID] < flag) continue;
+
                 var inst = Instantiate(mListContent);
                 var cp = inst.GetComponent<BuyItem>();
                 cp.ItemID = i;

@@ -901,3 +901,11 @@
 [unit_heal unit=16]
 
 [change_area_owner area=49 owner=0]
+
+;シャルロッテ量占領
+[sys_memset index=10004 value=1]
+
+;ショップフラグの加算
+[sys_memget index=4010 local=0]
+[calc opr="add" index0=0 value1=1 to=0]
+[sys_memset index=4010 local=0]
