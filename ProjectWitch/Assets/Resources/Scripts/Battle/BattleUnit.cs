@@ -318,15 +318,15 @@ namespace ProjectWitch.Battle
 			if (diffLevel < -10)
 				return 0;
 			else if (diffLevel < -5)
-				return 0.05f;
+				return 5f;
 			else if (diffLevel < 5)
-				return 0.1f;
+				return 10f;
 			else if (diffLevel < 10)
-				return 0.2f;
+				return 20f;
 			else if (diffLevel < 15)
-				return 0.5f;
+				return 50f;
 			else
-				return 1;
+				return 100;
 		}
 
 		// 兵士回復量
