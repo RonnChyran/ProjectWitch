@@ -318,11 +318,11 @@ namespace ProjectWitch.Battle
 			if (diffLevel < -10)
 				return 0;
 			else if (diffLevel < -5)
-				return 5f;
-			else if (diffLevel < 5)
 				return 10f;
-			else if (diffLevel < 10)
+			else if (diffLevel < 5)
 				return 20f;
+			else if (diffLevel < 10)
+				return 30f;
 			else if (diffLevel < 15)
 				return 50f;
 			else
