@@ -1,20 +1,22 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace ProjectWitch.Shop
+namespace ProjectWitch.Shop.Magic
 {
     [RequireComponent(typeof(Animator))]
-    public class BuyItemInfo : BaseItemInfo
+    public class BuyItemInfo : MagicBaseItemInfo
     {
         [SerializeField]
         private Button mBuyButton = null;
 
         public override void Reset()
         {
+            base.Reset();
+
             if (ItemID != -1)
             {
                 var game = Game.GetInstance();
-                var item = game.GameData.Equipment[ItemID];
+                var item = game.GameData.Card[ItemID];
 
                 var mana = game.GameData.PlayerMana - item.BuyingPrice;
                 mNextManaWindow.SetMana(mana);
@@ -24,16 +26,16 @@ namespace ProjectWitch.Shop
                 else mBuyButton.interactable = false;
 
                 //文字列にアイテム名を差し込む
-                mMessageA = mMessageA.Replace("[0]", item.Name);
-                mMessageA = mMessageA.Replace("[1]", item.BuyingPrice.ToString());
-                mMessageB = mMessageB.Replace("[0]", item.Name);
+                var messageA = mMessageA.Replace("[0]", item.Name);
+                messageA = messageA.Replace("[1]", item.BuyingPrice.ToString());
+                var messageB = mMessageB.Replace("[0]", item.Name);
 
                 //メッセージセット、マナが足りるか足りないかでメッセージが変わる。
                 var nextMana = game.GameData.PlayerMana - item.BuyingPrice;
                 if (nextMana > 0)
-                    mMessageBox.SetText(mMesNameA, mMessageA);
+                    mMessageBox.SetText(mMesNameA, messageA);
                 else
-                    mMessageBox.SetText(mMesNameB, mMessageB);
+                    mMessageBox.SetText(mMesNameB, messageB);
             }
 
             base.Reset();
@@ -41,16 +43,16 @@ namespace ProjectWitch.Shop
 
         public void ClickBuyButton()
         {
-            //プレイヤーのデータに装備データを入れる
+            //プレイヤーのデータにカードデータを入れる
             var game = Game.GetInstance();
-            game.GameData.Territory[0].EquipmentList[ItemID].Add(-1);
+            game.GameData.Group[game.GameData.Territory[0].GroupList[0]].CardList.Add(ItemID);
 
             //マナを減らす
-            game.GameData.PlayerMana -= game.GameData.Equipment[ItemID].BuyingPrice;
+            game.GameData.PlayerMana -= game.GameData.Card[ItemID].BuyingPrice;
 
             //メッセージを表示
             mMessageBox.SetText(mMesNameC, mMessageC);
-            
+
             //データをリセット
             mList.Reset();
 

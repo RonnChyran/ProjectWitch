@@ -17,8 +17,6 @@ namespace ProjectWitch.Field
         [SerializeField]
         private Text mcOwner = null;
         [SerializeField]
-        private Text mcLevel = null;
-        [SerializeField]
         private Text mcTime = null;
         [SerializeField]
         private Text mcMana = null;
@@ -108,7 +106,6 @@ namespace ProjectWitch.Field
 
                 //テキストデータのセット
                 mcOwner.text = game.GameData.Territory[area.Owner].OwnerName;
-                mcLevel.text = area.Level.ToString();
                 mcTime.text = area.Time.ToString();
                 mcMana.text = area.Mana.ToString();
                 mcPAtk.text = area.BattleFactor.PAtk.ToString() + "%";

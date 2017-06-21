@@ -605,13 +605,12 @@ namespace ProjectWitch.Field
             //領地がなかったら抜ける
             if (areas.Count == 0) return -1;
 
-            //平均の算出
+            //各領地の1割を合計する
             var sum = 0;
-            foreach (var area in areas) sum += game.GameData.Area[area].Mana;
-            var ave = sum / areas.Count;
+            foreach (var area in areas) sum += game.GameData.Area[area].Mana / 10;
 
-            //平均の10%を返す
-            return ave / 10;
+            //合計を返す
+            return sum;
 
         }
 

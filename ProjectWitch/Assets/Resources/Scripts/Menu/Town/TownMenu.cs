@@ -64,7 +64,33 @@ namespace ProjectWitch.Menu
 
         public void Click_MagicShop()
         {
+            Closable = false;
+            SceneManager.LoadScene("MagicShop", LoadSceneMode.Additive);
+        }
 
+        public void ExecuteEvent(EventDataFormat e)
+        {
+            Closable = false;
+            StartCoroutine(_EvecuteEvent(e));
+        }
+
+        private IEnumerator _EvecuteEvent(EventDataFormat e)
+        {
+            var game = Game.GetInstance();
+
+            game.CallScript(e);
+            yield return null;
+
+            //会話の終了まち
+            while (game.IsTalk) yield return null;
+
+            //イベントが終わったら少し待つ
+            yield return new WaitForSeconds(1.0f);
+
+            //終了
+            Closable = true;
+
+            yield return null;
         }
     }
 }

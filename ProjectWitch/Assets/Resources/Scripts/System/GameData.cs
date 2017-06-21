@@ -500,6 +500,18 @@ namespace ProjectWitch
 		//ユニット名
 		public string Name { get; set; }
 
+        //ユニットの種別
+        public enum UnitJob : int
+        {
+            MagicAttacker,
+            MagicAssistant,
+            PhysicsAttacker,
+            PhysicsAssistant,
+            OmniAttacker,
+            OmniAssistant
+        };
+        public UnitJob Job { get; set; }
+
 		//レベル
 		private int mLevel = 0;
 		public int Level { get { return (mLevel > MaxLevel && MaxLevel > 0) ? MaxLevel : mLevel; } set { mLevel = value; } }
@@ -867,15 +879,16 @@ namespace ProjectWitch
 	//カードデータ
 	public class CardDataFormat
 	{
-		//ID
-		[System.Xml.Serialization.XmlAttribute("id")]
-		public int ID { get; set; }
+        public static readonly int ShopFlagID = 4010;
+
+        //ID
+        public int ID { get; set; }
 
 		//名前
 		public string Name { get; set; }
 
 		//タイミング
-		public enum CardTiming
+		public enum CardTiming : int
 		{
 			BattleBegin = 0,      //戦闘開始
 			BattleEnd,          //戦闘終了
@@ -895,6 +908,26 @@ namespace ProjectWitch
 			Rand50,             //50%で発動
 			Rand20,             //20%で発動
 		}
+        public static readonly Dictionary<CardTiming,string> CardTimingName = new Dictionary<CardTiming, string>
+        {
+            {CardTiming.BattleBegin, "戦闘開始時" },
+            {CardTiming.BattleEnd, "戦闘終了時" },
+            {CardTiming.UserState_S10, "味方兵士数10%以下" },
+            {CardTiming.UserState_S50, "味方兵士数50%以下" },
+            {CardTiming.UserState_HP10, "味方HP10%以下" },
+            {CardTiming.UserState_HP50, "味方HP50%以下" },
+            {CardTiming.UserState_Poison, "味方が毒にかかる" },
+            {CardTiming.UserState_Death, "味方死亡" },
+            {CardTiming.EnemyState_S10, "敵兵士数10%以下" },
+            {CardTiming.EnemyState_S50, "敵兵士数50%以下" },
+            {CardTiming.EnemyState_HP10, "敵HP10%以下" },
+            {CardTiming.EnemyState_HP50, "敵HP50%以下" },
+            {CardTiming.EnemyState_Poison, "敵が毒にかかる" },
+            {CardTiming.EnemyState_Death, "敵死亡" },
+            {CardTiming.Rand80, "80%の確率で発動" },
+            {CardTiming.Rand50, "50%の確率で発動" },
+            {CardTiming.Rand20, "20%の確率で発動" },
+        };
 		public CardTiming Timing { get; set; }
 
 		//持続回数 (-1は無限)
@@ -956,15 +989,12 @@ namespace ProjectWitch
 
 		//地点所有者 (TerritoryDataFormatのリストのインデックス
 		public int Owner { get; set; }
-
-		//レベル
-		public int Level { get; set; }
-
+        
 		//所有マナ
 		public int Mana { get; set; }
 
 		//限界マナ
-		public int MaxMana { get; set; }
+		public int IncrementalMana { get; set; }
 
 		//戦闘時間
 		public int Time { get; set; }
@@ -1756,7 +1786,7 @@ namespace ProjectWitch
 		public string FileName { get; set; }
 
 		//タイミング
-		public enum TimingType
+		public enum TimingType : int
 		{
 			PlayerTurnBegin = 0,
 			EnemyTurnBegin,
@@ -1991,28 +2021,29 @@ namespace ProjectWitch
 			//ユニットデータに格納（0番目はキャプションなので読み飛ばす
 			for (int i = 1; i < rowData.Count; i++)
 			{
-				if (rowData[i].Count < 46) continue;
+				if (rowData[i].Count < 47) continue;
 
 				//データの順番
-				//[0]ID         [1]名前       [2]レベル      [3]レベル成長限界          [4]HP
-				//[5]HP成長率
-				//[6]LATK       [7]LMAT       [8]LDEF        [9]LMDE        [10]GATK    [11]GMAT
-				//[12]GDEF      [13]GMDE      [14]成LATK     [15]成LMAT     [16]成LDEF  [17]成LMDE
-				//[18]成GATK    [19]成GMAT    [20]成GDEF     [21]成GMDE     [22]指揮力　[23]機動力
-				//[24]成指揮    [25]成機動
-				//[26]回復力　  [27]回復力成長率
-				//[28]兵士数    [29]死ぬか撤退か [30]捕獲可能か
-				//[31]好感度 
-				//[32]リーダー攻撃スキル
-				//[33]リーダー防御スキル
-				//[34]兵士攻撃スキル   [35]兵士サイズ
-				//[36]装備             [37]AI番号
-				//[38]立ち絵画像名     [39]顔アイコン画像    
-				//[40]戦闘リーダープレハブ名
-				//[41]戦闘兵士プレハブ名 [42]キャラ説明
-				//[43]死亡時セリフ
-				//[44]捕獲時セリフ
-				//[45]逃走時セリフ
+				//[0]ID         [1]名前       [2]種別
+                //[3]レベル     [4]レベル成長限界          [5]HP
+				//[6]HP成長率
+				//[7]LATK       [8]LMAT       [9]LDEF        [10]LMDE       [11]GATK    [12]GMAT
+				//[13]GDEF      [14]GMDE      [15]成LATK     [16]成LMAT     [17]成LDEF  [18]成LMDE
+				//[19]成GATK    [20]成GMAT    [21]成GDEF     [22]成GMDE     [23]指揮力　[24]機動力
+				//[25]成指揮    [26]成機動
+				//[27]回復力　  [28]回復力成長率
+				//[29]兵士数    [30]死ぬか撤退か [31]捕獲可能か
+				//[32]好感度 
+				//[33]リーダー攻撃スキル
+				//[34]リーダー防御スキル
+				//[35]兵士攻撃スキル   [36]兵士サイズ
+				//[37]装備             [38]AI番号
+				//[39]立ち絵画像名     [40]顔アイコン画像    
+				//[41]戦闘リーダープレハブ名
+				//[42]戦闘兵士プレハブ名 [43]キャラ説明
+				//[44]死亡時セリフ
+				//[45]捕獲時セリフ
+				//[46]逃走時セリフ
 				var unit = new UnitDataFormat();
 				var data = rowData[i];
 
@@ -2022,54 +2053,55 @@ namespace ProjectWitch
 				{
 					unit.ID = int.Parse(data[0]);
 					unit.Name = data[1];
-					unit.Level = int.Parse(data[2]);
-					unit.MaxLevel = int.Parse(data[3]);
-					unit.HP0 = int.Parse(data[4]);
-					unit.HP100 = int.Parse(data[5]);
+                    unit.Job = EnumConverter.ToEnum<UnitDataFormat.UnitJob>(int.Parse(data[2]));
+					unit.Level = int.Parse(data[3]);
+					unit.MaxLevel = int.Parse(data[4]);
+					unit.HP0 = int.Parse(data[5]);
+					unit.HP100 = int.Parse(data[6]);
 					unit.HP = unit.BaseMaxHP;
-					unit.LPAtk0 = int.Parse(data[6]);
-					unit.LMAtk0 = int.Parse(data[7]);
-					unit.LPDef0 = int.Parse(data[8]);
-					unit.LMDef0 = int.Parse(data[9]);
-					unit.GPAtk0 = int.Parse(data[10]);
-					unit.GMAtk0 = int.Parse(data[11]);
-					unit.GPDef0 = int.Parse(data[12]);
-					unit.GMDef0 = int.Parse(data[13]);
-					unit.LPAtk100 = int.Parse(data[14]);
-					unit.LMAtk100 = int.Parse(data[15]);
-					unit.LPDef100 = int.Parse(data[16]);
-					unit.LMDef100 = int.Parse(data[17]);
-					unit.GPAtk100 = int.Parse(data[18]);
-					unit.GMAtk100 = int.Parse(data[19]);
-					unit.GPDef100 = int.Parse(data[20]);
-					unit.GMDef100 = int.Parse(data[21]);
-					unit.Lead0 = int.Parse(data[22]);
-					unit.Agi0 = int.Parse(data[23]);
-					unit.Lead100 = int.Parse(data[24]);
-					unit.Agi100 = int.Parse(data[25]);
-					unit.Cur0 = int.Parse(data[26]);
-					unit.Cur100 = int.Parse(data[27]);
-					unit.SoldierNum = int.Parse(data[28]);
+					unit.LPAtk0 = int.Parse(data[7]);
+					unit.LMAtk0 = int.Parse(data[8]);
+					unit.LPDef0 = int.Parse(data[9]);
+					unit.LMDef0 = int.Parse(data[10]);
+					unit.GPAtk0 = int.Parse(data[11]);
+					unit.GMAtk0 = int.Parse(data[12]);
+					unit.GPDef0 = int.Parse(data[13]);
+					unit.GMDef0 = int.Parse(data[14]);
+					unit.LPAtk100 = int.Parse(data[15]);
+					unit.LMAtk100 = int.Parse(data[16]);
+					unit.LPDef100 = int.Parse(data[17]);
+					unit.LMDef100 = int.Parse(data[18]);
+					unit.GPAtk100 = int.Parse(data[19]);
+					unit.GMAtk100 = int.Parse(data[20]);
+					unit.GPDef100 = int.Parse(data[21]);
+					unit.GMDef100 = int.Parse(data[22]);
+                    unit.Lead0 = int.Parse(data[23]);
+					unit.Agi0 = int.Parse(data[24]);
+					unit.Lead100 = int.Parse(data[25]);
+					unit.Agi100 = int.Parse(data[26]);
+					unit.Cur0 = int.Parse(data[27]);
+					unit.Cur100 = int.Parse(data[28]);
+					unit.SoldierNum = int.Parse(data[29]);
 					unit.MaxSoldierNum = unit.SoldierNum;
-					unit.Deathable = (data[29] == "0") ? false : true;
-					unit.Catchable = (data[30] == "0") ? false : true;
-					unit.Love = int.Parse(data[31]);
-					unit.LAtkSkill = int.Parse(data[32]);
-					unit.LDefSkill = int.Parse(data[33]);
-					unit.GAtkSkill = int.Parse(data[34]);
-					unit.GUnitSize = int.Parse(data[35]);
-					unit.Equipment = int.Parse(data[36]);
-					unit.AIID = int.Parse(data[37]);
+					unit.Deathable = (data[30] == "0") ? false : true;
+					unit.Catchable = (data[31] == "0") ? false : true;
+					unit.Love = int.Parse(data[32]);
+					unit.LAtkSkill = int.Parse(data[33]);
+					unit.LDefSkill = int.Parse(data[34]);
+					unit.GAtkSkill = int.Parse(data[35]);
+					unit.GUnitSize = int.Parse(data[36]);
+					unit.Equipment = int.Parse(data[37]);
+					unit.AIID = int.Parse(data[38]);
 
-					unit.StandImagePath = data[38];
-					unit.FaceIamgePath = data[39];
-					unit.BattleLeaderPrefabPath = data[40];
-					unit.BattleGroupPrefabPath = data[41];
-					unit.Comment = data[42];
+					unit.StandImagePath = data[39];
+					unit.FaceIamgePath = data[40];
+					unit.BattleLeaderPrefabPath = data[41];
+					unit.BattleGroupPrefabPath = data[42];
+					unit.Comment = data[43];
 
-					unit.OnDeadSerif = data[43];
-					unit.OnCapturedSerif = data[44];
-					unit.OnEscapedSerif = data[45];
+					unit.OnDeadSerif = data[44];
+					unit.OnCapturedSerif = data[45];
+					unit.OnEscapedSerif = data[46];
 
 					unit.IsAlive = true;
 					unit.IsBattled = false;
@@ -2124,9 +2156,8 @@ namespace ProjectWitch
 					area.Name = data[1];
 					area.Position = new Vector2(float.Parse(data[2]), float.Parse(data[3]));
 					area.Owner = int.Parse(data[4]);
-					area.Level = int.Parse(data[5]);
-					area.Mana = int.Parse(data[6]);
-					area.MaxMana = int.Parse(data[6]);
+					area.Mana = int.Parse(data[5]);
+					area.IncrementalMana = int.Parse(data[6]);
 					area.Time = int.Parse(data[7]);
 
 					//地形補正

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace ProjectWitch.Shop
+namespace ProjectWitch.Shop.Tool
 {
     public class BuyItem : BaseShopItem
     {
@@ -16,7 +16,11 @@ namespace ProjectWitch.Shop
             base.Reset();
 
             var game = Game.GetInstance();
+            var item = game.GameData.Equipment[ItemID];
             var itemList = game.GameData.Territory[0].EquipmentList;
+
+            //名前をセット
+            mName.text = item.Name;
 
             //個数をセット
             var num = itemList[ItemID].Count;

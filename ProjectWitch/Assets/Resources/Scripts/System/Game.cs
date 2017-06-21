@@ -327,9 +327,8 @@ namespace ProjectWitch
         {
             foreach (var area in GameData.Area)
             {
-                //最大マナの10%回復
-                area.Mana += (int)((float)area.MaxMana * mManaRecoveryRate);
-                if (area.Mana > area.MaxMana) area.Mana = area.MaxMana;
+                //IncrementalMana分だけ、マナを回復
+                area.Mana += area.IncrementalMana;
             }
         }
 

@@ -436,7 +436,7 @@ namespace ProjectWitch.BattleTester
 					if (uCsv[i, 0] == area.ID.ToString())
 					{
 						uCsv[i, 1] = area.Name;
-						uCsv[i, 6] = area.MaxMana.ToString();
+						uCsv[i, 5] = area.Mana.ToString();
 						uCsv[i, 7] = area.Time.ToString();
 						uCsv[i, 8] = area.BattleFactor.PAtk.ToString();
 						uCsv[i, 9] = area.BattleFactor.MAtk.ToString();
@@ -607,7 +607,7 @@ namespace ProjectWitch.BattleTester
 						if (uCsv[i, 0] == area.ID.ToString())
 						{
 							area.Name = uCsv[i, 1];
-							area.MaxMana = uCsv.Parse<int>(i, 6);
+							area.Mana = uCsv.Parse<int>(i, 5);
 							area.Time = uCsv.Parse<int>(i, 7);
 							area.BattleFactor.PAtk = uCsv.Parse<float>(i, 8);
 							area.BattleFactor.MAtk = uCsv.Parse<float>(i, 9);

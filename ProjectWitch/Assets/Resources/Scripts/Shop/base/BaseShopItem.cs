@@ -10,7 +10,7 @@ namespace ProjectWitch.Shop
 
         //商品名
         [SerializeField]
-        private Text mName = null;
+        protected Text mName = null;
 
         //価格
         [SerializeField]
@@ -24,11 +24,6 @@ namespace ProjectWitch.Shop
 
         public virtual void Reset()
         {
-            var game = Game.GetInstance();
-            var item = game.GameData.Equipment[ItemID];
-
-            //テキストをセット
-            mName.text = item.Name;
         }
 
         public virtual void OnClicked()

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ProjectWitch.Shop
+namespace ProjectWitch.Shop.Tool
 {
     [RequireComponent(typeof(Animator))]
     public class BuyMenu : BasePurchaseMenu

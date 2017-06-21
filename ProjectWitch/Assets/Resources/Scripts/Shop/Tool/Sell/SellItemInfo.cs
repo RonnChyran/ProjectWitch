@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace ProjectWitch.Shop
+namespace ProjectWitch.Shop.Tool
 {
     [RequireComponent(typeof(Animator))]
-    public class SellItemInfo : BaseItemInfo
+    public class SellItemInfo : ToolBaseItemInfo
     {
         //装備しているユニットID
         public int UnitID { get; set; }
@@ -24,10 +24,10 @@ namespace ProjectWitch.Shop
                 mNextManaWindow.SetMana(mana);
 
                 //文字列にアイテム名を差し込む
-                mMessageA = mMessageA.Replace("[0]", item.Name);
-                mMessageA = mMessageA.Replace("[1]", item.SellingPrice.ToString());
+                var messageA = mMessageA.Replace("[0]", item.Name);
+                messageA = messageA.Replace("[1]", item.SellingPrice.ToString());
 
-                mMessageBox.SetText(mMesNameA, mMessageA);
+                mMessageBox.SetText(mMesNameA, messageA);
 
                 //強制売却ボタンを非表示にする
                 mForceSellButtonPanel.SetActive(false);
@@ -53,11 +53,11 @@ namespace ProjectWitch.Shop
                 var unit = game.GameData.Unit[UnitID];
 
                 //メッセージを変換
-                mMessageC = mMessageC.Replace("[0]", item.Name);
-                mMessageC = mMessageC.Replace("[1]", unit.Name);
+                var messageC = mMessageC.Replace("[0]", item.Name);
+                messageC = messageC.Replace("[1]", unit.Name);
 
                 //メッセージを表示
-                mMessageBox.SetText(mMesNameC, mMessageC);
+                mMessageBox.SetText(mMesNameC, messageC);
 
                 //強制売却ボタンを表示
                 mForceSellButtonPanel.SetActive(true);

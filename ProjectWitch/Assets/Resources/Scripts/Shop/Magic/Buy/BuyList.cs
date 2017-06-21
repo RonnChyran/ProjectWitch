@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ProjectWitch.Shop
+namespace ProjectWitch.Shop.Magic
 {
     public class BuyList : BaseList
     {
@@ -12,13 +12,13 @@ namespace ProjectWitch.Shop
             base.Reset();
 
             var game = Game.GetInstance();
-            
+
             //子供を追加
-            for(int i=0; i< game.GameData.Equipment.Count; i++)
+            for (int i = 0; i < game.GameData.Card.Count; i++)
             {
                 //フラグを満たしていない商品は除外
-                var flag = game.GameData.Equipment[i].ShopFlag;
-                if (game.GameData.Memory[EquipmentDataFormat.ShopFlagID] < flag) continue;
+                var flag = game.GameData.Card[i].ShopFlag;
+                if (game.GameData.Memory[CardDataFormat.ShopFlagID] < flag) continue;
 
                 var inst = Instantiate(mListContent);
                 var cp = inst.GetComponent<BuyItem>();
@@ -27,7 +27,7 @@ namespace ProjectWitch.Shop
                 cp.MesBox = mMessageBox;
                 cp.Reset();
 
-                inst.transform.SetParent(mListContentParent.transform,false);
+                inst.transform.SetParent(mListContentParent.transform, false);
             }
         }
     }

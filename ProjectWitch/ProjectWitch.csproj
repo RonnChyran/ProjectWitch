@@ -13,11 +13,13 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Full v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile></CompilerResponseFile>
+    <CompilerResponseFile>
+    </CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows64:19</UnityBuildTarget>
     <UnityVersion>5.6.1f1</UnityVersion>
-    <RootNamespace></RootNamespace>
+    <RootNamespace>
+    </RootNamespace>
     <LangVersion>4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -199,6 +201,7 @@
     <Compile Include="Assets\Resources\Scripts\Menu\TalkCommandHelper.cs" />
     <Compile Include="Assets\Resources\Scripts\Menu\Top\InfoBoxText.cs" />
     <Compile Include="Assets\Resources\Scripts\Menu\Top\TopMenu.cs" />
+    <Compile Include="Assets\Resources\Scripts\Menu\Town\TownTalkEvent.cs" />
     <Compile Include="Assets\Resources\Scripts\Menu\Town\TownMenu.cs" />
     <Compile Include="Assets\Resources\Scripts\Opening_Ending\EndMovieController.cs" />
     <Compile Include="Assets\Resources\Scripts\Opening_Ending\Ending.cs" />
@@ -227,19 +230,29 @@
     <Compile Include="Assets\Resources\Scripts\SetBattleTester\SetUnitUI.cs" />
     <Compile Include="Assets\Resources\Scripts\SetBattleTester\UIEvent.cs" />
     <Compile Include="Assets\Resources\Scripts\SetBattleTester\UnityFileManager.cs" />
-    <Compile Include="Assets\Resources\Scripts\Shop\Buy\BuyItem.cs" />
-    <Compile Include="Assets\Resources\Scripts\Shop\Buy\BuyItemInfo.cs" />
-    <Compile Include="Assets\Resources\Scripts\Shop\Buy\BuyList.cs" />
-    <Compile Include="Assets\Resources\Scripts\Shop\Buy\BuyMenu.cs" />
     <Compile Include="Assets\Resources\Scripts\Shop\CurrentManaWindow.cs" />
+    <Compile Include="Assets\Resources\Scripts\Shop\Magic\Buy\BuyItem.cs" />
+    <Compile Include="Assets\Resources\Scripts\Shop\Magic\Buy\BuyItemInfo.cs" />
+    <Compile Include="Assets\Resources\Scripts\Shop\Magic\Buy\BuyList.cs" />
+    <Compile Include="Assets\Resources\Scripts\Shop\Magic\MagicBaseItemInfo.cs" />
+    <Compile Include="Assets\Resources\Scripts\Shop\Magic\Sell\SellItem.cs" />
+    <Compile Include="Assets\Resources\Scripts\Shop\Magic\Sell\SellItemInfo.cs" />
+    <Compile Include="Assets\Resources\Scripts\Shop\Magic\Sell\SellList.cs" />
     <Compile Include="Assets\Resources\Scripts\Shop\MessageBox.cs" />
     <Compile Include="Assets\Resources\Scripts\Shop\NextManaWindow.cs" />
-    <Compile Include="Assets\Resources\Scripts\Shop\Sell\SellItem.cs" />
-    <Compile Include="Assets\Resources\Scripts\Shop\Sell\SellItemInfo.cs" />
-    <Compile Include="Assets\Resources\Scripts\Shop\Sell\SellList.cs" />
-    <Compile Include="Assets\Resources\Scripts\Shop\Sell\SellMenu.cs" />
     <Compile Include="Assets\Resources\Scripts\Shop\ShopController.cs" />
     <Compile Include="Assets\Resources\Scripts\Shop\Talk\TalkMenu.cs" />
+    <Compile Include="Assets\Resources\Scripts\Shop\Talk\TalkMenu_Magic.cs" />
+    <Compile Include="Assets\Resources\Scripts\Shop\Talk\TalkMenu_Tool.cs" />
+    <Compile Include="Assets\Resources\Scripts\Shop\Tool\Buy\BuyItem.cs" />
+    <Compile Include="Assets\Resources\Scripts\Shop\Tool\Buy\BuyItemInfo.cs" />
+    <Compile Include="Assets\Resources\Scripts\Shop\Tool\Buy\BuyList.cs" />
+    <Compile Include="Assets\Resources\Scripts\Shop\Tool\Buy\BuyMenu.cs" />
+    <Compile Include="Assets\Resources\Scripts\Shop\Tool\Sell\SellItem.cs" />
+    <Compile Include="Assets\Resources\Scripts\Shop\Tool\Sell\SellItemInfo.cs" />
+    <Compile Include="Assets\Resources\Scripts\Shop\Tool\Sell\SellList.cs" />
+    <Compile Include="Assets\Resources\Scripts\Shop\Tool\Sell\SellMenu.cs" />
+    <Compile Include="Assets\Resources\Scripts\Shop\Tool\ToolBaseItemInfo.cs" />
     <Compile Include="Assets\Resources\Scripts\Shop\Top\TopMenu.cs" />
     <Compile Include="Assets\Resources\Scripts\Shop\base\BaseItemInfo.cs" />
     <Compile Include="Assets\Resources\Scripts\Shop\base\BaseList.cs" />

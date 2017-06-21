@@ -9,15 +9,15 @@ namespace ProjectWitch.Shop
     {
         //最初の値引き率
         [SerializeField]
-        private float mDiscountRateA = 0.9f;
+        protected float mDiscountRateA = 0.9f;
 
         //最終的な値引き率
         [SerializeField]
-        private float mDiscountRateB = 0.5f;
+        protected float mDiscountRateB = 0.5f;
 
         //選択肢ウィンドウへの参照
         [SerializeField]
-        private GameObject mChoicePanel = null;
+        protected GameObject mChoicePanel = null;
 
         //選択肢までのセリフ
         [SerializeField]
@@ -27,45 +27,27 @@ namespace ProjectWitch.Shop
 
         //選択肢に買うと答えた場合
         [SerializeField]
-        private ShopMessage[] mMes_OK = new ShopMessage[10];
+        protected ShopMessage[] mMes_OK = new ShopMessage[10];
 
         //選択肢に買うと答えた場合で、お金が足りなかった場合
         [SerializeField]
-        private ShopMessage[] mMes_OK_NoMoney = new ShopMessage[10];
+        protected ShopMessage[] mMes_OK_NoMoney = new ShopMessage[10];
 
         [Space(20)]
         
         //選択肢に買わないと答えた場合
         [SerializeField]
-        private ShopMessage[] mMes_NO = new ShopMessage[10];
+        protected ShopMessage[] mMes_NO = new ShopMessage[10];
 
         //置換する文字列
-        private string mTag_ItemName = "[name]";
-        private string mTag_ItemPriceA = "[priceA]";
-        private string mTag_ItemPriceB = "[priceB]";
-        private string mTag_ItemPriceC = "[priceC]";
-
-        //装備品のID
-        private int mEquipmentID = -1;
-
+        protected string mTag_ItemName = "[name]";
+        protected string mTag_ItemPriceA = "[priceA]";
+        protected string mTag_ItemPriceB = "[priceB]";
+        protected string mTag_ItemPriceC = "[priceC]";
+        
         //トークシーンの開始
-        public void Begin()
+        public virtual void Begin()
         {
-            //装備をランダムで選択
-            var game = Game.GetInstance();
-            var list = new List<int>();
-            for (int i = 0; i < game.GameData.Equipment.Count; i++)
-            {
-                //フラグを満たしていない商品は除外
-                var flag = game.GameData.Equipment[i].ShopFlag;
-                if (game.GameData.Memory[EquipmentDataFormat.ShopFlagID] < flag) continue;
-
-                list.Add(i);
-            }
-
-            mEquipmentID = list[UnityEngine.Random.Range(0, list.Count)];
-
-            StartCoroutine(_TalkProcess());
         }
 
         public void End()
@@ -75,7 +57,7 @@ namespace ProjectWitch.Shop
         }
 
         //選択肢前までのメッセージ表示
-        private IEnumerator _TalkProcess()
+        protected virtual IEnumerator _TalkProcess()
         {
             //会話の開始
 
@@ -93,37 +75,8 @@ namespace ProjectWitch.Shop
         {
             StartCoroutine(_ClickOK());
         }
-        private IEnumerator _ClickOK()
+        protected virtual IEnumerator _ClickOK()
         {
-            mChoicePanel.SetActive(false);
-            yield return null;
-
-            //所持金が足りるか足りないかでメッセージ変更
-            var gamedata = Game.GetInstance().GameData;
-            var equipment = gamedata.Equipment[mEquipmentID];
-            ShopMessage[] exeMessage = new ShopMessage[1];
-            if (gamedata.PlayerMana >= (int)(equipment.BuyingPrice*mDiscountRateB))
-            {
-                exeMessage = mMes_OK;
-
-                //所持金を減らす処理
-                gamedata.PlayerMana -= (int)(equipment.BuyingPrice * mDiscountRateB);
-
-                //購入処理
-                gamedata.Territory[0].EquipmentList[mEquipmentID].Add(-1);
-            }
-            else
-            {
-                exeMessage = mMes_OK_NoMoney;
-            }
-
-            //メッセージを表示
-            foreach (var mes in exeMessage)
-            {
-                yield return StartCoroutine(_ShowText(mes));
-            }
-
-            End();
             yield return null;
         }
 
@@ -148,22 +101,13 @@ namespace ProjectWitch.Shop
         
 
         //テキストの中に含まれるタグを置換
-        private string ReplaceMessage(string message)
+        protected virtual string ReplaceMessage(string message)
         {
-            //装備データを取得
-            var equipment = Game.GetInstance().GameData.Equipment[mEquipmentID];
-
-            //文字列を置換
-            var outstr = message.Replace(mTag_ItemName, equipment.Name);
-            outstr = outstr.Replace(mTag_ItemPriceA, equipment.BuyingPrice.ToString());
-            outstr = outstr.Replace(mTag_ItemPriceB, ((int)(equipment.BuyingPrice * mDiscountRateA)).ToString());
-            outstr = outstr.Replace(mTag_ItemPriceC, ((int)(equipment.BuyingPrice * mDiscountRateB)).ToString());
-
-            return outstr;
+            return "";
         }
 
         //テキストを終端まで読み出し
-        private IEnumerator _ShowText(ShopMessage mes)
+        protected IEnumerator _ShowText(ShopMessage mes)
         {
             //テキストを置換してセット
             var message = ReplaceMessage(mes.Message);

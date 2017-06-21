@@ -1,7 +1,7 @@
 ﻿using UnityEngine.UI;
 using UnityEngine;
 
-namespace ProjectWitch.Shop
+namespace ProjectWitch.Shop.Tool
 {
     public class SellItem : BaseShopItem
     {
@@ -24,6 +24,9 @@ namespace ProjectWitch.Shop
             var isEquipment = itemList[ItemID][ItemUniID] == -1 ? false : true;
             if (isEquipment) mIsEquipment.text = "E";
             else mIsEquipment.text = "";
+
+            //名前をセット
+            mName.text = item.Name;
 
             //価格をセット
             var price = game.GameData.Equipment[ItemID].SellingPrice;
