@@ -485,7 +485,6 @@ namespace ProjectWitch
 			Experience = 0;
 			SoldierCost = 2;
 			HPCost = 8;
-			SoldierLimitCost = 35;
 		}
 
 		#region data_member
@@ -598,7 +597,20 @@ namespace ProjectWitch
 		public int SoldierCost { get; set; }
 
 		//最大兵士数成長コスト
-		public int SoldierLimitCost { get; set; }
+		public float SoldierLimitCost
+        {
+            get
+            {
+                if(MaxSoldierNum < 800)
+                {
+                    return 3.0f;
+                }
+                else
+                {
+                    return 3.0f + 3.6f * ((MaxSoldierNum / 100.0f) - 8.0f);
+                }
+            }
+        }
 
 		//立ち絵画像名
 		public string StandImagePath { get; set; }

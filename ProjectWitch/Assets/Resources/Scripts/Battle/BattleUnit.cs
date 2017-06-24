@@ -332,13 +332,13 @@ namespace ProjectWitch.Battle
 		// 兵士回復量
 		public float GetGroupCurativeAmount(SkillDataFormat skillData)
 		{
-			return UnitData.MaxSoldierNum * skillData.Power * mBattle.Coe18;
+			return UnitData.MaxSoldierNum * skillData.Power/100.0f * mBattle.Coe18;
 		}
 
 		// HP回復量
 		public float GetLeaderCurativeAmount(SkillDataFormat skillData)
 		{
-			return MaxHP * skillData.Power * mBattle.Coe19;
+			return MaxHP * skillData.Power/100.0f * mBattle.Coe19;
 		}
 
 		// 行動順基準値

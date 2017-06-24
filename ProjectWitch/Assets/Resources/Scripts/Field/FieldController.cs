@@ -31,6 +31,10 @@ namespace ProjectWitch.Field
         private TalkCommandHelper mTalkCommandHelper = null;
         public TalkCommandHelper TalkCommandHelper { get{ return mTalkCommandHelper; } private set { } }
 
+        //収入計算用の定数
+        [SerializeField]
+        private int mIncomesFactor = 200;
+
         //内部変数
         //コルーチンが動いているかどうか
         private bool mIsCoroutineExec = false;
@@ -602,15 +606,9 @@ namespace ProjectWitch.Field
             //現在の所持地点を取得
             var areas = game.GameData.Territory[0].AreaList;
 
-            //領地がなかったら抜ける
-            if (areas.Count == 0) return -1;
-
-            //各領地の1割を合計する
-            var sum = 0;
-            foreach (var area in areas) sum += game.GameData.Area[area].Mana / 10;
-
-            //合計を返す
-            return sum;
+            //領地数*定数を収入とする 
+            return areas.Count * mIncomesFactor;
+            
 
         }
 

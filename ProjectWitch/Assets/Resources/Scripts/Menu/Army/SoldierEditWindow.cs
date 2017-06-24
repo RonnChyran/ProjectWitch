@@ -96,7 +96,7 @@ namespace ProjectWitch.Menu
             //総コストの計算
             mSoldierCurCost = mUpSoldierNum * unit.SoldierCost;
             mSoldierCurAllCost = solMax * unit.SoldierCost;
-            mMaxSoldierAddCost = mUpMaxSoldierNum * unit.SoldierLimitCost;
+            mMaxSoldierAddCost = (int)(mUpMaxSoldierNum * unit.SoldierLimitCost);
             
             //兵数消費コストの表示
             mSolCur_Cost.text = unit.SoldierCost.ToString();
