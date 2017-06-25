@@ -100,6 +100,13 @@ namespace ProjectWitch
 
         }
 
+        //ポーズ(BGM限定) true:ポーズをかける false:ポーズ解除
+        public void Pause(bool pause)
+        {
+            var source = GetSource(SoundType.BGM);
+            source.Pause(pause);
+        }
+
         //再生停止
         public void Stop(SoundType type)
         {
