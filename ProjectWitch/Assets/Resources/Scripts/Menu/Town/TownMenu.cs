@@ -14,6 +14,10 @@ namespace ProjectWitch.Menu
         [SerializeField]
         private Animator mTopMenu = null;
 
+        //トークイベントへの参照
+        [SerializeField]
+        private TownTalkEvent[] mTalkEvents = null;
+
         //component 
         private Animator mcAnim = null;
 
@@ -83,9 +87,19 @@ namespace ProjectWitch.Menu
 
             //会話の終了まち
             while (game.IsTalk) yield return null;
+            
+            //イベント実行済みフラグを折る
+            game.GameData.TownEventEnable = false;
+
+            //リセットをかける
+            foreach (var te in mTalkEvents)
+            {
+                te.Reset();
+            }
+            yield return null;
 
             //イベントが終わったら少し待つ
-            yield return new WaitForSeconds(1.0f);
+            yield return new WaitForSeconds(0.1f);
 
             //終了
             Closable = true;

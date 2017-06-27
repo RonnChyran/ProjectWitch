@@ -28,6 +28,14 @@ namespace ProjectWitch.Field
         private GameObject mHiLightEffect=null;
         private bool mEffectEnable = false;
 
+        //キャプションエフェクト
+        [SerializeField]
+        private GameObject mPlayerTurnEffect = null;
+        [SerializeField]
+        private GameObject mEnemyTurnEffect = null;
+        [SerializeField]
+        private GameObject mInvationEffect = null;
+
         [SerializeField]
         private GameObject mFlagCanvas = null;
 
@@ -87,8 +95,46 @@ namespace ProjectWitch.Field
         //エリアのハイライトエフェクト表示
         public IEnumerator ShowHiLightEffect(Vector3 targetPos)
         {
-            var inst = Instantiate(mHiLightEffect);
+            yield return StartCoroutine(ShowEffect(mHiLightEffect,targetPos));
+        }
+
+        //プレイヤーターンエフェクトの表示
+        public IEnumerator ShowPlayerTurnEffect()
+        {
+            yield return StartCoroutine(ShowEffectInCanvas(mPlayerTurnEffect));
+        }
+
+        //敵ターンエフェクトの表示
+        public IEnumerator ShowEnemyTurnEffect()
+        {
+            yield return StartCoroutine(ShowEffectInCanvas(mEnemyTurnEffect));
+        }
+
+        //防衛時エフェクトの表示
+        public IEnumerator ShowInvationEffect()
+        {
+            yield return StartCoroutine(ShowEffectInCanvas(mInvationEffect));
+        }
+
+        //3Dシーンでのエフェクト表示
+        public IEnumerator ShowEffect(GameObject effect, Vector3 targetPos)
+        {
+            var inst = Instantiate(effect);
             inst.transform.position = targetPos;
+            inst.GetComponent<FXController>().EndEvent.AddListener(EndEffect);
+            mEffectEnable = true;
+
+            //エフェクト終了まで待つ
+            while (mEffectEnable) yield return null;
+
+            yield return null;
+        }
+
+        //キャンバス上のエフェクト表示
+        public IEnumerator ShowEffectInCanvas(GameObject effect)
+        {
+            var inst = Instantiate(effect);
+            inst.transform.SetParent(mCameraCanvas.transform,false);
             inst.GetComponent<FXController>().EndEvent.AddListener(EndEffect);
             mEffectEnable = true;
 

@@ -7279,6 +7279,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mController: {fileID: 1115567906}
   mTopMenu: {fileID: 241342188}
+  mTalkEvents:
+  - {fileID: 2087519832}
+  - {fileID: 433566549}
+  - {fileID: 2146295684}
+  - {fileID: 1738328586}
 --- !u!114 &278269422
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7322,7 +7327,7 @@ Canvas:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 278269419}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 0}
@@ -9920,7 +9925,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.25}
   m_AnchorMax: {x: 1, y: 0.75}
-  m_AnchoredPosition: {x: 81.19997, y: 0}
+  m_AnchoredPosition: {x: 81.19996, y: 0}
   m_SizeDelta: {x: 152.4, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &407949981
@@ -10654,6 +10659,7 @@ GameObject:
   - component: {fileID: 433566546}
   - component: {fileID: 433566548}
   - component: {fileID: 433566547}
+  - component: {fileID: 433566549}
   m_Layer: 5
   m_Name: bar
   m_TagString: Untagged
@@ -10738,9 +10744,33 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 239404687}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 433566549}
+        m_MethodName: OnClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &433566549
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 433566545}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4992b07ec547d0468a8ebed54b56c74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mArea: 1
+  mMenu: {fileID: 278269421}
 --- !u!1 &434759772
 GameObject:
   m_ObjectHideFlags: 0
@@ -14087,7 +14117,7 @@ Canvas:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 600664656}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 0}
@@ -22961,9 +22991,9 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 2087519829}
   - {fileID: 2093137105}
   - {fileID: 1606012470}
+  - {fileID: 2087519829}
   - {fileID: 433566546}
   - {fileID: 2146295681}
   - {fileID: 1738328583}
@@ -35235,7 +35265,7 @@ RectTransform:
   - {fileID: 1978720368}
   - {fileID: 150014752}
   m_Father: {fileID: 1060649534}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -37613,6 +37643,7 @@ GameObject:
   - component: {fileID: 1738328583}
   - component: {fileID: 1738328585}
   - component: {fileID: 1738328584}
+  - component: {fileID: 1738328586}
   m_Layer: 5
   m_Name: outskirts
   m_TagString: Untagged
@@ -37697,9 +37728,33 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 319722659}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1738328586}
+        m_MethodName: OnClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &1738328586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1738328582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4992b07ec547d0468a8ebed54b56c74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mArea: 3
+  mMenu: {fileID: 278269421}
 --- !u!1001 &1745527440
 Prefab:
   m_ObjectHideFlags: 0
@@ -44519,6 +44574,7 @@ GameObject:
   - component: {fileID: 2087519829}
   - component: {fileID: 2087519831}
   - component: {fileID: 2087519830}
+  - component: {fileID: 2087519832}
   m_Layer: 5
   m_Name: plaza
   m_TagString: Untagged
@@ -44541,7 +44597,7 @@ RectTransform:
   - {fileID: 578567506}
   - {fileID: 200469721}
   m_Father: {fileID: 1060649534}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -44603,9 +44659,33 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1864074647}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2087519832}
+        m_MethodName: OnClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &2087519832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2087519828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4992b07ec547d0468a8ebed54b56c74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mArea: 0
+  mMenu: {fileID: 278269421}
 --- !u!1 &2088997985
 GameObject:
   m_ObjectHideFlags: 0
@@ -44706,7 +44786,7 @@ RectTransform:
   - {fileID: 466227464}
   - {fileID: 154942718}
   m_Father: {fileID: 1060649534}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -45542,6 +45622,7 @@ GameObject:
   - component: {fileID: 2146295681}
   - component: {fileID: 2146295683}
   - component: {fileID: 2146295682}
+  - component: {fileID: 2146295684}
   m_Layer: 5
   m_Name: alley
   m_TagString: Untagged
@@ -45626,6 +45707,30 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 848255589}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2146295684}
+        m_MethodName: OnClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &2146295684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2146295680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4992b07ec547d0468a8ebed54b56c74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mArea: 2
+  mMenu: {fileID: 278269421}

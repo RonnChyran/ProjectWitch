@@ -1,0 +1,13 @@
+[filter name="fade" time=500]
+[drawbg ref="1055m"]
+[filter name="clear" time=500]
+
+[show_message]
+路地裏イベントのテスト。[p]
+[hide_message]
+
+[filter name="fade" time=500]
+[clearbg]
+[filter name="clear" time=500]
+
+[sys_memset index=1002 value="1"]

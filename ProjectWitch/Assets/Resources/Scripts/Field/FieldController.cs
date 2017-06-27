@@ -143,6 +143,12 @@ namespace ProjectWitch.Field
                 MenuClickable = true;
                 FlagClickable = true;
 
+                //町イベントを有効にする
+                game.GameData.TownEventEnable = true;
+
+                //プレイヤーターン開始エフェクト表示
+                yield return StartCoroutine(mFieldUIController.ShowPlayerTurnEffect());
+
                 //時間が変化するまで待機
                 while (currentTime == game.GameData.CurrentTime) yield return null;
 
@@ -169,7 +175,10 @@ namespace ProjectWitch.Field
 
             //カメラ操作を無効にする
             CameraController.IsPlayable = false;
-            
+
+            //敵ターンエフェクト表示
+            yield return StartCoroutine(mFieldUIController.ShowEnemyTurnEffect());
+
             for(int i=1; i<game.GameData.Territory.Count; i++)
             {
                 var ter = game.GameData.Territory[i];
@@ -214,7 +223,7 @@ namespace ProjectWitch.Field
                             }
 
                             //攻めてきた演出
-                            yield return StartCoroutine(DominationEffect(targetArea));
+                            yield return StartCoroutine(DominationEffect(targetArea));                            
 
                             //敵ユニットのセット
                             SetEnemy(group, true);
@@ -655,6 +664,9 @@ namespace ProjectWitch.Field
 
             //エフェクトを表示
             yield return StartCoroutine(FieldUIController.ShowHiLightEffect(targetpos));
+
+            //キャプションエフェクト表示
+            yield return StartCoroutine(FieldUIController.ShowInvationEffect());
 
         }
 

@@ -30,7 +30,7 @@ namespace ProjectWitch.Menu
             Reset();
         }
 
-        void Reset()
+        public void Reset()
         {
             //実行するスクリプトを決定
 
@@ -53,6 +53,7 @@ namespace ProjectWitch.Menu
                 //条件式の数だけ条件判定をする
                 for (int i=0; i<e.If_Var.Count; i++)
                 {
+                    if (e.If_Var[i] == -1) continue;
                     var mem_value = game.GameData.Memory[e.If_Var[i]];
                     switch(e.If_Ope[i])
                     {
@@ -84,7 +85,7 @@ namespace ProjectWitch.Menu
             }
 
             //実行するスクリプトをランダムに取り出す
-            if(exeList.Count>0)
+            if(exeList.Count>0 && game.GameData.TownEventEnable)
             {
                 mEvent = exeList[UnityEngine.Random.Range(0, exeList.Count - 1)];
                 mcButton.interactable = true;

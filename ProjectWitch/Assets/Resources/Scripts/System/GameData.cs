@@ -177,6 +177,8 @@ namespace ProjectWitch
 		public int CurrentTurn { get; set; }
 		//現在の時間数 0:朝 1:昼 2:夜 3~:敵ターン
 		public int CurrentTime { get; set; }
+        //町イベントのトークフラグ
+        public bool TownEventEnable { get; set; }
 		//フィールドのBGM
 		public string FieldBGM { get; set; }
 		//通常バトルのBGM
@@ -207,6 +209,7 @@ namespace ProjectWitch
 
 				CurrentTime = 0; //朝から
 				CurrentTurn = 1;
+                TownEventEnable = true;
 				FieldBGM = "002_alice1";
 				BattleBGM = "004_battle1";
 
