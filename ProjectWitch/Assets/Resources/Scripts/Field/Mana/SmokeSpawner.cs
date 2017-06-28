@@ -13,6 +13,10 @@ namespace ProjectWitch.Field.Mana
         [SerializeField]
         private float mCreateSpan = 0.3f;
 
+        //生成時の高さオフセット
+        [SerializeField]
+        private float mOffsetY = -10.0f;
+
         public Transform Parent { get; set; }
 
         //前回生成からの時間
@@ -29,12 +33,13 @@ namespace ProjectWitch.Field.Mana
         {
             mTime += Time.deltaTime;
 
-            if (mTime > mCreateSpan)
+            if (mTime > UnityEngine.Random.Range(mCreateSpan - 0.5f, mCreateSpan + 0.5f))
             {
                 mTime = 0.0f;
 
                 var inst = Instantiate(mPrefab);
-                inst.transform.SetParent(Parent);
+                inst.transform.SetParent(Parent,false);
+                inst.transform.position = new Vector3(transform.position.x, transform.position.y + mOffsetY, transform.position.z);
             }
         }
     }

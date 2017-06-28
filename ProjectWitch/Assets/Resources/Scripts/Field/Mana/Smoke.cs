@@ -12,6 +12,10 @@ public class Smoke : MonoBehaviour {
     [SerializeField]
     private float mSpeedY = 50.0f;
 
+    //拡大率
+    [SerializeField]
+    private float mScaleRate = 2.0f;
+
     //ライフタイム
     [SerializeField]
     private float mLifeTime = 1.0f;
@@ -36,7 +40,8 @@ public class Smoke : MonoBehaviour {
         if (mTime > mLifeTime) Destroy(this.gameObject);
 
         //透過度の更新
-        mTransparent = (mTime / mLifeTime) * 0.5f + 0.5f;
+        mTransparent = Mathf.Min(1.0f,(1.0f - mTime / mLifeTime) * 2.0f);
+        transform.localScale += new Vector3(Time.deltaTime * mScaleRate, Time.deltaTime * mScaleRate, 0.0f);
         mcImage.color = new Color(1.0f, 1.0f, 1.0f, mTransparent);
 
         //位置の更新
