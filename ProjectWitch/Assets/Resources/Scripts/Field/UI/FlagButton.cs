@@ -70,7 +70,7 @@ namespace ProjectWitch.Field
             game.SoundManager.Play(mPushSEName, SoundType.SE);
 
             //メニューを開く
-            ShowMenu(mAreaPrefab);
+            ShowAreaWindow(mAreaPrefab);
 
             //フラグメニューの２重起動防止
             FieldController.FlagClickable = false;
@@ -80,10 +80,11 @@ namespace ProjectWitch.Field
 
             //オーナーパネルをロック
             FieldUIController.AreaNameLock = true;
+            
         }
 
         //エリアウィンドウの表示処理
-        private void ShowMenu(GameObject menu)
+        private void ShowAreaWindow(GameObject menu)
         {
             //描画先のキャンバス
             var canvas = FieldUIController.CameraCanvas;

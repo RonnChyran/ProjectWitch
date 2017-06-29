@@ -36,6 +36,10 @@ namespace ProjectWitch.Field
         [SerializeField]
         private GameObject mInvationEffect = null;
 
+        //マナ収集のエフェクト
+        [SerializeField]
+        private GameObject mGetManaEffect = null;
+
         [SerializeField]
         private GameObject mFlagCanvas = null;
 
@@ -140,6 +144,25 @@ namespace ProjectWitch.Field
 
             //エフェクト終了まで待つ
             while (mEffectEnable) yield return null;
+
+            yield return null;
+        }
+
+        //マナ収集エフェクト表示
+        public IEnumerator ShowGetManaEffect(int mana, bool isEquipment, int itemID)
+        {
+            var inst = Instantiate(mGetManaEffect);
+            inst.transform.SetParent(mCameraCanvas.transform, false);
+            var comp = inst.GetComponent<Mana.ManaController>();
+            comp.Mana = mana;
+            comp.IsEquipment = isEquipment;
+            comp.ItemID = itemID;
+            comp.Begin();
+
+            //終了まち
+            while (!comp.IsEnd) yield return null;
+
+            Destroy(inst);
 
             yield return null;
         }

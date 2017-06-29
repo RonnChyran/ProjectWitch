@@ -135,7 +135,10 @@ namespace ProjectWitch.Field
 
                 //BGM再開
                 PlayBGM();
-               
+
+                //プレイヤーターン開始エフェクト表示
+                yield return StartCoroutine(mFieldUIController.ShowPlayerTurnEffect());
+
                 //カメラ操作を有効にする
                 CameraController.IsPlayable = true;
 
@@ -145,9 +148,6 @@ namespace ProjectWitch.Field
 
                 //町イベントを有効にする
                 game.GameData.TownEventEnable = true;
-
-                //プレイヤーターン開始エフェクト表示
-                yield return StartCoroutine(mFieldUIController.ShowPlayerTurnEffect());
 
                 //時間が変化するまで待機
                 while (currentTime == game.GameData.CurrentTime) yield return null;
@@ -513,6 +513,51 @@ namespace ProjectWitch.Field
             yield return StartCoroutine(AfterBattle());
         }
         
+        //マナ収集
+        public void GetMana(int area)
+        { 
+            StartCoroutine(_GetMana(area));
+        }
+        private IEnumerator _GetMana(int area)
+        {
+            var game = Game.GetInstance();
+
+            yield return new WaitForEndOfFrame();
+
+            //カメラ操作を無効にする
+            CameraController.IsPlayable = false;
+
+            //メニュー操作を無効にする
+            MenuClickable = false;
+            FlagClickable = false;
+
+            //取得するマナ量
+            var mana = game.GameData.Area[area].Mana;
+            var hasItem = game.GameData.Area[area].HasItem;
+            var itemIsEquip = game.GameData.Area[area].ItemIsEquipment;
+            var itemID = (hasItem) ? game.GameData.Area[area].ItemID : -1;
+
+            //エフェクトを再生
+            yield return StartCoroutine(FieldUIController.ShowGetManaEffect(mana, itemIsEquip, itemID));
+            
+            //時間を進める
+            game.GameData.CurrentTime++;
+
+            //マナの増加処理
+            game.GameData.PlayerMana += mana;
+            game.GameData.Area[area].Mana = 0;
+
+            //装備を取得済みに変える
+            game.GameData.Area[area].HasItem = false;
+            
+            //復帰
+            CameraController.IsPlayable = true;
+            MenuClickable = true;
+            FlagClickable = true;
+
+            yield return null;
+        }
+
         //イベント制御
         private IEnumerator EventExecute(List<EventDataFormat> eventlist)
         {

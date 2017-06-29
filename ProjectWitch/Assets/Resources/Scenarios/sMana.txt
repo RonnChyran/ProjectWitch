@@ -1,0 +1,20 @@
+;マナ収集時 script
+[setskin ref="skin1"]
+
+[loadfg id=0 ref="alice"]
+[loadfg id=1 ref="kuro"]
+
+[drawfg id=1]
+[show_message]
+#クロ
+アリス様。[n]
+マナの結晶に混ざってこんなものが……。[p]
+[drawfg id=0]
+#アリス
+あん？[n]
+まあ使えそうだし、とっておけ。[p]
+[drawfg id=1]
+#クロ
+はっ。[n]
+では、軍の備品に加えておきます。[p]
+[hide_message]

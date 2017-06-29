@@ -68,18 +68,21 @@ namespace ProjectWitch
             mCoIsRunning = true;
 
             if (EndEvent != null) EndEvent.Invoke();
-            for (float i = 0; i < 1.0f; i += 0.1f)
-            {
-                foreach (var partsys in mPartSystem)
-                {
-                    var ma = partsys.main;
-                    var color = ma.startColor.color;
-                    color.a = Math.Max(0.0f, color.a - i);
-                    ma.startColor = color;
-                }
-                yield return null;
-            }
 
+            if (mPartSystem.Length > 0)
+            {
+                for (float i = 0; i < 1.0f; i += 0.1f)
+                {
+                    foreach (var partsys in mPartSystem)
+                    {
+                        var ma = partsys.main;
+                        var color = ma.startColor.color;
+                        color.a = Math.Max(0.0f, color.a - i);
+                        ma.startColor = color;
+                    }
+                    yield return null;
+                }
+            }
 
             Destroy(this.gameObject);
             yield return null;

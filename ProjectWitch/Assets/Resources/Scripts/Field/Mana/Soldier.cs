@@ -30,7 +30,7 @@ namespace ProjectWitch.Field.Mana
         // Use this for initialization
         void Start()
         {
-            mSpeedX = UnityEngine.Random.Range(mSpeedX - 50f, mSpeedX + 50f);
+            mSpeedX = UnityEngine.Random.Range(mSpeedX, mSpeedX + 50f);
         }
 
         // Update is called once per frame

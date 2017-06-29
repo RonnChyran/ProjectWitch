@@ -1017,6 +1017,11 @@ namespace ProjectWitch
 		//地形補正
 		public AreaBattleFactor BattleFactor { get; set; }
 
+        //臨時収入時の情報
+        public bool HasItem { get; set; }
+        public bool ItemIsEquipment { get; set; }
+        public int ItemID { get; set; }
+
 		//隣接地点
 		public List<int> NextArea { get; set; }
 
@@ -1033,6 +1038,7 @@ namespace ProjectWitch
 			outdata.AddRange(BitConverter.GetBytes(ID));
 			outdata.AddRange(BitConverter.GetBytes(Owner));
 			outdata.AddRange(BitConverter.GetBytes(Mana));
+            outdata.AddRange(BitConverter.GetBytes(HasItem));
 			outdata.AddRange(BitConverter.GetBytes(NextArea.Count));
 			outdata.AddRange(NextArea.GetBytes());
 
@@ -1047,6 +1053,7 @@ namespace ProjectWitch
 			ID = BitConverter.ToInt32(data, offset); offset += 4;
 			Owner = BitConverter.ToInt32(data, offset); offset += 4;
 			Mana = BitConverter.ToInt32(data, offset); offset += 4;
+            HasItem = BitConverter.ToBoolean(data, offset); offset += 1;
 
 			var nextAreaCount = BitConverter.ToInt32(data, offset); offset += 4;
 			NextArea = new List<int>();
@@ -2161,7 +2168,10 @@ namespace ProjectWitch
 				//データの順番
 				//[0]ID         [1]地点名     [2]x     [3]y    [4]所有者
 				//[5]レベル       [6]所有マナ  [7]戦闘時間     
-				//[8-13]地形補正    [14]背景プレハブ名 [15-]隣接地点 
+				//[8-13]地形補正  
+                //[14]臨時収入　装備フラグ
+                //[15]臨時収入　アイテムID  
+                //[16]背景プレハブ名 [17-]隣接地点 
 				var area = new AreaDataFormat();
 				var data = rowData[i];
 
@@ -2183,11 +2193,16 @@ namespace ProjectWitch
 					area.BattleFactor.Leadership = int.Parse(data[12]);
 					area.BattleFactor.Agility = int.Parse(data[13]);
 
+                    //臨時収入情報
+                    area.ItemIsEquipment = (int.Parse(data[14]) == 0) ? false : true;
+                    area.ItemID = int.Parse(data[15]);
+                    area.HasItem = true;
+
 					//背景プレハブ名
-					area.BackgroundName = data[14];
+					area.BackgroundName = data[16];
 
 					//隣接地点
-					for (int j = 15; j < data.Count; j++)
+					for (int j = 17; j < data.Count; j++)
 					{
 						if (data[j] == "") continue;
 						area.NextArea.Add(int.Parse(data[j]));
