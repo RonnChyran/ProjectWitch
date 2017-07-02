@@ -255,9 +255,13 @@ namespace ProjectWitch
             ScenarioIn.NextB = e.NextB;
 
             IsTalk = true;
-            SceneManager.LoadScene(cSceneName_Talk, LoadSceneMode.Additive);
+            StartCoroutine(_CallScript());
 
             HideNowLoading();
+        }
+        private IEnumerator _CallScript()
+        {
+            yield return SceneManager.LoadSceneAsync(cSceneName_Talk, LoadSceneMode.Additive);
         }
 
         //セーブ画面を呼び出す
