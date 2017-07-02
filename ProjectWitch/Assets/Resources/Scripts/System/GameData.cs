@@ -510,7 +510,8 @@ namespace ProjectWitch
             PhysicsAttacker,
             PhysicsAssistant,
             OmniAttacker,
-            OmniAssistant
+            OmniAssistant,
+            Count
         };
         public UnitJob Job { get; set; }
 
