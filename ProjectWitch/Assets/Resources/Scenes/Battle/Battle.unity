@@ -1818,7 +1818,8 @@ MonoBehaviour:
   mLastSerifUI: {fileID: 68265013}
   mMessageUI: {fileID: 1147147135}
   mCardStartUI: {fileID: 1150481041}
-  mCardStartEffect: {fileID: 0}
+  mCardStartEffect: {fileID: 1994028996500098, guid: c16c6c78d6ef1d74785c185d852fe704,
+    type: 2}
   mUIEffectParent: {fileID: 578050071}
   mBar: {fileID: 1535331355}
   mDescription: {fileID: 953247719}
@@ -9261,6 +9262,12 @@ Prefab:
       propertyPath: mBattleLoseEffect
       value: 
       objectReference: {fileID: 1458192919372390, guid: c1c1c402d384f424bbed20216418ac4b,
+        type: 2}
+    - target: {fileID: 114000010157674708, guid: 942477d124b96de45a0083cf505b7419,
+        type: 2}
+      propertyPath: mCardStartEffect
+      value: 
+      objectReference: {fileID: 1994028996500098, guid: c16c6c78d6ef1d74785c185d852fe704,
         type: 2}
     m_RemovedComponents:
     - {fileID: 0}

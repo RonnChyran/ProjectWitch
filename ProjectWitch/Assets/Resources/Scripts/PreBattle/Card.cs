@@ -123,7 +123,7 @@ namespace ProjectWitch.PreBattle
 
         public void OnClicked_Info()
         {
-            CardInfo.CardID = CardIDInGroup;
+            CardInfo.CardID = CardID;
             CardInfo.Show();
         }
 

@@ -431,6 +431,8 @@ namespace ProjectWitch.Battle
 				effect.transform.localPosition = effectObj.transform.localPosition;
 				effect.transform.localScale = effectObj.transform.localScale;
 			}
+
+
 			// コールバックセット
 			IsEffect = true;
 			FXCtrl = effect.GetComponent<FXController>();
