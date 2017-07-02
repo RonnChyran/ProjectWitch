@@ -1223,48 +1223,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e364e3f90de3dc241afdea6accac7f19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mCoe1: 0.5
-  mCoe2: 0.5
-  mCoe3: 0.5
-  mCoe4: 0.5
-  mCoe5: 0.01
-  mCoe6: 0.6
-  mCoe7: 0.01
-  mCoe8: 0.2
-  mCoe9: 2
-  mCoe10: 0.6
-  mCoe11: 2
-  mCoe12: 0.2
-  mCoe13: 5
-  mCoe14: 5
-  mCoe15: 1.5
   mCoe16: 0.1
   mCoe17: 0.5
   mCoe18: 1
   mCoe19: 1
   mCoe20: 1
-  mCoe21: 5
-  mCoe22: 5
   mCoe23: 50
-  mCoe24: 1
-  mCoe25: 1
-  mCoe26: 1
-  mRandMed1: 0
-  mRandAmp1: 10
-  mRandMed2: 0
-  mRandAmp2: 10
-  mRandMed3: 0
-  mRandAmp3: 10
-  mRandMed4: 0
-  mRandAmp4: 10
-  mRandMed5: 0
-  mRandAmp5: 10
-  mRandMed6: 0
-  mRandAmp6: 10
-  mRandMed7: 0
-  mRandAmp7: 10
-  mRandMed8: 0
-  mRandAmp8: 10
   mRandMed9: 0
   mRandAmp9: 0
   mRandMed10: 0
@@ -3047,7 +3011,7 @@ Canvas:
   m_GameObject: {fileID: 578050071}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 1
+  m_RenderMode: 0
   m_Camera: {fileID: 223195775}
   m_PlaneDistance: 1.64
   m_PixelPerfect: 0
@@ -9359,6 +9323,7 @@ MonoBehaviour:
   mTextColorEnemy: {r: 0, g: 0, b: 0, a: 1}
   mMoveTimeX: 0.25
   mMoveTimeY: 0.25
+  mMinusOrderValueByTurn: 10
 --- !u!1 &1640924301
 GameObject:
   m_ObjectHideFlags: 0
