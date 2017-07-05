@@ -149,6 +149,9 @@ namespace ProjectWitch.Field
                 //町イベントを有効にする
                 game.GameData.TownEventEnable = true;
 
+                //オートセーブ
+                game.AutoSave();
+
                 //時間が変化するまで待機
                 while (currentTime == game.GameData.CurrentTime) yield return null;
 

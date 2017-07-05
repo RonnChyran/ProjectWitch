@@ -2819,7 +2819,7 @@ namespace ProjectWitch
 		public static readonly string Data = "Data/";
 		public static readonly string SaveFolderPath = Application.dataPath + "/SaveData/";
 
-		public static string GameSaveFilePath(int index) { return SaveFolderPath + "save" + index.ToString() + ".dat"; }
+		public static string GameSaveFilePath(int index) { return SaveFolderPath + "save" + (index == -1 ? "_auto" : index.ToString()) + ".dat"; }
 		public static string SystemSaveFilePath() { return SaveFolderPath + "sys_save.dat"; }
 	}
 }

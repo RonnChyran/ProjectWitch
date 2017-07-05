@@ -101,6 +101,9 @@ namespace ProjectWitch.Menu
             //イベントが終わったら少し待つ
             yield return new WaitForSeconds(0.1f);
 
+            //BGM再生
+            game.SoundManager.Play(game.GameData.FieldBGM, SoundType.BGM);
+
             //終了
             Closable = true;
 
