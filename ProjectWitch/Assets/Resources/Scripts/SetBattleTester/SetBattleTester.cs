@@ -652,7 +652,7 @@ namespace ProjectWitch.BattleTester
 				_destDirName = _destDirName + Path.DirectorySeparatorChar;
 
 			//コピー元のディレクトリにあるファイルをコピー
-			string[] files = System.IO.Directory.GetFiles(_sourceDirName);
+			string[] files = global::System.IO.Directory.GetFiles(_sourceDirName);
 			foreach (string file in files)
 				File.Copy(file, _destDirName + Path.GetFileName(file), true);
 

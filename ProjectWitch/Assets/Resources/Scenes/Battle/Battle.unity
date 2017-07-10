@@ -1099,14 +1099,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9511648b8d7e64842b63baf1f6fa8204, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mVS: 
+  mVS: 170
   mOverSkillButton: 042_hover
   mClickSkillButton: 040_click
-  mNextTurn: 
+  mNextTurn: 167
   mWin: 033_battlewin
   mLose: 034_battlelose
   mMoveConfigSlider: 042_hover
-  mCaptureGauge: 
+  mCaptureGauge: 168
 --- !u!1 &237830610
 GameObject:
   m_ObjectHideFlags: 0
@@ -9269,6 +9269,21 @@ Prefab:
       value: 
       objectReference: {fileID: 1994028996500098, guid: c16c6c78d6ef1d74785c185d852fe704,
         type: 2}
+    - target: {fileID: 114000011163302568, guid: 942477d124b96de45a0083cf505b7419,
+        type: 2}
+      propertyPath: mVS
+      value: 170
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000011163302568, guid: 942477d124b96de45a0083cf505b7419,
+        type: 2}
+      propertyPath: mNextTurn
+      value: 167
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000011163302568, guid: 942477d124b96de45a0083cf505b7419,
+        type: 2}
+      propertyPath: mCaptureGauge
+      value: 168
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 0}
   m_ParentPrefab: {fileID: 100100000, guid: 942477d124b96de45a0083cf505b7419, type: 2}

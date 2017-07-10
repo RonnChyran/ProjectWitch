@@ -293,21 +293,9 @@ namespace ProjectWitch
         //オートセーブする
         public void AutoSave()
         {
-            Save(0); //0スロットはオートセーブ用スロット
+            GameData.Save(-1); //0スロットはオートセーブ用スロット
+            SystemData.Save();
         }
-
-        //現在の状態をセーブする
-        private void Save(int slot)
-        {
-            ShowDialog("save", "セーブ機能は実装されていません");
-        }
-
-        //スロット番号のセーブデータからデータを読み込む
-        private void Load(int slot)
-        {
-            ShowDialog("load", "ロード機能は実装されていません");
-        }
-
 
         //各コマンド
 

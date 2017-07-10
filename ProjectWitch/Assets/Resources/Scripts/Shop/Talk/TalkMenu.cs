@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+using System;
 
 namespace ProjectWitch.Shop
 {
@@ -123,7 +122,7 @@ namespace ProjectWitch.Shop
     }
 
     //名前とメッセージを一つにしたクラス
-    [System.Serializable]
+    [Serializable]
     public class ShopMessage
     {
         [SerializeField]

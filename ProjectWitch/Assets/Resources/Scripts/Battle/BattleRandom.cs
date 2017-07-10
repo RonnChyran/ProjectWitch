@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System;
 using System.Collections.Generic;
 
 namespace ProjectWitch.Battle
@@ -42,11 +42,11 @@ namespace ProjectWitch.Battle
 			{
 				if (IPos >= iTable.Length)
 					IPos = 0;
-				return System.Math.Max(System.Math.Min(iTable[IPos++], max), min);
+				return Math.Max(Math.Min(iTable[IPos++], max), min);
 			}
 			else
 			{
-				return Random.Range(min, max);
+				return UnityEngine.Random.Range(min, max);
 			}
 		}
 
@@ -62,7 +62,7 @@ namespace ProjectWitch.Battle
 				}
 				else
 				{
-					return Random.value;
+					return UnityEngine.Random.value;
 				}
 			}
 		}

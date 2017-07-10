@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using System.IO;
 
-namespace ProjectWitch
+namespace ProjectWitch.Sys
 {
-    public class SaveLoadContainerBase :MonoBehaviour
+    public class SaveLoadContainerBase : MonoBehaviour
     {
         //title
         [SerializeField]
@@ -38,10 +39,10 @@ namespace ProjectWitch
             var path = GamePath.GameSaveFilePath(mFileIndex);
 
             //ファイル番号
-            mcTitle.text = "File" + mFileIndex.ToString();
+            mcTitle.text = (mFileIndex == -1) ? "Auto" : "No." + mFileIndex.ToString();
 
             //ロードファイルの存在をチェック
-            if (System.IO.File.Exists(path))
+            if (File.Exists(path))
             {
                 //存在する場合は、メタデータを読み出し、値を更新
                 GameMetaData meta = new GameMetaData();
@@ -49,17 +50,17 @@ namespace ProjectWitch
 
                 //time
                 var y = meta.Year.ToString();
-                var m = meta.Month.ToString();
-                var d = meta.Day.ToString();
-                var h = meta.Hour.ToString();
-                var min = meta.Minute.ToString();
+                var m = string.Format("{0:D2}", meta.Month);
+                var d = string.Format("{0:D2}", meta.Day);
+                var h = string.Format("{0:D2}", meta.Hour);
+                var min = string.Format("{0:D2}", meta.Minute);
                 mcTimeStamp.text = y + "/" + m + "/" + d + "  " + h + ":" + min;
 
                 //占領領地
-                mcDominatedArea.text = "占領済み領地：" + meta.DominatedTerritory.ToString();
+                mcDominatedArea.text = "占領済み領地 : " + meta.DominatedTerritory.ToString();
 
                 //レベル
-                mcLevel.text = "Lv." + meta.Level.ToString();
+                mcLevel.text = "レベル : " + meta.Level.ToString();
 
                 //経過ターン数
                 mcTurn.text = meta.Turn.ToString() + "ターン目";
