@@ -96,7 +96,7 @@ namespace ProjectWitch
 		}
 
 		//値のアップ―デート
-		private void Update()
+		public void Update()
 		{
 			var game = Game.GetInstance();
 
@@ -148,6 +148,7 @@ namespace ProjectWitch
 	{
 		//セーブファイルのバージョン
 		private GameMetaData metaData = new GameMetaData();
+        public GameMetaData Meta { get { return metaData; }}
 
 		#region data_member
 
@@ -427,7 +428,7 @@ namespace ProjectWitch
 		//データをシステムファイルから読み込む
 		public void Load()
 		{
-			if (System.IO.File.Exists(GamePath.SystemSaveFilePath()))
+			if (global::System.IO.File.Exists(GamePath.SystemSaveFilePath()))
 			{
 				var inst = new SystemData();
 				inst.Copy(this);
@@ -496,7 +497,6 @@ namespace ProjectWitch
 		public static readonly int REQUIPRED_EXPERIENCE_TO_LVUP = 1;
 
 		//ID
-		[System.Xml.Serialization.XmlAttribute("id")]
 		public int ID { get; set; }
 
 		//ユニット名
@@ -822,7 +822,6 @@ namespace ProjectWitch
 		}
 
 		//ID
-		[System.Xml.Serialization.XmlAttribute("id")]
 		public int ID { get; set; }
 
 		//名前
@@ -994,7 +993,6 @@ namespace ProjectWitch
 
 		#region data_member
 		//地点番号
-		[System.Xml.Serialization.XmlAttribute("id")]
 		public int ID { get; set; }
 
 		//地点名
@@ -1079,7 +1077,6 @@ namespace ProjectWitch
 		#region data_member
 
 		//領主ID
-		[System.Xml.Serialization.XmlAttribute("id")]
 		public int ID { get; set; }
 
 		//領主名
@@ -1282,7 +1279,6 @@ namespace ProjectWitch
 		#region data_member
 
 		//ID
-		[System.Xml.Serialization.XmlAttribute("id")]
 		public int ID { get; set; }
 
 		//グループ名

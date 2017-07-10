@@ -12,8 +12,17 @@ namespace ProjectWitch.Batlle
         private int mCardID = 0;
         public int CardID { get { return mCardID; } set { mCardID = value; Reset(); } }
 
+        //カード画像への参照
         [SerializeField]
         private Image mImage = null;
+
+        //カード名への参照
+        [SerializeField]
+        private Text mCardName = null;
+
+        //発動スキルへの参照
+        [SerializeField]
+        private Text mSkillName = null;
 
         //パス
         [SerializeField]
@@ -38,6 +47,10 @@ namespace ProjectWitch.Batlle
 
             mFrontSprite = Resources.Load<Sprite>(mCardImagePath + card.ImageFront);
             mBackSprite = Resources.Load<Sprite>(mCardImagePath + card.ImageBack);
+
+            //テキストをセット
+            mCardName.text = card.Name;
+            mSkillName.text = game.GameData.Skill[card.SkillID].Name;
         }
 
         // Update is called once per frame

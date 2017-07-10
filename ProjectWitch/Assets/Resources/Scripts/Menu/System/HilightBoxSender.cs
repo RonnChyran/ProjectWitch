@@ -1,9 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
+using ProjectWitch.Sys;
 
-namespace ProjectWitch.Menu
+namespace ProjectWitch.Menu.System
 {
     public class HilightBoxSender : MonoBehaviour
     {

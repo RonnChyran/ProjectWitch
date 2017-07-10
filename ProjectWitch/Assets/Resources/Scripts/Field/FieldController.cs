@@ -133,6 +133,10 @@ namespace ProjectWitch.Field
                 if (game.BattleIn.IsEvent)
                     yield return StartCoroutine(CallBattle(game.BattleIn.AreaID, 0, true));
 
+                //カメラをアリスの館へ移動
+                var targetpos = game.GameData.Area[1].Position;
+                yield return StartCoroutine(mCameraController.MoveTo(targetpos));
+
                 //BGM再開
                 PlayBGM();
 

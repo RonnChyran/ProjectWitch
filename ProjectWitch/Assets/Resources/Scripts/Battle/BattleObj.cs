@@ -5,6 +5,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
@@ -160,7 +161,7 @@ namespace ProjectWitch.Battle
 		// 戦闘速度
 		public int BattleSpeed { get { return mGame.SystemData.Config.BattleSpeed; } set { mGame.SystemData.Config.BattleSpeed = value; } }
 		// 戦闘速度倍率
-		public float BattleSpeedMagni { get { return (float)System.Math.Pow(2.0f, BattleSpeed); } }
+		public float BattleSpeedMagni { get { return (float)Math.Pow(2.0f, BattleSpeed); } }
 		// ターン(行動)ユニット
 		public BattleUnit TurnUnit { get { return OrderController.TurnUnit; } }
 		// バーマネージャ
@@ -826,9 +827,9 @@ namespace ProjectWitch.Battle
 				yield return null;
 
 			var damageDisplay = (target.IsPlayer ? mDamageDisplayPlayer : mDamageDisplayEnemy).GetComponent<DamageDisplay>();
-			var realHealHP = System.Math.Min(healHP, System.Math.Max(target.UnitData.MaxHP - target.UnitData.HP, 0));
-			var realHealSolNum = System.Math.Min(healSolNum, System.Math.Max(target.UnitData.MaxSoldierNum - target.UnitData.SoldierNum, 0));
-			float displayHP = System.Math.Max(realHealHP, realHealSolNum);
+			var realHealHP = Math.Min(healHP, Math.Max(target.UnitData.MaxHP - target.UnitData.HP, 0));
+			var realHealSolNum = Math.Min(healSolNum, Math.Max(target.UnitData.MaxSoldierNum - target.UnitData.SoldierNum, 0));
+			float displayHP = Math.Max(realHealHP, realHealSolNum);
 			damageDisplay.Display(displayHP, false);
 			target.Healed(healHP, healSolNum);
 			for (int i = 5; i >= 0; --i)

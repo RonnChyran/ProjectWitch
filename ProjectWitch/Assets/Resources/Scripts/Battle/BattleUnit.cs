@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 namespace ProjectWitch.Battle
 {
@@ -384,9 +385,9 @@ namespace ProjectWitch.Battle
 			if (leader)
 			{
 				mLeaderObj = BattleData.Instantiate(leader, "leader", transform).gameObject;
-				mLeaderObj.transform.localPosition = new Vector3(System.Math.Abs(leaderPos.localPosition.x) *
+				mLeaderObj.transform.localPosition = new Vector3(Math.Abs(leaderPos.localPosition.x) *
 					(IsPlayer ? -1 : 1), leader.transform.localPosition.y, leaderPos.localPosition.z);
-				mLeaderObj.transform.localScale = new Vector3(System.Math.Abs(mLeaderObj.transform.localScale.x) *
+				mLeaderObj.transform.localScale = new Vector3(Math.Abs(mLeaderObj.transform.localScale.x) *
 					(IsPlayer ? -1 : 1), leader.transform.localScale.y, leader.transform.localScale.z);
 				// リーダーのアニメーター
 				foreach (Transform child in mLeaderObj.transform)
@@ -432,9 +433,9 @@ namespace ProjectWitch.Battle
 					foreach (Transform child in soldiderPosObj)
 					{
 						var obj = BattleData.Instantiate(soldierPrefab, child.gameObject.name, soldier).gameObject;
-						obj.transform.localPosition = new Vector3(System.Math.Abs(child.localPosition.x) *
+						obj.transform.localPosition = new Vector3(Math.Abs(child.localPosition.x) *
 							(IsPlayer ? -1 : 1), child.localPosition.y, child.localPosition.z);
-						obj.transform.localScale = new Vector3(System.Math.Abs(obj.transform.localScale.x) *
+						obj.transform.localScale = new Vector3(Math.Abs(obj.transform.localScale.x) *
 							(IsPlayer ? -1 : 1), obj.transform.localScale.y, obj.transform.localScale.z);
 						mSoldierObj.Add(obj);
 						// 兵士のアニメーター
@@ -474,7 +475,7 @@ namespace ProjectWitch.Battle
 		{
 			int nextDisplayNum = 0;
 			if (UnitData.MaxSoldierNum != 0)
-				nextDisplayNum = (int)System.Math.Ceiling((float)(mSoldierObj.Count) * DisplaySoldierNum / UnitData.MaxSoldierNum);
+				nextDisplayNum = (int)Math.Ceiling((float)(mSoldierObj.Count) * DisplaySoldierNum / UnitData.MaxSoldierNum);
 
 			int preDisplayNum = 0;
 			foreach (var soldier in mSoldierObj)
@@ -487,7 +488,7 @@ namespace ProjectWitch.Battle
 				// 減らす
 				for (; nextDisplayNum != preDisplayNum; --preDisplayNum)
 				{
-					int rand = Random.Range(0, preDisplayNum);
+					int rand = UnityEngine.Random.Range(0, preDisplayNum);
 					int id = 0;
 					for (int count = 0; count < rand; ++id)
 					{
@@ -504,7 +505,7 @@ namespace ProjectWitch.Battle
 				// 増やす
 				for (; nextDisplayNum != preDisplayNum; ++preDisplayNum)
 				{
-					int rand = Random.Range(0, mSoldierObj.Count - preDisplayNum);
+					int rand = UnityEngine.Random.Range(0, mSoldierObj.Count - preDisplayNum);
 					int id = 0;
 					for (int count = 0; count < rand; ++id)
 					{
@@ -642,17 +643,17 @@ namespace ProjectWitch.Battle
 				{
 					// 防：リーダー
 					// 物理攻撃
-					pDamage = System.Math.Min(LAtkSkill.Power / 100.0f, (AtkLPAtk / 2 - DefGPDef / 4) / 4) * PositionCoe;
+					pDamage = Math.Min(LAtkSkill.Power / 100.0f, (AtkLPAtk / 2 - DefGPDef / 4) / 4) * PositionCoe;
 					// 魔法攻撃
-					if (!isCounter) mDamage = System.Math.Min(LAtkSkill.Power / 100.0f, (AtkLMAtk / 2 - DefGMDef / 4) / 4);
+					if (!isCounter) mDamage = Math.Min(LAtkSkill.Power / 100.0f, (AtkLMAtk / 2 - DefGMDef / 4) / 4);
 				}
 				else
 				{
 					// 防：集団
 					// 物理攻撃
-					pDamage = System.Math.Min(LAtkSkill.Power, (AtkLPAtk / 2 - DefGPDef / 4) * 10) * PositionCoe;
+					pDamage = Math.Min(LAtkSkill.Power, (AtkLPAtk / 2 - DefGPDef / 4) * 10) * PositionCoe;
 					// 魔法攻撃
-					if (!isCounter) mDamage = System.Math.Min(LAtkSkill.Power, (AtkLMAtk / 2 - DefGMDef / 4) * 10);
+					if (!isCounter) mDamage = Math.Min(LAtkSkill.Power, (AtkLMAtk / 2 - DefGMDef / 4) * 10);
 				}
 			}
 			else
@@ -668,7 +669,7 @@ namespace ProjectWitch.Battle
 				{
 					// 防：リーダー
 					// 物理攻撃
-					pDamage = System.Math.Min(AtkData.SoldierNum / 100, (AtkGPAtk / 2 - DefLPDef / 4) / 4) * PositionCoe;
+					pDamage = Math.Min(AtkData.SoldierNum / 100, (AtkGPAtk / 2 - DefLPDef / 4) / 4) * PositionCoe;
 					// 魔法攻撃
 					if (!isCounter) mDamage = (AtkGMAtk / 2 - DefLMDef / 4) / 4;
 				}
@@ -676,12 +677,12 @@ namespace ProjectWitch.Battle
 				{
 					// 防：集団
 					// 物理攻撃
-					pDamage = System.Math.Min(AtkData.SoldierNum, (AtkGPAtk / 2 - DefGPDef / 4) * 10) * PositionCoe;
+					pDamage = Math.Min(AtkData.SoldierNum, (AtkGPAtk / 2 - DefGPDef / 4) * 10) * PositionCoe;
 					// 魔法攻撃
 					if (!isCounter) mDamage = (AtkGMAtk / 2 - DefGMDef / 4) * 10;
 				}
 			}
-			return System.Math.Max(pDamage, 0) + System.Math.Max(mDamage, 0);
+			return Math.Max(pDamage, 0) + Math.Max(mDamage, 0);
 		}
 
 		// ダメージを受ける
@@ -702,12 +703,12 @@ namespace ProjectWitch.Battle
 
 
 			}
-			damage = System.Math.Min(damage, (!IsExistSoldier || toLeader ? UnitData.HP : UnitData.SoldierNum));
+			damage = Math.Min(damage, (!IsExistSoldier || toLeader ? UnitData.HP : UnitData.SoldierNum));
 
 			if (!IsExistSoldier || toLeader)
-				UnitData.HP = System.Math.Max(UnitData.HP - (int)damage, 0);
+				UnitData.HP = Math.Max(UnitData.HP - (int)damage, 0);
 			else
-				UnitData.SoldierNum = System.Math.Max(UnitData.SoldierNum - (int)damage, 0);
+				UnitData.SoldierNum = Math.Max(UnitData.SoldierNum - (int)damage, 0);
 			IsDamaged = true;
 			return (int)damage;
 		}
@@ -715,8 +716,8 @@ namespace ProjectWitch.Battle
 		// 回復する
 		public void Healed(float healHP, float healSolNum)
 		{
-			UnitData.HP = System.Math.Min(UnitData.HP + (int)healHP, MaxHP);
-			UnitData.SoldierNum = System.Math.Min(UnitData.SoldierNum + (int)healSolNum, UnitData.MaxSoldierNum);
+			UnitData.HP = Math.Min(UnitData.HP + (int)healHP, MaxHP);
+			UnitData.SoldierNum = Math.Min(UnitData.SoldierNum + (int)healSolNum, UnitData.MaxSoldierNum);
 		}
 
 		// 捕獲ダメージを受ける

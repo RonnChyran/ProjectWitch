@@ -6637,6 +6637,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1831421634}
   - component: {fileID: 1831421633}
+  - component: {fileID: 1831421635}
   m_Layer: 0
   m_Name: PreBattleController
   m_TagString: PreBattleController
@@ -6670,6 +6671,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1831421635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1831421632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cde36736de38f548b9fc6aac280f997, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mType: 0
+  mName: 018_event3
+  mPlayOnAwake: 1
 --- !u!1 &1869378705
 GameObject:
   m_ObjectHideFlags: 0

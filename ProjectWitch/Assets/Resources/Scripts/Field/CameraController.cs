@@ -47,9 +47,6 @@ namespace ProjectWitch.Field
 
         void OnMouseDown()
         {
-            //カメラが操作可能かどうか
-            if (!IsPlayable) return;
-
             var ray = RectTransformUtility.ScreenPointToRay(Camera.main, Input.mousePosition);
 
             RaycastHit rHit;
@@ -65,9 +62,6 @@ namespace ProjectWitch.Field
 
         void OnMouseDrag()
         {
-            //カメラが操作可能かどうか
-            if (!IsPlayable) return;
-
             Vector3 mousePos;
             var ray = RectTransformUtility.ScreenPointToRay(Camera.main, Input.mousePosition);
 
@@ -79,6 +73,13 @@ namespace ProjectWitch.Field
             else
             {
                 mousePos = Vector3.zero;
+            }
+
+            //カメラが操作可能かどうか
+            if (!IsPlayable)
+            {
+                mOldMousePos = mousePos;
+                return;
             }
 
             var tmp = mousePos - mOldMousePos;

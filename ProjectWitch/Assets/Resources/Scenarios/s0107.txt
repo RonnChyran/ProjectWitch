@@ -14,12 +14,10 @@
 [loadcg id=2 ref="werewolf"]
 
 [filter name="fade" time=500]
-[drawbg ref="1047n"]
+[drawbg ref="Event/706B"]
 [bgm ref="018_event3"]
 [filter name="clear" time=500]
 
-[drawcg id=0 pos="right" state="1"]
-[drawcg id=1 pos="left" dir="right"]
 [show_message]
 #アリス
 [voice ref="010040"]
@@ -47,14 +45,8 @@
 #クロ
 [voice ref="010046"]
 はっ。[p]
-#アリス
-[voice ref="010047"]
-クフフッ！[n]
-さあ行くぞお前たち、裏切り者の犬にはしつけが必要だ！！ [p]
 
 [filter name="fade" time=500]
-[clearcg id=0]
-[clearcg id=1]
 [drawbg ref="1048n"]
 [cn]
 …………。[p]
@@ -97,11 +89,26 @@
 #アリス軍
 オオオオオォォォーー！！！[p]
 
+[hide_message]
+[filter name="fade" time=500]
+[clearcg id=1]
+[drawbg ref="Event/710"]
+[filter name="clear" time=300]
+[wait time=500]
+
+[show_message]
+一方のアリスは数十名の部下を連れて空中へ飛び出した。[p]
+いくつもの落下傘が、闇夜に紛れて砦の中へと降り立っていく。[p]
+前方の兵士に気を取られているワーウルフの軍勢のなかに、[n]
+上空からの侵入者に気付くものはいない。[p]
+#アリス
+[voice ref="010047"]
+クフフッ！[n]
+さあ行くぞお前たち、裏切り者の犬にはしつけが必要だ！！ [p]
 
 [hide_message]
 [filter name="fade" time=500]
 [clearbg]
-[clearcg id=1]
 [filter name="clear" time=500]
 
 [stopbgm]
