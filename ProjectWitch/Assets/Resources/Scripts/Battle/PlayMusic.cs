@@ -30,19 +30,22 @@ namespace ProjectWitch.Battle
 		// 捕獲ゲージ増加音
 		[SerializeField]
 		private string mCaptureGauge = null;
+		// ユニット画像マウスオーバー音
+		[SerializeField]
+		private string mOverUnitFace = null;
 
 		public void PlayAudio(string name)
 		{
-            var game = Game.GetInstance();
-            if (name != "")
-                game.SoundManager.Play(name, SoundType.SE);
+			var game = Game.GetInstance();
+			if (name != "")
+				game.SoundManager.Play(name, SoundType.SE);
 		}
 
-        public void StopBGM()
-        {
-            var game = Game.GetInstance();
-            game.SoundManager.Stop(SoundType.BGM);
-        }
+		public void StopBGM()
+		{
+			var game = Game.GetInstance();
+			game.SoundManager.Stop(SoundType.BGM);
+		}
 
 		public void PlayVS()
 		{
@@ -66,13 +69,13 @@ namespace ProjectWitch.Battle
 
 		public void PlayWin()
 		{
-            StopBGM();
+			StopBGM();
 			PlayAudio(mWin);
 		}
 
 		public void PlayLose()
 		{
-            StopBGM();
+			StopBGM();
 			PlayAudio(mLose);
 		}
 
@@ -86,13 +89,18 @@ namespace ProjectWitch.Battle
 			PlayAudio(mCaptureGauge);
 		}
 
+		public void PlayOverUnitFace()
+		{
+			PlayAudio(mOverUnitFace);
+		}
+
 		// Use this for initialization
 		void Start()
-        {
-            var game = Game.GetInstance();
-            game.SoundManager.Play(game.BattleIn.BGM, SoundType.BGM);
-        }
+		{
+			var game = Game.GetInstance();
+			game.SoundManager.Play(game.BattleIn.BGM, SoundType.BGM);
+		}
 		// Update is called once per frame
-		void Update() {}
+		void Update() { }
 	}
 }
