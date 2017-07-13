@@ -2024,6 +2024,13 @@ namespace ProjectWitch
 		}
 
 		public bool TutorialMode { get; set; }
+
+        public enum TopMenu
+        {
+            Default,
+            Army, Town, System, Tips
+        }
+        public TopMenu Top { get; set; }
 	}
 
 	#endregion

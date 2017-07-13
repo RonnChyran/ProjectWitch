@@ -10,10 +10,18 @@ namespace ProjectWitch.Field
         private Vector3 mMapSize;
 
         //操作対象のカメラ
-        private Camera mCamera;
+        [SerializeField]
+        private Camera mMoveCamera = null;
+
+        //全体表示のカメラ
+        [SerializeField]
+        private Camera mOverLookCamera = null;
 
         //カメラが操作可能か
         public bool IsPlayable { get; set; }
+
+        //全体表示になっているか
+        public bool IsOverlook { get; set; }
 
         //目的地に到達するまでの時間
         [SerializeField]
@@ -31,10 +39,7 @@ namespace ProjectWitch.Field
 
             //デフォルトは操作可能
             IsPlayable = true;
-
-            //カメラを取得
-            mCamera = Camera.main;
-            
+                        
         }
 
         void Update()
@@ -42,12 +47,19 @@ namespace ProjectWitch.Field
             DeltaMove();
         }
 
+        //カメラ切り替え true:全体表示にする false:縮小ビューにする
+        public void ChangeOverLookCamera(bool enable)
+        {
+            mMoveCamera.enabled = !enable;
+            mOverLookCamera.enabled = enable;
+        }
+
         //変数入力
         private Vector3 mOldMousePos;
 
         void OnMouseDown()
         {
-            var ray = RectTransformUtility.ScreenPointToRay(Camera.main, Input.mousePosition);
+            var ray = RectTransformUtility.ScreenPointToRay(mMoveCamera, Input.mousePosition);
 
             RaycastHit rHit;
             if (Physics.Raycast(ray, out rHit))
@@ -63,7 +75,7 @@ namespace ProjectWitch.Field
         void OnMouseDrag()
         {
             Vector3 mousePos;
-            var ray = RectTransformUtility.ScreenPointToRay(Camera.main, Input.mousePosition);
+            var ray = RectTransformUtility.ScreenPointToRay(mMoveCamera, Input.mousePosition);
 
             RaycastHit rHit;
             if (Physics.Raycast(ray, out rHit))
@@ -85,11 +97,11 @@ namespace ProjectWitch.Field
             var tmp = mousePos - mOldMousePos;
             tmp.z = 0.0f;
 
-            Camera.main.transform.position -= tmp;
+            mMoveCamera.transform.position -= tmp;
 
             //カメラの移動制限
-            Vector3 cameraPos = mCamera.transform.position;
-            float cameraSizeY = mCamera.orthographicSize;
+            Vector3 cameraPos = mMoveCamera.transform.position;
+            float cameraSizeY = mMoveCamera.orthographicSize;
             float aspect = (float)Screen.width / (float)Screen.height;
             float cameraSizeX = cameraSizeY * aspect;
 
@@ -110,7 +122,7 @@ namespace ProjectWitch.Field
                 cameraPos.y = mMapSize.y - cameraSizeY;
             }
 
-            mCamera.transform.position = cameraPos;
+            mMoveCamera.transform.position = cameraPos;
 
         }
 
@@ -118,7 +130,7 @@ namespace ProjectWitch.Field
         public IEnumerator MoveTo(Vector2 targetpos)
         {
             mTargetPos = targetpos;
-            mCurrentPos = mCamera.transform.position;
+            mCurrentPos = mMoveCamera.transform.position;
             mProgress = mDuration;
 
             while (mProgress >= 0) yield return null;
@@ -131,7 +143,7 @@ namespace ProjectWitch.Field
             {
 
                 //線形補間で位置を出す
-                mCamera.transform.position = new Vector3(mCurrentPos.x * mProgress + mTargetPos.x * (1 - mProgress),
+                mMoveCamera.transform.position = new Vector3(mCurrentPos.x * mProgress + mTargetPos.x * (1 - mProgress),
                                                          mCurrentPos.y * mProgress + mTargetPos.y * (1 - mProgress), mCurrentPos.z);
 
                 mProgress -= Time.deltaTime;

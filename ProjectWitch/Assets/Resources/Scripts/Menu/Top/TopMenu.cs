@@ -68,5 +68,9 @@ namespace ProjectWitch.Menu
             mcAnim.SetBool("IsShow", false);
         }
 
+        public void Show()
+        {
+            mcAnim.SetBool("IsShow", true);
+        }
     }
 }

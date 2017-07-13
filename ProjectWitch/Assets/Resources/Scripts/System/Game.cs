@@ -58,6 +58,11 @@ namespace ProjectWitch
         [SerializeField]
         private GameObject mNowLoadingPrefab = null;
 
+        //タイトル画面遷移
+        [SerializeField]
+        private GoTitleWindow mGoTitleWindow = null;
+        public GoTitleWindow GoTitle { get { return mGoTitleWindow; } }
+
         #endregion
 
         #region ゲームデータ関連
