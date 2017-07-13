@@ -140,6 +140,9 @@ namespace ProjectWitch.Battle
 		// 撤退ボタン
 		[SerializeField]
 		private Button mEscapeButton = null;
+		// カードエフェクトプレハブ
+		[SerializeField]
+		private GameObject m_CardEffectPrefab = null;
 		// 最終呼び出しevent
 		[SerializeField]
 		public UnityEvent EndEvent = null;
@@ -311,7 +314,7 @@ namespace ProjectWitch.Battle
 				var bu = go.GetComponent<BattleUnit>();
 				bu.Setup(id, true, i, this);
 				PlayerUnits.Add(bu);
-				PlayerFaces[i].SetUnit(PlayerUnits[i]);
+				PlayerFaces[i].SetUnit(PlayerUnits[i], true);
 			}
 			print("エネミーユニット設定");
 			EnemyUnits = new List<BattleUnit>();
@@ -329,7 +332,7 @@ namespace ProjectWitch.Battle
 				var bu = go.GetComponent<BattleUnit>();
 				bu.Setup(id, false, i, this);
 				EnemyUnits.Add(bu);
-				EnemyFaces[i].SetUnit(EnemyUnits[i]);
+				EnemyFaces[i].SetUnit(EnemyUnits[i], false);
 			}
 			PlayerSummonUnits = new List<BattleUnit>();
 			EnemySummonUnits = new List<BattleUnit>();
@@ -353,7 +356,7 @@ namespace ProjectWitch.Battle
 			}
 
 			// 戦闘ターン数取得
-			TurnNum = BattleDataIn.TurnNum == 0 ? mGame.GameData.Area[mGame.BattleIn.AreaID].Time : BattleDataIn.TurnNum;
+			TurnNum = (BattleDataIn.TurnNum == 0) ? mGame.GameData.Area[mGame.BattleIn.AreaID].Time : BattleDataIn.TurnNum;
 
 			// 順番バー初期化
 			print("順番枠設定");
@@ -417,7 +420,7 @@ namespace ProjectWitch.Battle
 		#endregion
 
 		// エフェクトを発生させる
-		private GameObject GenerateEffect(GameObject effectObj, string name, bool isUI)
+		private GameObject GenerateEffect(GameObject effectObj, string name, bool isUI, CardManager card = null)
 		{
 			// 生成
 			if (!effectObj)
@@ -432,7 +435,11 @@ namespace ProjectWitch.Battle
 				effect.transform.localPosition = effectObj.transform.localPosition;
 				effect.transform.localScale = effectObj.transform.localScale;
 			}
-
+			else if (card != null)
+			{
+				var c = effect.GetComponent<BattleCardEffect>();
+				c.CardID = card.ID;
+			}
 
 			// コールバックセット
 			IsEffect = true;
@@ -1281,12 +1288,12 @@ namespace ProjectWitch.Battle
 				mCaptureGauge.SetActive(true);
 				mCaptureGaugeBack.SetActive(true);
 				CaptureGauge.fillAmount = preCaptureGauge / 100;
-				tarUnit.SufferCaptureDamage(tarUnit);
-				// 捕獲音再生
-				Music.PlayCaptureGauge();
+				tarUnit.SufferCaptureDamage(TurnUnit);
+
 				var text = mCaptureGauge.transform.Find("Text").GetComponent<Text>();
 				float time = 0;
 				var endTime = mCaptureGaugeTime / BattleSpeedMagni;
+				var preGauge = preCaptureGauge;
 				while (time < endTime)
 				{
 					var rate = time / endTime;
@@ -1294,6 +1301,12 @@ namespace ProjectWitch.Battle
 					CaptureGauge.fillAmount = gauge / 100;
 					text.text = (int)gauge + "％";
 					Bar.SetBar(tarUnit, 0, 0, 0, (tarUnit.CaptureGauge - preCaptureGauge) * (rate - 1));
+					if (preGauge != gauge)
+					{
+						// 捕獲音再生
+						Music.PlayCaptureGauge();
+					}
+					preGauge = gauge;
 					yield return null;
 					time += Time.deltaTime;
 				}

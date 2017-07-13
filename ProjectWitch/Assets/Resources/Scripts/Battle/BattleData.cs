@@ -118,7 +118,7 @@ namespace ProjectWitch.Battle
 
 		public static Transform Instantiate(GameObject gameObject, string name, Transform parent = null)
 		{
-			var tf = GameObject.Instantiate(gameObject).transform;
+			var tf = Instantiate(gameObject).transform;
 			tf.name = name;
 			if (parent != null)
 				tf.parent = parent;
