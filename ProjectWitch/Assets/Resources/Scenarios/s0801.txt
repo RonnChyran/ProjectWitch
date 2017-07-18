@@ -1,98 +1,166 @@
-;s0801
-;script:
-;direction:
-;timing:
+﻿;script 801
+;directer:yuichi
+;script:nikai
+;timing:s800の後の戦闘後
 
-■場面2
-;場面1後
-;自動戦闘により強制勝利
-ヴェロニカ陣営。
+[field_area_hilight id=94]
+[wait time=500]
+
+[loadcg id=0 ref="raisa"]
+[loadcg id=1 ref="seedle"]
+[loadcg id=2 ref="eli"]
+
+[filter name="fade" time=500]
+[drawbg ref="1039m"]
+[bgm ref="021_event6"]
+[drawcg id=2 dir="right" pos=3]
+[drawcg id=1 dir="right" pos=1]
+[filter name="clear" time=500]
+[show_message]
+ヴェロニカ陣営。[p]
 #エリ
-しょーりー！！
-フフフフッ！！　やっぱり私は強いのだ！
-見た？　シードル！
-私の活躍を！
+[voice ref="080005"]
+しょーりー！！[n]
+フフフフッ！！　やっぱり私は強いのだ！[p]
+[scale id=2 sx=-1 time=300]
+[voice ref="080006"]
+見た？　シードル！[n]
+私の活躍を！[p]
 #シードル
-エリ様の攻撃、味方も何人か巻き込んでますよ……。
-大体、エリ様の攻撃は範囲が広いんですから、もう少し周りをよくみて……あいたっ！！
-ちょっと！　エリ様！
-暴力をふるうのはいけませんってば！
-
-080010
-
-080011
-
-080012
-
-
-
-
-080013
-
-080015
-
-
-080016
-ちょっと、いたいっ！！
+[voice ref="080007"]
+エリ様の攻撃、味方も何人か巻き込んでますよ……。[p]
+[voice ref="080008"]
+大体、エリ様の攻撃は範囲が広いんですから、もう少し周りをよくみて……[n]
+[move id=2 x=-7 time=50]
+[se ref="044"]
+[move id=1 x=-2 time=20]
+[move id=2 x=5 time=50]
+あいたっ！！[p]
+[move id=2 x=-7 time=50]
+[se ref="044"]
+[move id=1 x=-2 time=20]
+[move id=2 x=5 time=50]
+[voice ref="080009"]
+ちょっと！　エリ様！[n]
+暴力をふるうのはいけませんってば！[p]
+[move id=2 x=-7 time=50]
+[se ref="044"]
+[move id=1 x=-2 time=20]
+[move id=2 x=5 time=50]
+[voice ref="080010"]
+ちょっと、いたいっ！！[p]
+[move id=2 y=-5 time=50]
+[move id=2 y=5 time=50]
+[move id=2 y=-5 time=50]
+[move id=2 y=5 time=50]
 #エリ
-うるさい、うるさいッッ！！
-アンタは素直に私を褒めていればいいのよッ！！
-なーにがもう少し周りをよくみて、よ！！
-シードルなんかこうよっ！　このっ！　このっ！！
+[voice ref="080011"]
+うるさい、うるさいッッ！！[n]
+アンタは素直に私を褒めていればいいのよッ！！[p]
+[voice ref="080012"]
+なーにがもう少し周りをよくみて、よ！！[n]
+シードルなんかこうよっ！　
+[move id=2 x=-7 time=50]
+[se ref="044"]
+[move id=1 x=-2 time=20]
+[move id=2 x=5 time=50]
+このっ！　
+[move id=2 x=-7 time=50]
+[se ref="044"]
+[move id=1 x=-2 time=20]
+[move id=2 x=5 time=50]
+このっ！！[p]
 [cn]
-エリはシードルのすねを、なおも執拗に蹴り続けた。
+エリはシードルのすねをなおも執拗に蹴り続けた。[p]
+[move id=2 x=-7 time=50]
+[se ref="044"]
+[move id=1 x=-2 time=20]
+[move id=2 x=5 time=50]
 #シードル
-いたっ！　いたいっ！
-ちょっと！！　やめてくださいよエリ様！！
-むき出しなんですから！
-蹴るなら丈夫なお腹とかに……ちょっ、聞いてますか！？
-エリ様ーー！
+[voice ref="080013"]
+いたっ！
+[move id=2 x=-7 time=50]
+[se ref="044"]
+[move id=1 x=-2 time=20]
+[move id=2 x=5 time=50]
+　いたいっ！[n]
+[move id=2 x=-7 time=50]
+[se ref="044"]
+[move id=1 x=-2 time=20]
+[move id=2 x=5 time=50]
+ちょっと！！
+[move id=2 x=-7 time=50]
+[se ref="044"]
+[move id=1 x=-2 time=20]
+[move id=2 x=5 time=50]
+　やめてくださいよエリ様！！[p]
+[voice ref="080015"]
+むき出しなんですから！[n]
+[move id=2 x=-7 time=50]
+[se ref="044"]
+[move id=1 x=-2 time=20]
+[move id=2 x=5 time=50]
+蹴るなら丈夫なお腹とかに……[n]
+[move id=2 x=-7 time=50]
+[se ref="044"]
+[move id=1 x=-2 time=20]
+[move id=2 x=5 time=50]
+ちょっ、聞いてますか！？[p]
+[move id=2 x=-7 time=50]
+[se ref="044"]
+[move id=1 x=-2 time=20]
+[move id=2 x=5 time=50]
+[voice ref="080016"]
+エリ様ーー！[p]
+[move id=2 x=-7 time=50]
+[se ref="044"]
+[move id=1 x=-2 time=20]
+[move id=2 x=5 time=50]
+[wait time=200]
+[move id=2 x=-7 time=50]
+[se ref="044"]
+[move id=1 x=-2 time=20]
+[move id=2 x=5 time=50]
+[hide_message]
+[filter name="fade" time="500"]
+[clearbg]
+[clearcg id=1]
+[clearcg id=2]
+[stopbgm]
+[wait time=500]
+[filter name="clear" time="500"]
 
+[field_area_hilight id=93]
 
-
-
-
-
-
-
-
-080017
-
-
-080018
-
-080019
-
-
-
-
-
+[filter name="fade" time=500]
+[drawbg ref="1039e"]
+[bgm ref="015_raizania"]
+[drawcg id=0 pos=3]
+[filter name="clear" time=500]
+[show_message]
 
 [cn]
-……………。
-ライザ陣営。
+ライザ陣営。[p]
 #ライザの部下
-ライザ様。南の城壁からエリ軍とみられる一団がこちらの攻撃を潜り抜けて突入してきた模様。
+[voice ref="080017"]
+ライザ様。[n]
+南の城壁からエリ軍とみられる一団がこちらの攻撃を潜り抜けて突入してきた模様。[p]
 #ライザ
-キヒヒッ！
-まあ想定内だ。
-反乱をおこしたとはいえ、まだ賛同する兵士はこちらの方が少ない。
+[voice ref="080018"]
+キヒヒッ！[n]
+まあ想定内だ。[p]
+[voice ref="080019"]
+反乱をおこしたとはいえ、まだ賛同する兵士はこちらの方が少ない。[p]
+[voice ref="080020"]
+すぐに中央から援軍を出せ。[n]
+勝負はこれからだぜ、キヒヒヒヒ！[p]
 
-080020
+[hide_message]
+[filter name="fade" time="500"]
+[clearbg]
+[clearcg id=0]
+[wait time=500]
+[filter name="clear" time="500"]
+[stopbgm]
 
-
-
-
-
-
-
-
-
-
-
-
-080021
-
-
-すぐに中央から援軍を出せ。
-勝負はこれからだぜ、キヒヒヒヒ！
+[sys_memset index=801 value="1"]

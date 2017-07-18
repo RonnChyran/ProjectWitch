@@ -1,43 +1,69 @@
-;s0838
-;script:
-;direction:
-;timing:
+﻿;script 838
+;directer:yuichi
+;script:nikai
+;timing:s0837後
 
-■場面40
-;場面39後
+[field_area_hilight id=77]
+[filter name="fade" time=500]
+
+[loadcg id=0 ref="alice"]
+[loadcg id=1 ref="kuro"]
+[loadcg id=2 ref="eli"]
+
+[bgm ref="004_battle1"]
+[drawbg ref="1011m"]
+
+[drawcg id=0 posx=-20]
+[drawcg id=1 posx=0]
+[drawcg id=2 posx=30]
+
+[wait time=500]
+[filter name="clear" time=500]
+
+[show_message]
 ;77世界樹侵攻
-世界樹。
+世界樹。[p]
 #アリス
-おお……思っていたのの百倍でけえ……。
+[voice ref="080502"]
+おお……思っていたのの百倍でけえ……。[p]
 #エリ
-で？　アンタはこれを焼こうっていうの？
+[voice ref="080503"]
+で？　アンタはこれを焼こうっていうの？[p]
+[changecg id=0 state=2]
 #アリス
-いや……そうだな。
-やるだけやってみるか……？
+[voice ref="080504"]
+いや……そうだな。[n]
+やるだけやってみるか……？[p]
 #エリ
-もう……、いいわよ。付き合ってあげる。
-
-
-
-
-080506
-
-080507
-
-080508
-
-
-
-
-
-
-
-080509
-
+[voice ref="080505"]
+もう……[n]
+いいわよ。 付き合ってあげる。[p]
+[scale id=0 sx=-1 time=300]
+[changecg id=0 state=0]
 #アリス
-とりあえず、魔法隊は総動員で攻撃魔法を世界樹に向かってぶつける。
-余ったやつらで火をたかせるぞ。
+[voice ref="080506"]
+とりあえず、魔法隊は総動員で攻撃魔法を世界樹に向かってぶつける。[p]
+[voice ref="080507"]
+余ったやつらで火をたかせるぞ。[p]
 #エリ
-了解よ。
+[voice ref="080508"]
+了解よ。[p]
+[scale id=1 sx=-1 time=200]
+[scale id=2 sx=-1 time=300]
+[move id=1 x=100 time=500]
+[move id=2  x=50 time=500]
 ;ここからしばらく世界樹との戦闘
 ;世界樹は物理無効魔法有効　HP超高い
+
+[hide_message]
+[filter name="fade" time=500]
+[clearcg id=0]
+[clearcg id=1]
+[clearcg id=2]
+[clearbg]
+[stopbgm]
+[wait time=500]
+[filter name="clear" time="500"]
+
+
+[sys_memset index=838 value="1"]

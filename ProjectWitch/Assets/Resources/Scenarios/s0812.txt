@@ -1,68 +1,83 @@
-;s0812
-;script:
-;direction:
-;timing:
+﻿;script 812
+;directer:yuichi
+;script:nikai
+;timing:s0811後
 
-■場面13
-;場面12後
-ペトロパブロフスク街道東。
-#エリ
-ああっ！　こら！！
-逃げるな、戦えーーー！！
+[field_area_hilight id=90]
+[wait time=500]
+
+[loadcg id=0 ref="veronica"]
+[loadcg id=1 ref="nia"]
+
+[filter name="fade" time=500]
+[bgm ref="004_battle1"]
+[drawbg ref="1018m"]
+[drawcg id=1 posx=-100 dir="right"]
+[filter name="clear" time=500]
+
+[show_message]
+モスクの森南。[p]
+ここでの戦いでヴェロニカ軍がとったのはゲリラ戦の形だった。[p]
+#ヴェロニカ
+[voice ref="080085"]
+まだよ……、よく引き付けて。[p]
 [cn]
-連日敗戦を重ね、民兵で構成されたエリたちの軍勢は支離滅裂状態となっていた。
-毎日数百人の逃亡者が出ており、士気も兵数も圧倒的に足りない状況だった。
-
-
-080078
-
-
-080079
-
-
-080080
-
-
-080081
-
-080082
-
-
-#シードル
-エリ様、ここはいっそレーニングラッド要塞まで後退して、そこで再起を図るのがよろしいかと。
-#エリ
-私に逃げろっていうの！？
-そんなのいやよ！　絶対ないわ！！
-#シードル
-引くも作戦のうちです。
-さあ！　お引き退きを！！
-#エリ
-きーーー！！　この馬鹿ッ！！
-#シードル
-いたいっ！！
-
-
-
-
-080083
-
-080084
-
-
-
-
-
-
-
-
-
-
-
-#エリ
-全軍退却！！　シードルはしんがりを務めなさい！！
-#シードル
-いてて……はい、承知しました……。
-
+ニア軍が進軍しているそばの茂みには、大量の伏兵が潜伏していた。[p]
+森の中にはトラップや伏兵などの障害が張り巡らされ[n]
+ニア軍は昼夜問わずヴェロニカ軍に襲われるのだ。[p]
+[move id=1 x=20 time=400]
+[wait time=200]
+[move id=1 x=20 time=400]
+[wait time=200]
+[move id=1 x=20 time=400]
+[wait time=200]
+[move id=1 x=20 time=400]
+[wait time=200]
+[move id=1 x=20 time=400]
+[wait time=200]
+[scale id=1 sx=-1 time=300]
+[wait time=100]
+[scale id=1 sx=-1 time=300]
+#ニア
+[voice ref="080086"]
+ぜえ……ぜえ……。[n]
+もう！！[p]
+[move id=1 y=5 time=50]
+[move id=1 y=-5 time=50]
+[voice ref="080087"]
+一体どんだけ歩かせるのよ！！[n]
+迷ってるんじゃないのォ？[p]
+[drawcg id=0 pos=5]
+#ヴェロニカ
+[voice ref="080088"]
+今よっ！！　突撃ッ！！[p]
+[se ref="159"]
+[se ref="047"]
+#ニア
+[move id=1 x=-5 y=5 time=50]
+[move id=1 y=-5 time=50]
+[voice ref="080089"]
+まっ、またあ！？[n]
+ちょっと！　早く反撃しなさいよ！！[p]
+[move id=1 y=-5 time=50]
+[move id=1 y=5 time=50]
+[move id=1 y=-5 time=50]
+[move id=1 y=5 time=50]
+[voice ref="080090"]
+もぉヤダぁーーー！！！！[p]
 ;自動戦闘
-;ライザ勝利
-;86ペトロパブロフスク街道東占領
+;ニア敗北
+;モスクの森南　キープ
+
+
+[hide_message]
+[filter name="fade" time="500"]
+[clearbg]
+[clearcg id=0]
+[clearcg id=1]
+[wait time=500]
+[filter name="clear" time="500"]
+[stopbgm]
+
+
+[sys_memset index=812 value="1"]

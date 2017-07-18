@@ -1,10 +1,12 @@
-;s0835
-;script:
-;direction:
-;timing:
+﻿;script 835
+;directer:yuichi
+;script:nikai
+;timing:s0834後
 
-■場面37
-;場面36後
+[field_area_hilight id=85]
 ;自動戦闘
 ;ライザ軍勝利
 ;85:フラン平原占領
+[se ref="030_domination"]
+
+[sys_memset index=835 value="1"]

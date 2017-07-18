@@ -1,10 +1,88 @@
-;s0809
-;script:
-;direction:
-;timing:
+﻿;script 809
+;directer:yuichi
+;script:nikai
+;timing:s0808後
 
-■場面10
-;場面9後
-;自動戦闘
-;ライザ勝利
-;87ペトロパブロフスク街道西占領
+[field_area_hilight id=87]
+[wait time=500]
+
+[loadcg id=0 ref="raisa"]
+
+[filter name="fade" time=500]
+[bgm ref="015_raizania"]
+[drawbg ref="1034m"]
+[drawcg id=0 pos=3]
+[filter name="clear" time=500]
+
+[show_message]
+ペトロパブロフスク街道西[p]
+#ライザの部下
+[voice ref="080051"]
+申し上げます！[n]
+ラボーチキン平原がヴェロニカ軍により奪取された模様！！[p]
+#ライザ
+[move id=0 y=-5 time=50]
+[move id=0 y=10 time=50]
+[voice ref="080052"]
+なんだと！？[n]
+ええーーい、畜生！！[p]
+[rotate id=0 angle=-10 time=50]
+[se ref="151"]
+[rotate id=0 angle=10 time=50]
+#ライザの部下
+[voice ref="080053"]
+ぎゃあっ！！[p]
+[cn]
+ライザは八つ当たりで部下を思いっきりけりつけた。[p]
+#ライザ
+[voice ref="080054"]
+こっちは順調だというのに……。[p]
+[voice ref="080055"]
+オイ！！[p]
+#ライザの部下
+[voice ref="080056"]
+はっ、はい！[p]
+#ライザ
+[voice ref="080057"]
+少し向こうへ増援を送ってやれ。[n]
+それとニアに、[p]
+[voice ref="080058"]
+「予定通りレーニングラッド要塞の攻略は同時にやる[n]
+お前もさっさと来い」[p]
+[voice ref="080059"]
+と、伝えておけ。[p]
+#ライザの部下
+[voice ref="080060"]
+はっ！！[p]
+[cn]
+ニアの進む北側ルート。[n]
+ライザの進む南側ルート。[p]
+その終着点にはレーニングラッド要塞という巨大な要塞がある。[p]
+両陣営、そこが決戦の場になるであろうことはわかっていた。[p]
+だからこそ、ライザ陣営は早くレーニングラッド要塞の包囲を完成させる必要があり、
+ヴェロニカ陣営は何とかしてライザ陣営をレーニングラッド要塞から遠ざけたいのであった。[p]
+[move id=0 y=-5 time=200]
+#ライザ
+[voice ref="080061"]
+ヴェロニカ……。[n]
+寄せ集めの軍隊だけでなかなかやるじゃねえか……。[p]
+[voice ref="080062"]
+もうちょっとしっかりレベルダウンの結界かけておけばよかったか。[p]
+[voice ref="080063"]
+まあいい……。[n]
+ニアができないときは私が行くまでのこと。[p]
+[voice ref="080064"]
+キヒヒッ！！[n]
+もうすぐ会えるなァ、楽しみだぜ……[n]
+なあ、ヴェロニカぁ……。[p]
+
+[hide_message]
+[filter name="fade" time="500"]
+[clearbg]
+[clearcg id=0]
+[wait time=500]
+[filter name="clear" time="500"]
+[stopbgm]
+
+
+[sys_memset index=809 value="1"]

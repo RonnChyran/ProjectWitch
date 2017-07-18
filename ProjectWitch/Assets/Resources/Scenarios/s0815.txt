@@ -1,15 +1,55 @@
-;s0815
-;script:
-;direction:
-;timing:
+﻿;script 815
+;directer:yuichi
+;script:nikai
+;timing:s0811後
+[field_area_hilight id=89]
+[wait time=500]
 
-■場面16
-;場面15後
-モスクの森北。
+[loadcg id=0 ref="veronica"]
+[loadcg id=1 ref="nia"]
+
+[filter name="fade" time=500]
+[bgm ref="004_battle1"]
+[drawbg ref="1018n"]
+[drawcg id=1 pos=2 dir="right"]
+[drawcg id=0 pos=5]
+[filter name="clear" time=500]
+
+[show_message]
+モスクの森北。[p]
 #ヴェロニカ
-今よッ！　突撃ー！！
+[voice ref="080099"]
+総員退避っ！！[p]
+[scale id=0 sx=-1 time=200]
+[move id=0 x=50 time=400]
 #ニア
-まっ、またあ！？
+[voice ref="080100"]
+……もうヤダ。もうヤダーーー！！[p]
+[move id=1 y=10 time=100]
+[move id=1 y=-10 time=100]
+[voice ref="080101"]
+なによ毎晩毎晩毎晩毎晩！！！！[p]
+[voice ref="080102"]
+寝かせろよ！！[n]
+[move id=1 y=-5 time=50]
+[move id=1 y=5 time=50]
+[move id=1 y=-5 time=50]
+[move id=1 y=5 time=50]
+この私を寝かせろーーー！！！！[p]
+[move id=1 y=5 time=50]
+[move id=1 y=-5 time=50]
 ;自動戦闘
-;ヴェロニカ勝利
-;モスクの森北　キープ
+;ニア勝利（撤退する）
+;モスクの森北　占領
+
+[hide_message]
+[filter name="fade" time="500"]
+[clearbg]
+[clearcg id=0]
+[clearcg id=1]
+[wait time=500]
+[filter name="clear" time="500"]
+[stopbgm]
+
+
+[sys_memset index=815 value="1"]

@@ -1301,10 +1301,11 @@ namespace ProjectWitch.Battle
 					CaptureGauge.fillAmount = gauge / 100;
 					text.text = (int)gauge + "％";
 					Bar.SetBar(tarUnit, 0, 0, 0, (tarUnit.CaptureGauge - preCaptureGauge) * (rate - 1));
-					if (preGauge != gauge)
+					if ((int)preGauge != (int)gauge)
 					{
 						// 捕獲音再生
 						Music.PlayCaptureGauge();
+                        Debug.Log("Play SE!");
 					}
 					preGauge = gauge;
 					yield return null;

@@ -1,10 +1,76 @@
-;s0802
-;script:
-;direction:
-;timing:
+﻿;script 802
+;directer:yuichi
+;script:nikai
+;timing:s801後 ターンはじめ
 
-■場面3
-;場面2後
-;マジノライン北
 ;自動戦闘
 ;ヴェロニカ軍敗北
+[field_area_hilight id=93]
+[wait time=500]
+
+[loadcg id=0 ref="veronica"]
+[loadcg id=1 ref="nia"]
+
+[filter name="fade" time=500]
+[drawbg ref="1039m"]
+[bgm ref="015_raizania"]
+[filter name="clear" time=500]
+
+[drawcg id=0 pos=4]
+[show_message]
+マジノライン北。[p]
+#ヴェロニカ
+[voice ref="080021"]
+ライザ、ニア……。[n]
+ああ、どうしてこんなことに……。[p]
+#ニア
+[drawcg id=1 dir="right" pos=2 mode="slidein"]
+[voice ref="080022"]
+おっ！　ヴェロニカはっけーん！[n]
+おーい！　ヴェーローニーカー！！[p]
+#ヴェロニカ
+[voice ref="080023"]
+ニア！？[n]
+ニアね！！[p]
+#ニア
+[voice ref="080024"]
+そーだーーよー！！[p]
+#ヴェロニカ
+[voice ref="080025"]
+馬鹿なことはやめて、今すぐ降伏しなさい！！[p]
+[voice ref="080026"]
+あなたたちの命を取るようなことはしないから！！[p]
+#ニア
+[voice ref="080027"]
+そーれーはーいーやーだー！！[n]
+[move id=1 y=2 time=50]
+[move id=1 y=-2 time=50]
+キヒヒッ！！[p]
+#ヴェロニカ
+[voice ref="080028"]
+なんで……！[p]
+#ニア
+[voice ref="080029"]
+まだまけてなーいもん！！[p]
+[voice ref="080030"]
+（それにこっちには、「切り札」もあるしねー……）[p]
+#ヴェロニカ
+[voice ref="080031"]
+仕方ないわね……。[p]
+[voice ref="080032"]
+降伏しないというのなら少々力ずくになりますが、[n]
+文句は言いませんね！[p]
+;自動戦闘
+;ヴェロニカ勝利
+;93マジノライン北奪還
+[hide_message]
+[filter name="fade" time="500"]
+[clearbg]
+[clearcg id=0]
+[clearcg id=1]
+[wait time=500]
+[filter name="clear" time="500"]
+[stopbgm]
+
+
+[sys_memset index=802 value="1"]

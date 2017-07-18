@@ -1,16 +1,84 @@
-;s0826
-;script:
-;direction:
+﻿;script 826
+;directer:yuichi
+;script:nikai
 ;timing:
 
-■場面27
-;場面26
-ワルサワの町。
-#ヴェロニカ
-建物の間に隠れて！　ホムンクルスが来たら相手にしないこと！
-ライザ……あなた、まさかホムンクルスに手を出すなんて……。
+[field_area_hilight id=82]
+[wait time=500]
+
+[loadcg id=0 ref="eli"]
+[loadcg id=1 ref="seedle"]
+[loadcg id=2 ref="raisa"]
+[loadcg id=3 ref="nia"]
+
+[filter name="fade" time=500]
+[bgm ref="017_event2"]
+[drawbg ref="1055m"]
+[drawcg id=3 pos=3 dir="right"]
+[drawcg id=2 posx=-10 dir="right"]
+[filter name="clear" time=500]
+
+[show_message]
+#ライザ
+[voice ref="080179"]
+キヒヒッ！！　いいぞいいぞ、ぶち殺せ！！[n]
+キーッヒヒヒヒヒヒ！！[p]
 [cn]
-市街地での戦いが始まった。
-;自動戦闘
-;ライザ軍勝利
-;ワルサワの町占領
+ホムンクルス軍団の攻撃は一方的だった。[p]
+ホムンクルスと戦ったヴェロニカ軍はなすすべもなくやられていった。[p]
+[filter name="fade" time=500]
+[clearcg id=2]
+[clearcg id=3]
+[drawcg id=0 pos=2]
+[drawcg id=1 pos=4]
+[wait time=500]
+[filter name="clear" time=500]
+#エリ
+[voice ref="080180"]
+こっ、このおーーー！！[n]
+めておいんぱくとーーー！！[p]
+[cn]
+エリの放った流星群はホムンクルス軍団に直撃した。[p]
+[move id=0 y=5 time=50]
+[move id=0 y=-5 time=50]
+#エリ
+[voice ref="080181"]
+どうよ！　少しは効いたでしょ！[p]
+#ホムンクルス
+[voice ref="080182"]
+グ……ギ、ギ、ギ……。[p]
+[cn]
+ホムンクルス軍団のほどんどが無傷だった。[p]
+エリ級の魔法をもってしてもホムンクルス軍団にはほとんど効果がないのだ。[p]
+[move id=0 x=5 time=50]
+#エリ
+[voice ref="080183"]
+そんな……！！[p]
+[move id=2 x=2 time=20]
+[wait time=100]
+[move id=2 x=5 time=50]
+[voice ref="080184"]
+シッ、シードル！[n]
+[scale id=0 sx=-1 time=100]
+あんた何とかしなさいよ！！[p]
+[move id=1 y=5 time=50]
+[move id=1 y=-5 time=50]
+#シードル
+[voice ref="080185"]
+そんなこといわれても！[n]
+私たちの攻撃も全く効いてないですよ！！[p]
+[cn]
+もはや、撤退するほかなかった。[p]
+ヴェロニカ軍はワルサワの町を放棄し、ベルリ城まで撤退した。[p]
+
+[hide_message]
+[filter name="fade" time="500"]
+[clearbg]
+[clearcg id=0]
+[clearcg id=1]
+[wait time=500]
+[filter name="clear" time="500"]
+[stopbgm]
+
+
+[sys_memset index=826 value="1"]

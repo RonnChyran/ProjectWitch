@@ -1,38 +1,46 @@
-;s0836
-;script:
-;direction:
-;timing:
+﻿;script 836
+;directer:yuichi
+;script:nikai
+;timing:s0835戦闘後
+[field_area_hilight id=85]
 
-■場面38
-;場面37後戦闘後
+[loadcg id=0 ref="seedle"]
+
+[bgm ref="017_event2"]
+[drawbg ref="1037n"]
+
+[drawcg id=0 posx=-30 dir="right"]
+
+[wait time=500]
+[filter name="clear" time=500]
+
 #ライザの部下
-あっちだ！　追えーー！！
+[voice ref="080475"]
+あっちだ！　追えーー！！[p]
 [cn]
-ヴェロニカ軍の残党がライザ軍と交戦し、敗走中だった。
+ヴェロニカ軍の残党がライザ軍と交戦し、敗走中だった。[p]
+[move id=0 x=30 time=900]
 #シードル
-エリ様……、くそっ！！
-全員散れっ！！
-生きていたらいずれ会おう！
-再起のときまで生き延びるのだ！！
+[voice ref="080476"]
+エリ様……、
+[wait time=500]
+くそっ！！[n]
+[scale id=0 sx=-1 time=100]
+全員散れっ！！[p]
+[voice ref="080477"]
+生きていたらいずれ会おう！[n]
+再起のときまで生き延びるのだ！！[p]
 [cn]
-シードルは戦場を離脱した。
-どこへ行ったのか。
+シードルは戦場を離脱した。[p]
+どこへ行ったのか。[n]
+ライザ軍が彼を見つけることは、ついにできなかった[p]
+[hide_message]
+[filter name="fade" time=500]
+[clearcg id=0]
+[clearbg]
+[stopbgm]
+[wait time=500]
+[filter name="clear" time="500"]
 
 
-
-
-
-
-
-
-080478
-
-080479
-
-080480
-
-
-080481
-
-
-ライザ軍が彼を見つけることは、ついにできなかった。
+[sys_memset index=836 value="1"]

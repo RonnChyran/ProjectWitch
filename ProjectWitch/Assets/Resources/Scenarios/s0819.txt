@@ -1,29 +1,63 @@
-;s0819
-;script:
-;direction:
+﻿;script 819
+;directer:yuichi
+;script:nikai
 ;timing:
 
-■場面20
-;場面19戦闘後
+;場面20
+[field_area_hilight id=80]
+[wait time=500]
+
+[loadcg id=0 ref="eli"]
+[loadcg id=1 ref="seedle"]
+
+[filter name="fade" time=500]
+[bgm ref="005_battle2"]
+[drawbg ref="1048m"]
+[drawcg id=0 pos=2]
+[drawcg id=1 pos=4]
+[filter name="clear" time=500]
+
+[show_message]
+#エリ
+[voice ref="080124"]
+そーれ、放てーーー！！！[p]
+[move id=0 y=2 time=20]
+[move id=0 y=-2 time=20]
+[move id=0 y=2 time=20]
+[move id=0 y=-2 time=20]
+[voice ref="080125"]
+フフフッ！！　いいわよぉ、どんどん敵が倒れていくじゃない！！[n]
+[scale id=0 sx=-1 time=200]
+ねえシードル！！[p]
+#シードル
+[voice ref="080126"]
+ええ、この戦い、こちらが完全に主導権を握っております。[p]
+[voice ref="080127"]
+さあ、このまま一気に畳みかけてしまいましょう。[p]
+#エリ
+[voice ref="080128"]
+ええ、シードル！　行ってきなさい！！[p]
+[scale id=0 sx=-1 time=100]
+#シードル
+[voice ref="080129"]
+はっ！[p]
+[move id=1 x=-100 time=500]
 [cn]
-レーニングラッド要塞での初戦は、双方に多くの被害を出した。
-特にヴェロニカ本隊が守る南側の壁はライザ本隊があたり、
+二日目の戦い。[n]
+ここで初めてヴェロニカ側から仕掛けることになった。[p]
+シードルが先陣を切って外で交戦する敵へ突っ込んでいったのだ[p]
+;自動戦闘
+;シードル勝利
+;領地キープ
+
+[hide_message]
+[filter name="fade" time="500"]
+[clearbg]
+[clearcg id=0]
+[clearcg id=1]
+[wait time=500]
+[filter name="clear" time="500"]
+[stopbgm]
 
 
-
-
-
-
-
-
-080124
-080125
-
-
-
-080126
-
-080127
-
-
-正規兵対正規兵の熾烈な争いとなり、この日の戦いで最も多くの被害を出した場所となった。
+[sys_memset index=819 value="1"]

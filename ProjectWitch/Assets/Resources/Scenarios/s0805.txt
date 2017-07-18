@@ -1,10 +1,12 @@
-;s0805
-;script:
-;direction:
-;timing:
-
-■場面6
-;場面5のあと　ターンはじめ
+﻿;script 805
+;directer:yuichi
+;script:nikai
+;timing:s0804の後　ターンはじめ
 ;自動戦闘
-;ライザ勝利
-;87ペトロパブロフスク街道西占領
+;ニア勝利
+;92ラボ―チキン平原占領
+[field_area_hilight id=92]
+[se ref="030_domination"]
+[wait time=500]
+
+[sys_memset index=804 value="1"]

@@ -93,6 +93,10 @@ namespace ProjectWitch
                 source.cueName == name)
                 return;
 
+            //対象がVoiceのばあい、再生中のものを終了する
+            if (type == SoundType.Voice && IsPlaying(SoundType.Voice))
+                Stop(SoundType.Voice);
+
             source.cueSheet = mCueSheetList[type];
             source.cueName = name;
 

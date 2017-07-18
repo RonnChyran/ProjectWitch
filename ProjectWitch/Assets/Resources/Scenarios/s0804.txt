@@ -1,11 +1,12 @@
-;s0804
-;script:
-;direction:
-;timing:
-
-■場面5
-;場面4の跡　ターンはじめ
-
+﻿;script 804
+;directer:yuichi
+;script:nikai
+;timing:s805のあと　ターンはじめ
 ;自動戦闘
-;ニア勝利
-;93マジノライン北占領
+;ライザ勝利
+;87ペトロパブロフスク街道西占領
+[field_area_hilight id=87]
+[se ref="030_domination"]
+[wait time=500]
+
+[sys_memset index=804 value="1"]
