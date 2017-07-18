@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 namespace ProjectWitch.Battle
 {
-	public class CardManager : MonoBehaviour
+	public class CardManager
 	{
 		private Game mGame;
 		public GameObject CardObj { get; private set; }

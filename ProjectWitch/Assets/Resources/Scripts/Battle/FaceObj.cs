@@ -34,6 +34,8 @@ namespace ProjectWitch.Battle
 		[SerializeField]
 		private GameObject mImLevel = null, mTeLevel = null;
 		[SerializeField]
+		private GameObject mGOSolNum = null;
+		[SerializeField]
 		private GameObject mImRace = null;
 		[SerializeField]
 		private List<Sprite> mSpriteRace = null;
@@ -113,6 +115,7 @@ namespace ProjectWitch.Battle
 
 			SetStatusIcons();
 
+			mImLevel.SetActive(true);
 			mImFace.GetComponent<RectTransform>().localScale = new Vector3((isPlayer ? -1 : 1), 1, 1);
 			mImLevel.SetActive(true);
 			mTeLevel.GetComponent<Text>().text = Unit.UnitData.Level.ToString();
@@ -224,37 +227,33 @@ namespace ProjectWitch.Battle
 				Unit.Position = Position.Rear;
 		}
 
+		public void SetRemove(Color color, string text)
+		{
+			var image = mImFace.GetComponent<Image>();
+			image.color = color;
+			mHPTexts.SetActive(false);
+			mImLevel.SetActive(false);
+			mStateText.SetActive(true);
+			mStateText.GetComponent<Text>().text = text;
+			IsExsistUnit = false;
+		}
+
 		// 死亡設定
 		public void SetDead()
 		{
-			var image = mImFace.GetComponent<Image>();
-			image.color = new Color(255 / 255.0f, 47 / 255.0f, 47 / 255.0f);
-			mHPTexts.SetActive(false);
-			mStateText.SetActive(true);
-			mStateText.GetComponent<Text>().text = "死亡";
-			IsExsistUnit = false;
+			SetRemove(new Color(255 / 255.0f, 47 / 255.0f, 47 / 255.0f), "死亡");
 		}
 
 		// 捕獲設定
 		public void SetCapture()
 		{
-			var image = mImFace.GetComponent<Image>();
-			image.color = new Color(47 / 255.0f, 47 / 255.0f, 255 / 255.0f);
-			mHPTexts.SetActive(false);
-			mStateText.SetActive(true);
-			mStateText.GetComponent<Text>().text = "捕獲";
-			IsExsistUnit = false;
+			SetRemove(new Color(47 / 255.0f, 47 / 255.0f, 255 / 255.0f), "捕獲");
 		}
 
 		// 撤退設定
 		public void SetRetreat()
 		{
-			var image = mImFace.GetComponent<Image>();
-			image.color = new Color(47 / 255.0f, 47 / 255.0f, 47 / 255.0f);
-			mHPTexts.SetActive(false);
-			mStateText.SetActive(true);
-			mStateText.GetComponent<Text>().text = "敗走";
-			IsExsistUnit = false;
+			SetRemove(new Color(47 / 255.0f, 47 / 255.0f, 47 / 255.0f), "敗走");
 		}
 
 		// ボタンの名称を設定する
@@ -305,12 +304,14 @@ namespace ProjectWitch.Battle
 
 		private void SetSolNum()
 		{
-			mSoldierNum = Unit.DisplaySoldierNum;
-			mTeSolNum.GetComponent<Text>().text = Unit.DisplaySoldierNum.ToString();
-			var image = mImSolNumBar.GetComponent<Image>();
-			image.fillAmount = 0;
-			if (Unit.UnitData.MaxSoldierNum != 0)
+			mGOSolNum.SetActive(Unit.UnitData.MaxSoldierNum != 0);
+			if (mGOSolNum.activeSelf)
+			{
+				mSoldierNum = Unit.DisplaySoldierNum;
+				mTeSolNum.GetComponent<Text>().text = Unit.DisplaySoldierNum.ToString();
+				var image = mImSolNumBar.GetComponent<Image>();
 				image.fillAmount = (float)Unit.DisplaySoldierNum / Unit.UnitData.MaxSoldierNum;
+			}
 		}
 
 		// Update is called once per frame

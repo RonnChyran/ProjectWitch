@@ -34,9 +34,6 @@ namespace ProjectWitch.Battle
 		// 操作説明文
 		[SerializeField]
 		private string mDescriptionText = "";
-		// 操作説明文のスライド時間
-		[SerializeField]
-		private float mDescriptionTextSlideTime = 10f;
 		// ユニットプレハブ
 		[SerializeField]
 		private GameObject mUnitPrefab = null;
@@ -125,6 +122,9 @@ namespace ProjectWitch.Battle
 		// スキル説明文マスク
 		[SerializeField]
 		private RectTransform mMaskDescription = null;
+		// スキル説明文のスピード
+		[SerializeField]
+		private float mDescriptionSpeed = 500;
 		// スキルキャプション
 		[SerializeField]
 		private GameObject mSkillCaption = null;
@@ -143,6 +143,12 @@ namespace ProjectWitch.Battle
 		// カードエフェクトプレハブ
 		[SerializeField]
 		private GameObject m_CardEffectPrefab = null;
+		// かばうエフェクト
+		[SerializeField]
+		private GameObject mGuardEffect = null;
+		// かばうエフェクト後待機時間
+		[SerializeField]
+		private float mGuardEffectWaitTime = 0.5f;
 		// 最終呼び出しevent
 		[SerializeField]
 		public UnityEvent EndEvent = null;
@@ -223,6 +229,8 @@ namespace ProjectWitch.Battle
 		public bool IsCheck { get; private set; }
 		// 現在兵士の攻撃中かどうか
 		public bool IsAttackGroup { get; private set; }
+		// かばうチェックフラグ
+		public bool IsCheckGuard { get; private set; }
 		#endregion
 
 		// データのロード
@@ -316,6 +324,7 @@ namespace ProjectWitch.Battle
 				PlayerUnits.Add(bu);
 				PlayerFaces[i].SetUnit(PlayerUnits[i], true);
 			}
+
 			print("エネミーユニット設定");
 			EnemyUnits = new List<BattleUnit>();
 			for (int i = 0; i < BattleDataIn.EnemyUnits.Count; ++i)
@@ -346,6 +355,7 @@ namespace ProjectWitch.Battle
 				card.Setup(BattleDataIn.PlayerCards[i], true, PlayerCardObjs[i]);
 				PlayerCards.Add(card);
 			}
+
 			print("エネミーカード設定");
 			EnemyCards = new List<CardManager>();
 			for (int i = 0; i < BattleDataIn.EnemyCards.Count; i++)
@@ -420,7 +430,7 @@ namespace ProjectWitch.Battle
 		#endregion
 
 		// エフェクトを発生させる
-		private GameObject GenerateEffect(GameObject effectObj, string name, bool isUI, CardManager card = null)
+		private GameObject GenerateEffect(GameObject effectObj, string name, bool isUI, bool isCard = false, CardManager card = null)
 		{
 			// 生成
 			if (!effectObj)
@@ -429,13 +439,13 @@ namespace ProjectWitch.Battle
 				return null;
 			}
 			var effect = BattleData.Instantiate(effectObj, name).gameObject;
-			effect.transform.parent = (isUI ? mUIEffectParent.transform : transform);
+			effect.transform.SetParent(isUI ? mUIEffectParent.transform : transform);
 			if (isUI)
 			{
 				effect.transform.localPosition = effectObj.transform.localPosition;
 				effect.transform.localScale = effectObj.transform.localScale;
 			}
-			else if (card != null)
+			if (isCard)
 			{
 				var c = effect.GetComponent<BattleCardEffect>();
 				c.CardID = card.ID;
@@ -450,14 +460,24 @@ namespace ProjectWitch.Battle
 			return effect;
 		}
 
-		private void GenerateEffect(string effectPath, bool isPlayer)
+		private IEnumerator CoGenerateEffect(string effectPath, bool isPlayer, bool isAttack)
 		{
+			if (isAttack)
+			{
+				IsCheckGuard = true;
+				while (IsCheckGuard) yield return null;
+			}
 			// 生成
 			print("Load：エフェクト　" + effectPath);
 			var obj = (GameObject)Resources.Load("Effects/Battle/Prefabs/" + effectPath);
 			var effect = GenerateEffect(obj, effectPath, false);
 			if (effect)
 				effect.transform.localScale = new Vector3((isPlayer ? -1 : 1), 1, 1);
+		}
+
+		private void GenerateEffect(string effectPath, bool isPlayer, bool isAttack)
+		{
+			StartCoroutine(CoGenerateEffect(effectPath, isPlayer, isAttack));
 		}
 
 
@@ -543,6 +563,7 @@ namespace ProjectWitch.Battle
 			// 一時停止
 			while (IsPause)
 				yield return null;
+
 			var flame = card.Flame;
 			if (flame)
 			{
@@ -552,13 +573,19 @@ namespace ProjectWitch.Battle
 					yield return WaitSeconds(0.06f);
 				}
 			}
+
+			/* 以前のカード発動エフェクト
 			mCardStartUI.SetActive(true);
 			yield return mCardStartUI.GetComponent<CardStartUI>().CardStart(card.CardData, card.CardObj);
+			*/
+
 			card.SetUseSprite();
 			print("Load：カード起動エフェクト");
-			GenerateEffect(mCardStartEffect, "CardStartEffect", true);
+			GenerateEffect(mCardStartEffect, "CardStartEffect", true, true, card);
 			yield return StartCoroutine(CoWaitEffect());
 			mCardStartUI.SetActive(false);
+
+
 			yield return StartCoroutine(CoSkillAction(action, target, card.Skill, card.IsPlayer, true));
 			flame.SetActive(false);
 			// カード数消費(無限じゃない時)
@@ -714,7 +741,7 @@ namespace ProjectWitch.Battle
 			}
 
 
-			if (!IsBattleEnd && targetUnit != null && targetUnit.UnitData.HP != 0)
+			if (!IsBattleEnd && (targetUnit == null || targetUnit.UnitData.HP != 0))
 			{
 				// 一時停止
 				while (IsPause) yield return null;
@@ -733,7 +760,7 @@ namespace ProjectWitch.Battle
 
 		// ダメージを与えた時のコルーチン
 		private IEnumerator DamageProcess(DamageType type, BattleUnit atkUnit, BattleUnit defUnit, bool byLeader, bool toLeader,
-			BattleUnit originTarget = null)
+			bool checkGuard = true)
 		{
 			// カウンターダメージの時、対象が魔法キャラである・前衛でない・味方である・召喚ユニットである場合、反撃側が魔法キャラである場合反撃しない
 			if (type == DamageType.Counter || type == DamageType.CaptureCounter)
@@ -755,25 +782,31 @@ namespace ProjectWitch.Battle
 			yield return WaitSeconds(0.05f);
 			EndTargetUnit = null;
 
-			// ターゲットが庇われていた場合
-			if (type == DamageType.Normal)
+			// ターゲットの味方陣営がガードスキルを使っていた場合
+			if (type == DamageType.Normal && checkGuard)
 			{
 				foreach (var unit in (defUnit.IsPlayer ? PlayerUnits : EnemyUnits))
 				{
-					if (unit != defUnit && unit != originTarget && unit.GuardTarget == defUnit)
+					if (unit != defUnit && unit.IsGuarding)
 					{
+						// かばうエフェクト
+						GenerateEffect(mGuardEffect, "mGuardEffect", true);
+						// エフェクトの終わるまで待つ
+						yield return StartCoroutine(CoWaitEffect());
+						yield return WaitSeconds(mGuardEffectWaitTime);
+
 						// ターゲットを戻す
 						yield return defUnit.SlideOut();
-						if (type == DamageType.Normal)
-							defUnit.Face.SetSelectArrow(false);
-						yield return StartCoroutine(DamageProcess(type, atkUnit, unit, byLeader, toLeader,
-							(originTarget == null ? defUnit : originTarget)));
+						defUnit.Face.SetSelectArrow(false);
+						yield return StartCoroutine(DamageProcess(type, atkUnit, unit, byLeader, toLeader, false));
 						yield return unit.SlideOut();
 						yield return defUnit.SlideIn();
 						yield break;
 					}
 				}
 			}
+			// ガードチェックフラグを切る
+			IsCheckGuard = false;
 
 			IsNowIncDec = true;
 			EndTargetUnit = defUnit;
@@ -795,17 +828,37 @@ namespace ProjectWitch.Battle
 				var damageDisplay = (defUnit.IsPlayer ? mDamageDisplayPlayer : mDamageDisplayEnemy).GetComponent<DamageDisplay>();
 				damageDisplay.Display(DamageNum, true);
 
-				DamageNum = System.Math.Min(preLife, DamageNum);
+				DamageNum = Math.Min(preLife, DamageNum);
 
-				while (FXCtrl && FXCtrl.LifeTime >= 0.5)
-					yield return null;
-				for (int i = 5; i >= 0; --i)
+				while (FXCtrl && FXCtrl.LifeTime >= 0.5) yield return null;
+
+				float time = 0, endTime = 0.5f / BattleSpeedMagni;
+				int preDisHP = defUnit.DisplayHP, preDisHPBuff = preDisHP;
+				int preDisSN = defUnit.DisplaySoldierNum, preDisSNBuff = preDisSN;
+				while (time < endTime)
 				{
-					defUnit.ApproachDisplay(i);
-					defUnit.SetDisplaySoldier();
+					var rate = time / endTime;
+					defUnit.DisplayHP = preDisHP + (int)((defUnit.UnitData.HP - preDisHP) * rate);
+					defUnit.DisplaySoldierNum = preDisSN + (int)((defUnit.UnitData.SoldierNum - preDisSN) * rate);
+
+					if (defUnit.UnitData.SoldierNum != preDisSN)
+						defUnit.SetDisplaySoldier();
 					Bar.SetBar(defUnit, 0, 0, 0);
-					yield return WaitSeconds(0.05f);
+					// ゲージ音再生
+					if (preDisHPBuff != defUnit.DisplayHP || preDisSNBuff != defUnit.DisplaySoldierNum) Music.PlayCaptureGauge();
+					preDisHPBuff = defUnit.DisplayHP;
+					preDisSNBuff = defUnit.DisplaySoldierNum;
+					time += Time.deltaTime;
+					yield return null;
 				}
+				defUnit.DisplayHP = defUnit.UnitData.HP;
+				defUnit.DisplaySoldierNum = defUnit.UnitData.SoldierNum;
+				if (defUnit.UnitData.SoldierNum != preDisSN)
+					defUnit.SetDisplaySoldier();
+				Bar.SetBar(defUnit, 0, 0, 0);
+				// ゲージ音再生
+				if (preDisHP != defUnit.DisplayHP || preDisSN != defUnit.DisplaySoldierNum) Music.PlayCaptureGauge();
+
 				yield return WaitSeconds(0.05f);
 				yield return damageDisplay.Hide();
 
@@ -820,7 +873,7 @@ namespace ProjectWitch.Battle
 			}
 
 			// 庇い対象を無しにする
-			defUnit.GuardTarget = null;
+			defUnit.IsGuarding = false;
 			if (type == DamageType.Normal)
 				defUnit.Face.SetSelectArrow(false);
 
@@ -828,32 +881,53 @@ namespace ProjectWitch.Battle
 		}
 
 		// 回復した時のコルーチン
-		private IEnumerator HealProcess(BattleUnit target, float healHP, float healSolNum)
+		private IEnumerator HealProcess(BattleUnit defUnit, float healHP, float healSolNum)
 		{
 			IsNowIncDec = true;
 			// ターゲットをスライドインさせる、スライドしている間待機
-			yield return target.SlideIn();
-			target.Face.SetSelectArrow(true);
+			yield return defUnit.SlideIn();
+			defUnit.Face.SetSelectArrow(true);
 			while (FXCtrl && FXCtrl.LifeTime >= 0.5)
 				yield return null;
 
-			var damageDisplay = (target.IsPlayer ? mDamageDisplayPlayer : mDamageDisplayEnemy).GetComponent<DamageDisplay>();
-			var realHealHP = Math.Min(healHP, Math.Max(target.UnitData.MaxHP - target.UnitData.HP, 0));
-			var realHealSolNum = Math.Min(healSolNum, Math.Max(target.UnitData.MaxSoldierNum - target.UnitData.SoldierNum, 0));
+			var damageDisplay = (defUnit.IsPlayer ? mDamageDisplayPlayer : mDamageDisplayEnemy).GetComponent<DamageDisplay>();
+			var realHealHP = Math.Min(healHP, Math.Max(defUnit.UnitData.MaxHP - defUnit.UnitData.HP, 0));
+			var realHealSolNum = Math.Min(healSolNum, Math.Max(defUnit.UnitData.MaxSoldierNum - defUnit.UnitData.SoldierNum, 0));
 			float displayHP = Math.Max(realHealHP, realHealSolNum);
 			damageDisplay.Display(displayHP, false);
-			target.Healed(healHP, healSolNum);
-			for (int i = 5; i >= 0; --i)
+			defUnit.Healed(healHP, healSolNum);
+
+			float time = 0, endTime = 0.5f / BattleSpeedMagni;
+			int preDisHP = defUnit.DisplayHP, preDisHPBuff = preDisHP;
+			int preDisSN = defUnit.DisplaySoldierNum, preDisSNBuff = preDisSN;
+			while (time < endTime)
 			{
-				target.ApproachDisplay(i);
-				target.SetDisplaySoldier();
-				Bar.SetBar(target, 0, 0, 0);
-				yield return WaitSeconds(0.05f);
+				var rate = time / endTime;
+				defUnit.DisplayHP = preDisHP + (int)((defUnit.UnitData.HP - preDisHP) * rate);
+				defUnit.DisplaySoldierNum = preDisSN + (int)((defUnit.UnitData.SoldierNum - preDisSN) * rate);
+
+				if (defUnit.UnitData.SoldierNum != preDisSN)
+					defUnit.SetDisplaySoldier();
+				Bar.SetBar(defUnit, 0, 0, 0);
+				// ゲージ音再生
+				if (preDisHPBuff != defUnit.DisplayHP || preDisSNBuff != defUnit.DisplaySoldierNum) Music.PlayCaptureGauge();
+				preDisHPBuff = defUnit.DisplayHP;
+				preDisSNBuff = defUnit.DisplaySoldierNum;
+				time += Time.deltaTime;
+				yield return null;
 			}
+			defUnit.DisplayHP = defUnit.UnitData.HP;
+			defUnit.DisplaySoldierNum = defUnit.UnitData.SoldierNum;
+			if (defUnit.UnitData.SoldierNum != preDisSN)
+				defUnit.SetDisplaySoldier();
+			Bar.SetBar(defUnit, 0, 0, 0);
+			// ゲージ音再生
+			if (preDisHP != defUnit.DisplayHP || preDisSN != defUnit.DisplaySoldierNum) Music.PlayCaptureGauge();
+
 			yield return WaitSeconds(0.05f);
 
 			yield return damageDisplay.Hide();
-			target.Face.SetSelectArrow(false);
+			defUnit.Face.SetSelectArrow(false);
 			IsNowIncDec = false;
 		}
 
@@ -1057,7 +1131,7 @@ namespace ProjectWitch.Battle
 			IsAttackGroup = true;
 			var gSkillData = TurnUnit.GAtkSkill;
 			// エフェクト発生
-			GenerateEffect(gSkillData.EffectPath, tarUnit.IsPlayer);
+			GenerateEffect(gSkillData.EffectPath, tarUnit.IsPlayer, true);
 			// ダメージ処理
 			StartCoroutine(DamageProcess(DamageType.Normal, TurnUnit, tarUnit, false, false));
 			while (!IsNowIncDec) yield return null;
@@ -1156,8 +1230,6 @@ namespace ProjectWitch.Battle
 					// ターゲットユニットをスライドインさせる
 					yield return tarUnit.SlideIn();
 					tarUnit.Face.SetSelectArrow(true);
-					// エフェクト発生
-					GenerateEffect(skill.EffectPath, tarUnit.IsPlayer);
 					// 攻撃ユニット
 					var atkUnit = (isCard ? UnitAlice : actionUnit);
 					var toLeader = skill.Target == SkillDataFormat.SkillTarget.EnemyLeader ||
@@ -1166,6 +1238,8 @@ namespace ProjectWitch.Battle
 					if (skill.Type == SkillDataFormat.SkillType.Damage)
 					{
 						// 0:ダメ―ジ
+						// エフェクト発生
+						GenerateEffect(skill.EffectPath, tarUnit.IsPlayer, true);
 						// ダメージ処理
 						StartCoroutine(DamageProcess(DamageType.Normal, atkUnit, tarUnit, true, toLeader));
 						while (!IsNowIncDec)
@@ -1187,6 +1261,8 @@ namespace ProjectWitch.Battle
 					else if (skill.Type == SkillDataFormat.SkillType.Heal)
 					{
 						// 1:回復
+						// エフェクト発生
+						GenerateEffect(skill.EffectPath, tarUnit.IsPlayer, false);
 						// 回復処理					
 						if (skill.Attribute[0])         // 毒を回復させるなら
 							tarUnit.IsStatePoison = false;
@@ -1196,11 +1272,15 @@ namespace ProjectWitch.Battle
 					else if (skill.Type == SkillDataFormat.SkillType.StatusUp || skill.Type == SkillDataFormat.SkillType.StatusDown)
 					{
 						// 2:ステ上昇 or 3:ステ下降
+						// エフェクト発生
+						GenerateEffect(skill.EffectPath, tarUnit.IsPlayer, false);
 						tarUnit.SufferStatus(skill);
 					}
 					else if (!isCard && skill.Type == SkillDataFormat.SkillType.SoulSteal)
 					{
 						// 5:ダメージ還元
+						// エフェクト発生
+						GenerateEffect(skill.EffectPath, tarUnit.IsPlayer, true);
 						// ダメージ処理
 						StartCoroutine(DamageProcess(DamageType.Normal, atkUnit, tarUnit, true, toLeader));
 						while (!IsNowIncDec) yield return null;
@@ -1213,16 +1293,22 @@ namespace ProjectWitch.Battle
 					else if (!isCard && skill.Type == SkillDataFormat.SkillType.Guard)
 					{
 						// 6:ガード
-						actionUnit.GuardTarget = tarUnit;
+						// エフェクト発生
+						GenerateEffect(skill.EffectPath, tarUnit.IsPlayer, false);
+						actionUnit.IsGuarding = true;
 					}
 					else if (skill.Type == SkillDataFormat.SkillType.NoDamage)
 					{
 						// 8:ダメージ無効
+						// エフェクト発生
+						GenerateEffect(skill.EffectPath, tarUnit.IsPlayer, false);
 						tarUnit.IsStateNoDamage = true;
 					}
 					else if (skill.Type == SkillDataFormat.SkillType.StatusOff)
 					{
 						// 10:ステータス取り消し
+						// エフェクト発生
+						GenerateEffect(skill.EffectPath, tarUnit.IsPlayer, false);
 						tarUnit.Status.Clear();
 					}
 					else if (skill.Type == SkillDataFormat.SkillType.Random)
@@ -1230,6 +1316,8 @@ namespace ProjectWitch.Battle
 						// 11:ランダム
 						if (isRandomDamage)     // ダメージ
 						{
+							// エフェクト発生
+							GenerateEffect(skill.EffectPath, tarUnit.IsPlayer, true);
 							StartCoroutine(DamageProcess(DamageType.Normal, atkUnit, tarUnit, true, toLeader));
 							while (!IsNowIncDec)
 								yield return null;
@@ -1238,7 +1326,11 @@ namespace ProjectWitch.Battle
 								StartCoroutine(DamageProcess(DamageType.Counter, tarUnit, atkUnit, !EndTargetUnit.IsExistSoldier, false));
 						}
 						else                    // 回復
+						{
+							// エフェクト発生
+							GenerateEffect(skill.EffectPath, tarUnit.IsPlayer, false);
 							StartCoroutine(HealProcess(tarUnit, tarUnit.GetLeaderCurativeAmount(skill), tarUnit.GetGroupCurativeAmount(skill)));
+						}
 					}
 					// エフェクト発生中は待つ
 					yield return StartCoroutine(CoWaitEffect());
@@ -1267,7 +1359,7 @@ namespace ProjectWitch.Battle
 			foreach (var unit in (tarUnit.IsPlayer ? PlayerUnits : EnemyUnits))
 			{
 				// ターゲットを戻す
-				if (unit != tarUnit && unit != originTarget && unit.GuardTarget == tarUnit && unit.UnitData.Deathable)
+				if (unit != tarUnit && unit != originTarget && unit.IsGuarding && unit.UnitData.Deathable)
 				{
 					yield return tarUnit.SlideOut();
 					yield return StartCoroutine(CoCapture(unit, (originTarget == null ? tarUnit : originTarget)));
@@ -1293,7 +1385,7 @@ namespace ProjectWitch.Battle
 				var text = mCaptureGauge.transform.Find("Text").GetComponent<Text>();
 				float time = 0;
 				var endTime = mCaptureGaugeTime / BattleSpeedMagni;
-				var preGauge = preCaptureGauge;
+				var preGauge = (int)preCaptureGauge;
 				while (time < endTime)
 				{
 					var rate = time / endTime;
@@ -1301,12 +1393,10 @@ namespace ProjectWitch.Battle
 					CaptureGauge.fillAmount = gauge / 100;
 					text.text = (int)gauge + "％";
 					Bar.SetBar(tarUnit, 0, 0, 0, (tarUnit.CaptureGauge - preCaptureGauge) * (rate - 1));
-					if (preGauge != gauge)
-					{
-						// 捕獲音再生
+					// 捕獲音再生
+					if (preGauge != (int)gauge)
 						Music.PlayCaptureGauge();
-					}
-					preGauge = gauge;
+					preGauge = (int)gauge;
 					yield return null;
 					time += Time.deltaTime;
 				}
@@ -1375,7 +1465,7 @@ namespace ProjectWitch.Battle
 					if (preTurnUnit.IsStatePoison)
 					{
 						// 毒ダメージエフェクト発生
-						GenerateEffect("毒ダメージエフェクトパス名", preTurnUnit.IsPlayer);
+						GenerateEffect("286_fx_poison", preTurnUnit.IsPlayer, false);
 						// 毒状態なら毒ダメージを受ける
 						yield return StartCoroutine(DamageProcess(DamageType.Poison, null, preTurnUnit, false, false));
 						yield return WaitSeconds(0.05f);
@@ -1545,7 +1635,7 @@ namespace ProjectWitch.Battle
 		{
 			if (mDescription.activeSelf)
 			{
-				StopCoroutine(CoSlideDescriptionText());
+				StopCoroutine("CoSlideDescriptionText");
 				var textRect = mDescription.GetComponent<Text>().rectTransform;
 				textRect.localPosition = new Vector3(0, 0, 0);
 			}
@@ -1557,6 +1647,9 @@ namespace ProjectWitch.Battle
 				text.text = TurnUnit.LDefSkill.Description;
 			else if (type == 2)
 				text.text = "対象を捕獲しようと試みる。";
+			text.rectTransform.sizeDelta = new Vector2(text.preferredWidth, text.rectTransform.sizeDelta.y);
+			if (text.preferredWidth >= mMaskDescription.sizeDelta.x)
+				StartCoroutine("CoSlideDescriptionText");
 		}
 
 		// 説明文を消す
@@ -1569,7 +1662,7 @@ namespace ProjectWitch.Battle
 				text.text = mDescriptionText;
 				text.rectTransform.sizeDelta = new Vector2(text.preferredWidth, text.rectTransform.sizeDelta.y);
 				if (text.preferredWidth >= mMaskDescription.sizeDelta.x)
-					StartCoroutine(CoSlideDescriptionText());
+					StartCoroutine("CoSlideDescriptionText");
 			}
 			else
 				text.rectTransform.sizeDelta = mMaskDescription.sizeDelta;
@@ -1583,7 +1676,8 @@ namespace ProjectWitch.Battle
 			textRect.localPosition = new Vector3(width, 0, 0);
 			while (true)
 			{
-				textRect.localPosition -= new Vector3(text.preferredWidth * 2 / mDescriptionTextSlideTime * Time.deltaTime, 0, 0);
+				textRect.localPosition -= new Vector3(mDescriptionSpeed * Time.deltaTime, 0, 0);
+				//				textRect.localPosition -= new Vector3(text.preferredWidth * 2 / mDescriptionTextSlideTime * Time.deltaTime, 0, 0);
 				if (textRect.localPosition.x < -width)
 					textRect.localPosition = new Vector3(width, 0, 0);
 				yield return null;

@@ -84,9 +84,9 @@ namespace ProjectWitch.Battle
 		#region 戦闘データ
 
 		// 表示HP
-		public int DisplayHP { get; private set; }
+		public int DisplayHP { get; set; }
 		// 表示兵士数
-		public int DisplaySoldierNum { get; private set; }
+		public int DisplaySoldierNum { get; set; }
 		// 最大HP
 		public int MaxHP { get { return UnitData.MaxHP; } }
 		// 捕獲ゲージ量
@@ -109,26 +109,26 @@ namespace ProjectWitch.Battle
 		private float AreaCorAgility { get { return Area.CorAgility * AreaCoePercentCoe; } }
 
 		// 物理攻撃力
-		public float LPAtk { get { return UnitData.LeaderPAtk * PhyAtkPercentCoe; } }
+		public float LPAtk { get { return UnitData.LeaderPAtk * PhyAtkPercentCoe * AreaCorPAtk; } }
 		// 魔法攻撃力
-		public float LMAtk { get { return UnitData.LeaderMAtk * MagAtkPercentCoe; } }
+		public float LMAtk { get { return UnitData.LeaderMAtk * MagAtkPercentCoe * AreaCorMAtk; } }
 		// 物理防御力
-		public float LPDef { get { return UnitData.LeaderPDef * PhyDefPercentCoe; } }
+		public float LPDef { get { return UnitData.LeaderPDef * PhyDefPercentCoe * AreaCorPDef; } }
 		// 魔法防御力
-		public float LMDef { get { return UnitData.LeaderMDef * MagDefPercentCoe; } }
+		public float LMDef { get { return UnitData.LeaderMDef * MagDefPercentCoe * AreaCorMDef; } }
 		// 指揮力
-		public float Leadership { get { return UnitData.Leadership * AreaCorLeadership * LeadershipPercentCoe; } }
+		public float Leadership { get { return UnitData.Leadership * LeadershipPercentCoe * AreaCorLeadership; } }
 		// 機動力
-		public float Agility { get { return UnitData.Agility * AreaCorAgility * AgilityPercentCoe; } }
+		public float Agility { get { return UnitData.Agility * AgilityPercentCoe * AreaCorAgility; } }
 
 		// 集団物理攻撃力
-		public float GPAtk { get { return UnitData.GroupPAtk * PhyAtkPercentCoe; } }
+		public float GPAtk { get { return UnitData.GroupPAtk * PhyAtkPercentCoe * AreaCorPAtk; } }
 		// 集団魔法攻撃力
-		public float GMAtk { get { return UnitData.GroupMAtk * MagAtkPercentCoe; } }
+		public float GMAtk { get { return UnitData.GroupMAtk * MagAtkPercentCoe * AreaCorMAtk; } }
 		// 集団物理防御力
-		public float GPDef { get { return UnitData.GroupPDef * (IsDefense ? 2 : 1) * PhyDefPercentCoe; } }
+		public float GPDef { get { return UnitData.GroupPDef * PhyDefPercentCoe * AreaCorPDef; } }
 		// 集団魔法防御力
-		public float GMDef { get { return UnitData.GroupMDef * (IsDefense ? 2 : 1) * MagDefPercentCoe; } }
+		public float GMDef { get { return UnitData.GroupMDef * MagDefPercentCoe * AreaCorMDef; } }
 
 		// ポジション
 		public Position Position { get; set; }
@@ -157,8 +157,8 @@ namespace ProjectWitch.Battle
 		public bool IsStatePoison { get; set; }
 		// 一度だけ無敵状態である
 		public bool IsStateNoDamage { get; set; }
-		// 身代わりスキル対象、nullのときはなし
-		public BattleUnit GuardTarget { get; set; }
+		// ガードスキル使用中である
+		public bool IsGuarding { get; set; }
 		// 召喚ユニットの場合持続時間、通常ユニットの場合-1
 		public int SummonDuration { get; private set; }
 
@@ -182,10 +182,8 @@ namespace ProjectWitch.Battle
 			{
 				float per = 0;
 				foreach (var sta in Status)
-					if (sta.Status[1])
-						per += sta.Power * (sta.IsStatusUp ? 1 : -1);
-				if (GuardTarget != null)
-					per += LDefSkill.Power;
+					if (sta.Status[1]) per += sta.Power * (sta.IsStatusUp ? 1 : -1);
+				if (IsGuarding) per += LDefSkill.Power;
 				return per / 10;
 			}
 		}
@@ -210,10 +208,8 @@ namespace ProjectWitch.Battle
 			{
 				float per = 0;
 				foreach (var sta in Status)
-					if (sta.Status[3])
-						per += sta.Power * (sta.IsStatusUp ? 1 : -1);
-				if (GuardTarget != null)
-					per += LDefSkill.Power;
+					if (sta.Status[3]) per += sta.Power * (sta.IsStatusUp ? 1 : -1);
+				if (IsGuarding) per += LDefSkill.Power;
 				return per / 10;
 			}
 		}
@@ -247,17 +243,17 @@ namespace ProjectWitch.Battle
 		public float GetStatusPercent(int num)
 		{
 			if (num == 0)
-				return PhyAtkPercent;
+				return PhyAtkPercent + (AreaCorPAtk - 1) * 100;
 			else if (num == 1)
-				return PhyDefPercent;
+				return PhyDefPercent + (AreaCorPDef - 1) * 100;
 			else if (num == 2)
-				return MagAtkPercent;
+				return MagAtkPercent + (AreaCorMAtk - 1) * 100;
 			else if (num == 3)
-				return MagDefPercent;
+				return MagDefPercent + (AreaCorMDef - 1) * 100;
 			else if (num == 4)
-				return AgilityPercent;
+				return AgilityPercent + (AreaCorAgility - 1) * 100;
 			else if (num == 5)
-				return LeadershipPercent;
+				return LeadershipPercent + (AreaCorLeadership - 1) * 100;
 			else
 				return 0;
 		}
@@ -266,7 +262,7 @@ namespace ProjectWitch.Battle
 			if (num == 0)
 				return IsStatePoison;
 			else if (num == 1)
-				return GuardTarget;
+				return IsGuarding;
 			else if (num == 2)
 				return IsStateNoDamage;
 			else
@@ -359,14 +355,15 @@ namespace ProjectWitch.Battle
 			mBattle = BattleData.GetInstance();
 			UnitID = id;
 			mBattleObj = bo;
-			ApproachDisplay(0);
+			DisplayHP = UnitData.HP;
+			DisplaySoldierNum = UnitData.SoldierNum;
 			print("セットアップ：" + UnitData.Name);
 
 			IsDamaged = false;
 			IsDisplay = false;
 			IsStatePoison = false;
 			IsStateNoDamage = false;
-			GuardTarget = null;
+			IsGuarding = false;
 			SummonDuration = summonDuration;
 			Status = new List<UnitStatus>();
 
@@ -603,7 +600,7 @@ namespace ProjectWitch.Battle
 
 		#endregion
 
-		// 表示用HPを現在HPに近づける
+		/* // 表示用HPを現在HPに近づける
 		public void ApproachDisplay(int num)
 		{
 			if (num <= 0)
@@ -616,78 +613,38 @@ namespace ProjectWitch.Battle
 				DisplayHP += (UnitData.HP - DisplayHP) / num;
 				DisplaySoldierNum += (UnitData.SoldierNum - DisplaySoldierNum) / num;
 			}
-		}
+		}*/
 
 		// ダメージ量計算
 		private float NormalDamage(BattleUnit atkUnit, bool byLeader, bool toLeader, bool isCounter)
 		{
+			// 物理ダメージ、魔法ダメージ
 			float pDamage = 0, mDamage = 0;
-			var AtkData = atkUnit.UnitData;
-			// 防御側: GPDef
-			var DefGPDef = UnitData.GroupPDef * AreaCorPDef;
-			// 防御側: GMDef
-			var DefGMDef = UnitData.GroupMDef * AreaCorMDef;
-			// 防御側: LPDef
-			var DefLPDef = UnitData.LeaderPDef * AreaCorPDef;
-			// 防御側: LMDef
-			var DefLMDef = UnitData.LeaderMDef * AreaCorMDef;
-			if (byLeader)
+			if (byLeader)       // 攻：リーダー
 			{
-				// 攻：リーダー
-
-				// 攻撃側: LPAtk
-				var AtkLPAtk = AtkData.LeaderPAtk * AreaCorPAtk;
-				// 攻撃側: LMAtk
-				var AtkLMAtk = AtkData.LeaderMAtk * AreaCorMAtk;
-
-				if (toLeader)
+				if (toLeader)   // 防：リーダー
 				{
-					// 防：リーダー
-					// 物理攻撃
-					pDamage = System.Math.Min(LAtkSkill.Power / 100.0f, (AtkLPAtk / 2 - DefGPDef / 4) / 4) * PositionCoe;
-					// 魔法攻撃
-					if (!isCounter) mDamage = System.Math.Min(LAtkSkill.Power / 100.0f, (AtkLMAtk / 2 - DefGMDef / 4) / 4);
+					pDamage = System.Math.Min(LAtkSkill.Power / 100.0f, (atkUnit.LPAtk / 2 - LPDef / 4) / 4) * PositionCoe;
+					if (!isCounter) mDamage = System.Math.Min(LAtkSkill.Power / 100.0f, (atkUnit.LMAtk / 2 - LMDef / 4) / 4);
 				}
-				else
+				else            // 防：集団
 				{
-					// 防：集団
-					// 物理攻撃
-					pDamage = System.Math.Min(LAtkSkill.Power, (AtkLPAtk / 2 - DefGPDef / 4) * 10) * PositionCoe;
-					// 魔法攻撃
-					if (!isCounter) mDamage = System.Math.Min(LAtkSkill.Power, (AtkLMAtk / 2 - DefGMDef / 4) * 10);
+					pDamage = System.Math.Min(LAtkSkill.Power, (atkUnit.LPAtk / 2 - GPDef / 4) * 10) * PositionCoe;
+					if (!isCounter) mDamage = System.Math.Min(LAtkSkill.Power, (atkUnit.LMAtk / 2 - GMDef / 4) * 10);
 				}
 			}
-			else
+			else                // 功：集団
 			{
-				// 功：集団
-
-				// 攻撃側: GPAtk
-				var AtkGPAtk = AtkData.GroupPAtk * AreaCorPAtk;
-				// 攻撃側: GMAtk
-				var AtkGMAtk = AtkData.GroupMAtk * AreaCorMAtk;
-
-				if (toLeader)
+				if (toLeader)   // 防：リーダー
 				{
-					// 防：リーダー
-					// 物理攻撃
-					pDamage = System.Math.Min(AtkData.SoldierNum / 100, (AtkGPAtk / 2 - DefLPDef / 4) / 4) * PositionCoe;
-					// 魔法攻撃
-					if (!isCounter) mDamage = (AtkGMAtk / 2 - DefLMDef / 4) / 4;
+					pDamage = System.Math.Min(atkUnit.UnitData.SoldierNum / 100, (atkUnit.GPAtk / 2 - LPDef / 4) / 4) * PositionCoe;
+					if (!isCounter) mDamage = (atkUnit.GMAtk / 2 - LMDef / 4) / 4;
 				}
-				else
+				else            // 防：集団
 				{
-					// 防：集団
-
-					// 攻撃側: Leadership
-					var AtkLeadership = AtkData.Leadership * AreaCorLeadership;
-					// 防御側: Leadership
-					var DefLeadership = UnitData.Leadership * AreaCorLeadership;
-
-					// 物理攻撃
-					pDamage = System.Math.Min(AtkData.SoldierNum, (AtkGPAtk / 2 - DefGPDef / 4) * 10) * PositionCoe
-						* (100 + AtkLeadership - DefLeadership) / 100;
-					// 魔法攻撃
-					if (!isCounter) mDamage = (AtkGMAtk / 2 - DefGMDef / 4) * 10 * (100 + AtkLeadership - DefLeadership) / 100;
+					pDamage = System.Math.Min(atkUnit.UnitData.SoldierNum, (atkUnit.GPAtk / 2 - GPDef / 4) * 10) * PositionCoe
+						* (100 + atkUnit.Leadership - Leadership) / 100;
+					if (!isCounter) mDamage = (atkUnit.GMAtk / 2 - GMDef / 4) * 10 * (100 + atkUnit.Leadership - Leadership) / 100;
 				}
 			}
 			return System.Math.Max(pDamage, 0) + System.Math.Max(mDamage, 0);
