@@ -504,6 +504,7 @@ namespace ProjectWitch.Battle
 			}
 			foreach (var card in cards)
 			{
+				if (IsBattleEnd) yield break;
 				if (card.CardData == null || !card.IsCanUse || checkCamp == (card.IsPlayer ? -1 : 1))
 					continue;
 				if (card.CardData.Timing == timeing)
@@ -540,21 +541,16 @@ namespace ProjectWitch.Battle
 							List<BattleUnit> units = new List<BattleUnit>();
 							if (card.Skill.Target == SkillDataFormat.SkillTarget.Enemy ||
 								card.Skill.Target == SkillDataFormat.SkillTarget.EnemyLeader)        // 対象が敵の時
-							{
 								units = (card.IsPlayer ? EnemyUnits : PlayerUnits);
-							}
 							else if (card.Skill.Target == SkillDataFormat.SkillTarget.Player ||
 								card.Skill.Target == SkillDataFormat.SkillTarget.PlayerLeader)       // 対象が味方の時
-							{
 								units = (!card.IsPlayer ? EnemyUnits : PlayerUnits);
-							}
 							target = units[BattleRandom.Range(0, units.Count - 1)];
 						}
 					}
 					yield return StartCoroutine(CoCardSkillAction(card, action, target));
 				}
 			}
-			yield return null;
 		}
 
 		// カード発動コルーチン
