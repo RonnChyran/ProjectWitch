@@ -352,117 +352,51 @@ namespace ProjectWitch.Battle
 			yield return StartCoroutine(CoDownOrderSingle(bu));
 		}
 
-		// 順番下げ(陣営)のコルーチン
+		// 順番下げ(陣営)のコルーチン isPlayerは対象の陣営
 		private IEnumerator CoDownOrderAll(bool isPlayer)
 		{
-			// まだNextOrderを下回る数字が出ていないフラグ
-			bool flag = true;
-			for (int i = mOrderDiplayObj.Count - 1; i > 0; i--)
+			var turnUnit = TurnUnit;
+			var preOrderValue = TurnUnit.OrderValue;
+			// TurnUnitが行動を終えたとしてNextOrderValueを代入し、ソートする
+			turnUnit.OrderValue = NextOrderValue;
+			mOrderDiplayObj.Sort((a, b) => a.BattleUnit.OrderValue - b.BattleUnit.OrderValue);
+			// 数値入れ替え、後ろから確認していく　2陣営が各一人ずつ存在しているはずなのでCountは2以上を保証
+			for (int i = mOrderDiplayObj.Count - 2; i >= 0; i--)
 			{
-				if (i == mOrderDiplayObj.Count - 1)
+				var unit = mOrderDiplayObj[i].BattleUnit;           // 調べるUnit
+				var postUnit = mOrderDiplayObj[i + 1].BattleUnit;   // 調べるUnitより行動順が1つあとのユニット
+
+				// unitが対象、その次のユニットがunitの相手陣営(対象じゃない)とき入れ替え
+				if (unit.IsPlayer == isPlayer && postUnit.IsPlayer != isPlayer)
 				{
-					if (mOrderDiplayObj[i].BattleUnit.OrderValue <= NextOrderValue)
-						flag = false;
-					// 最終
-					// ターンユニットと最終ユニットが別陣営
-					if ((TurnUnit.IsPlayer != mOrderDiplayObj[i].BattleUnit.IsPlayer) &&
-						(mOrderDiplayObj[i].BattleUnit.OrderValue <= NextOrderValue) ?
-						(mOrderDiplayObj[i].BattleUnit.IsPlayer == isPlayer) :
-						(TurnUnit.IsPlayer == isPlayer && mOrderDiplayObj[i - 1].BattleUnit.OrderValue <= NextOrderValue))
-					{
-						// (NextOrderのほうが大きい&&最終ユニットが対象)||
-						//(最終ユニットOrderのほうが大きい&&NextOrderは最終ユニットの1つ前のOrderより大きい&&ターンユニットが対象)
-						int order = NextOrderValue;
-						NextOrderValue = mOrderDiplayObj[i].BattleUnit.OrderValue;
-						mOrderDiplayObj[i].BattleUnit.OrderValue = order;
-					}
-				}
-				else
-				{
-					// 途中
-					if (flag && mOrderDiplayObj[i].BattleUnit.OrderValue <= NextOrderValue)
-					{
-						// 初めてNextOrderを下回る数字が出た
-						flag = false;
-						if (TurnUnit.IsPlayer == isPlayer && TurnUnit.IsPlayer != mOrderDiplayObj[i + 1].BattleUnit.IsPlayer)
-						{
-							// ターンユニットが対象であり、一つ上の対象がターンユニットと別陣営であるならば入れ替える
-							int order = NextOrderValue;
-							NextOrderValue = mOrderDiplayObj[i + 1].BattleUnit.OrderValue;
-							mOrderDiplayObj[i + 1].BattleUnit.OrderValue = order;
-						}
-					}
-					if (mOrderDiplayObj[i].BattleUnit.OrderValue <= NextOrderValue && mOrderDiplayObj[i + 1].BattleUnit.OrderValue > NextOrderValue)
-					{
-						// NextOrderが途中に挟まっている
-						if (mOrderDiplayObj[i].BattleUnit.IsPlayer == isPlayer && TurnUnit.IsPlayer != mOrderDiplayObj[i].BattleUnit.IsPlayer)
-						{
-							// 対象であり、ターンユニットと陣営が違うなら入れ替える
-							int order = NextOrderValue;
-							NextOrderValue = mOrderDiplayObj[i].BattleUnit.OrderValue;
-							mOrderDiplayObj[i].BattleUnit.OrderValue = order;
-						}
-					}
-					else
-					{
-						if (mOrderDiplayObj[i].BattleUnit.IsPlayer == isPlayer && mOrderDiplayObj[i].BattleUnit.IsPlayer != mOrderDiplayObj[i + 1].BattleUnit.IsPlayer)
-						{
-							// 対象であり、一つ上のユニットと陣営が違うなら入れ替える
-							int order = mOrderDiplayObj[i + 1].BattleUnit.OrderValue;
-							mOrderDiplayObj[i + 1].BattleUnit.OrderValue = mOrderDiplayObj[i].BattleUnit.OrderValue;
-							mOrderDiplayObj[i].BattleUnit.OrderValue = order;
-						}
-					}
+					var order = unit.OrderValue;
+					unit.OrderValue = postUnit.OrderValue;
+					// unitがTurnUnitならNextOrderValueも変更
+					if (unit == turnUnit) NextOrderValue = postUnit.OrderValue;
+					postUnit.OrderValue = order;
+					// postUnitがTurnUnitならNextOrderValueも変更
+					if (postUnit == turnUnit) NextOrderValue = order;
 				}
 			}
-			for (int i = mOrderDiplayObj.Count - 1; i >= 0; i--)
+			// ターンユニットの行動順数値をもとに戻してソート
+			turnUnit.OrderValue = preOrderValue;
+			mOrderDiplayObj.Sort((a, b) => a.BattleUnit.OrderValue - b.BattleUnit.OrderValue);
+			// 対象のユニットを上にスライドさせて画面外に移動
+			for (int i = 0; i < mOrderDiplayObj.Count; i++)
 				if (mOrderDiplayObj[i].BattleUnit.IsPlayer == isPlayer)
 					mOrderDiplayObj[i].SlideUpOut();
-			while (IsAnimation)
-				yield return null;
-			List<OrderDiplayObj> lodo = new List<OrderDiplayObj>();
-			for (int i = mOrderDiplayObj.Count - 1; i >= 0; i--)
-			{
-				if (mOrderDiplayObj[i].BattleUnit.IsPlayer == isPlayer)
-				{
-					lodo.Insert(0, mOrderDiplayObj[i]);
-					mOrderDiplayObj.Remove(mOrderDiplayObj[i]);
-				}
-			}
-			foreach (var odo in lodo)
-			{
-				for (int i = 1; i < mOrderDiplayObj.Count; i++)
-				{
-					if (odo.BattleUnit.OrderValue < mOrderDiplayObj[i].BattleUnit.OrderValue)
-					{
-						mOrderDiplayObj.Insert(i, odo);
-						break;
-					}
-					else if (i == mOrderDiplayObj.Count - 1)
-					{
-						mOrderDiplayObj.Add(odo);
-						break;
-					}
-				}
-			}
+			while (IsAnimation) yield return null;
+			// 対象以外のユニットを移動後の場所にスライド
 			for (int i = 0; i < mOrderDiplayObj.Count; i++)
-			{
 				if (mOrderDiplayObj[i].BattleUnit.IsPlayer != isPlayer)
-				{
 					mOrderDiplayObj[i].SlideToPos(i);
-				}
-			}
-			while (IsAnimation)
-				yield return null;
+			while (IsAnimation) yield return null;
+			// 対象のユニットを上からスライドさせて画面内に移動
 			for (int i = 0; i < mOrderDiplayObj.Count; i++)
-			{
 				if (mOrderDiplayObj[i].BattleUnit.IsPlayer == isPlayer)
-				{
 					mOrderDiplayObj[i].SlideUpIn(i);
-				}
-			}
-			while (IsAnimation)
-				yield return null;
+			while (IsAnimation) yield return null;
+			// 次の行動順矢印の位置を移動
 			yield return MoveNextPos();
 		}
 
