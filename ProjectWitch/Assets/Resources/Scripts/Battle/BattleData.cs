@@ -121,7 +121,7 @@ namespace ProjectWitch.Battle
 			var tf = Instantiate(gameObject).transform;
 			tf.name = name;
 			if (parent != null)
-				tf.parent = parent;
+				tf.SetParent(parent);
 			return tf;
 		}
 	}
