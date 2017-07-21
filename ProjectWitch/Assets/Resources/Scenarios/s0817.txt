@@ -28,9 +28,7 @@
 [voice ref="080123"]
 おらーーー！！！[n]
 死にてえ奴はかかってきやがれェーーー！！！！[p]
-;自動戦闘
-;時間切れ
-;ヴェロニカキープ
+
 [hide_message]
 [filter name="fade" time="500"]
 [clearbg]
@@ -40,5 +38,14 @@
 [filter name="clear" time="500"]
 [stopbgm]
 
+;自動戦闘
+;時間切れ
+;ヴェロニカキープ
+[unit_heal unit=24]
+[unit_heal unit=30]
+[battle_unit_in p0=24 e0=30]
+[battle_time time=5]
+[battle_area id=80]
+[battle_auto]
 
 [sys_memset index=817 value="1"]

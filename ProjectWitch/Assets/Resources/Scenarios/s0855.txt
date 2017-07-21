@@ -92,5 +92,7 @@
 [wait time=500]
 [filter name="clear" time="500"]
 
+;アリス離脱
+[unit_unemploy unit=0]
 
 [sys_memset index=855 value="1"]

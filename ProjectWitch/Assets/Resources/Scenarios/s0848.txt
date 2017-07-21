@@ -204,7 +204,6 @@
 #アリス
 [voice ref="080703"]
 どけーーーーーっ！！！[p]
-;戦闘 アリスvsライザ
 [hide_message]
 [filter name="fade" time=500]
 [clearcg id=4]
@@ -214,5 +213,9 @@
 [wait time=500]
 [filter name="clear" time="500"]
 
+;アリスVSライザ
+[unit_heal unit=0]
+[unit_heal unit=30]
+[battle_unit_in p0=0 e0=30]
 
 [sys_memset index=848 value="1"]

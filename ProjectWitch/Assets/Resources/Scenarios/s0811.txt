@@ -86,9 +86,6 @@
 いてて……[n]
 はい、承知しました……。[p]
 
-;自動戦闘
-;ライザ勝利
-;86ペトロパブロフスク街道東占領
 
 [hide_message]
 [filter name="fade" time="500"]
@@ -99,5 +96,15 @@
 [filter name="clear" time="500"]
 [stopbgm]
 
+;自動戦闘
+;ライザ勝利
+;86ペトロパブロフスク街道東占領
+[unit_heal unit=25]
+[unit_heal unit=26]
+[unit_heal unit=30]
+[battle_unit_in p0=26 p1=25 e0=30]
+[battle_time time=5]
+[battle_area id=86]
+[battle_auto]
 
 [sys_memset index=811 value="1"]

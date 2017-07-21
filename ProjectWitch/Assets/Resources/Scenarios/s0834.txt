@@ -425,8 +425,7 @@
 アリス、あなたなら本当に……。）[p]
 [cn]
 アリス軍に、エリが加わった。[p]
-;エリが加入
-;エリは死にません
+
 [hide_message]
 [filter name="fade" time=500]
 [clearcg id=0]
@@ -438,5 +437,8 @@
 [wait time=500]
 [filter name="clear" time="500"]
 
+;エリが加入
+;エリは死にません
+[unit_employ unit=28]
 
 [sys_memset index=834 value="1"]

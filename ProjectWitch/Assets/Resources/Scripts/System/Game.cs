@@ -36,9 +36,14 @@ namespace ProjectWitch
         public string SceneName_Ending { get { return cSceneName_Ending; } private set { } }
 
         //毎ターンのマナ回復率
+        [SerializeField]
         private float mManaRecoveryRate = 0.1f; //10%
-                                                //毎ターンのHP回復率
+        //毎ターンのHP回復率
+        [SerializeField]
         private float mHPRecoveryRate = 0.2f; //20%
+        //ターン数を同期するメモリのID
+        [SerializeField]
+        private int mCurrentTurnID = 4011;
 
         #endregion
 
@@ -147,7 +152,7 @@ namespace ProjectWitch
             MenuDataIn.Reset();
 
             //ゲームデータ初期化
-            GameData = new GameData();
+            GameData = new GameData(mCurrentTurnID);
             GameData.Reset();
 
             //システムデータ初期化

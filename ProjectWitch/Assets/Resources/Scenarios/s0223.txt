@@ -809,8 +809,7 @@
 [unit_employ unit=7]
 [endif]
 
-
-;ショップフラグの加算
+;占領地数のカウント
 [sys_memget index=4010 local=0]
-[calc opr="add" index0=0 value1=1 to=0]
+[calc opr="add" index0=0 value1=2 to=0]
 [sys_memset index=4010 local=0]

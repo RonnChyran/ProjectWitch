@@ -150,6 +150,13 @@ namespace ProjectWitch
 		private GameMetaData metaData = new GameMetaData();
         public GameMetaData Meta { get { return metaData; }}
 
+        //コンストラクタ
+        private GameData() { }
+        public GameData(int currentMemID)
+        {
+            mCurrentTurnID = currentMemID;
+        }
+
 		#region data_member
 
 		//ユニットデータ
@@ -174,8 +181,10 @@ namespace ProjectWitch
 
 		//所持マナ
 		public int PlayerMana { get; set; }
-		//現在のターン数
-		public int CurrentTurn { get; set; }
+        //現在のターン数
+        private int mCurrentTurn = 0;
+        private int mCurrentTurnID = 0; //仮想メモリとの同期ID
+		public int CurrentTurn { get { return mCurrentTurn; } set { mCurrentTurn = value; Memory[mCurrentTurnID] = value; } }
 		//現在の時間数 0:朝 1:昼 2:夜 3~:敵ターン
 		public int CurrentTime { get; set; }
         //町イベントのトークフラグ
@@ -207,14 +216,15 @@ namespace ProjectWitch
 				FieldEvent = new List<EventDataFormat>();
 				TownEvent = new List<EventDataFormat>();
 				PlayerMana = 10000;
+                
+                Memory = new VirtualMemory(20000);
 
-				CurrentTime = 0; //朝から
+                CurrentTime = 0; //朝から
 				CurrentTurn = 1;
                 TownEventEnable = true;
 				FieldBGM = "002_alice1";
 				BattleBGM = "004_battle1";
 
-				Memory = new VirtualMemory(20000);
 
 
 			}

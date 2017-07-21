@@ -194,3 +194,8 @@
 
 ;トリアイナ領占領
 [sys_memset index=10001 value="1"]
+
+;占領地数の増加
+[sys_memget index=4010 local=0]
+[calc opr="add" index0=0 value1=1 to=0]
+[sys_memset index=4010 local=0]

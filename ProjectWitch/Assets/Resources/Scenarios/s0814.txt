@@ -2,6 +2,7 @@
 ;directer:yuichi
 ;script:nikai
 ;timing:s0811後
+
 [field_area_hilight id=89]
 [wait time=500]
 
@@ -25,9 +26,7 @@
 #ニア
 [voice ref="080098"]
 まっ、またあ！？[p]
-;自動戦闘
-;ヴェロニカ勝利
-;モスクの森北　キープ
+
 [hide_message]
 [filter name="fade" time="500"]
 [clearbg]
@@ -37,5 +36,14 @@
 [filter name="clear" time="500"]
 [stopbgm]
 
+;自動戦闘
+;ヴェロニカ勝利
+;モスクの森北　キープ
+[unit_heal unit=24]
+[unit_heal unit=32]
+[battle_unit_in p0=24 e0=32]
+[battle_time time=5]
+[battle_area id=89]
+[battle_auto]
 
 [sys_memset index=814 value="1"]

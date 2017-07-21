@@ -2,11 +2,17 @@
 ;directer:yuichi
 ;script:nikai
 ;timing:s0804の後　ターンはじめ
+
+[field_area_hilight id=92]
+
 ;自動戦闘
 ;ニア勝利
 ;92ラボ―チキン平原占領
-[field_area_hilight id=92]
-[se ref="030_domination"]
-[wait time=500]
+[unit_heal unit=24]
+[unit_heal unit=32]
+[battle_unit_in p0=24 e0=32]
+[battle_time time=5]
+[battle_area id=92]
+[battle_auto]
 
-[sys_memset index=804 value="1"]
+[sys_memset index=805 value="1"]

@@ -60,9 +60,7 @@
 [voice ref="080032"]
 降伏しないというのなら少々力ずくになりますが、[n]
 文句は言いませんね！[p]
-;自動戦闘
-;ヴェロニカ勝利
-;93マジノライン北奪還
+
 [hide_message]
 [filter name="fade" time="500"]
 [clearbg]
@@ -70,7 +68,16 @@
 [clearcg id=1]
 [wait time=500]
 [filter name="clear" time="500"]
+
+;自動戦闘
+;ヴェロニカ勝利
+;93マジノライン北奪還
+[unit_heal unit=24]
+[unit_heal unit=32]
+[battle_unit_in p0=24 e0=32]
+[battle_time time=5]
+[battle_area id=93]
+[battle_auto]
+
 [stopbgm]
-
-
 [sys_memset index=802 value="1"]

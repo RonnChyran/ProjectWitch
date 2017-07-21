@@ -394,6 +394,18 @@
 [wait time=500]
 [filter name="clear" time="500"]
 
-
 [sys_memset index=856 value="1"]
+
+;アリス復帰、クロ、エリ、シードル離脱
+[unit_heal unit=0]
+[unit_employ unit=0]
+[unit_unemploy unit=1]
+[unit_unemploy unit=28]
+[unit_unemploy unit=29]
+[unit_data_change id=1 member="IsAlive" value="false"]
+[unit_data_change id=28 member="IsAlive" value="false"]
+[unit_data_change id=29 member="IsAlive" value="false"]
+
 ;戦闘
+[battle_unit_in e0=48]
+[battle_bgm ref="006_battle3"]

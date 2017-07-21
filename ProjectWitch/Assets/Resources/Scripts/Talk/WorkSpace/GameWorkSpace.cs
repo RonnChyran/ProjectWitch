@@ -429,6 +429,20 @@ namespace ProjectWitch.Talk.WorkSpace
                     return error;
                 }));
 
+            vm.AddCommandDelegater(
+                "SetBattleTime",
+                new CommandDelegater(false, 1, delegate (object[] arguments)
+                {
+                    string error;
+                    int time = Converter.ObjectToInt(arguments[0], out error);
+                    if (error != null) return error;
+
+                    var game = Game.GetInstance();
+                    game.BattleIn.TurnNum = time;
+
+                    return error;
+                }));
+
             //編成画面を表示しない
             vm.AddCommandDelegater (
 				"SetBattleNonPre",
@@ -479,6 +493,17 @@ namespace ProjectWitch.Talk.WorkSpace
 					CallEnding (index, out error);
 					return error;
 				}));
+
+            vm.AddCommandDelegater(
+                "GameClear",
+                new CommandDelegater(false, 0, delegate (object[] arguments)
+                  {
+                      string error = null;
+                      var game = Game.GetInstance();
+                      game.SystemData.Memory[0] = 1;
+
+                      return error;
+                  }));
 
 			//指定キャラの生存フラグ
 			vm.AddCommandDelegater (

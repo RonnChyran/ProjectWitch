@@ -59,9 +59,6 @@
 [stopbgm]
 [cn]
 ヴェロニカがライザ軍の異変に気付いたのはすぐのことだった。[p]
-;自動戦闘
-;時間切れ
-;レーニングラッド砦　キープ
 
 [hide_message]
 [clearbg]
@@ -70,5 +67,12 @@
 [wait time=500]
 [filter name="clear" time="500"]
 
+;自動戦闘
+;時間切れ
+;レーニングラッド砦　キープ
+[battle_unit_in p0=24 e0=194 e1=30]
+[battle_time time=5]
+[battle_area id=80]
+[battle_auto]
 
 [sys_memset index=822 value="1"]

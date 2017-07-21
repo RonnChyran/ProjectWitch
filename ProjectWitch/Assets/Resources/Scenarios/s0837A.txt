@@ -1,0 +1,24 @@
+;ss0837A
+;世界樹侵攻ストップ用
+
+[setskin ref="skin1"]
+
+[loadfg id=0 ref="alice"]
+[loadfg id=1 ref="kuro"]
+
+[field_area_hilight id=77]
+
+[show_message]
+[drawfg id=1]
+#クロ
+アリス様。この先は深い森が広がっております。[p]
+兵を進めるのは難しいかと。[p]
+[drawfg id=0]
+#アリス
+うーん、まあこんなところ占領しても意味ないよな…。[p]
+よし、侵攻中止だ。[p]
+
+[clearfg]
+[hide_message]
+
+[battle_disable]

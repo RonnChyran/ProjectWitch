@@ -11,9 +11,11 @@
 開通は突然だった……。[p]
 おそらくあと半分くらいだろうとアリスが踏んでいた地点で、向こう側とつながったのだ。[p]
 そして、向こう側から実に80体近いホムンクルスの軍団が飛び出してきた……。[p]
-;戦闘
+
 [hide_message]
 [filter name="clear" time=500]
-
 [stopbgm]
+
+[change_area_owner area=77 owner=8]
+
 [sys_memset index=842 value="1"]

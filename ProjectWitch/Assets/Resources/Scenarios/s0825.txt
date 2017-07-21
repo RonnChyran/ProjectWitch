@@ -31,9 +31,7 @@
 [filter name="fade" time="500"]
 [cn]
 市街地での戦いが始まった。[p]
-;自動戦闘
-;ライザ軍勝利
-;ワルサワの町占領
+
 [hide_message]
 [clearbg]
 [clearcg id=0]
@@ -41,5 +39,13 @@
 [filter name="clear" time="500"]
 [stopbgm]
 
+;自動戦闘
+;ライザ軍勝利
+;ワルサワの町占領
+[unit_heal unit=30]
+[battle_unit_in p0=26 p1=25 p2=24 e0=30 e1=194]
+[battle_time time=5]
+[battle_area id=82]
+[battle_auto]
 
 [sys_memset index=825 value="1"]

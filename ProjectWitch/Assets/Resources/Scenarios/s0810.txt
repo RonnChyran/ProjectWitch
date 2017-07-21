@@ -3,7 +3,7 @@
 ;script:nikai
 ;timing:s0809後
 
-[field_area_hilight id=87]
+[field_area_hilight id=91]
 [wait time=500]
 
 [loadcg id=0 ref="veronica"]
@@ -83,8 +83,16 @@
 [filter name="clear" time="500"]
 [stopbgm]
 
-
-[sys_memset index=810 value="1"]
 ;自動戦闘
 ;ニア勝利
 ;91エカテリーナ要塞占領
+;ニアの兵数を増加
+[unit_data_change id=32 member="MaxSoldierNum" value="5000"]
+[unit_heal unit=24]
+[unit_heal unit=32]
+[battle_unit_in p0=24 e0=32]
+[battle_time time=5]
+[battle_area id=91]
+[battle_auto]
+
+[sys_memset index=810 value="1"]

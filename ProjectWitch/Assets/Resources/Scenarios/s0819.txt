@@ -46,9 +46,6 @@
 二日目の戦い。[n]
 ここで初めてヴェロニカ側から仕掛けることになった。[p]
 シードルが先陣を切って外で交戦する敵へ突っ込んでいったのだ[p]
-;自動戦闘
-;シードル勝利
-;領地キープ
 
 [hide_message]
 [filter name="fade" time="500"]
@@ -59,5 +56,14 @@
 [filter name="clear" time="500"]
 [stopbgm]
 
+;自動戦闘
+;シードル勝利
+;領地キープ
+[unit_heal unit=26]
+[unit_heal unit=32]
+[battle_unit_in p0=24 e0=30]
+[battle_time time=5]
+[battle_area id=80]
+[battle_auto]
 
 [sys_memset index=819 value="1"]

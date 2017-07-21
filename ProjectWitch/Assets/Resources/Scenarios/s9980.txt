@@ -1,0 +1,342 @@
+;s9980
+;ノーマルエンド
+
+[filter name="fade" time=0]
+
+[loadcg id=0 ref="veronica"]
+[loadcg id=1 ref="alice"]
+[loadcg id=2 ref="eli"]
+[loadcg id=3 ref="seedle"]
+
+[bgm ref="029_raizania2"]
+[drawbg ref="1001m"]
+
+[wait time=500]
+[filter name="clear" time=500]
+
+[show_message]
+煙の臭い。肌に張り付くような熱気。[p]
+ヴェロニカ宮の謁見の間で、名もなき大魔女が膝をついていた。[p]
+#名無しの大魔女
+[voice ref="080945r"]
+…………そんな、バカな。[p]
+[cn]
+大魔女の体からはうす緑色の煙が立ち上っていた。[p]
+魔力が支えきれず、漏れているのだ。[p]
+#アリス
+[voice ref="080945s"]
+…………。[p]
+[cn]
+そのそばでアリスが倒れていた。[p]
+アリスはピクリとも動かない。[p]
+#名無しの大魔女
+[voice ref="080945t"]
+フン、とどめを刺す前に力尽きたか……。[n]
+グ……そろそろ、私たちも……。[p]
+[drawcg id=1 pos=3 state=2]
+[cn]
+その時、アリスがゆっくりと起き上がった。[p]
+目はうつろ、おぼつかない足取りで大魔女の方へ歩き出す。[p]
+[move id=1 x=-5 time=300]
+[wait time=300]
+[move id=1 x=-5 time=300]
+[wait time=300]
+#名無しの大魔女
+[voice ref="080945u"]
+そこまでして世界がほしいかアリス……。[p]
+[cn]
+しかし、アリスにはもはやわずかな魔力も残されていなかった。[p]
+[move id=1 x=-5 time=300]
+[wait time=300]
+#アリス
+[voice ref="080945v"]
+……ころ、す……。[n]
+[move id=1 x=-5 time=300]
+[wait time=300]
+ぜっ……たい、ころ……す。[p]
+[filter name="color" color="FFFFFF" time=50]
+[se ref=150]
+[filter name="clear" time=50]
+[move id=1 y=-20 time=200]
+[cn]
+うわごとのように殺す、殺すと繰り返すアリスに大魔女の一撃が叩き込まれた。[p]
+#アリス
+[voice ref="080945w"]
+……っ！！[p]
+[clearcg id=1 mode="fadeout"]
+[cn]
+そして、ついに本当に動かなくなった。[p]
+#名無しの大魔女
+[voice ref="080945x"]
+泣き虫アリスのくせに……。[p]
+[stopbgm]
+[cn]
+その言葉を最後に、大魔女も風に掻き消えるように姿を消した。[p]
+
+;場面転換
+[hide_message]
+[filter name="fade" time=500]
+[drawcg id=1 pos=1]
+[move id=1 y=20 time=0]
+[clearcg id=1]
+[drawbg ref="white"]
+[drawcg id=1 pos=4]
+[bgm ref="023_event8"]
+[filter name="clear" time=500]
+
+[cn]
+[show_message]
+白い世界の中心にアリスは立っていた。[p]
+周りには何もなく、ただ白い空間が広がっている。[p]
+と、そこへ徐々に輪郭が浮かび上がり、人の形を成した。[p]
+[drawcg id=0 pos=2 dir="right"]
+[move id=1 y=5 time=50]
+[move id=1 y=-5 time=50]
+#アリス
+[voice ref="080945y"]
+ヴェロニカ……！[p]
+#ヴェロニカ
+[voice ref="080945z"]
+アリス……。[p]
+#アリス
+[voice ref="080946"]
+ヴェロニカ！　ヴェロニカなんだな！[p]
+[voice ref="080946a"]
+ああっ、生きてる！[n]
+ヴェロニカぁ！！[p]
+[move id=1 x=-20 time=300]
+[cn]
+アリスは勢いよくヴェロニカに飛びついた。[p]
+#ヴェロニカ
+[voice ref="080946b"]
+あらあら……[n]
+あなた、いつからそんなに甘えん坊になったんですか？[p]
+#アリス
+[voice ref="080946c"]
+ヴェロニカだ……[n]
+本物の、ヴェロニカだ……。[p]
+#ヴェロニカ
+[voice ref="080946d"]
+アリス……。[n]
+ここにいるということは、死んでしまったのですね。[p]
+[move id=1 x=20 time=300]
+#アリス
+[voice ref="080946e"]
+死んだ……？[n]
+ああ、そうか……私、あの化け物と戦って。[p]
+[voice ref="080946f"]
+……勝てなかったんだな。[p]
+#ヴェロニカ
+[voice ref="080946g"]
+いえ……
+先ほどライザとニアの魂が飛んでいくのを見ました。[p]
+[voice ref="080946h"]
+おそらく彼女たちも倒れたのです。[p]
+#アリス
+[voice ref="080946i"]
+そっか……[n]
+じゃあ私、ヴェロニカの敵を討てたんだな。[p]
+#ヴェロニカ
+[voice ref="080946j"]
+アリス……。[p]
+#アリス
+[voice ref="080946k"]
+ヴェロニカ……これからはずっと一緒なんだよな。[p]
+#ヴェロニカ
+[voice ref="080946l"]
+……ええ、そうよ。[p]
+#アリス
+[voice ref="080946m"]
+そっか……[n]
+よかった。[p]
+[move id=0 x=5 time=500]
+#ヴェロニカ
+[voice ref="080946n"]
+行きましょう、アリス。[n]
+私だけじゃないわ、みんなが待っているの。[p]
+#アリス
+[voice ref="080946o"]
+……！　ああ、行こう。[p]
+[cn]
+アリスとヴェロニカは手をつないで歩きだした。[p]
+[filter name="color" color="FFFFFF" time=1500]
+次第に二人の姿は光に溶け、そして、消えた。[p]
+[hide_message]
+[clearcg id=0]
+[clearcg id=1]
+[drawcg id=2 pos=3]
+[move id=2 y=-80 time=0]
+[drawcg id=3 pos=3]
+[move id=3 y=-100 time=0]
+[drawbg ref="1018n"]
+[bgm ref="014_velonica"]
+[filter name="clear" time=500]
+
+;場面転換
+[show_message]
+ヴェロニカ宮付近の森。[p]
+[move id=2 y=80 time=300]
+#エリ
+[voice ref="080946p"]
+ぷはっ！！[p]
+[voice ref="080946q"]
+あー、いててて……。[n]
+ったく、あの化け物、私じゃなきゃ死んでたわよ。[p]
+[move id=2 x=-20 time=400]
+[voice ref="080946r"]
+シードル！　
+[scale id=2 sx=-1 time=100]
+[move id=2 x=40 time=800]
+シードル！？[n]
+[scale id=2 sx=-1 time=100]
+あっ、いた。[p]
+[voice ref="080946s"]
+このっ！　寝てんじゃないわよ、起きなさい！！[p]
+#シードル
+[voice ref="080946t"]
+ううん……。[p]
+[move id=2 x=-5 time=50]
+[se ref="044"]
+[move id=2 x=5 time=50]
+[wait time=300]
+[move id=2 x=-5 time=50]
+[se ref="044"]
+[move id=2 x=5 time=50]
+[cn]
+げしっ！　げしっ！！[p]
+#シードル
+[voice ref="080946u"]
+いてっ！　いてっ！！[n]
+[move id=3 y=100 time=200]
+なっ、なんですかぁ！？[p]
+[scale id=3 sx=-1 time=300]
+[voice ref="080946v"]
+あっ、エリ様……。[p]
+#エリ
+[voice ref="080946w"]
+ずいぶん遠くまで飛ばされたけど、[n]
+一体何日眠っていたのかしら……。[p]
+[scale id=2 sx=-1 time=300]
+[voice ref="080946x"]
+シードル、とりあえず宮殿に戻るわよ！[p]
+[move id=2 x=50 time=500]
+[move id=3 y=5 time=50]
+[move id=3 y=-5 time=50]
+#シードル
+[voice ref="080946y"]
+はっ、はい！[p]
+[move id=3 x=70 time=700]
+
+;場面転換
+[hide_message]
+[filter name="fade" time=500]
+[moveto id=2 x=70 time=0]
+[scale id=2 sx=-1 time=0]
+[clearcg id=3]
+[drawbg ref="1001m"]
+[filter name="clear" time=500]
+
+;周囲の散策
+[scale id=2 sx=-1 time=400]
+[move id=2 x=5 time=800]
+[scale id=2 sx=-1 time=400]
+[wait time=300]
+[scale id=2 sx=-1 time=400]
+[wait time=300]
+[scale id=2 sx=-1 time=400]
+[move id=2 x=-30 time=1000]
+[move id=2 y=-5 time=100]
+[move id=2 y=5 time=100]
+[move id=2 y=-5 time=100]
+[move id=2 y=5 time=100]
+[scale id=2 sx=-1 time=400]
+[wait time=300]
+[scale id=2 sx=-1 time=400]
+[wait time=300]
+[scale id=2 sx=-1 time=400]
+
+#エリ
+[voice ref="080946z"]
+……ライザ、ニア。 死んでる。[n]
+ということは、アリスは倒したのね！
+[move id=2 y=5 time=50]
+[move id=2 y=-5 time=50]
+[p]
+#シードル
+[voice ref="080947"]
+エリ様！　アリス様が……。[p]
+[scale id=2 sx=-1 time=200]
+#エリ
+[voice ref="080947a"]
+えっ……。[p]
+
+;場面転換
+[hide_message]
+[filter name="fade" time=500]
+[moveto id=2 x=20 time=0]
+[scale id=2 sx=-1 time=0]
+[drawcg id=3 posx=-10 dir="right" layer="back"]
+[filter name="clear" time=500]
+;イベントＣＧ　アリスとヴェロニカ
+#エリ
+[voice ref="080947b"]
+アリス……、ヴェロニカ様。[p]
+#シードル
+[voice ref="080947c"]
+エリ様……すでに亡くなられています。[p]
+#エリ
+[voice ref="080947d"]
+ええ……。[p]
+#シードル
+[voice ref="080947e"]
+エリ様……。アリス様は。[p]
+[scale id=2 sx=-1 time=400]
+#エリ
+[voice ref="080947f"]
+シードル、そっとしておいてあげましょう。[p]
+[voice ref="080947g"]
+きっと、ヴェロニカ様に会えたのよ。[p]
+#シードル
+[voice ref="080947h"]
+エリ様……。[p]
+[scale id=2 sx=-1 time=400]
+[move id=2 y=-10 time=400]
+#エリ
+[voice ref="080947i"]
+だって、こんなに安らかな顔をしているんだもの……[n]
+きっと、幸せに……。[p]
+[move id=2 y=10 time=400]
+[scale id=2 sx=-1 time=400]
+[move id=2 x=-20 time=500]
+[scale id=3 sx=-1 time=300]
+
+#シードル
+[voice ref="080947j"]
+エリ様……。[p]
+#エリ
+[voice ref="080947k"]
+死ぬなんて聞いてないわよ……。[n]
+アリスの……ばか。[p]
+#シードル
+[voice ref="080947o"]
+…………。[p]
+[move id=2 x=-40 time=1000]
+[move id=3 x=-40 time=1000]
+[filter name="fade" time=500]
+[cn]
+魔女の世界に平和が訪れた。[p]
+上まで登った太陽に背を向けるようにして、[n]
+エリとシードルは歩き出した。[p]
+二度と、振り返ることはなかった。[p]
+
+[hide_message]
+[filter name="fade" time=500]
+[clearcg id=2]
+[clearcg id=3]
+[clearbg]
+[stopbgm]
+[wait time=500]
+[filter name="clear" time="500"]
+
+
+[sys_memset index=859 value="1"]

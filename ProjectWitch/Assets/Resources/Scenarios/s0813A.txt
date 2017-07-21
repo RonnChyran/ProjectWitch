@@ -1,0 +1,68 @@
+;s0813A
+
+;ニア勝利（撤退する）
+;モスクの森南　占領
+
+[field_area_hilight id=90]
+[wait time=500]
+
+[loadcg id=0 ref="veronica"]
+[loadcg id=1 ref="nia"]
+
+[filter name="fade" time=500]
+[bgm ref="004_battle1"]
+[drawbg ref="1018e"]
+[drawcg id=0 pos=5]
+[drawcg id=1 pos=2 dir="right"]
+[filter name="clear" time=500]
+
+[show_message]
+モスクの森南。[p]
+#ヴェロニカ
+[voice ref="080091"]
+そろそろ潮時ね……。[n]
+総員撤退よ！！[p]
+[cn]
+多くが民兵で構成されたヴェロニカの軍隊。[n]
+ゲリラ戦をするにはあまりにも経験が足りなかった。[p]
+そのため、ゲリラ戦にもかかわらず数日で切り上げなければならなかった。[p]
+#ニア
+[voice ref="080092"]
+……………。[n]
+[rotate id=1 angle=10 time=300]
+……あ？[p]
+[cn]
+しかし、それでも効果は絶大のようで、[n]
+数日の間昼夜問わず魔法の雨にさらされたニアの軍はすっかり疲弊していた。[p]
+#ニア
+[rotate id=1 angle=-10 time=100]
+[move id=1 y=5 time=50]
+[move id=1 y=-5 time=50]
+[voice ref="080093"]
+あっ……あいつら、撤退していくぞ……。[n]
+お、追えええ……。[p]
+#ヴェロニカ部下
+[voice ref="080094"]
+ヴェロニカ様！　敵勢が追ってまいります。[p]
+#ヴェロニカ
+[voice ref="080095"]
+ええ、わかったわ。[n]
+しんがりを頼めるかしら。[p]
+#ヴェロニカ部下
+[voice ref="080096"]
+はっ！　お任せください！！[p]
+[scale id=0 sx=-1 time=200]
+[move id=0 x=50 time=400]
+
+
+[hide_message]
+[filter name="fade" time="500"]
+[clearbg]
+[clearcg id=0]
+[clearcg id=1]
+[wait time=500]
+[filter name="clear" time="500"]
+[stopbgm]
+
+
+[change_area_owner area=90 owner=8]
