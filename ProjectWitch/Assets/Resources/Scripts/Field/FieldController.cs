@@ -210,8 +210,13 @@ namespace ProjectWitch.Field
                     yield return StartCoroutine(EventExecute(eventlist));
 
                     //ターンはじめイベントで戦闘フラグが立った
-                    //戦闘開始
+                    if (game.BattleIn.IsEvent)
+                    {
+                        //戦闘開始
+                        yield return StartCoroutine(CallBattle(game.BattleIn.AreaID, game.BattleIn.EnemyTerritory, true));
+                    }
 
+                    //自領地への侵攻
                     //すでに交戦状態に入っている場合
                     if (ter.State == TerritoryDataFormat.TerritoryState.Active)
                     {

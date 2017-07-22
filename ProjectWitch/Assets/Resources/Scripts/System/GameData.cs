@@ -12,7 +12,7 @@ using ProjectWitch.Extention;
 namespace ProjectWitch
 {
 	//プレイヤーデータ用のメタデータ
-	public class GameMetaData : ISaveMetaData
+	public class GameMetaData : SaveMetaData
 	{
 		//タイムスタンプ
 		public int Year { get; set; }       //yearのみ255を超えるのでint型
@@ -117,7 +117,7 @@ namespace ProjectWitch
 	}
 
 	//システムデータ用のメタデータ
-	public class SystemMetaData : ISaveMetaData
+	public class SystemMetaData : SaveMetaData
 	{
 		//セーブファイルに書き込むバイト列を取得
 		public override byte[] GetSaveBytes()
@@ -291,14 +291,17 @@ namespace ProjectWitch
 			FileIO.LoadBinary(GamePath.GameSaveFilePath(slot), meta, inst);
 			this.Copy(inst);
 
-			//ファイルのバージョンチェック
-			metaData = meta;
+            //ファイルのバージョンチェック
+            if (metaData.Major != meta.Major)
+                Debug.LogError("セーブファイルのバージョンが違います");
 		}
 
 		//引数に与えられたオブジェクトをコピーする
 		public void Copy(GameData inst)
-		{
-			Unit = inst.Unit;
+        {
+            Memory = inst.Memory;
+
+            Unit = inst.Unit;
 			Skill = inst.Skill;
 			Area = inst.Area;
 			Territory = inst.Territory;
@@ -311,9 +314,9 @@ namespace ProjectWitch
 			PlayerMana = inst.PlayerMana;
 			CurrentTime = inst.CurrentTime;
 			CurrentTurn = inst.CurrentTurn;
+
 			FieldBGM = inst.FieldBGM;
 			BattleBGM = inst.BattleBGM;
-			Memory = inst.Memory;
 		}
 
 		//セーブ用データをByte配列にパックして取得

@@ -22,10 +22,12 @@ namespace ProjectWitch
     }
     
     //セーブ用のメタデータ
-    public class ISaveMetaData
+    public class SaveMetaData
     {
-        public byte Major { get; set; }
-        public byte Minor { get; set; }
+        private byte _major = 0;
+        private byte _minor = 0;
+        public byte Major { get { return _major; } set { _major = value; } }
+        public byte Minor { get { return _minor; } set { _minor = value; } }
 
         public virtual int GetSize()
         {
@@ -51,7 +53,7 @@ namespace ProjectWitch
             if (obj == null || GetType() != obj.GetType())
                 return false;
 
-            ISaveMetaData v = (ISaveMetaData)obj;
+            SaveMetaData v = (SaveMetaData)obj;
             return (Major == v.Major) && (Minor == v.Minor);
         }
 
@@ -70,7 +72,7 @@ namespace ProjectWitch
     static class FileIO
     {
         //任意のオブジェクトをxmlにシリアライズしてファイルに保存
-        public static void SaveBinary(string filepath, ISaveMetaData meta, ISaveableData data)
+        public static void SaveBinary(string filepath, SaveMetaData meta, ISaveableData data)
         {
             using (FileStream fs = new FileStream(filepath, FileMode.Create))
             {
@@ -95,7 +97,7 @@ namespace ProjectWitch
         }
 
         //任意のオブジェクトをファイルのxmlからデシリアライズする
-        public static void LoadBinary<T>(string filepath, ISaveMetaData meta, T data)
+        public static void LoadBinary<T>(string filepath, SaveMetaData meta, T data)
             where T : ISaveableData
         {
             using (FileStream fs = new FileStream(filepath, FileMode.Open))
@@ -113,7 +115,7 @@ namespace ProjectWitch
         }
 
         //任意のロードファイルのメタ情報を読み出す
-        public static void LoadMetaData(string filepath, ISaveMetaData meta)
+        public static void LoadMetaData(string filepath, SaveMetaData meta)
         {
             using (FileStream fs = new FileStream(filepath, FileMode.Open))
             {

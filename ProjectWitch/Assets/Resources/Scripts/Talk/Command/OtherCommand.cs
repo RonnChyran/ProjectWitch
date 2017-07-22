@@ -63,40 +63,39 @@ namespace ProjectWitch.Talk.Compiler{
 			if (arguments.ContainName ("p0")) {
 				commandList.Add(arguments.Get ("p0"));
 			} else {
-				CompilerLog.Log (line, index, "p0引数が不足しています。");
-				return null;
+                commandList.Add(new SetArgumentCommand("-1"));
 			}
 			if (arguments.ContainName ("p1")) {
 				commandList.Add(arguments.Get ("p1"));
-			} else {
-				CompilerLog.Log (line, index, "p1引数が不足しています。");
-				return null;
-			}
+			} else
+            {
+                commandList.Add(new SetArgumentCommand("-1"));
+            }
 			if (arguments.ContainName ("p2")) {
 				commandList.Add(arguments.Get ("p2"));
-			} else {
-				CompilerLog.Log (line, index, "p2引数が不足しています。");
-				return null;
-			}
+			} else
+            {
+                commandList.Add(new SetArgumentCommand("-1"));
+            }
 
 			if (arguments.ContainName ("e0")) {
 				commandList.Add(arguments.Get ("e0"));
-			} else {
-				CompilerLog.Log (line, index, "e0引数が不足しています。");
-				return null;
-			}
+			} else
+            {
+                commandList.Add(new SetArgumentCommand("-1"));
+            }
 			if (arguments.ContainName ("e1")) {
 				commandList.Add(arguments.Get ("e1"));
-			} else {
-				CompilerLog.Log (line, index, "e1引数が不足しています。");
-				return null;
-			}
+			} else
+            {
+                commandList.Add(new SetArgumentCommand("-1"));
+            }
 			if (arguments.ContainName ("e2")) {
 				commandList.Add(arguments.Get ("e2"));
-			} else {
-				CompilerLog.Log (line, index, "e2引数が不足しています。");
-				return null;
-			}
+			} else
+            {
+                commandList.Add(new SetArgumentCommand("-1"));
+            }
 
 			commandList.Add (new RunOrderCommand("SetBattleUnit"));
 
