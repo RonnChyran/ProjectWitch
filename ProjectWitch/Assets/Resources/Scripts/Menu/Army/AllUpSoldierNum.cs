@@ -33,7 +33,7 @@ namespace ProjectWitch.Menu
                 //回復兵数
                 var solNum = data.MaxSoldierNum - data.SoldierNum;
 
-                mana += solNum * data.SoldierCost;
+                mana += (int)(solNum * data.SoldierCost);
             }
             mManaCost = mana;
 
@@ -54,11 +54,11 @@ namespace ProjectWitch.Menu
                 var data = game.GameData.Unit[unit];
 
                 //マナがある限り兵数回復
-                var solNum = Mathf.Min(data.MaxSoldierNum - data.SoldierNum, game.GameData.PlayerMana / data.SoldierCost);
+                var solNum = (int)Mathf.Min(data.MaxSoldierNum - data.SoldierNum, game.GameData.PlayerMana / data.SoldierCost);
                 data.SoldierNum += solNum;
 
                 //マナ消費
-                game.GameData.PlayerMana -= solNum * data.SoldierCost;
+                game.GameData.PlayerMana -= (int)(solNum * data.SoldierCost);
             }
 
             Close();

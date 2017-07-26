@@ -94,8 +94,8 @@ namespace ProjectWitch.Menu
             mUpMaxSoldierNum = 100;
 
             //総コストの計算
-            mSoldierCurCost = mUpSoldierNum * unit.SoldierCost;
-            mSoldierCurAllCost = solMax * unit.SoldierCost;
+            mSoldierCurCost = (int)(mUpSoldierNum * unit.SoldierCost);
+            mSoldierCurAllCost = (int)(solMax * unit.SoldierCost);
             mMaxSoldierAddCost = (int)(mUpMaxSoldierNum * unit.SoldierLimitCost);
             
             //兵数消費コストの表示

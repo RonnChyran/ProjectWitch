@@ -88,6 +88,13 @@ namespace ProjectWitch.Field.Mana
                 while (game.IsTalk) yield return null;
 
                 ShowResultMessage(itemName + "を　手に入れた！");
+
+                //手に入れたアイテムを領地データに追加
+                if (IsEquipment)
+                    game.GameData.Territory[0].EquipmentList[ItemID].Add(-1);
+                else
+                    game.GameData.Group[game.GameData.Territory[0].GroupList[0]].CardList.Add(ItemID);
+
                 yield return new WaitForSeconds(3.0f);
             }
 

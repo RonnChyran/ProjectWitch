@@ -35,9 +35,6 @@ namespace ProjectWitch
         public string SceneName_Opening { get { return cSceneName_Opening; } private set { } }
         public string SceneName_Ending { get { return cSceneName_Ending; } private set { } }
 
-        //毎ターンのマナ回復率
-        [SerializeField]
-        private float mManaRecoveryRate = 0.1f; //10%
         //毎ターンのHP回復率
         [SerializeField]
         private float mHPRecoveryRate = 0.2f; //20%
@@ -272,18 +269,6 @@ namespace ProjectWitch
         private IEnumerator _CallScript()
         {
             yield return SceneManager.LoadSceneAsync(cSceneName_Talk, LoadSceneMode.Additive);
-        }
-
-        //セーブ画面を呼び出す
-        public void CallSave()
-        {
-            GameData.Save(0);
-        }
-
-        //ロード画面を呼び出す
-        public void CallLoad()
-        {
-            GameData.Load(0);
         }
 
         //ローディング画面を表示

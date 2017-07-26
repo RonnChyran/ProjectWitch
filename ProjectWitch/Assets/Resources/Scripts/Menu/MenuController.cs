@@ -68,6 +68,7 @@ namespace ProjectWitch.Menu
                     mTopMenu.Show();
                     break;
             }
+            Game.GetInstance().MenuDataIn.Top = MenuDataIn.TopMenu.Default;
         }
 
         //メニューを閉じる

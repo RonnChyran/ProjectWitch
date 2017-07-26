@@ -22,7 +22,7 @@ namespace ProjectWitch.Sys
         public void Load()
         {
             var game = Game.GetInstance();
-            game.GameData.Load(mFileIndex);
+            if (!game.GameData.Load(mFileIndex)) return;
             
             StartCoroutine(game.CallField());
         }

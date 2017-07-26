@@ -14,6 +14,12 @@ namespace ProjectWitch
 	//プレイヤーデータ用のメタデータ
 	public class GameMetaData : SaveMetaData
 	{
+        public GameMetaData()
+        {
+            Major = 1;
+            Minor = 0;
+        }
+
 		//タイムスタンプ
 		public int Year { get; set; }       //yearのみ255を超えるのでint型
 		public byte Month { get; set; }
@@ -282,18 +288,16 @@ namespace ProjectWitch
 		}
 
 		//データをセーブファイルから読み込む
-		public void Load(int slot)
+		public bool Load(int slot)
 		{
 			var meta = new GameMetaData();
 
 			var inst = new GameData();
 			inst.Copy(this);
-			FileIO.LoadBinary(GamePath.GameSaveFilePath(slot), meta, inst);
+            if (!FileIO.LoadBinary(GamePath.GameSaveFilePath(slot), ref meta, inst))
+                return false;
 			this.Copy(inst);
-
-            //ファイルのバージョンチェック
-            if (metaData.Major != meta.Major)
-                Debug.LogError("セーブファイルのバージョンが違います");
+            return true;
 		}
 
 		//引数に与えられたオブジェクトをコピーする
@@ -439,19 +443,22 @@ namespace ProjectWitch
 		}
 
 		//データをシステムファイルから読み込む
-		public void Load()
+		public bool Load()
 		{
 			if (global::System.IO.File.Exists(GamePath.SystemSaveFilePath()))
 			{
 				var inst = new SystemData();
 				inst.Copy(this);
-				FileIO.LoadBinary(GamePath.SystemSaveFilePath(), metaData, inst);
+                if (!FileIO.LoadBinary(GamePath.SystemSaveFilePath(), ref metaData, inst))
+                    return false;
+
 				this.Copy(inst);
 			}
 			else
 			{
 				Debug.Log("システムファイルが見つかりません。初回起動モードで実行します。");
 			}
+            return true;
 		}
 
 		//コピーメソッド
@@ -500,8 +507,7 @@ namespace ProjectWitch
 			Love = 0;
 			IsAlive = true;
 			Experience = 0;
-			SoldierCost = 2;
-			HPCost = 8;
+			SoldierCost = 0.5f;
 		}
 
 		#region data_member
@@ -607,11 +613,8 @@ namespace ProjectWitch
 		//AI番号
 		public int AIID { get; set; }
 
-		//HP回復コスト
-		public int HPCost { get; set; }
-
 		//兵士回復コスト
-		public int SoldierCost { get; set; }
+		public float SoldierCost { get; set; }
 
 		//最大兵士数成長コスト
 		public float SoldierLimitCost
@@ -792,6 +795,7 @@ namespace ProjectWitch
 			outdata.AddRange(BitConverter.GetBytes(HP));
 			outdata.AddRange(BitConverter.GetBytes(Experience));
 			outdata.AddRange(BitConverter.GetBytes(SoldierNum));
+            outdata.AddRange(BitConverter.GetBytes(MaxSoldierNum));
 			outdata.AddRange(BitConverter.GetBytes(Deathable));
 			outdata.AddRange(BitConverter.GetBytes(Catchable));
 			outdata.AddRange(BitConverter.GetBytes(IsAlive));
@@ -812,6 +816,7 @@ namespace ProjectWitch
 			HP = BitConverter.ToInt32(data, offset); offset += 4;
 			Experience = BitConverter.ToInt32(data, offset); offset += 4;
 			SoldierNum = BitConverter.ToInt32(data, offset); offset += 4;
+            MaxSoldierNum = BitConverter.ToInt32(data, offset); offset += 4;
 			Deathable = BitConverter.ToBoolean(data, offset); offset += 1;
 			Catchable = BitConverter.ToBoolean(data, offset); offset += 1;
 			IsAlive = BitConverter.ToBoolean(data, offset); offset += 1;

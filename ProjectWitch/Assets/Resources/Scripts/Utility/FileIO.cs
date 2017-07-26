@@ -97,20 +97,33 @@ namespace ProjectWitch
         }
 
         //任意のオブジェクトをファイルのxmlからデシリアライズする
-        public static void LoadBinary<T>(string filepath, SaveMetaData meta, T data)
-            where T : ISaveableData
+        public static bool LoadBinary<T1,T2>(string filepath, ref T1 meta, T2 data)
+            where T1 : SaveMetaData, new()
+            where T2 : ISaveableData 
         {
             using (FileStream fs = new FileStream(filepath, FileMode.Open))
             {
+                var metaData = new T1();
+
                 //メタデータの読み出し
-                byte[] buffer = new byte[meta.GetSize()];
+                byte[] buffer = new byte[metaData.GetSize()];
                 fs.Read(buffer, 0, buffer.Length);
-                meta.SetFromBytes(buffer);
+                metaData.SetFromBytes(buffer);
+
+                //バージョンチェック
+                if (metaData.Major != meta.Major)
+                {
+                    Debug.LogError("セーブファイルのバージョンが違います");
+                    return false;
+                }
+                meta = metaData;
 
                 //データの読み出し
                 buffer = new byte[fs.Length-meta.GetSize()];
                 fs.Read(buffer, 0, buffer.Length);
                 data.SetFromBytes(0, buffer);
+
+                return true;
             }
         }
 
