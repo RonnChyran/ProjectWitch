@@ -1,91 +1,110 @@
-;s0811
-;script:
-;direction:
-;timing:
+﻿;script 811
+;directer:yuichi
+;script:nikai
+;timing:s0810後
 
-■場面12
-;場面11後
-エカテリーナ要塞
-#ヴェロニカ
-右翼と左翼は前進して敵軍の横をついて！
-中央軍は敵を食い止めるのよ！！
-みんな頑張って！　耐えるのよ！！
+[field_area_hilight id=86]
+[wait time=500]
 
+[loadcg id=0 ref="eli"]
+[loadcg id=1 ref="seedle"]
 
+[filter name="fade" time=500]
+[bgm ref="017_event2"]
+[drawbg ref="1037m"]
+[drawcg id=0 pos=2]
+[drawcg id=1 pos=4]
+[filter name="clear" time=500]
 
-
-
-
-
-080067
-
-
-080068
-
-080069
-
-080070
-
-
+[show_message]
+ペトロパブロフスク街道東[p]
+[se ref="047"]
+#エリ
+[voice ref="080077"]
+ああっ！　こら！！[n]
+逃げるな、戦えーーー！！[p]
+[move id=0 y=5 time=50]
+[move id=0 y=-5 time=50]
+[move id=0 y=5 time=50]
+[move id=0 y=-5 time=50]
+[se ref="047"]
+[se ref="159"]
 [cn]
-エカテリーナ要塞は守りの薄い小さな要塞だった。
-壁の高さはマジノラインやレーニングラッド要塞と比べると半分にも満たず、
-敵は城壁の上までやすやすと登ってきていた。
-#ヴェロニカの部下
-西門が破られました！！
-敵がなだれ込んできます！！
-#ニア
-キャハハハハハッ！！
-ライザから援軍もらったもんね！
-こんな小さい砦、力押しでもらくしょーだよ！
-#ヴェロニカ
-ニア！！
+連日敗戦を重ね、民兵で構成されたエリたちの軍勢は支離滅裂状態となっていた。[p]
+[se ref="156"]
+[se ref="047"]
+毎日数百人の逃亡者が出ており、士気も兵数も圧倒的に足りない状況だった。[p]
+[se ref="159"]
+[se ref="047"]
+#シードル
+[voice ref="080078"]
+エリ様、ここはいっそレーニングラッド要塞まで後退して、そこで再起を図るのがよろしいかと。[p]
+[scale id=0 sx=-1 time=100]
+[se ref="047"]
+#エリ
+[voice ref="080079"]
+私に逃げろっていうの！？[n]
+そんなのいやよ！　絶対ないわ！！[p]
+#シードル
+[voice ref="080080"]
+引くも作戦のうちです。[n]
+さあ！　お引き退きを！！[p]
+[se ref="047"]
+[se ref="156"]
+[move id=0 y=-2 time=50]
+[move id=0 y=2 time=50]
+[move id=0 y=-2 time=50]
+[move id=0 y=2 time=50]
+#エリ
+[voice ref="080081"]
+きーーー！！　この馬鹿ッ！！[p]
+[moveto id=0 x=60 time=100]
+[se ref="044"]
+[move id=1 x=10 time=50]
+[move id=1 y=-10 time=50]
+[se ref="047"]
+#シードル
+[voice ref="080082"]
+いたいっ！！[p]
+[se ref="156"]
+[se ref="047"]
+[scale id=0 sx=-1 time=100]
+#エリ
+[voice ref="080083"]
+全軍退却！！　シードルはしんがりを務めなさい！！[p]
+[scale id=0 sx=-1 time=100]
+[move id=0 x=70 time=300]
+[move id=1 y=2 x=2 time=500]
+[move id=1 y=2 x=-4 time=500]
+[move id=1 y=2 x=4 time=500]
+[move id=1 y=2 x=-4 time=500]
+[move id=1 y=2 x=2 time=500]
+[se ref="047"]
+[se ref="156"]
+#シードル
+[voice ref="080084"]
+いてて……[n]
+はい、承知しました……。[p]
 
 
-
-080071
-080072
-
-
-
-080073
-080074
-
-
-080075
-
-080076
-
-
-#ニア
-ああっ！　ヴェロニカだ！！
-キヒヒッ！　ねえねえ、私たちに裏切られて今どんな気分？
-悔しい？　悔しい？
-#ヴェロニカ
-いいえ、この結果は私の未熟さが招いたもの……。
-ですから、私はこの戦いに勝って、あなたたちを反省させる義務があります。
-#ニア
-えー、なにそれ。
-ちょーつまんないんですけどぉー。
-もういいや、キヒヒッ……ヴェロニカぁ。
-死んじゃえええーーー！！
-
-
-
-
-
-
-
-
-
-
-080077
-
-
-
-
-
+[hide_message]
+[filter name="fade" time="500"]
+[clearbg]
+[clearcg id=0]
+[clearcg id=1]
+[wait time=500]
+[filter name="clear" time="500"]
+[stopbgm]
 
 ;自動戦闘
-;ニア勝利
-;91エカテリーナ要塞占領
+;ライザ勝利
+;86ペトロパブロフスク街道東占領
+[unit_heal unit=25]
+[unit_heal unit=26]
+[unit_heal unit=30]
+[battle_unit_in p0=26 p1=25 e0=30]
+[battle_time time=5]
+[battle_area id=86]
+[battle_auto][battle_nonpre]
+
+[sys_memset index=811 value="1"]

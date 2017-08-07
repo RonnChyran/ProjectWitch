@@ -1,43 +1,70 @@
-;s0840
-;script:
-;direction:
-;timing:
+﻿;script 840
+;directer:yuichi
+;script:nikai
+;timing:s0839後 3回世界樹と戦う
+[field_area_hilight id=104]
+[filter name="fade" time=500]
 
-■場面42
-;場面41後　3回世界樹と戦う
-ヴェロニカ宮
+[loadcg id=0 ref="raisa"]
+[loadcg id=1 ref="nia"]
+[bgm ref="015_raizania"]
+[drawbg ref="1000m"]
+
+[drawcg id=0 pos=4 dir="right"]
+
+[wait time=500]
+[filter name="clear" time=500]
+
+[show_message]
+ヴェロニカ宮[p]
+[se ref="046"]
+[drawcg id=1 pos=2 dir="right" mode="slidein" layer="front"]
 #ニア
-ライザー！　あのマルゲルってのから連絡があったよ！
-えっとね……ワルサワの町の南にある森が、山にさえぎられていなくて抜けられそうだって！
+[voice ref="080532"]
+ライザー！　[n]
+[scale id=0 sx=-1 time=200]
+あのマルゲルってのから連絡があったよ！[p]
+[voice ref="080533"]
+えっとね……[n]
+[move id=1 y=-2 time=50]
+[move id=1 y=2 time=50]
+[move id=1 y=-2 time=50]
+[move id=1 y=2 time=50]
+ワルサワの町の南にある森が、山にさえぎられていなくて抜けられそうだって！[p]
 #ライザ
-そうか！　よし、ワルサワの町に軍を集めるぞ！
-キヒヒヒッ！
-しっかり軍備を固めて、南の大地も占領だ！！
-あの大魔女ホーリーベルさえできなかった、世界統一を成し遂げるんだ。
-そうすりゃ俺様は、名実ともに大魔女さ！！
-
-
-
-080538
-
-080539
-080540
-
-
-080541
-
-
-
-
-
-080542
-
-
+[voice ref="080534"]
+そうか！　よし、ワルサワの町に軍を集めるぞ！[p]
+[voice ref="080535"]
+キヒヒヒッ！[n]
+しっかり軍備を固めて、南の大地も占領だ！！[p]
+[voice ref="080536"]
+あの大魔女ホーリーベルさえできなかった、世界統一を成し遂げるんだ。[p]
+[voice ref="080537"]
+そうすりゃ俺様は、名実ともに大魔女さ！！[p]
+[move id=1 y=5 time=50]
+[move id=1 y=-5 time=50]
+[move id=1 y=5 time=50]
+[move id=1 y=-5 time=50]
 #ニア
-あっ、ライザだけずるいよ！　私も大魔女！！
+[voice ref="080538"]
+あっ、ライザだけずるいよ！　私も大魔女！！[p]
 #ライザ
-あん？　大魔女って二人でなれるのか……？
-まあいいか！！
-さあいくぞー！！
+[voice ref="080539"]
+あん？　大魔女って二人でなれるのか……？[p]
+[voice ref="080540"]
+まあいいか！！[n]
+さあいくぞー！！[p]
 #ニア
-おおーー！！
+[voice ref="080541"]
+おおーー！！[p]
+[hide_message]
+[filter name="fade" time=500]
+[clearcg id=0]
+[clearcg id=1]
+[clearbg]
+[stopbgm]
+[wait time=500]
+[filter name="clear" time="500"]
+
+
+[sys_memset index=840 value="1"]

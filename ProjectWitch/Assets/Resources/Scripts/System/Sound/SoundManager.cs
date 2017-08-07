@@ -93,11 +93,22 @@ namespace ProjectWitch
                 source.cueName == name)
                 return;
 
+            //対象がVoiceのばあい、再生中のものを終了する
+            if (type == SoundType.Voice && IsPlaying(SoundType.Voice))
+                Stop(SoundType.Voice);
+
             source.cueSheet = mCueSheetList[type];
             source.cueName = name;
 
             source.Play();
 
+        }
+
+        //ポーズ(BGM限定) true:ポーズをかける false:ポーズ解除
+        public void Pause(bool pause)
+        {
+            var source = GetSource(SoundType.BGM);
+            source.Pause(pause);
         }
 
         //再生停止

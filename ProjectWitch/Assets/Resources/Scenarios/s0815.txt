@@ -1,15 +1,18 @@
-;s0815
-;script:
-;direction:
-;timing:
+﻿;script 815
+;directer:yuichi
+;script:nikai
+;timing:s0814後
+[field_area_hilight id=89]
+[wait time=500]
 
-■場面16
-;場面15後
-モスクの森北。
-#ヴェロニカ
-今よッ！　突撃ー！！
-#ニア
-まっ、またあ！？
 ;自動戦闘
-;ヴェロニカ勝利
-;モスクの森北　キープ
+;ニア勝利（撤退する）
+;モスクの森北　占領
+[unit_heal unit=24]
+[unit_heal unit=32]
+[battle_unit_in p0=24 e0=32]
+[battle_time time=5]
+[battle_area id=89]
+[battle_auto][battle_nonpre]
+
+[sys_memset index=815 value="1"]

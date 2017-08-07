@@ -1,0 +1,22 @@
+;s0848A
+;マジノライン完全占領までの進軍停止スクリプト
+
+[setskin ref="skin1"]
+
+[loadfg id=0 ref="alice"]
+[loadfg id=1 ref="kuro"]
+
+[show_message]
+[drawfg id=1]
+#クロ
+アリス様。マジノラインを完全に占領せず先に進めば、[n]
+背後から付かれることになり、大変危険です。[p]
+[drawfg id=0]
+#アリス
+うーん、それもそうか。[p]
+ちっ、しゃくだが侵攻は中止だ。[p]
+
+[clearfg]
+[hide_message]
+
+[battle_disable]

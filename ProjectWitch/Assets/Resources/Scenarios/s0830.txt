@@ -1,11 +1,557 @@
-;s0830
-;script:
-;direction:
-;timing:
+﻿;script 830
+;directer:yuichi
+;script:nikai
+;timing:s0829後
+;回想続き
 
-;場面31
-;場面30後
-;ベルリ城城下
-;自動戦闘
-;ライザ軍勝利
-;ベルリ城城下占領
+[filter name="fade" time=500]
+
+
+[loadcg id=0 ref="alice_mini"]
+[loadcg id=1 ref="raisa_mini"]
+[loadcg id=2 ref="nia_mini"]
+[loadcg id=3 ref="veronica_mini"]
+[loadcg id=4 ref="eli"]
+[loadcg id=5 ref="alice"]
+
+[bgm ref="022_event7"]
+[drawbg ref="1044m"]
+
+[drawcg id=1 posx=70]
+[drawcg id=2 posx=70]
+
+[wait time=500]
+[filter name="clear" time=500]
+
+;少し先を歩いてニアに合図する
+[move id=1 x=-10 time=200]
+[wait time=100]
+[move id=1 x=-10 time=200]
+[wait time=100]
+[move id=1 x=-10 time=200]
+[wait time=100]
+[scale id=1 sx=-1 time=100]
+[move id=1 y=5 time=50]
+[move id=1 y=-5 time=50]
+
+;恐る恐る覗き込むニアを急かして連れていく
+[move id=2 x=-20 time=400]
+[rotate id=2 angle=10 time=300]
+[move id=1 x=5 time=50]
+[move id=1 x=-5 time=50]
+[scale id=1 sx=-1 time=200]
+[rotate id=2 angle=-10 time=200]
+[move id=1 x=-10 time=200]
+[move id=2 x=-10 time=200]
+[move id=1 x=-10 time=200]
+[move id=2 x=-10 time=200]
+[move id=1 x=-10 time=200]
+[move id=2 x=-10 time=200]
+[move id=1 x=-10 time=200]
+[move id=2 x=-10 time=200]
+
+[show_message]
+#サーカスの裏方
+[voice ref="080235"]
+いたぞっ！　
+[move id=1 y=-2 time=20]
+[move id=1 y=2 time=20]
+[move id=2 y=-2 time=20]
+[move id=2 y=2 time=20]
+追え！！[p]
+[scale id=1 sx=-1 time=100]
+[scale id=2 sx=-1 time=100]
+#ライザ
+[voice ref="080236"]
+げっ！　見つかった！！[p]
+[scale id=2 sx=-1 time=200]
+[move id=2 y=5 time=50]
+[move id=2 y=-5 time=50]
+[move id=2 y=5 time=50]
+[move id=2 y=-5 time=50]
+#ニア
+[voice ref="080237"]
+だから言ったじゃんーーー！！[p]
+[cn]
+ライザとニアはサーカスの関係者に見つかり、追われていた。[p]
+[scale id=2 sx=-1 time=100]
+#サーカスの裏方
+[voice ref="080238"]
+こらガキ！　おとなしく観念しろ！[p]
+#ライザ
+[voice ref="080239"]
+ちっ……。もう使ってもいいよな！[n]
+ファイヤーボール！！[p]
+#サーカスの裏方
+[voice ref="080240"]
+なっ、なん……ぎゃあああーー！！[p]
+[cn]
+ライザの放った火球は、追っ手の一人に命中した。[p]
+#ライザ
+[voice ref="080241"]
+よし！　今のうちに逃げるぞ！！[p]
+[scale id=1 sx=-1 time=100]
+[move id=1 x=-70 time=500]
+#ニア
+[voice ref="080242"]
+う、うん！！[p]
+;逃げようとして途中で振り返る
+[scale id=2 sx=-1 time=200]
+[move id=2 x=-20 time=300]
+[scale id=2 sx=-1 time=200]
+[wait time=500]
+[scale id=2 sx=-1 time=200]
+[move id=2 x=-70 time=1500]
+
+;場面転換
+[filter name="fade" time=500]
+[clearcg id=1]
+[clearcg id=2]
+[drawcg id=0 dir="right" pos=2]
+[drawcg id=3 pos=5]
+[drawcg id=4 pos=4 layer="front"]
+[filter name="clear" time=500]
+[wait time=200]
+[scale id=3 sx=-1 time=100]
+[changecg id=3 state=1]
+#ヴェロニカ
+[voice ref="080243"]
+……！[p]
+[scale id=4 sx=-1 time=300]
+#エリ
+[voice ref="080244"]
+ヴェロニカ様？　どうかしましたか？[p]
+[scale id=3 sx=-1 time=300]
+#ヴェロニカ
+[voice ref="080245"]
+いや……叫び声が聞こえたと思ったんだが、気のせいか。[p]
+[changecg id=3 state=0]
+#エリ
+[voice ref="080246"]
+お客さんの歓声ですよ、きっと。[p]
+#ヴェロニカ
+[voice ref="080247"]
+まあそうだよな……。[n]
+[scale id=4 sx=-1 time=300]
+おいアリス！　どうだ、サーカスは楽しいだろう！[p]
+[move id=0 y=5 time=50]
+[move id=0 y=-5 time=50]
+#アリス
+[voice ref="080248"]
+うんっ！　楽しい！[p]
+#エリ
+[voice ref="080249"]
+すっかり元気になりましたね。[p]
+#ヴェロニカ
+[voice ref="080250"]
+キヒヒッ！[n]
+当然だ、こんなに面白いもん、なかなか見れないんだぞ。[p]
+[cn]
+サーカスはいよいよ佳境に差し掛かっていた。[p]
+二つの塔の上のそれぞれに、男と女の役者が立っていた。[p]
+空中ブランコだ。[p]
+#アリス
+[voice ref="080251"]
+わっ……
+[move id=0 y=2 time=10]
+[move id=0 y=-2 time=10]
+[wait time=100]
+わっ、
+[move id=0 y=2 time=10]
+[move id=0 y=-2 time=10]
+[wait time=100]
+おち、おちちゃう。[p]
+[cn]
+演者は空中から伸びたポールをつかんで飛び出した。[p]
+そして、手を放したかと思うと、相方が離したポールに捕まり、反対側の塔に着地する。[p]
+アリスはドキドキしながらその光景を見ていた。[p]
+#ヴェロニカ
+[voice ref="080252"]
+ん？[n]
+……あいつはなんだ。[p]
+[cn]
+ヴェロニカは右の塔の上で、何か裏方が騒いでいるのを見つけた。[p]
+
+;場面転換
+[filter name="fade" time=0]
+[clearcg id=0]
+[clearcg id=3]
+[clearcg id=4]
+[drawcg id=1 pos=4 dir="right"]
+[drawcg id=2 pos=3]
+[filter name="clear" time=0]
+
+[move id=2 y=2 time=50]
+[move id=2 y=-2 time=50]
+[move id=2 y=2 time=50]
+[move id=2 y=-2 time=50]
+#ライザ
+[voice ref="080253"]
+だーー！！　しつこい！！[n]
+ファイヤーボール！！[p]
+[se ref="132"]
+[move id=2 y=2 time=50]
+[move id=2 y=-2 time=50]
+#サーカスの裏方
+[voice ref="080254"]
+ぎゃああああーー！！！[p]
+[move id=2 y=2 time=50]
+[move id=2 y=-2 time=50]
+#ヴェロニカ
+[voice ref="080255"]
+ッ！！　なんだあいつら！！[p]
+[cn]
+右の上に現れたのは、裏方に追われていたライザとニアだった。[p]
+[move id=2 y=2 time=50]
+[move id=2 y=-2 time=50]
+[move id=2 y=2 time=50]
+[move id=2 y=-2 time=50]
+#ニア
+[voice ref="080256"]
+ライザぁ、ここ高くて怖いよぉーー！！[p]
+[scale id=1 sx=-1 time=100]
+#ライザ
+[voice ref="080257"]
+我慢しやがれ！[n]
+[wait time=200]
+[scale id=1 sx=-1 time=200]
+畜生しつこい奴らめ……。[p]
+;引きずる
+[scale id=1 sx=-1 time=100]
+[move id=1 x=-30 time=300]
+[move id=2 x=-10 time=100]
+[move id=1 x=-10 time=100]
+[move id=2 x=-10 time=100]
+[move id=1 x=-10 time=100]
+[move id=2 x=-10 time=100]
+[move id=1 x=-10 time=100]
+[move id=2 x=-10 time=100]
+[move id=1 x=-10 time=100]
+[move id=2 x=-10 time=100]
+[move id=1 x=-10 time=100]
+
+;場面転換
+[filter name="fade" time=0]
+[clearcg id=1]
+[clearcg id=2]
+[drawcg id=0 pos=1 dir="right"]
+[drawcg id=3 pos=5 state=1]
+[drawcg id=4 pos=4 layer="front"]
+[filter name="clear" time=0]
+[cn]
+やがて観客も異常に気付き始め、ついにショーは中断してしまった。[p]
+ライザたちは塔の端に追い詰められ、今にも落ちそうになっている。[p]
+#アリス
+[voice ref="080258"]
+えっ……、あの、えっ？[n]
+終わっちゃったの？[p]
+#ヴェロニカ
+[voice ref="080259"]
+…………。[p]
+[cn]
+アリスは突然のことに困惑していた。[p]
+#ヴェロニカ
+[voice ref="080260"]
+エリ、アリスを頼んだぜ。[p]
+[scale id=4 sx=-1 time=100]
+[move id=4 y=5 time=50]
+[move id=4 y=-5 time=50]
+#エリ
+[voice ref="080261"]
+えっ、はっ、はい！[n]
+[scale id=3 sx=-1 time=200]
+[move id=3 x=50 time=500]
+[move id=4 x=5 time=50]
+あの、ヴェロニカ様！？[p]
+[clearcg id=3]
+[cn]
+ヴェロニカはテントの隅にあった掃除用のほうきを手に取った。[p]
+そして勢いよく跳躍するとほうきの上に飛び乗り、そのまま塔の上へ直行した。[p]
+#アリス
+[voice ref="080262"]
+えっ……、空、飛んでる。[p]
+[scale id=4 sx=-1 time=300]
+[move id=4 x=-30 time=600]
+#エリ
+[voice ref="080263"]
+ヴェロニカ様は魔女なのよ。[p]
+[voice ref="080264"]
+花の魔女ヴェロニカ様って言ったら結構有名なんだけど、
+アリスちゃん、知らない？[p]
+#アリス
+[voice ref="080265"]
+うん……しらなかった。[p]
+[scale id=4 sx=-1 time=400]
+#エリ
+[voice ref="080266"]
+なら見ておきなさい。[n]
+ヴェロニカ様は、とってもかっこいいんだから。[p]
+[cn]
+騒動に続いて空を飛ぶ魔女が出現したことで、観客はより騒がしくなった。[p]
+もはやショーの一環なんじゃないかと思い、口笛を吹くものまで出始める始末だ。[p]
+;場面展開
+[filter name="fade" time=0]
+[clearcg id=0]
+[clearcg id=4]
+[drawcg id=1 pos=3 dir="right"]
+[drawcg id=2 pos=2 dir="right"]
+[filter name="clear" time=0]
+
+#ライザ
+[voice ref="080267"]
+なっ、なんだぁ一体……。[p]
+#ニア
+[voice ref="080268"]
+ライザっ！　危ない！！[p]
+[move id=2 x=20 time=200]
+[move id=1 x=-25 time=250]
+[rotate id=1 angle=10 time=100]
+
+#ライザ
+[voice ref="080269"]
+えっ……！[p]
+[cn]
+ライザが目を離した瞬間、サーカスの団員の手がライザに伸びた。[p]
+ニアはライザをかばい、彼女を後ろへ突き飛ばした。[n]
+しかし、ライザの後ろに床はなかった。[p]
+[filter name="color" time=500 color="FFFFFF"]
+[clearcg id=1]
+[clearcg id=2]
+[drawbg ref="Event/709"]
+[filter name="clear" time=500]
+
+空中ブランコの着地点に立っていたため、手すりすらなく、[n]
+ライザは大きく態勢を崩し、空中に投げ出された。[p]
+#ライザ
+[voice ref="080270"]
+うわっ……わあああーーー！！！[p]
+#ニア
+[voice ref="080271"]
+わっ、ライザぁ！！[p]
+#ライザ
+[voice ref="080272"]
+この……ばかやろおおおおーーー！！！！[p]
+[cn]
+空中に投げ出されたライザは、真っ逆さまに下へと落ちていった。[p]
+ネットなどの事故対策はなかった。[n]
+待ち受けるのは固い床である。[p]
+#ライザ
+[voice ref="080273"]
+ち、ちくしょおおおーーー！！[p]
+[move id=1 y=-20 time=200]
+[cn]
+今まさにライザの体は地面にたたきつけられようとしていた。[p]
+その瞬間だった。[p]
+[filter name="color" time=500 color="FFFFFF"]
+#ヴェロニカ
+[voice ref="080274"]
+…………っ！[p]
+[se ref="151"]
+[cn]
+ヴェロニカがすさまじい速さで飛んできてライザをキャッチしたのだ。[p]
+;[se 大歓声]
+あと１秒飛び出すのが遅かったら、[n]
+ライザはどうなっていたかわからなかった。[p]
+そのあまりの離れ業に、会場は大歓声で包まれた。[p]
+;場面転換
+[move id=1 y=20 time=0]
+[rotate id=1 angle=-10 time=0]
+[drawbg ref="1044m"]
+[filter name="clear" time=500]
+
+[drawcg id=1 pos=4]
+[drawcg id=3 pos=2 dir="right" state=1]
+[drawcg id=2 pos=5]
+
+;ライザを放り捨てる
+ヴェロニカは塔の上まで上がり、ライザを放り投げた[p]
+#ヴェロニカ
+[voice ref="080275"]
+…………。[p]
+#ライザ
+[voice ref="080276"]
+へへへ……魔女様、ありがとう……。[p]
+#ニア
+[voice ref="080277"]
+あっ、ありがとーございます。[p]
+#ヴェロニカ
+[voice ref="080278"]
+ちっ……！[p]
+[move id=3 x=5 time=50]
+[rotate id=3 angle=-5 time=50]
+[se ref="151"]
+[move id=1 x=5 time=50]
+[rotate id=3 angle=5 time=50]
+[move id=2 x=5 y=5 time=50]
+[move id=2 y=-5 time=50]
+[cn]
+ボカッ！！[p]
+#ライザ
+[voice ref="080279"]
+ギャァッ！！[p]
+[cn]
+ヴェロニカはライザを思いっきり殴りつけた。[p]
+[move id=2 y=5 time=50]
+[move id=2 y=-5 time=50]
+[move id=2 y=5 time=50]
+[move id=2 y=-5 time=50]
+#ニア
+[voice ref="080280"]
+なっ、なにするの！！[p]
+#ヴェロニカ
+[voice ref="080281"]
+だまれッ！！[n]
+せっかくのショーを台無しにしやがって、このクソガキども！！[p]
+[voice ref="080282"]
+ちっ……面白いもんを見せてやるって言ったのに、[n]
+てめえらのせいで台無しじゃねえか！！[p]
+#エリ
+[voice ref="080283"]
+ヴェロニカ様……。[p]
+#アリス
+[voice ref="080284"]
+…………。[p]
+#ヴェロニカ
+[voice ref="080285"]
+気分が悪いぜ……。[n]
+おい、ショーを続けろ。 邪魔したな……。[p]
+[scale id=3 sx=-1 time=200]
+[move id=3 x=-60 time=1000]
+[cn]
+ヴェロニカはライザとニアを一瞥すると、[n]
+さっさとほうきに乗ってアリスたちのもとへもどって行ってしまった。[p]
+;場面転換
+[filter name="fade" time=500]
+[clearcg id=3]
+[clearcg id=1]
+[clearcg id=2]
+[drawcg id=0 pos=2 dir="right"]
+[drawcg id=4 pos=3 dir="right"]
+[drawcg id=3 posx=70 state=1]
+[filter name="clear" time=500]
+[move id=3 x=-30 time=600]
+
+#アリス
+[voice ref="080286"]
+あ……あの。[p]
+[move id=0 x=5 time=100]
+#ヴェロニカ
+[voice ref="080287"]
+……悪かったな。 ショーが台無しだ。[p]
+#エリ
+[voice ref="080288"]
+ヴェロニカ様のせいじゃないですよ！[n]
+あの子供たちが……。[p]
+#アリス
+[voice ref="080289"]
+あっ、あの！[p]
+[move id=0 y=5 time=50]
+[move id=0 y=-5 time=50]
+[scale id=4 sx=-1 time=100]
+[cn]
+エリの言葉をさえぎって、アリスが口を開いた。[p]
+アリスがあまりにも大きな声を出したので、[n]
+ヴェロニカは少し驚いてアリスの方を見た。[p]
+#アリス
+[voice ref="080290"]
+ま、ヴェロニカ様の弟子にしてください！！[p]
+
+[move id=3 y=5 time=50]
+[move id=3 y=-5 time=50]
+#ヴェロニカ
+[voice ref="080291"]
+で、弟子ィ！？[p]
+[voice ref="080292"]
+おっ、お前、何言ってんだよ！ お前人間だろ！？[n]
+魔女が人間の師匠になれるわけねえだろ！[p]
+#アリス
+[voice ref="080293"]
+わ、私も魔法使えるもん……。[p]
+#ヴェロニカ
+[voice ref="080294"]
+うそをつくな。[n]
+魔女だって嘘をついても、いいことなんかないぞ。[p]
+#アリス
+[voice ref="080295"]
+ほ、ほんとだもん！[n]
+だから……私に魔法教えて！！[p]
+[move id=3 x=-5 time=50]
+[move id=0 x=-5 time=50]
+#ヴェロニカ
+[voice ref="080296"]
+いいかげんにしろ！！[n]
+私は魔女だ！！[p]
+[voice ref="080297"]
+人間の弟子なんかいらないし、魔法だって教えねえ！！[p]
+[voice ref="080298"]
+ちっ……
+[scale id=3 sx=-1 time=300]
+もういい、ちょこっとかわいい奴だ[n]
+なんて思って連れてきたのが間違いだったぜ。[p]
+[voice ref="080299"]
+エリ、行くぞ！[p]
+[move id=3 x=50 time=1000]
+[scale id=4 sx=-1 time=100]
+[move id=4 x=30 time=400]
+#エリ
+[voice ref="080300"]
+ヴェ、ヴェロニカ様！！[n]
+[wait time=200]
+[scale id=4 sx=-1 time=300]
+……あんたも、余計なこと言ったわね。[p]
+[scale id=4 sx=-1 time=300]
+[move id=4 x=50 time=1000]
+[clearcg id=4]
+#アリス
+[voice ref="080301"]
+あ……。[n]
+…………。[p]
+[moveto id=0 x=50 time=700]
+[cn]
+アリスはまた一人になってしまった。[p]
+[filter name="fade" time=500]
+[stopbgm]
+[clearcg id=3]
+[clearcg id=4]
+[clearcg id=0]
+
+[drawbg ref="1002m"]
+[drawcg id=5 pos=3 state=4]
+[filter name="clear" time=500]
+アリスの部屋。[p]
+アリスがソファでうたたねをしていた。[p]
+#アリス
+[voice ref="080302"]
+……うん。[n]
+ふああ……。[p]
+[changecg id=5 state=0]
+[voice ref="080303"]
+……そうか、寝ちまってたのか。[p]
+[voice ref="080304"]
+華の魔女ヴェロニカ……。[n]
+いまどこにいるんだろうな。[p]
+[voice ref="080305"]
+そういや、あの北の大地の魔女もヴェロニカとか言ったっけ。[p]
+[changecg id=5 state=1]
+[voice ref="080306"]
+クフフッ[n]
+まあ、あのヴェロニカとはにてもにつかねえけどな……。[p]
+[changecg id=5 state=0]
+…………。[p]
+[voice ref="080307"]
+世界を回ってれば、またいつか会えるよな……[n]
+ヴェロニカ。[p]
+[cn]
+昼下がり。[p]
+戦争の日々にアリスは少し疲れていたのだろう。[p]
+ぼそりとつぶやき、そのまま再び眠りについた。[p]
+[hide_message]
+[filter name="fade" time=500]
+[clearcg id=5]
+[clearbg]
+[stopbgm]
+[wait time=500]
+[filter name="clear" time="500"]
+
+
+[sys_memset index=830 value="1"]

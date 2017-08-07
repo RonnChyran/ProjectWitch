@@ -22,10 +22,12 @@ namespace ProjectWitch
     }
     
     //セーブ用のメタデータ
-    public class ISaveMetaData
+    public class SaveMetaData
     {
-        public byte Major { get; set; }
-        public byte Minor { get; set; }
+        private byte _major = 0;
+        private byte _minor = 0;
+        public byte Major { get { return _major; } set { _major = value; } }
+        public byte Minor { get { return _minor; } set { _minor = value; } }
 
         public virtual int GetSize()
         {
@@ -51,7 +53,7 @@ namespace ProjectWitch
             if (obj == null || GetType() != obj.GetType())
                 return false;
 
-            ISaveMetaData v = (ISaveMetaData)obj;
+            SaveMetaData v = (SaveMetaData)obj;
             return (Major == v.Major) && (Minor == v.Minor);
         }
 
@@ -70,7 +72,7 @@ namespace ProjectWitch
     static class FileIO
     {
         //任意のオブジェクトをxmlにシリアライズしてファイルに保存
-        public static void SaveBinary(string filepath, ISaveMetaData meta, ISaveableData data)
+        public static void SaveBinary(string filepath, SaveMetaData meta, ISaveableData data)
         {
             using (FileStream fs = new FileStream(filepath, FileMode.Create))
             {
@@ -95,25 +97,38 @@ namespace ProjectWitch
         }
 
         //任意のオブジェクトをファイルのxmlからデシリアライズする
-        public static void LoadBinary<T>(string filepath, ISaveMetaData meta, T data)
-            where T : ISaveableData
+        public static bool LoadBinary<T1,T2>(string filepath, ref T1 meta, T2 data)
+            where T1 : SaveMetaData, new()
+            where T2 : ISaveableData 
         {
             using (FileStream fs = new FileStream(filepath, FileMode.Open))
             {
+                var metaData = new T1();
+
                 //メタデータの読み出し
-                byte[] buffer = new byte[meta.GetSize()];
+                byte[] buffer = new byte[metaData.GetSize()];
                 fs.Read(buffer, 0, buffer.Length);
-                meta.SetFromBytes(buffer);
+                metaData.SetFromBytes(buffer);
+
+                //バージョンチェック
+                if (metaData.Major != meta.Major)
+                {
+                    Debug.LogError("セーブファイルのバージョンが違います");
+                    return false;
+                }
+                meta = metaData;
 
                 //データの読み出し
                 buffer = new byte[fs.Length-meta.GetSize()];
                 fs.Read(buffer, 0, buffer.Length);
                 data.SetFromBytes(0, buffer);
+
+                return true;
             }
         }
 
         //任意のロードファイルのメタ情報を読み出す
-        public static void LoadMetaData(string filepath, ISaveMetaData meta)
+        public static void LoadMetaData(string filepath, SaveMetaData meta)
         {
             using (FileStream fs = new FileStream(filepath, FileMode.Open))
             {

@@ -55,8 +55,8 @@ namespace ProjectWitch.Menu
 
             //上昇するレベルを計算
             int upLv = unit.Experience / UnitDataFormat.REQUIPRED_EXPERIENCE_TO_LVUP;
-            if(unit.MaxLevel != -1)
-                upLv = Math.Min(unit.MaxLevel, upLv);
+            if (unit.MaxLevel != -1)
+                upLv = Math.Min(unit.MaxLevel - unit.Level, upLv);
 
             //新たなステータスを計算
             mNewUnit.Level += upLv;
@@ -88,8 +88,8 @@ namespace ProjectWitch.Menu
             //unit = mNewUnit;
             game.GameData.Unit[UnitID] = mNewUnit;
 
-            //HP・兵数回復
-            game.GameData.Unit[UnitID].Rebirth();
+            //HP回復
+            game.GameData.Unit[UnitID].HP = game.GameData.Unit[UnitID].MaxHP;
 
             StatusWindow.Reset();
 

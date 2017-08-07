@@ -3,13 +3,13 @@
 //	summary	:コマンドを走らせて、操作を受け取るまでする部分
 //==========================================================
 
+using System.Collections;
+using System.Threading;
+
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 using ProjectWitch.Talk.Compiler;
-using ProjectWitch.Talk.Command;
-using ProjectWitch.Talk.WorkSpace;
 
 namespace ProjectWitch.Talk.WorkSpace
 {
@@ -68,34 +68,41 @@ namespace ProjectWitch.Talk.WorkSpace
 
         //スキップ禁止フラグ
         private bool mSkipIsEnable = true;
-        
-        //コマンドを読み込む
-        void Start (){
-			VirtualMachine vm = null;
 
-			string name = Game.GetInstance ().ScenarioIn.FileName;
+        //コマンドを読み込む
+        void Start() {
+            StartCoroutine(_Start());
+        }
+
+        private IEnumerator _Start()
+        { 
+            VirtualMachine vm = null;
+            
+            string name = Game.GetInstance().ScenarioIn.FileName;
             string path = name;
             if (!Game.GetInstance().ScenarioIn.IsTest)
                 path = mScenarioPath + name;
-			ScriptCompiler compiler = new ScriptCompiler();
-			vm = compiler.CompileScript (path);
 
-			if (vm == null) return;
+            //スクリプトをコンパイル
+            ScriptCompiler compiler = new ScriptCompiler();
+            yield return StartCoroutine(compiler.CompileScript(path, (result) => vm = result ));
 
-			this.SetCommandDelegaters (vm);
-			mTextWorkSpace.SetCommandDelegaters (vm);
-			mGraphicsWorkSpace.SetCommandDelegaters (vm);
-			mSoundsWorkSpace.SetCommandDelegaters (vm);
-			mGameWorkSpace.SetCommandDelegaters (vm);
+            if (vm == null) yield break;
+
+            this.SetCommandDelegaters(vm);
+            mTextWorkSpace.SetCommandDelegaters(vm);
+            mGraphicsWorkSpace.SetCommandDelegaters(vm);
+            mSoundsWorkSpace.SetCommandDelegaters(vm);
+            mGameWorkSpace.SetCommandDelegaters(vm);
             mFieldWorkSpace.SetCommandDelegaters(vm);
             mPreBattleWorkSpace.SetCommandDelegaters(vm);
             mMenuWorkSpace.SetCommandDelegaters(vm);
             mBattleWorkSpace.SetCommandDelegaters(vm);
 
             vm.AddNotification("scriptBegin", new NotifyMethod(mGameWorkSpace.ScriptBegin));
-			vm.AddNotification ("scriptEnd", new NotifyMethod(mGameWorkSpace.ScriptEnd));
-			mVirtualMachine = vm;
-		}
+            vm.AddNotification("scriptEnd", new NotifyMethod(mGameWorkSpace.ScriptEnd));
+            mVirtualMachine = vm;
+        }
 
 		// Update is called once per frame
 		void Update ()
@@ -172,8 +179,9 @@ namespace ProjectWitch.Talk.WorkSpace
 			}
 		}
 
-		//アップデータコマンドはここに入る
-		private UpdaterFormat mUpdater;
+
+        //アップデータコマンドはここに入る
+        private UpdaterFormat mUpdater;
 		public UpdaterFormat Updater{
 			get{ return mUpdater; }
 		}

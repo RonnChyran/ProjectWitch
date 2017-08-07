@@ -1,16 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using ProjectWitch.Sys;
 
-namespace ProjectWitch.Menu
+namespace ProjectWitch.Menu.System
 {
     public class HilightBoxLoadReciever : HilightBoxSaveReciever
     {
         // Update is called once per frame
         void Update()
         {
-            //
-            if (SelectedIndex >= 0)
+            if(SelectedIndex == -1)
+            {
+                mcText.text = "オートセーブファイルをロードします。\nよろしいですか？";
+                mcButton.interactable = true;
+            }
+            else if (SelectedIndex >= 0)
             {
                 mcText.text = SelectedIndex.ToString() + "番のファイルをロードします。\nよろしいですか？";
                 mcButton.interactable = true;

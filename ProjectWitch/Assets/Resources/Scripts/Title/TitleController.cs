@@ -23,9 +23,10 @@ namespace ProjectWitch
         // Update is called once per frame
         void Update()
         {
-            if(mLoadGame.activeSelf && Input.GetButtonDown("Cancel"))
+            if (Input.GetButtonDown("Cancel"))
             {
-                CloseLoadWindow();
+                if (mLoadGame.activeSelf) CloseLoadWindow();
+                if (mConfig.activeSelf) CloseConfigWindow();
             }
         }
 

@@ -1,18 +1,131 @@
-;s0816
-;script:
-;direction:
-;timing:
+﻿;script 816
+;directer:yuichi
+;script:nikai
+;timing:s0815後
 
-■場面17
-;場面16後
-モスクの森北。
+[field_area_hilight id=80]
+[wait time=500]
+
+[loadcg id=0 ref="eli"]
+[loadcg id=1 ref="seedle"]
+[loadcg id=2 ref="veronica"]
+[loadcg id=3 ref="raisa"]
+[loadcg id=4 ref="nia"]
+
+[filter name="fade" time=500]
+[bgm ref="014_velonica"]
+[drawbg ref="1030e"]
+[drawcg id=2 pos=4]
+[drawcg id=0 posx=-80 dir="right"]
+[filter name="clear" time=500]
+
+[show_message]
+レーニングラッド要塞。[p]
+ヴェロニカ陣営。[p]
+[moveto id=0 x=40 time=500]
+[drawcg id=1 pos=1 dir="right" mode="slidein" layer="back"]
+#エリ
+[voice ref="080103"]
+ああっ、ヴェロニカ様！[n]
+ご無事で何よりです。[p]
 #ヴェロニカ
-総員退避っ！！
+[voice ref="080104"]
+ええ、ご苦労様、エリ。[n]
+それにシードルも。[p]
+[move id=1 y=5 time=50]
+[move id=1 y=-5 time=50]
+#シードル
+[voice ref="080105"]
+は、はい！　恐縮です。[p]
+[scale id=0 sx=-1 time=100]
+[move id=0 x=-7 time=100]
+[se ref="040"]
+[move id=1 x=-2 time=50]
+[move id=0 x=5 time=50]
+[cn]
+げしっ！[p]
+#シードル
+[voice ref="080106"]
+いたあっ！！[n]
+なっ、何するんですかエリ様！！[p]
+[move id=0 y=5 time=50]
+[move id=0 y=-5 time=50]
+#エリ
+[voice ref="080107"]
+あんた、何顔赤くしてんのよ！！[n]
+ヴェロニカ様をそういう目で見てるんじゃないでしょうね！！[p]
+[voice ref="080108"]
+私の奴隷のくせに生意気なのよ！！[p]
+[move id=1 y=-10 time=300]
+#シードル
+[voice ref="080109"]
+そっ、そんな理不尽な……。[p]
+#ヴェロニカ
+[voice ref="080110"]
+まあまあ、エリ。[p]
+[scale id=0 sx=-1 time=100]
+[move id=1 y=10 time=200]
+[voice ref="080111"]
+ともかく二人とも無事でよかったわ。[n]
+さあ、ここからが正念場よ。[p]
+[voice ref="080112"]
+ここで相手の兵力を削って、一気に決戦に持ち込むわ[p]
+#エリ
+[move id=0 y=5 time=50]
+[move id=0 y=-5 time=50]
+[voice ref="080113"]
+はいっ！[p]
+#シードル
+[voice ref="080114"]
+承知しました！[p]
+[filter name="fade" time=500]
+[stopbgm]
+[clearcg id=0]
+[clearcg id=1]
+[clearcg id=2]
+[bgm ref="015"]
+[drawcg id=4 posx=50 dir="right"]
+[wait time=500]
+[filter name="clear" time=500]
+
+[cn]
+一方ライザ陣営。[p]
+[drawcg id=3 pos=2 dir="right" mode="slidein"]
+#ライザ
+[voice ref="080115"]
+なっ、なんだこれは！！[p]
+[move id=3 y=5 time=50]
+[move id=3 y=-5 time=50]
+[move id=4 y=-2 time=20]
+[move id=4 y=2 time=20]
+[voice ref="080116"]
+おいニア！[n]
+こんな疲れた兵じゃ使い物にならんぞ！！[p]
+[scale id=4 sx=-1 time=400]
+[move id=4 x=-10 time=400]
 #ニア
-……もうヤダ。もうヤダーーー！！
-なによ毎晩毎晩毎晩毎晩！！！！
-寝かせろよ！！
-この私を寝かせろーーー！！！！
-;自動戦闘
-;ニア勝利（撤退する）
-;モスクの森北　占領
+[voice ref="080117"]
+ご、ごめんなさい～！[n]
+だってヴェロニカのやつが卑怯でぇ……。[p]
+#ライザ
+[voice ref="080118"]
+卑怯だろうが何だろうが負けは負けだろうがッ！！[p]
+[voice ref="080119"]
+しかも私の援軍まで使い物にならなくしやがって……[p]
+[voice ref="080120"]
+アレの完成を急がないと……[n]
+先にやられちまうぞ。[p]
+[cn]
+レーニングラッド要塞の包囲が完了したのは、それから間もなくのことだった。[p]
+
+[hide_message]
+[filter name="fade" time="500"]
+[clearbg]
+[clearcg id=3]
+[clearcg id=4]
+[wait time=500]
+[filter name="clear" time="500"]
+[stopbgm]
+
+
+[sys_memset index=816 value="1"]

@@ -48,6 +48,27 @@ namespace ProjectWitch.Menu
             //チュートリアルの開始
             if(Game.GetInstance().MenuDataIn.TutorialMode)
                 StartTutorial();
+
+            //指定のページに飛ぶ
+            switch(Game.GetInstance().MenuDataIn.Top)
+            {
+                case MenuDataIn.TopMenu.Army:
+                    mTopMenu.OnClickArmy();
+                    break;
+                case MenuDataIn.TopMenu.Town:
+                    mTopMenu.OnClickTown();
+                    break;
+                case MenuDataIn.TopMenu.System:
+                    mTopMenu.OnClickSystem();
+                    break;
+                case MenuDataIn.TopMenu.Tips:
+                    mTopMenu.OnClickInfo();
+                    break;
+                default:
+                    mTopMenu.Show();
+                    break;
+            }
+            Game.GetInstance().MenuDataIn.Top = MenuDataIn.TopMenu.Default;
         }
 
         //メニューを閉じる

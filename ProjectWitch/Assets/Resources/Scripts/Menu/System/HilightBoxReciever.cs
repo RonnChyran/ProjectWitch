@@ -1,14 +1,13 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
+using ProjectWitch.Sys;
 
-namespace ProjectWitch.Menu
+namespace ProjectWitch.Menu.System
 {
     public class HilightBoxReciever : MonoBehaviour
     {
         //現在選択しているインデックス番号
-        private int mSelectedIndex = -1;
+        private int mSelectedIndex = -2;
         public int SelectedIndex { get { return mSelectedIndex; } set { mSelectedIndex = value; } }
 
         //インフォテキスト

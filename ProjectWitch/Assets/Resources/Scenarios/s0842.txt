@@ -1,12 +1,21 @@
-;s0842
-;script:
-;direction:
-;timing:
+﻿;script 842
+;directer:yuichi
+;script:nikai
+;timing:s0841後
 
-■場面44
-;場面43後
-世界樹。
-開通は突然だった……。
-おそらくあと半分くらいだろうとアリスが踏んでいた地点で、向こう側とつながったのだ。
-そして、向こう側から実に80体近いホムンクルスの軍団が飛び出してきた……。
-;戦闘
+[field_area_hilight id=77]
+[filter name="fade" time=500]
+[bgm ref="005_battle2"]
+[show_message]
+世界樹。[p]
+開通は突然だった……。[p]
+おそらくあと半分くらいだろうとアリスが踏んでいた地点で、向こう側とつながったのだ。[p]
+そして、向こう側から実に80体近いホムンクルスの軍団が飛び出してきた……。[p]
+
+[hide_message]
+[filter name="clear" time=500]
+[stopbgm]
+
+[change_area_owner area=77 owner=8]
+
+[sys_memset index=842 value="1"]

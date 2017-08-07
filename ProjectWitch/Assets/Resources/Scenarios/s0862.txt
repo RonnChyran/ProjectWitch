@@ -1,0 +1,8 @@
+﻿;script 862
+;directer:yuichi
+;script:nikai
+;timing:s0862後 戦闘勝利時
+[field_area_hilight id=104]
+[filter name="fade" time=500]
+
+[call_ending index=2]

@@ -21,11 +21,13 @@ namespace ProjectWitch.Talk.Compiler{
 			List<PatternFormat> patternList = new List<PatternFormat> ();
 			patternList.Add (new CreateSetBattleUnitCommand ());
 			patternList.Add (new CreateSetBattleAreaCommand ());
+            patternList.Add(new CreateSetBattleTimeCommand());
 			patternList.Add (new CreateSetBattleNonPreCommand ());
 			patternList.Add (new CreateSetAutoBattleCommand ());
             patternList.Add(new CreateBattleDisableCommand());
             patternList.Add(new CreateBattleBGMCommand());
 			patternList.Add (new CreateCallEndingCommand ());
+            patternList.Add(new CreateGameClearCommand());
 
 			patternList.Add (new CreateIfAliveCommand ());
 			patternList.Add (new CreateIfDeathCommand ());
@@ -61,40 +63,39 @@ namespace ProjectWitch.Talk.Compiler{
 			if (arguments.ContainName ("p0")) {
 				commandList.Add(arguments.Get ("p0"));
 			} else {
-				CompilerLog.Log (line, index, "p0引数が不足しています。");
-				return null;
+                commandList.Add(new SetArgumentCommand("-1"));
 			}
 			if (arguments.ContainName ("p1")) {
 				commandList.Add(arguments.Get ("p1"));
-			} else {
-				CompilerLog.Log (line, index, "p1引数が不足しています。");
-				return null;
-			}
+			} else
+            {
+                commandList.Add(new SetArgumentCommand("-1"));
+            }
 			if (arguments.ContainName ("p2")) {
 				commandList.Add(arguments.Get ("p2"));
-			} else {
-				CompilerLog.Log (line, index, "p2引数が不足しています。");
-				return null;
-			}
+			} else
+            {
+                commandList.Add(new SetArgumentCommand("-1"));
+            }
 
 			if (arguments.ContainName ("e0")) {
 				commandList.Add(arguments.Get ("e0"));
-			} else {
-				CompilerLog.Log (line, index, "e0引数が不足しています。");
-				return null;
-			}
+			} else
+            {
+                commandList.Add(new SetArgumentCommand("-1"));
+            }
 			if (arguments.ContainName ("e1")) {
 				commandList.Add(arguments.Get ("e1"));
-			} else {
-				CompilerLog.Log (line, index, "e1引数が不足しています。");
-				return null;
-			}
+			} else
+            {
+                commandList.Add(new SetArgumentCommand("-1"));
+            }
 			if (arguments.ContainName ("e2")) {
 				commandList.Add(arguments.Get ("e2"));
-			} else {
-				CompilerLog.Log (line, index, "e2引数が不足しています。");
-				return null;
-			}
+			} else
+            {
+                commandList.Add(new SetArgumentCommand("-1"));
+            }
 
 			commandList.Add (new RunOrderCommand("SetBattleUnit"));
 
@@ -133,8 +134,40 @@ namespace ProjectWitch.Talk.Compiler{
 		}
 	}
 
-	//戦闘準備画面の非表示
-	public class CreateSetBattleNonPreCommand : Pattern_TagFormat
+    //戦闘のターン数を指定
+    public class CreateSetBattleTimeCommand : Pattern_TagFormat
+    {
+        protected override string TagName()
+        {
+            return "battle_time";
+        }
+
+        protected override CommandFormat[] CreateCommand(ArgumentDictionary arguments, int line, int index)
+        {
+            CommandList commandList = new CommandList();
+
+            if (arguments.ContainName("time"))
+            {
+                commandList.Add(arguments.Get("time"));
+            }
+            else
+            {
+                CompilerLog.Log(line, index, "time引数が不足しています。");
+                return null;
+            }
+            commandList.Add(new RunOrderCommand("SetBattleTime"));
+
+            if (arguments.Count > 0)
+            {
+                CompilerLog.Log(line, index, "無効な引数があります。");
+                return null;
+            }
+            return commandList.GetArray();
+        }
+    }
+
+    //戦闘準備画面の非表示
+    public class CreateSetBattleNonPreCommand : Pattern_TagFormat
 	{
 		protected override string TagName(){
 			return "battle_nonpre";
@@ -257,8 +290,32 @@ namespace ProjectWitch.Talk.Compiler{
 		}
 	}
 
-	//指定キャラの生存を確認
-	public class CreateIfAliveCommand : Pattern_TagFormat
+    //ゲームクリアフラグを立てる
+    public class CreateGameClearCommand : Pattern_TagFormat
+    {
+        protected override string TagName()
+        {
+            return "game_clear";
+        }
+
+        protected override CommandFormat[] CreateCommand(ArgumentDictionary arguments, int line, int index)
+        {
+            CommandList commandList = new CommandList();
+            
+            commandList.Add(new RunOrderCommand("GameClear"));
+
+            if (arguments.Count > 0)
+            {
+                CompilerLog.Log(line, index, "無効な引数があります。");
+                return null;
+            }
+            return commandList.GetArray();
+        }
+    }
+
+
+    //指定キャラの生存を確認
+    public class CreateIfAliveCommand : Pattern_TagFormat
 	{
 		protected override string TagName(){
 			return "if_alive";

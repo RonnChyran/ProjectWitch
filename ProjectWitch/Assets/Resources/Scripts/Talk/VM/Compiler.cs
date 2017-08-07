@@ -4,6 +4,7 @@
 //===================================
 
 using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO; //System.IO.FileInfo, System.IO.StreamReader, System.IO.StreamWriter
 using System; //Exception
@@ -72,7 +73,7 @@ namespace ProjectWitch.Talk.Compiler
 		}
 
 		//コンパイル
-		public VirtualMachine CompileScript(string path)
+		public IEnumerator CompileScript(string path, UnityEngine.Events.UnityAction<VirtualMachine> callback)
 		{
             //if (!File.Exists (path))
             //{
@@ -95,7 +96,8 @@ namespace ProjectWitch.Talk.Compiler
                 catch (FileNotFoundException)
                 {
                     CompilerLog.Log("(" + path + ")ファイルが存在しません");
-                    return null;
+                    callback(null);
+                    yield break;
                 }
             }
             else
@@ -104,11 +106,14 @@ namespace ProjectWitch.Talk.Compiler
                 if (!tasset)
                 {
                     CompilerLog.Log("(" + path + ")ファイルが存在しません");
-                    return null;
+                    callback(null);
+                    yield break;
                 }
                 var reader = new StringReader(tasset.text);
                 text = reader.ReadToEnd();
             }
+
+            yield return null;
 
 			//CRLF、CRをLFに変換
 			text = new Regex ("\r\n|\r").Replace (text, "\n");
@@ -117,22 +122,57 @@ namespace ProjectWitch.Talk.Compiler
 
 			//字句解析
 			WordWithName[] wordList = mWordAnalyzer.Analyze (text);
-			if (wordList == null) return null;
-			//タグ内の余分な空白を除去
-			WordWithName[] adjustedWordList = DeleteSpaceFromWordList (wordList);
-			if (adjustedWordList == null) return null;
-			//構文解析
-			CommandFormat[] commandArray = mStructureAnalyzer.Analyze (adjustedWordList);
-			if (commandArray == null) return null;
-			//一部不完全なコマンドを完成させる
-			CommandFormat[] adjustedCommandArray = LinkIfAndEndif (commandArray);
-			if (adjustedCommandArray == null) return null;
+            if (wordList == null)
+            {
+                callback(null);
+                yield break;
+            }
 
-			//仮想マシンにコマンドを登録
-			VirtualMachine vm = VirtualMachine.Create(adjustedCommandArray);
-			if (vm == null) return null;
+            yield return null;
 
-			return vm;
+            //タグ内の余分な空白を除去
+            WordWithName[] adjustedWordList = DeleteSpaceFromWordList (wordList);
+            if (adjustedWordList == null)
+            {
+
+                callback(null);
+                yield break;
+            }
+            
+            yield return null;
+
+            //構文解析
+            CommandFormat[] commandArray = mStructureAnalyzer.Analyze (adjustedWordList);
+			if (commandArray == null)
+            {
+                callback(null);
+                yield break;
+            }
+            
+            yield return null;
+
+            //一部不完全なコマンドを完成させる
+            CommandFormat[] adjustedCommandArray = LinkIfAndEndif (commandArray);
+			if (adjustedCommandArray == null)
+            {
+                callback(null);
+                yield break;
+            }
+            
+            yield return null;
+
+            //仮想マシンにコマンドを登録
+            VirtualMachine vm = VirtualMachine.Create(adjustedCommandArray);
+			if (vm == null)
+            {
+                callback(null);
+                yield break;
+            }
+            
+            yield return null;
+
+            callback(vm);
+            yield return null;
 		}
 
 		//タグ内の余分な空白を除去(ついでにタグの[]についてのエラーも検出する)

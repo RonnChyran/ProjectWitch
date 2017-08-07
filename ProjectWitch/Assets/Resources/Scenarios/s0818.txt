@@ -1,36 +1,22 @@
-;s0818
-;script:
-;direction:
-;timing:
+﻿;script 818
+;directer:yuichi
+;script:nikai
+;timing:s0817戦闘後
 
-;場面19
-;場面18後
-レーニングラッド要塞
-#ライザ
-サンダーボルトッ！！
-#ヴェロニカ軍兵士
-ぎゃああああーーー！！
+[field_area_hilight id=80]
+[wait time=500]
+[drawbg ref="black"]
+[bgm ref="016_event3"]
+[show_message]
 
-
-
-
-080123
-
-
-
-
+[cn]
+レーニングラッド要塞での初戦は、双方に多くの被害を出した。[p]
+特にヴェロニカ本隊が守る南側の壁はライザ本隊があたり、
+正規兵対正規兵の熾烈な争いとなり、この日の戦いで最も多くの被害を出した場所となった。[p]
+[hide_message]
+[clearbg]
+[stopbgm]
+[filter name="clear" time="500"]
 
 
-
-
-
-
-
-
-
-#ライザ
-おらーーー！！！
-死にてえ奴はかかってきやがれェーーー！！！！
-;自動戦闘
-;時間切れ
-;ヴェロニカキープ
+[sys_memset index=818 value="1"]

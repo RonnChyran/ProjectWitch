@@ -8,7 +8,7 @@ namespace ProjectWitch.PreBattle
     {
         //子プレハブ
         [SerializeField]
-        private Text mRace = null;
+        private Image mRace = null;
         [SerializeField]
         private Text mLv = null;
         [SerializeField]
@@ -28,11 +28,7 @@ namespace ProjectWitch.PreBattle
 
         [Space(1)]
         [SerializeField]
-        private Color mRaceColor_Magic = Color.white;
-        [SerializeField]
-        private Color mRaceColor_Physics = Color.white;
-        [SerializeField]
-        private Color mRaceColor_Balance = Color.white;
+        private Sprite[] mRaceSprites = new Sprite[(int)UnitDataFormat.UnitJob.Count];
 
         [Space(1)]
         [SerializeField]
@@ -143,29 +139,8 @@ namespace ProjectWitch.PreBattle
 
         private void SetRace(UnitDataFormat unit)
         {
-            string text = "";
-            Color color;
-
             //リーダーのステータスから種を判断
-            if (unit.LeaderPAtk != 0 &&
-                unit.LeaderMAtk != 0)
-            {
-                text = "万";
-                color = mRaceColor_Balance;
-            }
-            else if (unit.LeaderPAtk == 0)
-            {
-                text = "魔";
-                color = mRaceColor_Magic;
-            }
-            else
-            {
-                text = "物";
-                color = mRaceColor_Physics;
-            }
-
-            mRace.text = text;
-            mRace.color = color;
+            mRace.sprite = mRaceSprites[(int)unit.Job];
         }
 
         private void SetSoldierNum(UnitDataFormat unit)

@@ -87,7 +87,7 @@ namespace ProjectWitch.BattleTester
 			m_TeID.text = "ID: " + String.Format("{0:D3}", _value);
 			var area = m_SBT.Game.GameData.Area[_value];
 			m_IFName.text = area.Name;
-			m_INMana.ValueInt = area.MaxMana;
+			m_INMana.ValueInt = area.Mana;
 			m_INTime.ValueInt = area.Time;
 			m_INPA.ValueFloat = area.BattleFactor.PAtk;
 			m_INPD.ValueFloat = area.BattleFactor.PDef;
@@ -105,7 +105,7 @@ namespace ProjectWitch.BattleTester
 		}
 
 		public void ChangeName(string _str) { Area.Name = _str; }
-		public void ChangeMana(int _value) { Area.MaxMana = _value; }
+		public void ChangeMana(int _value) { Area.Mana = _value; }
 		public void ChangeTime(int _value) { Area.Time = _value; }
 
 		public void ChangePAtk(float _value) { Area.BattleFactor.PAtk = _value; }

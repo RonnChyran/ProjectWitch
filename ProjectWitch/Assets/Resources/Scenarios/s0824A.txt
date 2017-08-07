@@ -1,0 +1,34 @@
+;s0824A
+
+[field_area_hilight id=80]
+
+[loadcg id=0 ref="veronica"]
+
+[filter name="fade" time=500]
+[bgm ref="029_raizania2"]
+[drawbg ref="1030e"]
+[drawcg id=0 pos=3]
+[filter name="clear" time=500]
+
+[show_message]
+ホムンクルスの猛攻はすさまじかった。[n]
+たった２０体である。[p]
+たった２０体のホムンクルスに３００００の兵士が負けたのだ。[p]
+今までの攻防戦が嘘だったように、レーニングラッド砦はあっさり落ちた。[p]
+#ヴェロニカ
+[voice ref="080176"]
+…………そんなばかな。[p]
+[cn]
+ヴェロニカは東へ逃げながら次の戦略を考えていた。[p]
+しかし、どうあがいてもホムンクルスに勝つ方法は思い浮かばないのだった。[p]
+;レーニングラッド砦占領
+
+[hide_message]
+[filter name="fade" time="500"]
+[clearbg]
+[clearcg id=0]
+[wait time=500]
+[filter name="clear" time="500"]
+[stopbgm]
+
+[change_area_owner area=80 owner=8]

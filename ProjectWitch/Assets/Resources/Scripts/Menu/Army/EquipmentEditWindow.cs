@@ -101,6 +101,7 @@ namespace ProjectWitch.Menu
         public void Show(int unitID)
         {
             UnitID = unitID;
+            ItemID = Game.GetInstance().GameData.Unit[UnitID].Equipment;
             mArmyMenu.Closable = false;
             mPanel.SetActive(true);
             mList.Reset();

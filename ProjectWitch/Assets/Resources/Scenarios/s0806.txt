@@ -1,11 +1,92 @@
-;s0806
-;script:
-;direction:
-;timing:
+﻿;script 806
+;directer:yuichi
+;script:nikai
+;timing:s0805の後　ターンはじめ
+[field_area_hilight id=87]
+[wait time=500]
 
+[loadcg id=0 ref="eli"]
+[loadcg id=1 ref="seedle"]
 
-■場面7
-;場面6の後　ターンはじめ
+[filter name="fade" time=500]
+[drawbg ref="1037m"]
+[bgm ref="005_battle2"]
+[filter name="clear" time=500]
+
+[drawcg id=0 pos=4]
+[drawcg id=1 dir="right" pos=2]
+[show_message]
+ペトロパブロフスク街道西[p]
+[move id=0 y=5 time=50]
+[move id=0 y=-5 time=50]
+#エリ
+[voice ref="080033"]
+シードル！　どうなってんのよ！！[n]
+押されちゃってるじゃない！！[p]
+[move id=0 y=5 time=50]
+[move id=0 y=-5 time=50]
+[voice ref="080034"]
+私たちの方が数が多いのに！[p]
+#シードル
+[voice ref="080035"]
+向こうの方が兵の熟練度が高いんですよ。[n]
+宮殿の権力者たちはみんな向こうについてしまったせいで。[p]
+[voice ref="080036"]
+こちらは民兵が多いですからね。[n]
+数では勝りますが質では劣ります。[p]
+[move id=0 x=-7 time=50]
+[se ref="044"]
+[move id=1 x=-2 time=20]
+[move id=0 x=5 time=50]
+#エリ
+[voice ref="080037"]
+冷静に分析してんじゃないわよ！！[p]
+[move id=1 y=5 time=50]
+[move id=1 y=-5 time=50]
+#シードル
+[voice ref="080038"]
+ええっ！？[n]
+どうなってるのって聞いたから……。[p]
+#エリ
+[voice ref="080039"]
+きーーー！！　
+[move id=0 y=-5 time=50]
+[move id=0 y=5 time=50]
+[move id=0 y=-5 time=50]
+[move id=0 y=5 time=50]
+うるさいわね！！[p]
+[voice ref="080040"]
+それ以上言ったら敵軍の中に一人置き去りにするわよ！！[p]
+[move id=1 y=5 time=50]
+[move id=1 y=-5 time=50]
+#シードル
+[voice ref="080041"]
+勘弁してくださいよ！[p]
+[voice ref="080042"]
+（この人なら本当にやりかねないぞ……。）[p]
+[scale id=0 sx=-1 time=200]
+#エリ
+[voice ref="080043"]
+とにかく！　今度こそ押しかえすわよ！！[p]
+
+[hide_message]
+[filter name="fade" time=500]
+[clearcg id=0]
+[clearcg id=1]
+[clearbg]
+[stopbgm]
+[wait time=500]
+[filter name="clear" time="500"]
+
 ;自動戦闘
-;ニア勝利
-;92ラボ―チキン平原占領
+;エリ勝利
+;87ペトロパブロフスク街道西奪還
+[unit_heal unit=25]
+[unit_heal unit=26]
+[unit_heal unit=30]
+[battle_unit_in p0=26 p1=25 e0=30]
+[battle_time time=5]
+[battle_area id=87]
+[battle_auto][battle_nonpre]
+
+[sys_memset index=806 value="1"]

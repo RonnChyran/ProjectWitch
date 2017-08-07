@@ -213,7 +213,15 @@
 [filter name="clear" time=500]
 
 [stopbgm]
-[sys_memset index=712 value="1"]
-[sys_memset index=10016 value="1"]
 
+;リリィ領占領
+[sys_memset index=712 value="1"]
+[sys_memset index=10006 value="1"]
+
+;ミグを雇う
 [unit_employ unit=33]
+
+;占領地数の増加
+[sys_memget index=4010 local=0]
+[calc opr="add" index0=0 value1=1 to=0]
+[sys_memset index=4010 local=0]

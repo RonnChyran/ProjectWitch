@@ -1,199 +1,221 @@
-;s0848
-;script:
-;direction:
-;timing:
+﻿;script 163
+;directer:yuichi
+;script:nikai
+;timing:s0831後
+[field_area_hilight id=94]
+[filter name="fade" time=500]
 
-■場面50
-;場面49後
-;マジノライン中央進行
-マジノライン中央。
+[loadcg id=0 ref="alice"]
+[loadcg id=1 ref="eli"]
+[loadcg id=2 ref="kuro"]
+[loadcg id=4 ref="raisa"]
+[loadcg id=5 ref="nia"]
+[loadcg id=6 ref="seedle"]
+
+[bgm ref="005_battle2"]
+[drawbg ref="1039n"]
+
+[drawcg id=0 pos=4 state=1]
+[drawcg id=1 pos=3]
+[drawcg id=6 posx=-10]
+[drawcg id=2 pos=5]
+
+[wait time=500]
+[filter name="clear" time=500]
+
+[show_message]
+マジノライン中央。[p]
 #アリス
-いいかっ！　ここを取ったらこの戦争は私たちの勝ちだ！！
-全員気合を入れていけよ！！
-それっ、突撃ーーーー！！
+[voice ref="080666"]
+いいかっ！　ここを取ったらこの戦争は私たちの勝ちだ！！[p]
+[voice ref="080667"]
+全員気合を入れていけよ！！[n]
+それっ、突撃ーーーー！！[p]
+[move id=1 y=5 time=50]
+[move id=1 y=-5 time=50]
+[move id=6 y=5 time=50]
+[move id=6 y=-5 time=50]
 #アリス軍兵士
-おおおおーーーーー！！！！
-
-
-
-
-
-
-
-080669
-
-
-
-
-080670
-080671
-
-
-
+[voice ref="080668"]
+おおおおーーーーー！！！！[p]
 [cn]
-アリス軍の突撃が始まった。
-アリス軍側の士気は圧倒的にライザ軍よりも上だった。
-見る見るうちに、ライザ軍の拠点を占領していく。
-全くの一方的な戦闘だった。
+アリス軍の突撃が始まった。[p]
+アリス軍側の士気は圧倒的にライザ軍よりも上だった[p]
+見る見るうちに、ライザ軍の拠点を占領していく。[n]
+全くの一方的な戦闘だった。[p]
+[changecg id=0 state=1]
 #アリス
-クフフッ！！　いいぞいいぞ！　そのまま突っ切れーーー！！！
-[cn]
-そんな一方的な戦いのさなか、ライザは到着した。
-#ライザ
-ちっ！　もう始まってやがる。
-オイ、お前ら！
-さっさと準備しろ！！
-
-
-
-
-
-
-
-080682
-
-080683
-
-
-
-
-
-080684
-
+[voice ref="080669"]
+クフフッ！！ いいぞいいぞ！[n]
+そのまま突っ切れーーー！！！[p]
+[filter name="fade" time=500]
+[clearcg id=0]
+[clearcg id=1]
+[clearcg id=2]
+[clearcg id=6]
 
 [cn]
-ライザとその部下たちは、
-砦の中に立つひときわ高い建物の屋上に現れると、
-そこにギロチン台を設置し始めた。
+そんな一方的な戦いのさなか、ライザは到着した。[p]
+[filter name="clear" time=500]
+[drawcg id=5 posx=-20 dir="right"]
+[drawcg id=4 pos=2 dir="right"]
 #ライザ
-アーーーーリーーーースーーーー！！！！
+[voice ref="080670"]
+ちっ！　もう始まってやがる。[p]
+[scale id=4 sx=-1 time=100]
+[move id=4 y=5 time=50]
+[move id=4 y=-5 time=50]
+[voice ref="080671"]
+オイ、お前ら！[n]
+さっさと準備しろ！！[p]
+[cn]
+ライザとその部下たちは砦の中に立つひときわ高い建物の屋上に現れると、[n]
+そこにギロチン台を設置し始めた。[p]
+[scale id=4 sx=-1 time=200]
+#ライザ
+[voice ref="080682"]
+アーーーーリーーーースーーーー！！！！[p]
+[filter name="fade" time=500]
+[clearcg id=4]
+[clearcg id=5]
+[drawcg id=0 pos=4 state=2]
+[drawcg id=1 pos=3]
+[drawcg id=2 pos=5]
+[drawcg id=6 posx=-10]
+[filter name="clear" time=500]
 #アリス
-破壊こ……っ！？
-なっ、だれだ！！
+[voice ref="080683"]
+破壊こ……っ！？[n]
+[changecg id=0 state=0]
+[move id=0 y=-2 time=20]
+[move id=0 y=2 time=20]
+[changecg id=0 state=2]
+なっ、だれだ！！[p]
 [cn]
-ライザは魔法拡声器を用いて、大声でアリス軍へ呼びかけた。
+ライザは魔法拡声器を用いて、大声でアリス軍へ呼びかけた。[p]
 #ライザ
-アリス！！　これを見やがれっ！！
-
-
-
-080685
-080686
-
-
-080687
-
-
-
-080688
-
-080689
-
-080690
-
+[voice ref="080684"]
+アリス！！　これを見やがれっ！！[p]
 #アリス
-なにを……。
-……！？
-ヴェロニカ！！！！
+[voice ref="080685"]
+なにを……。[p]
+[changecg id=0 state=0]
+[move id=0 y=-2 time=20]
+[move id=1 y=-2 time=20]
+[move id=0 y=2 time=20]
+[move id=1 y=2 time=20]
+[move id=6 y=-2 time=20]
+[move id=6 y=2 time=20]
+[voice ref="080686"]
+……！？[n]
+ヴェロニカ！！！！[p]
+[move id=1 y=5 time=50]
+[move id=1 y=-5 time=50]
 #エリ
-ヴェロニカ様ッ！！？
+[voice ref="080687"]
+ヴェロニカ様ッ！！？[p]
 [cn]
-ライザが連れて現れたのは、ヴェロニカその人だった。
+ライザが連れて現れたのは、ヴェロニカその人だった[p]
+[move id=0 y=5 time=50]
+[move id=0 y=-5 time=50]
+[move id=0 y=5 time=50]
+[move id=0 y=-5 time=50]
 #アリス
-ヴェロニカ！！　オイ、私だ！！！
-アリスだ！！！！
-ヴェロニカーーーー！！
+[voice ref="080688"]
+ヴェロニカ！！　オイ、私だ！！！[n]
+アリスだ！！！！[p]
+[voice ref="080689"]
+ヴェロニカーーーー！！[p]
 #ヴェロニカ
-……アリ……ス？
-
-
-
-080691
-080692
-
-
-080693
-
-
-080694
-
-
-080695
-
-
-
+[voice ref="080690"]
+……アリ……ス？[p]
+[move id=1 y=5 time=50]
+[move id=1 y=-5 time=50]
+[move id=0 y=5 time=50]
+[move id=0 y=-5 time=50]
 
 #アリス
-ヴェロニカッ！？
-ま、まってろよ！
-すぐに助けに行ってやるからな！！
+[voice ref="080691"]
+ヴェロニカッ！？[p]
+[voice ref="080692"]
+ま、まってろよ！[n]
+すぐに助けに行ってやるからな！！[p]
 #ライザ
-急げっ！！
-奴が来る前にかたを付けるぞ！！
+[voice ref="080693"]
+急げっ！！[n]
+奴が来る前にかたを付けるぞ！！[p]
 #アリス
-……まにあわねえ。
-クロ！！　道をこじ開けろ！！
+[voice ref="080694"]
+……まにあわねえ。[n]
+クロ！！　道をこじ開けろ！！[p]
 #クロ
-はっ！！
-全軍、左右に展開！　中央をこじ開けろ！！
-
-
-
-
-
-
-
-080696
-
-080697
-
-
-080698
-
-
-
-
-
-
+[voice ref="080695"]
+はっ！！[n]
+[move id=2 x=-70 time=200]
+全軍、左右に展開！　中央をこじ開けろ！！[p]
 [cn]
-精鋭ぞろいのクロの軍団は、ライザの軍勢をあっという間に押しはじめ、中央にわずかな隙間を作り出した。
+精鋭ぞろいのクロの軍団はライザの軍勢をあっという間に押しはじめ、[n]
+中央にわずかな隙間を作り出した。[p]
+[scale id=2 sx=-1 time=100]
 #クロ
-アリス様！！
+[voice ref="080696"]
+アリス様！！[p]
+[se ref="156"]
+[se ref="159"]
 #アリス
-よくやった！！
-ヴェロニカッ！！
+[voice ref="080697"]
+よくやった！！[n]
+ヴェロニカッ！！[p]
+[move id=1 x=-100 time=400]
+[clearcg id=1]
+[move id=0 x=-100 time=400]
+[clearcg id=0]
+[scale id=6 sx=-1 time=100]
+[filter name="fade" time=500]
+[clearcg id=2]
+[clearcg id=6]
+[drawcg id=5 posx=-20 dir="right"]
+[drawcg id=4 pos=2 dir="right"]
+[filter name="clear" time=500]
 #ライザ
-なっ……！！
-畜生急げ！！
+[voice ref="080698"]
+なっ……！！[n]
+畜生急げ！！[p]
 [cn]
-ヴェロニカは今まさにギロチン台にかけられようとしていた。
-
-
-
-080699
-
-
-080700
-
-080701
-
-
-080702
-
-080703
-
-
-
+ヴェロニカは今まさにギロチン台にかけられようとしていた。[p]
+[se ref="156"]
 #アリス
-遅いッ！！
-破壊光線ーーーーー！！！！
+[voice ref="080699"]
+遅いッ！！[n]
+破壊光線ーーーーー！！！！[p]
+[se ref="100"]
 #ライザの部下
-ぎゃあああっ！！！
+[voice ref="080700"]
+ぎゃあああっ！！！[p]
+[move id=4 y=5 time=50]
+[move id=4 y=-5 time=50]
 #ライザ
-ちっ！！　お前たち！
-あいつを先に止めろ！！
+[voice ref="080701"]
+ちっ！！　お前たち！[p]
+あいつを先に止めろ！！[p]
 #ライザの部下
-はっ！！
+[voice ref="080702"]
+はっ！！[p]
 #アリス
-どけーーーーーっ！！！
-;戦闘 アリスvsライザ
+[voice ref="080703"]
+どけーーーーーっ！！！[p]
+[hide_message]
+[filter name="fade" time=500]
+[clearcg id=4]
+[clearcg id=5]
+[clearbg]
+[stopbgm]
+[wait time=500]
+[filter name="clear" time="500"]
+
+;アリスVSライザ
+[unit_heal unit=0]
+[unit_heal unit=30]
+[battle_unit_in p0=0 e0=30]
+
+[sys_memset index=848 value="1"]

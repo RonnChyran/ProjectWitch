@@ -17,8 +17,6 @@ namespace ProjectWitch.Field
         [SerializeField]
         private Text mcOwner = null;
         [SerializeField]
-        private Text mcLevel = null;
-        [SerializeField]
         private Text mcTime = null;
         [SerializeField]
         private Text mcMana = null;
@@ -108,7 +106,6 @@ namespace ProjectWitch.Field
 
                 //テキストデータのセット
                 mcOwner.text = game.GameData.Territory[area.Owner].OwnerName;
-                mcLevel.text = area.Level.ToString();
                 mcTime.text = area.Time.ToString();
                 mcMana.text = area.Mana.ToString();
                 mcPAtk.text = area.BattleFactor.PAtk.ToString() + "%";
@@ -168,30 +165,11 @@ namespace ProjectWitch.Field
         {
             var game = Game.GetInstance();
 
-            //二重起動の防止
-            if (game.IsDialogShowd) return;
-
-            //取得するマナ量
-            var mana = game.GameData.Area[AreaID].Mana;
-
-            //表示する文字列の構成
-            var str = "地点：" + game.GameData.Area[AreaID].Name + "\n";
-            str += "現在の所持マナ：" + game.GameData.PlayerMana + "M\n";
-            str += "取得マナ：" + mana.ToString() + "M\n";
-            str += "取得後の所持マナ：" + (game.GameData.PlayerMana + mana).ToString() + "M\n";
-
-            game.ShowDialog("マナ収集", str);
-
-            //マナの増加処理
-            game.GameData.PlayerMana += mana;
-            game.GameData.Area[AreaID].Mana = 0;
-
-            //時間を進める
-            game.GameData.CurrentTime++;
-
+            //マナの収集
+            FieldController.GetMana(AreaID);
             
             //メニューを閉じる
-            Close();
+            Close(true);
         }
 
         //ウィンドウを閉じる

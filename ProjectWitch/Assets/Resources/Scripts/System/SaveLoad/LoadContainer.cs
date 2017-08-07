@@ -1,10 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿
+using System.IO;
 
-
-namespace ProjectWitch
+namespace ProjectWitch.Sys
 {
     public class LoadContainer :SaveLoadContainerBase
     {
@@ -15,7 +12,7 @@ namespace ProjectWitch
             var path = GamePath.GameSaveFilePath(mFileIndex);
             
             //ロードファイルの存在をチェック
-            if (!System.IO.File.Exists(path))
+            if (!File.Exists(path))
             {
                 mcButton.interactable = false;
             }
@@ -25,7 +22,7 @@ namespace ProjectWitch
         public void Load()
         {
             var game = Game.GetInstance();
-            game.GameData.Load(mFileIndex);
+            if (!game.GameData.Load(mFileIndex)) return;
             
             StartCoroutine(game.CallField());
         }

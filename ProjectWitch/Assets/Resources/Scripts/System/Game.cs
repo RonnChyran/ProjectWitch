@@ -35,10 +35,12 @@ namespace ProjectWitch
         public string SceneName_Opening { get { return cSceneName_Opening; } private set { } }
         public string SceneName_Ending { get { return cSceneName_Ending; } private set { } }
 
-        //毎ターンのマナ回復率
-        private float mManaRecoveryRate = 0.1f; //10%
-                                                //毎ターンのHP回復率
+        //毎ターンのHP回復率
+        [SerializeField]
         private float mHPRecoveryRate = 0.2f; //20%
+        //ターン数を同期するメモリのID
+        [SerializeField]
+        private int mCurrentTurnID = 4011;
 
         #endregion
 
@@ -57,6 +59,11 @@ namespace ProjectWitch
         //ローディング画面
         [SerializeField]
         private GameObject mNowLoadingPrefab = null;
+
+        //タイトル画面遷移
+        [SerializeField]
+        private GoTitleWindow mGoTitleWindow = null;
+        public GoTitleWindow GoTitle { get { return mGoTitleWindow; } }
 
         #endregion
 
@@ -142,7 +149,7 @@ namespace ProjectWitch
             MenuDataIn.Reset();
 
             //ゲームデータ初期化
-            GameData = new GameData();
+            GameData = new GameData(mCurrentTurnID);
             GameData.Reset();
 
             //システムデータ初期化
@@ -255,21 +262,13 @@ namespace ProjectWitch
             ScenarioIn.NextB = e.NextB;
 
             IsTalk = true;
-            SceneManager.LoadScene(cSceneName_Talk, LoadSceneMode.Additive);
+            StartCoroutine(_CallScript());
 
             HideNowLoading();
         }
-
-        //セーブ画面を呼び出す
-        public void CallSave()
+        private IEnumerator _CallScript()
         {
-            GameData.Save(0);
-        }
-
-        //ロード画面を呼び出す
-        public void CallLoad()
-        {
-            GameData.Load(0);
+            yield return SceneManager.LoadSceneAsync(cSceneName_Talk, LoadSceneMode.Additive);
         }
 
         //ローディング画面を表示
@@ -289,21 +288,9 @@ namespace ProjectWitch
         //オートセーブする
         public void AutoSave()
         {
-            Save(0); //0スロットはオートセーブ用スロット
+            GameData.Save(-1); //0スロットはオートセーブ用スロット
+            SystemData.Save();
         }
-
-        //現在の状態をセーブする
-        private void Save(int slot)
-        {
-            ShowDialog("save", "セーブ機能は実装されていません");
-        }
-
-        //スロット番号のセーブデータからデータを読み込む
-        private void Load(int slot)
-        {
-            ShowDialog("load", "ロード機能は実装されていません");
-        }
-
 
         //各コマンド
 
@@ -327,9 +314,8 @@ namespace ProjectWitch
         {
             foreach (var area in GameData.Area)
             {
-                //最大マナの10%回復
-                area.Mana += (int)((float)area.MaxMana * mManaRecoveryRate);
-                if (area.Mana > area.MaxMana) area.Mana = area.MaxMana;
+                //IncrementalMana分だけ、マナを回復
+                area.Mana += area.IncrementalMana;
             }
         }
 

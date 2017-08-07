@@ -1,17 +1,51 @@
-;s0825
-;script:
-;direction:
+﻿;script 825
+;directer:yuichi
+;script:nikai
 ;timing:
 
-■場面26
-;場面25後
-ホムンクルスの猛攻はすさまじかった。
-たった２０体である。
-たった２０体のホムンクルスに、３００００の兵士が負けたのだ。
-今までの攻防戦が嘘だったように、レーニングラッド砦はあっさり落ちた。
+[field_area_hilight id=82]
+[wait time=500]
+
+[loadcg id=0 ref="veronica"]
+
+[filter name="fade" time=500]
+[bgm ref="017_event2"]
+[drawbg ref="1055m"]
+[drawcg id=0 pos=3]
+[filter name="clear" time=500]
+
+[show_message]
+ワルサワの町。[p]
+[move id=0 x=-20 time=400]
+[wait time=200]
+[scale id=0 sx=-1 time=100]
+[move id=0 x=40 time=800]
 #ヴェロニカ
-…………そんなばかな。
+[voice ref="080177"]
+建物の間に隠れて！[n]
+ホムンクルスが来たら相手にしないこと！[p]
+[scale id=0 sx=-1 time=300]
+[voice ref="080178"]
+ライザ……[n]
+あなた、まさかホムンクルスに手を出すなんて……。[p]
+[filter name="fade" time="500"]
 [cn]
-ヴェロニカは東へ逃げながら次の戦略を考えていた。
-しかし、どうあがいてもホムンクルスに勝つ方法は思い浮かばないのだった。
-;レーニングラッド砦占領
+市街地での戦いが始まった。[p]
+
+[hide_message]
+[clearbg]
+[clearcg id=0]
+[wait time=500]
+[filter name="clear" time="500"]
+[stopbgm]
+
+;自動戦闘
+;ライザ軍勝利
+;ワルサワの町占領
+[unit_heal unit=30]
+[battle_unit_in p0=26 p1=25 p2=24 e0=30 e1=194]
+[battle_time time=5]
+[battle_area id=82]
+[battle_auto][battle_nonpre]
+
+[sys_memset index=825 value="1"]

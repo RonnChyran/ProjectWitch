@@ -1,13 +1,411 @@
 ;s0856
-;script:
-;direction:
-;timing:
+;directer:yuichi
+;script:nikai
+;timing:s0855後
+[field_area_hilight id=104]
+[filter name="fade" time=500]
 
-;場面59-1
-;戦闘敗北
+[loadcg id=0 ref="raisa"]
+[loadcg id=1 ref="nia"]
+[loadcg id=2 ref="eli"]
+[loadcg id=3 ref="seedle"]
+[loadcg id=4 ref="kuro"]
+[loadcg id=5 ref="alice"]
+[loadcg id=6 ref="chishire"]
+
+[bgm ref="029_raisania2"]
+[drawbg ref="1000m"]
+
+[drawcg id=1 pos=4]
+[drawcg id=0 pos=2 dir="right"]
+
+[wait time=500]
+[filter name="clear" time=500]
+
+[show_message]
+ヴェロニカ宮。[p]
+#ライザ
+[voice ref="080889"]
+……おかしい[n]
+ヴェロニカを殺したってのに奴ら全然勢いが収まりやがらねえ……。[p]
+[move id=1 y=5 time=50]
+[move id=1 y=-5 time=50]
+[move id=1 y=5 time=50]
+[move id=1 y=-5 time=50]
+#ニア
+[voice ref="080890"]
+どうするの、ライザぁー！[p]
+#ライザ
+[voice ref="080891"]
+こうなったらもう一回ホムンクルスを作り出すしか……。[p]
+[move id=1 y=5 time=50]
+[move id=1 y=-5 time=50]
+#ニア
+[voice ref="080892"]
+そ、そんな材料もうないよ！！[p]
+#ライザ
+[voice ref="080893"]
+ああそうだな……いや？[n]
+ニア……あるじゃないか、材料が。[p]
+#ニア
+[voice ref="080894"]
+え……？[p]
+
+;場面転換
+[filter name="fade" time=500]
+[clearcg id=0]
+[clearcg id=1]
+[bgm ref="029_raizania2"]
+[drawbg ref="1000e"]
+[drawcg id=2 pos=3]
+[drawcg id=3 posx=20]
+[drawcg id=4 pos=5 layer="front"]
+[filter name="clear" time=500]
+#エリ
+[voice ref="080895"]
+ここね……。[p]
+[cn]
+エリ率いる軍勢がヴェロニカ宮の最深部に到達した。[p]
+#エリ
+[voice ref="080896"]
+行くわよ……。[p]
+[se ref="046"]
+[cn]
+ゆっくりと扉を開いた。[p]
+[se ref="046"]
+[filter name="fade" time=500]
+[drawbg ref="1001m"]
+[bgm ref="015"]
+[filter name="clear" time=500]
+#クロ
+[voice ref="080897"]
+これは……。[p]
+#エリ
+[voice ref="080898"]
+何よ……これ……。[p]
+[cn]
+エリの背筋に悪寒が走った。[p]
+全身から汗が吹き出し、彼女はとても立っていられなくなり、
+その場に崩れ落ちた。[p]
+まるで蛇ににらまれたカエルのように、[n]
+エリは「それ」を見た瞬間、体の自由をすっかり奪われたのだった。[p]
+#？？？
+[voice ref="080901"]
+…………エリ。[p]
+[cn]
+異形の生物がエリの名を呼ぶ。聞き覚えのある声だった。[p]
+#エリ
+[voice ref="080902"]
+ヴェロニカ様……。[p]
+[move id=5 x=-5 time=50]
+[voice ref="080903"]
+ヴェロニカ様……！！[p]
+#？？？
+[voice ref="080904"]
+エリ……にげ、な、さ……。[n]
+…………。[p]
+#エリ
+[voice ref="080905"]
+ヴェロニカ様……？[p]
+#？？？
+[voice ref="080906"]
+ギィヒヒヒヒヒヒッ！！[n]
+[move id=2 y=2 time=50]
+[move id=2 y=-2 time=50]
+まだ残っていやがったか……、しぶとい奴め。[p]
+[move id=2 x=5 time=50]
+#エリ
+[voice ref="080907"]
+……！！[n]
+ライザ、ニア！！[p]
+#？？？
+[voice ref="080908"]
+よう、できそこないのホムンクルス。[n]
+泣き虫アリスはどうした。[p]
+#エリ
+[voice ref="080909"]
+くっ！！[n]
+あなたたち、まさか心臓を同時に３つ使ったわね……[p]
+#？？？
+[voice ref="080910"]
+そうだ……。[n]
+ライザ、ニア、ヴェロニカ。三人の魔女の心臓から私はできた[p]
+[voice ref="080911"]
+ライザとニアとヴェロニカだから……さしずめラザニカ。[p]
+[voice ref="080912"]
+いや…… 、ヴェライア。[n]
+いやいや……、ニアザニカ。[p]
+[voice ref="080913"]
+……まあ名前なんてこいつを倒してからゆっくり決めりゃあいいか。[p]
+#エリ
+[voice ref="080914"]
+この……！！[n]
+めておいんぱくと！！[p]
+[move id=2 y=5 time=50]
+[move id=2 y=-5 time=50]
+[se ref="118"]
+[filter name="color" color="660066" time=50]
+[filter name="clear" time=50]
+[filter name="color" color="660066" time=50]
+[filter name="clear" time=20]
+[filter name="color" color="660066" time=50]
+[filter name="clear" time=20]
+[cn]
+エリの放った流星群が異形の生物に降り注ぐ。[p]
 #名無しの大魔女
-キィヒヒヒヒヒ！！
-その程度か、拍子抜けだなぁ……。
+[voice ref="080915"]
+……ふん。なるほどな。[p]
+[voice ref="080916"]
+キィヒヒヒヒ……。[n]
+これがホムンクルスか。 痛くもかゆくもねえ……。[p]
+[voice ref="080917"]
+キヒ……キヒヒ。[n]
+キヒヒヒ……アハハハハアハッッ！！[p]
+#エリ
+[voice ref="080918"]
+うそでしょ……。[p]
+#名無しの大魔女
+[voice ref="080919"]
+キヒッ……！[n]
+どんどん魔力がわいてくる……キヒヒ！[p]
+[voice ref="080920"]
+やりすぎちまうかもな……。[p]
+[move id=2 x=5 time=50]
+[move id=3 x=5 time=50]
+[move id=4 x=5 time=50]
+#エリ
+[voice ref="080921"]
+！？[n]
+なにか来る……！[p]
+[cn]
+大魔女の頭上にすさまじい魔力の塊が集まり始めた。[p]
+圧縮された魔力の塊はまばゆい光を放つ光球となる。[p]
+#クロ
+[voice ref="080922"]
+まずい！　エリ様、退却を！！[p]
+[move id=2 x=10 time=500]
+[scale id=2 sx=-1 time=100]
+#エリ
+[voice ref="080923"]
+し、シードル！　何とかしなさいよ！！[p]
+[move id=3 y=5 time=50]
+[move id=3 y=-5 time=50]
+[move id=3 y=5 time=50]
+[move id=3 y=-5 time=50]
+#シードル
+[voice ref="080924"]
+何とかといわれても！[n]
+エリ様逃げましょう！！[p]
+#名無しの大魔女
+[voice ref="080926"]
+遅いわ！！[p]
+[scale id=2 sx=-1 time=100]
+[filter name="color" color="FFFFFF" time=1000]
+[stopbgm]
+[cn]
+次の瞬間、大魔女の頭上の光球がはじけ、エリたちに襲い掛かった。[p]
+#エリ
+[voice ref="080927"]
+え……。[p]
+[cn]
+声をあげる暇もなかった。[p]
+その場にいたアリス軍は誰一人逃げることを許されることはなく蒸発し、消えた。[p]
+
+
+;場面転換
+[hide_message]
+[clearbg]
+[clearcg id=2]
+[clearcg id=3]
+[clearcg id=4]
+[filter name="clear" time=500]
+
+[field_area_hilight id=1]
+
+[filter name="fade" time=500]
+[drawbg ref="1002m"]
+[bgm ref="017_event2"]
+[filter name="clear" time=500]
+[show_message]
+アリスの館。[p]
+[drawcg id=5 pos=1 dir="right" state=5]
 #アリス
-……絶対殺してやる。
-次こそ……絶対殺してやる！！
+[voice ref="080927"]
+……クロ、
+[move id=5 x=20 time=600]
+なあ、クロ。[n]
+[move id=5 x=20 time=600]
+[scale id=5 sx=-1 time=200]
+[wait time=400]
+[scale id=5 sx=-1 time=200]
+[wait time=400]
+いないのか……？[p]
+[move id=5 x=20 time=600]
+[voice ref="080928"]
+チシャ、
+[scale id=5 sx=-1 time=200]
+[move id=5 x=-20 time=600]
+メイジー……、
+[move id=5 x=-20 time=600]
+エリ。[n]
+[move id=5 x=-20 time=600]
+……だれか。[p]
+[scale id=5 sx=-1 time=400]
+[wait time=500]
+[scale id=5 sx=-1 time=400]
+[wait time=500]
+[voice ref="080929"]
+……誰もいないのか？[n]
+…………。[p]
+[se ref="160"]
+[se ref="046"]
+[wait time="500"]
+[drawcg id=6 pos=5]
+#チシャ
+[voice ref="080930"]
+アリス様……。[p]
+[scale id=5 sx=-1 time=400]
+#アリス
+[voice ref="080931"]
+チシャ……。[p]
+[move id=6 y=5 time=50]
+[move id=6 y=-5 time=50]
+#チシャ
+[voice ref="080932"]
+アリス様！　[n]
+ああよかった、起きられたんですね。[p]
+#アリス
+[voice ref="080933"]
+チシャ……クロは？　メイジーは？[n]
+みんなどこにいるんだ？[p]
+[move id=6 y=-10 time=400]
+[wait time=1000]
+[move id=6 y=10 time=200]
+[move id=6 x=-20 time=400]
+
+#チシャ
+[voice ref="080934"]
+……アリス様、それが。[p]
+[cn]
+チシャはアリスにぼろぼろのパイプを差し出した。[p]
+[move id=5 x=10 time=500]
+[wait time=500]
+#アリス
+[voice ref="080935"]
+これ……クロの。[p]
+#チシャ
+[voice ref="080936"]
+ヴェロニカ宮より戻った兵士が届けてくれました。[n]
+その兵士は先ほど……。[p]
+[voice ref="080937"]
+その兵士によると、ヴェロニカ宮に異形の化け物が出現。
+場内にいたわが軍は全滅。[p]
+[voice ref="080938"]
+エリ様、クロ様、シードル様をはじめ、ほとんどが死亡とのことです……。[p]
+#アリス
+[voice ref="080939"]
+……死んだ？[n]
+って、おい、何の冗談だよ……。[p]
+[voice ref="080940"]
+死ぬわけないだろ……[n]
+クロが、あいつらが……。[p]
+#チシャ
+[voice ref="080941"]
+アリス様……、戻ってきてください。[n]
+でないと、このまま僕たちは。[p]
+#アリス
+[voice ref="080942"]
+…………。[p]
+[move id=5 y=5 time=50]
+[move id=5 y=-5 time=50]
+#チシャ
+[voice ref="080943"]
+アリス様！！[p]
+#アリス
+[voice ref="080944"]
+……わかった、やる。[p]
+#チシャ
+[voice ref="080945"]
+アリス様……！[p]
+#アリス
+[voice ref="080945a"]
+……やるよ。[p]
+[voice ref="080945b"]
+…………。[p]
+#チシャ
+[voice ref="080945c"]
+…………アリス様？[p]
+
+;場面転換
+[hide_message]
+[filter name="fade" time=500]
+[clearcg id=5]
+[clearcg id=6]
+[clearbg]
+[stopbgm]
+[filter name="clear" time=500]
+[field_area_hilight id=104]
+[filter name="fade" time=500]
+[drawbg ref="1001m"]
+[bgm ref="006"]
+[filter name="clear" time=500]
+
+[show_message]
+肉の焦げるにおいと、解けた岩の放つ熱気が充満した宮殿の真ん中にそれは静かにたたずんでいた。[p]
+[drawcg id=5 pos=4 state=0]
+#アリス
+[voice ref="080945d"]
+…………。[p]
+#名無しの大魔女
+[voice ref="080945e"]
+泣き虫アリス……ギィヒヒ……[n]
+今頃来やがったか。[p]
+#アリス
+[voice ref="080945f"]
+…………。[p]
+#名無しの大魔女
+[voice ref="080945g"]
+オイ……なんとか言わねえか。泣き虫……[p]
+[move id=5 y=5 time=50]
+[move id=5 y=-5 time=50]
+[changecg id=2 state=2]
+#アリス
+[voice ref="080945h"]
+泣き虫じゃねえ！！[p]
+[voice ref="080945i"]
+私は……私は華の魔女アリスだ！！[p]
+[voice ref="080945j"]
+お前なんかに……お前みたいなやつに……[n]
+……負けるもんか。[p]
+#名無しの大魔女
+[voice ref="080945k"]
+ふん、口だけならなんとでもいえるぜ……。[n]
+かかって来いよ。[p]
+#アリス
+[voice ref="080945l"]
+この……！！[n]
+破壊光線――――！！！！！[p]
+[se ref="100"]
+[hide_message]
+[filter name="color" color="FFFFFF" time=500]
+[clearcg id=5]
+[clearbg]
+[stopbgm]
+[wait time=500]
+[filter name="clear" time="500"]
+
+[sys_memset index=856 value="1"]
+
+;アリス復帰、クロ、エリ、シードル離脱
+[unit_heal unit=0]
+[unit_employ unit=0]
+[unit_unemploy unit=1]
+[unit_unemploy unit=28]
+[unit_unemploy unit=29]
+[unit_data_change id=1 member="IsAlive" value="false"]
+[unit_data_change id=28 member="IsAlive" value="false"]
+[unit_data_change id=29 member="IsAlive" value="false"]
+
+;戦闘
+[battle_unit_in e0=48]
+[battle_bgm ref="006_battle3"]

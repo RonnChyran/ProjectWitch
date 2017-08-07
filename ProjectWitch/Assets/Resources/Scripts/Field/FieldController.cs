@@ -31,6 +31,10 @@ namespace ProjectWitch.Field
         private TalkCommandHelper mTalkCommandHelper = null;
         public TalkCommandHelper TalkCommandHelper { get{ return mTalkCommandHelper; } private set { } }
 
+        //収入計算用の定数
+        [SerializeField]
+        private int mIncomesFactor = 200;
+
         //内部変数
         //コルーチンが動いているかどうか
         private bool mIsCoroutineExec = false;
@@ -129,15 +133,28 @@ namespace ProjectWitch.Field
                 if (game.BattleIn.IsEvent)
                     yield return StartCoroutine(CallBattle(game.BattleIn.AreaID, 0, true));
 
+                //カメラをアリスの館へ移動
+                var targetpos = game.GameData.Area[1].Position;
+                yield return StartCoroutine(mCameraController.MoveTo(targetpos));
+
                 //BGM再開
                 PlayBGM();
-               
+
+                //プレイヤーターン開始エフェクト表示
+                yield return StartCoroutine(mFieldUIController.ShowPlayerTurnEffect());
+
                 //カメラ操作を有効にする
                 CameraController.IsPlayable = true;
 
                 //メニュー操作を有効にする
                 MenuClickable = true;
                 FlagClickable = true;
+
+                //町イベントを有効にする
+                game.GameData.TownEventEnable = true;
+
+                //オートセーブ
+                game.AutoSave();
 
                 //時間が変化するまで待機
                 while (currentTime == game.GameData.CurrentTime) yield return null;
@@ -165,7 +182,10 @@ namespace ProjectWitch.Field
 
             //カメラ操作を無効にする
             CameraController.IsPlayable = false;
-            
+
+            //敵ターンエフェクト表示
+            yield return StartCoroutine(mFieldUIController.ShowEnemyTurnEffect());
+
             for(int i=1; i<game.GameData.Territory.Count; i++)
             {
                 var ter = game.GameData.Territory[i];
@@ -190,8 +210,13 @@ namespace ProjectWitch.Field
                     yield return StartCoroutine(EventExecute(eventlist));
 
                     //ターンはじめイベントで戦闘フラグが立った
-                    //戦闘開始
+                    if (game.BattleIn.IsEvent)
+                    {
+                        //戦闘開始
+                        yield return StartCoroutine(CallBattle(game.BattleIn.AreaID, game.BattleIn.EnemyTerritory, true));
+                    }
 
+                    //自領地への侵攻
                     //すでに交戦状態に入っている場合
                     if (ter.State == TerritoryDataFormat.TerritoryState.Active)
                     {
@@ -210,7 +235,7 @@ namespace ProjectWitch.Field
                             }
 
                             //攻めてきた演出
-                            yield return StartCoroutine(DominationEffect(targetArea));
+                            yield return StartCoroutine(DominationEffect(targetArea));                            
 
                             //敵ユニットのセット
                             SetEnemy(group, true);
@@ -500,6 +525,51 @@ namespace ProjectWitch.Field
             yield return StartCoroutine(AfterBattle());
         }
         
+        //マナ収集
+        public void GetMana(int area)
+        { 
+            StartCoroutine(_GetMana(area));
+        }
+        private IEnumerator _GetMana(int area)
+        {
+            var game = Game.GetInstance();
+
+            yield return new WaitForEndOfFrame();
+
+            //カメラ操作を無効にする
+            CameraController.IsPlayable = false;
+
+            //メニュー操作を無効にする
+            MenuClickable = false;
+            FlagClickable = false;
+
+            //取得するマナ量
+            var mana = game.GameData.Area[area].Mana;
+            var hasItem = game.GameData.Area[area].HasItem;
+            var itemIsEquip = game.GameData.Area[area].ItemIsEquipment;
+            var itemID = (hasItem) ? game.GameData.Area[area].ItemID : -1;
+
+            //エフェクトを再生
+            yield return StartCoroutine(FieldUIController.ShowGetManaEffect(mana, itemIsEquip, itemID));
+            
+            //時間を進める
+            game.GameData.CurrentTime++;
+
+            //マナの増加処理
+            game.GameData.PlayerMana += mana;
+            game.GameData.Area[area].Mana = 0;
+
+            //装備を取得済みに変える
+            game.GameData.Area[area].HasItem = false;
+            
+            //復帰
+            CameraController.IsPlayable = true;
+            MenuClickable = true;
+            FlagClickable = true;
+
+            yield return null;
+        }
+
         //イベント制御
         private IEnumerator EventExecute(List<EventDataFormat> eventlist)
         {
@@ -602,16 +672,9 @@ namespace ProjectWitch.Field
             //現在の所持地点を取得
             var areas = game.GameData.Territory[0].AreaList;
 
-            //領地がなかったら抜ける
-            if (areas.Count == 0) return -1;
-
-            //平均の算出
-            var sum = 0;
-            foreach (var area in areas) sum += game.GameData.Area[area].Mana;
-            var ave = sum / areas.Count;
-
-            //平均の10%を返す
-            return ave / 10;
+            //領地数*定数を収入とする 
+            return areas.Count * mIncomesFactor;
+            
 
         }
 
@@ -658,6 +721,9 @@ namespace ProjectWitch.Field
 
             //エフェクトを表示
             yield return StartCoroutine(FieldUIController.ShowHiLightEffect(targetpos));
+
+            //キャプションエフェクト表示
+            yield return StartCoroutine(FieldUIController.ShowInvationEffect());
 
         }
 

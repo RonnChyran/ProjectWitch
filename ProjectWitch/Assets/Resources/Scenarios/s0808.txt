@@ -1,40 +1,19 @@
-;s0808
-;script:
-;direction:
-;timing:
+﻿;script 808
+;directer:yuichi
+;script:nikai
+;timing:s0808後
 
-■場面9
-;場面8のあと　内乱が終わっている　ターンはじめ
-;背景真っ白
-#？？？
-……－い！　な……し…………ス！！
-やー……！！なき……ア………！！
-やーい！！泣き虫アリス！！
-;背景アリスの部屋
-#アリス
-……れが……。
-誰が泣き虫だッッ！！！！
+[field_area_hilight id=87]
 
-080049
+;自動戦闘
+;ライザ勝利
+;87ペトロパブロフスク街道西占領
+[unit_heal unit=25]
+[unit_heal unit=26]
+[unit_heal unit=30]
+[battle_unit_in p0=26 p1=25 e0=30]
+[battle_time time=5]
+[battle_area id=87]
+[battle_auto][battle_nonpre]
 
-
-080050
-
-
-
-
-
-
-
-
-
-
-
-……はあ、はあ。
-…………。
-なんだ今の夢……。
-この私を馬鹿にしやがって……。
-[cn]
-その日のアリスの機嫌は最悪で、
-普段から散々怒られているチシャでさえ、
-怖くてあまり近づけなかったほどだった。
+[sys_memset index=804 value="1"]

@@ -14,7 +14,9 @@ namespace ProjectWitch
 
         //components
         private ParticleSystem[] mPartSystem;
+        private ParticleSystemRenderer[] mPartRenderer;
         private Animator[] mAnimators;
+        private MeshRenderer[] mMeshRenderer;
 
         //inspector
         //再生速度
@@ -38,7 +40,9 @@ namespace ProjectWitch
         void Start()
         {
             mPartSystem = GetComponentsInChildren<ParticleSystem>();
+            mPartRenderer = GetComponentsInChildren<ParticleSystemRenderer>();
             mAnimators = GetComponentsInChildren<Animator>();
+            mMeshRenderer = GetComponentsInChildren<MeshRenderer>();
 
             foreach (var part in mPartSystem)
             {
@@ -67,17 +71,36 @@ namespace ProjectWitch
         {
             mCoIsRunning = true;
 
+            //終了イベント発行
             if (EndEvent != null) EndEvent.Invoke();
-            for (float i = 0; i < 1.0f; i += 0.1f)
+
+            if (mPartSystem.Length > 0 || mMeshRenderer.Length > 0)
             {
-                foreach (var partsys in mPartSystem)
+                for (float i = 0; i < 1.0f; i += 0.1f)
                 {
-                    var ma = partsys.main;
-                    var color = ma.startColor.color;
-                    color.a = Math.Max(0.0f, color.a - i);
-                    ma.startColor = color;
+                    //パーティクルのフェードアウト処理
+                    foreach (var partsys in mPartRenderer)
+                    {
+                        var ma = partsys.material;
+                        if (!ma.HasProperty("_TintColor")) continue; //tint colorプロパティのないパーティクルは無視
+
+                        var color = ma.GetColor("_TintColor");
+                        color.a = Math.Max(0.0f, color.a - i);
+                        ma.SetColor("_TintColor",color);
+                    }
+
+                    //メッシュのフェードアウト処理
+                    foreach(var mesh in mMeshRenderer)
+                    {
+                        var mat = mesh.material;
+                        if (!mat.HasProperty("_Color")) continue;
+
+                        var color = mat.GetColor("_Color");
+                        color.a = Math.Max(0.0f, color.a - i);
+                        mat.SetColor("_Color", color);
+                    }
+                    yield return null;
                 }
-                yield return null;
             }
 
 

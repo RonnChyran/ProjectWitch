@@ -27,7 +27,7 @@
     <IntermediateOutputPath>Temp\UnityVS_obj\Debug\</IntermediateOutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DefineConstants>DEBUG;TRACE;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_5_6_1;UNITY_5_6;UNITY_5;UNITY_64;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_GENERICS;ENABLE_PVR_GI;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_RUNTIME_NAVMESH_BUILDING;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;ENABLE_NATIVE_ARRAY;INCLUDE_DYNAMIC_GI;INCLUDE_GI;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;INCLUDE_PUBNUB;ENABLE_PLAYMODE_TESTS_RUNNER;ENABLE_SCRIPTING_NEW_CSHARP_COMPILER;ENABLE_VIDEO;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_SUBSTANCE;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_UNITYWEBREQUEST;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_EVENT_QUEUE;ENABLE_CLUSTERINPUT;ENABLE_VR;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;NET_2_0;ENABLE_PROFILER;DEBUG;TRACE;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_NATIVE_ARRAY_CHECKS;UNITY_TEAM_LICENSE;ENABLE_VSTU;CROSS_PLATFORM_INPUT</DefineConstants>
+    <DefineConstants>DEBUG;TRACE;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_5_6_1;UNITY_5_6;UNITY_5;UNITY_64;UNITY_ANALYTICS;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_GENERICS;ENABLE_PVR_GI;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_RUNTIME_NAVMESH_BUILDING;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;ENABLE_NATIVE_ARRAY;INCLUDE_DYNAMIC_GI;INCLUDE_GI;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;INCLUDE_PUBNUB;ENABLE_PLAYMODE_TESTS_RUNNER;ENABLE_SCRIPTING_NEW_CSHARP_COMPILER;ENABLE_VIDEO;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_SUBSTANCE;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_UNITYWEBREQUEST;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_EVENT_QUEUE;ENABLE_CLUSTERINPUT;ENABLE_VR;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;NET_2_0;DEVELOPMENT_BUILD;ENABLE_PROFILER;DEBUG;TRACE;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_NATIVE_ARRAY_CHECKS;UNITY_TEAM_LICENSE;ENABLE_VSTU;CROSS_PLATFORM_INPUT</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -37,7 +37,7 @@
     <IntermediateOutputPath>Temp\UnityVS_obj\Release\</IntermediateOutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DefineConstants>TRACE;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_5_6_1;UNITY_5_6;UNITY_5;UNITY_64;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_GENERICS;ENABLE_PVR_GI;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_RUNTIME_NAVMESH_BUILDING;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;ENABLE_NATIVE_ARRAY;INCLUDE_DYNAMIC_GI;INCLUDE_GI;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;INCLUDE_PUBNUB;ENABLE_PLAYMODE_TESTS_RUNNER;ENABLE_SCRIPTING_NEW_CSHARP_COMPILER;ENABLE_VIDEO;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_SUBSTANCE;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_UNITYWEBREQUEST;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_EVENT_QUEUE;ENABLE_CLUSTERINPUT;ENABLE_VR;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;NET_2_0;ENABLE_PROFILER;DEBUG;TRACE;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_NATIVE_ARRAY_CHECKS;UNITY_TEAM_LICENSE;ENABLE_VSTU;CROSS_PLATFORM_INPUT</DefineConstants>
+    <DefineConstants>TRACE;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_5_6_1;UNITY_5_6;UNITY_5;UNITY_64;UNITY_ANALYTICS;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_GENERICS;ENABLE_PVR_GI;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_RUNTIME_NAVMESH_BUILDING;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;ENABLE_NATIVE_ARRAY;INCLUDE_DYNAMIC_GI;INCLUDE_GI;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;INCLUDE_PUBNUB;ENABLE_PLAYMODE_TESTS_RUNNER;ENABLE_SCRIPTING_NEW_CSHARP_COMPILER;ENABLE_VIDEO;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_SUBSTANCE;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_UNITYWEBREQUEST;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_EVENT_QUEUE;ENABLE_CLUSTERINPUT;ENABLE_VR;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;NET_2_0;DEVELOPMENT_BUILD;ENABLE_PROFILER;DEBUG;TRACE;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_NATIVE_ARRAY_CHECKS;UNITY_TEAM_LICENSE;ENABLE_VSTU;CROSS_PLATFORM_INPUT</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
@@ -289,19 +289,28 @@
     <None Include="Assets\Resources\Scenarios\s0800.txt" />
     <None Include="Assets\Resources\Scenarios\s0801.txt" />
     <None Include="Assets\Resources\Scenarios\s0802.txt" />
+    <None Include="Assets\Resources\Scenarios\s0802A.txt" />
     <None Include="Assets\Resources\Scenarios\s0803.txt" />
+    <None Include="Assets\Resources\Scenarios\s0803A.txt" />
     <None Include="Assets\Resources\Scenarios\s0804.txt" />
+    <None Include="Assets\Resources\Scenarios\s0804A.txt" />
     <None Include="Assets\Resources\Scenarios\s0805.txt" />
+    <None Include="Assets\Resources\Scenarios\s0805A.txt" />
     <None Include="Assets\Resources\Scenarios\s0806.txt" />
+    <None Include="Assets\Resources\Scenarios\s0806A.txt" />
     <None Include="Assets\Resources\Scenarios\s0807.txt" />
     <None Include="Assets\Resources\Scenarios\s0808.txt" />
     <None Include="Assets\Resources\Scenarios\s0809.txt" />
     <None Include="Assets\Resources\Scenarios\s0810.txt" />
+    <None Include="Assets\Resources\Scenarios\s0810A.txt" />
     <None Include="Assets\Resources\Scenarios\s0811.txt" />
+    <None Include="Assets\Resources\Scenarios\s0811A.txt" />
     <None Include="Assets\Resources\Scenarios\s0812.txt" />
     <None Include="Assets\Resources\Scenarios\s0813.txt" />
+    <None Include="Assets\Resources\Scenarios\s0813A.txt" />
     <None Include="Assets\Resources\Scenarios\s0814.txt" />
     <None Include="Assets\Resources\Scenarios\s0815.txt" />
+    <None Include="Assets\Resources\Scenarios\s0815A.txt" />
     <None Include="Assets\Resources\Scenarios\s0816.txt" />
     <None Include="Assets\Resources\Scenarios\s0817.txt" />
     <None Include="Assets\Resources\Scenarios\s0818.txt" />
@@ -311,11 +320,13 @@
     <None Include="Assets\Resources\Scenarios\s0822.txt" />
     <None Include="Assets\Resources\Scenarios\s0823.txt" />
     <None Include="Assets\Resources\Scenarios\s0824.txt" />
+    <None Include="Assets\Resources\Scenarios\s0824A.txt" />
     <None Include="Assets\Resources\Scenarios\s0825.txt" />
     <None Include="Assets\Resources\Scenarios\s0826.txt" />
     <None Include="Assets\Resources\Scenarios\s0827.txt" />
     <None Include="Assets\Resources\Scenarios\s0828.txt" />
     <None Include="Assets\Resources\Scenarios\s0829.txt" />
+    <None Include="Assets\Resources\Scenarios\s0829A.txt" />
     <None Include="Assets\Resources\Scenarios\s0830.txt" />
     <None Include="Assets\Resources\Scenarios\s0831.txt" />
     <None Include="Assets\Resources\Scenarios\s0832.txt" />
@@ -324,6 +335,7 @@
     <None Include="Assets\Resources\Scenarios\s0835.txt" />
     <None Include="Assets\Resources\Scenarios\s0836.txt" />
     <None Include="Assets\Resources\Scenarios\s0837.txt" />
+    <None Include="Assets\Resources\Scenarios\s0837A.txt" />
     <None Include="Assets\Resources\Scenarios\s0838.txt" />
     <None Include="Assets\Resources\Scenarios\s0839.txt" />
     <None Include="Assets\Resources\Scenarios\s0840.txt" />
@@ -335,6 +347,7 @@
     <None Include="Assets\Resources\Scenarios\s0846.txt" />
     <None Include="Assets\Resources\Scenarios\s0847.txt" />
     <None Include="Assets\Resources\Scenarios\s0848.txt" />
+    <None Include="Assets\Resources\Scenarios\s0848A.txt" />
     <None Include="Assets\Resources\Scenarios\s0849.txt" />
     <None Include="Assets\Resources\Scenarios\s0850.txt" />
     <None Include="Assets\Resources\Scenarios\s0851.txt" />
@@ -348,6 +361,7 @@
     <None Include="Assets\Resources\Scenarios\s0859.txt" />
     <None Include="Assets\Resources\Scenarios\s0860.txt" />
     <None Include="Assets\Resources\Scenarios\s0861.txt" />
+    <None Include="Assets\Resources\Scenarios\s0862.txt" />
     <None Include="Assets\Resources\Scenarios\s1001.txt" />
     <None Include="Assets\Resources\Scenarios\s1002.txt" />
     <None Include="Assets\Resources\Scenarios\s1003.txt" />
@@ -360,17 +374,23 @@
     <None Include="Assets\Resources\Scenarios\s9805.txt" />
     <None Include="Assets\Resources\Scenarios\s9806.txt" />
     <None Include="Assets\Resources\Scenarios\s9807.txt" />
+    <None Include="Assets\Resources\Scenarios\s9980.txt" />
+    <None Include="Assets\Resources\Scenarios\s9981.txt" />
+    <None Include="Assets\Resources\Scenarios\s9982.txt" />
     <None Include="Assets\Resources\Scenarios\s9991.txt" />
     <None Include="Assets\Resources\Scenarios\s9994.txt" />
     <None Include="Assets\Resources\Scenarios\s9995.txt" />
     <None Include="Assets\Resources\Scenarios\s9996.txt" />
     <None Include="Assets\Resources\Scenarios\sBoss.txt" />
+    <None Include="Assets\Resources\Scenarios\sFinalBossA.txt" />
+    <None Include="Assets\Resources\Scenarios\sMana.txt" />
     <None Include="Assets\Resources\Scenarios\sNull.txt" />
     <None Include="Assets\Resources\Scenarios\ss0116.txt" />
     <None Include="Assets\Resources\Scenarios\ss0227.txt" />
     <None Include="Assets\Resources\Scenarios\ss0228.txt" />
     <None Include="Assets\Resources\Scenarios\ss0518.txt" />
     <None Include="Assets\Resources\Scenarios\ss0611.txt" />
+    <None Include="Assets\Resources\Scenarios\t1_1000.txt" />
     <None Include="Assets\Resources\Scenarios\test.txt" />
     <None Include="Assets\StreamingAssets\s0000.txt" />
     <None Include="Assets\uREPL\Resources\uREPL\Xmls\Help.txt" />

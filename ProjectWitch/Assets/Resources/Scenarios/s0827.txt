@@ -1,70 +1,218 @@
-;s0827
-;script:
-;direction:
-;timing:
+﻿;script 827
+;directer:yuichi
+;script:nikai
+;timing:s0826後
 
-■場面28
-;場面27
+;回想シーン　アリスの子供時代
+;ライザ(8)
+;ニア(8)
+;アリス(8)
+;ヴェロニカ(20)
+;エリ(12)（まだ人間）
+;白背景
+[filter name="fade" time=500]
+
+[loadcg id=0 ref="alice_mini"]
+[loadcg id=1 ref="raisa_mini"]
+[loadcg id=2 ref="nia_mini"]
+[loadcg id=3 ref="veronica_mini"]
+[loadcg id=4 ref="eli"]
+
+[drawcg id=0 dir="right" pos=2]
+[drawcg id=1 pos=3]
+[drawcg id=2 pos=4]
+
+[show_message]
+[bgm ref="023_event8"]
+[drawbg ref="1055m"]
+[filter name="color" color="FFFFFF" time=500]
+;ライザ
+#？？？
+[voice ref="080186"]
+やーい、泣き虫アリス！[p]
+;ニア
+#？？？
+[voice ref="080187"]
+泣き虫アリス！[p]
+[filter name="clear" time=500]
+#アリス
+[voice ref="080188"]
+…………。[p]
 #ライザ
-キヒヒッ！！　いいぞいいぞ、ぶち殺せ！！
-キーッヒヒヒヒヒヒ！！
+[voice ref="080189"]
+黙ってないでなんかいえよ！！[p]
+#ニア
+[voice ref="080190"]
+なんかいえ！[p]
+[rotate id=1 angle=5 time=50]
+[rotate id=1 angle=-5 time=50]
+[move id=0 x=-5 time=50]
+;[se ぽかっ！]
+#アリス
+[voice ref="080191"]
+ひっ！！[p]
+[move id=0 y=-5 time=200]
+#ライザ
+[voice ref="080192"]
+ちぇっ！　つまんねーの！[n]
+ニアー、どっかいこうぜぇ。[p]
+#ニア
+[voice ref="080193"]
+うんっ！[p]
+#ライザ
+[voice ref="080194"]
+キヒヒッ！[n]
+じゃあなー！　泣き虫アリス！[p]
+[scale id=1 sx=-1 time=100]
+[move id=1 x=70 time=500]
+#ニア
+[voice ref="080195"]
+じゃあなー！[p]
+[scale id=2 sx=-1 time=100]
+[move id=2 x=70 time=500]
+[scale id=0 sx=-1 time=300]
+[move id=0 x=-10 time=500]
+[move id=0 y=-10 time=500]
+#アリス
+[voice ref="080196"]
+ひっく……
+[move id=0 y=2 time=50]
+[move id=0 y=-2 time=50]
+えっ、
+[move id=0 y=2 time=50]
+[move id=0 y=-2 time=50]
+うええ……。[n]
+うっ……
+[move id=0 y=2 time=50]
+[move id=0 y=-2 time=50]
+ぐす……。[p]
 [cn]
-ホムンクルス軍団の攻撃は一方的だった。
-ホムンクルスと戦ったヴェロニカ軍はなすすべもなくやられていった。
+ライザとニアが去り、アリスはその場にしゃがみこんで泣き始めた。[p]
+[drawcg id=3 posx=-100 dir="right"]
+[drawcg id=4 posx=-100 dir="right" layer="front"]
+#ヴェロニカ
+[voice ref="080197"]
+おいエリ！　急がないと始まっちまうぜ！！[p]
 #エリ
-こっ、このおーーー！！
-めておいんぱくとーーー！！
-[cn]
-エリの放った流星群はホムンクルス軍団に直撃した。
-
-
-
-080181
-
-080182
-
-
-
-
-
-080183
-080184
-
-
-080185
-
+[voice ref="080198"]
+はい！　ヴェロニカ様！[p]
+[moveto id=3 x=90 time=600]
+[moveto id=4 x=70 time=600]
+#ヴェロニカ
+[voice ref="080199"]
+おっ？[n]
+[scale id=3 sx=-1 time=100]
+おい、ちょっと待て。[p]
+[voice ref="080200"]
+あのガキ、あんなところで何やってんだ？[p]
+[move id=4 y=5 time=50]
+[move id=4 y=-5 time=50]
 #エリ
-どうよ！　少しは効いたでしょ！
-#ホムンクルス
-グ……ギ、ギ、ギ……。
+[voice ref="080201"]
+ヴェ、ヴェロニカ様！[n]
+急ぐんじゃなかったんですか！？[p]
+[move id=3 y=5 time=50]
+[move id=3 y=-5 time=50]
+#ヴェロニカ
+[voice ref="080202"]
+オイ、お前！[n]
+そんなところでなにめそめそ泣いてんだよ。[p]
+#アリス
+[voice ref="080203"]
+うっ……
+[move id=0 y=2 time=50]
+[move id=0 y=-2 time=50]
+うええ……。[p]
+#ヴェロニカ
+[voice ref="080204"]
+おいったら！[p]
+[moveto id=3 x=40 time=500]
+[rotate id=3 angle=5 time=50]
+[rotate id=3 angle=-5 time=50]
+[scale id=0 sx=-1 time=100]
+[move id=0 y=10 time=100]
 [cn]
-ホムンクルス軍団のほどんどが無傷だった。
-エリ級の魔法をもってしても、
-ホムンクルス軍団にはほとんど効果がないのだ。
+ヴェロニカはアリスの両腕をつかんで、無理やり立ち上がらせた。[p]
+[move id=0 x=-5 time=100]
+#アリス
+[voice ref="080205"]
+…………。[p]
+#ヴェロニカ
+[voice ref="080206"]
+お前、この町の子供だろ？[p]
+#アリス
+[voice ref="080207"]
+…………うん。[p]
+#ヴェロニカ
+[voice ref="080208"]
+何をそんなに泣いてたんだ。[n]
+転んだのか？[p]
+[rotate id=0 angle=1 time=50]
+[rotate id=0 angle=-2 time=50]
+[rotate id=0 angle=2 time=50]
+[rotate id=0 angle=-1 time=50]
+#アリス
+[voice ref="080209"]
+…………。[p]
+[cn]
+ふるふる、とアリスは首を横に振った。[p]
+#ヴェロニカ
+[voice ref="080210"]
+まあいいや。[p]
+[filter name="fade" time=500]
+[clearcg id=0]
+[clearcg id=3]
+[clearcg id=4]
+[drawbg ref="Event/705B"]
+[filter name="clear" time=500]
+私はヴェロニカ！　花の魔女ヴェロニカ様だ！！[n]
+お前、私についてこないか？[n]
+キヒヒッ！ 面白いもんを見せてやるよ。[p]
+[cn]
+ヴェロニカはアリスに向かって手を差し出した。[p]
+#アリス
+[voice ref="080211"]
+…………。[p]
+[cn]
+アリスはヴェロニカを見た。[p]
+ヴェロニカは曇りのない笑顔でこちらを見ている。[p]
+#アリス
+[voice ref="080212"]
+…………。[p]
+[cn]
+アリスはヴェロニカの手を取った。[p]
+#ヴェロニカ
+[voice ref="080213"]
+よし、決まりだな！[n]
+お前、名前はなんていうんだ？[p]
+#アリス
+[voice ref="080214"]
+……リス。[p]
+[drawbg ref="Event/705A"]
+#ヴェロニカ
+[voice ref="080215"]
+あん？　よく聞こえねえよ……。[p]
+#アリス
+[voice ref="080216"]
+アリス……。[p]
+#ヴェロニカ
+[voice ref="080217"]
+アリス？[n]
+……へえ、かわいい名前じゃねえか。[p]
+[drawbg ref="Event/705B"]
+[voice ref="080218"]
+それじゃあ、アリス。 行くぞ、私についてこい！[p]
+#アリス
+[voice ref="080219"]
+……うん。[p]
 #エリ
-そんな……！！
-シッ、シードル！
-あんた何とかしなさいよ！！
-#シードル
-そんなこといわれても！
-私たちの攻撃も全く効いてないですよ！！
+[voice ref="080220"]
+ヴェロニカ様はいっつもこれなんだから……もう。[p]
+[hide_message]
+[clearbg]
+[stopbgm]
+[wait time=500]
+[filter name="clear" time="500"]
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-[cn]
-もはや、撤退するほかなかった。
-ヴェロニカ軍は、ワルサワの町を放棄し、ベルリ城まで撤退した。
+[sys_memset index=827 value="1"]

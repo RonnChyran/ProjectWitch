@@ -1,13 +1,37 @@
 ;s0857
-;script:
-;direction:
-;timing:
+;directer:yuichi
+;script:nikai
+;timing:s0856後 戦闘敗北
+[field_area_hilight id=104]
+[filter name="fade" time=500]
 
-;場面59-2
+[loadcg id=0 ref="alice"]
+
+[bgm ref="006_battle3"]
+[drawbg ref="1001m"]
+
+[drawcg id=0 pos=3 state=2]
+
+[wait time=500]
+[filter name="clear" time=500]
+
+
+[show_message]
 #名無しの大魔女
-ふん、性懲りもなく現れたな。
-何度来たところで同じことだ……。
+[voice ref="080945m"]
+キィヒヒヒヒヒ！！[n]
+その程度か、拍子抜けだなぁ……。[p]
 #アリス
-うるさい！
-絶対……、絶対ぶち殺す。
-何年かかろうと……絶対！
+[voice ref="080945n"]
+……絶対殺してやる。[n]
+次こそ……絶対殺してやる！！[p]
+
+[hide_message]
+[filter name="fade" time=500]
+[clearcg id=0]
+[clearbg]
+[stopbgm]
+[wait time=500]
+[filter name="clear" time="500"]
+
+[sys_memset index=857 value="1"]

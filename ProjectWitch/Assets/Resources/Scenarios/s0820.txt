@@ -1,42 +1,71 @@
-;s0820
-;script:
-;direction:
-;timing:
+﻿;script 820
+;directer:yuichi
+;script:nikai
+;timing:アリスが４つ領地を占領してから
 
-■場面21
+[field_area_hilight id=80]
+[wait time=500]
 
+[loadcg id=0 ref="veronica"]
+[loadcg id=1 ref="raisa"]
+[loadcg id=2 ref="nia"]
 
-#エリ
-そーれ、放てーーー！！！
-フフフッ！！　いいわよぉ、どんどん敵が倒れていくじゃない！！
-ねえシードル！！
-#シードル
-ええ、この戦い、こちらが完全に主導権を握っております。
-さあ、このまま一気に畳みかけてしまいましょう。
+[filter name="fade" time=500]
+[bgm ref="018_event3"]
+[drawbg ref="1030e"]
+[drawcg id=0 pos=3]
+[filter name="clear" time=500]
 
-
-
-080128
-
-080129
-
-
-
-
-
-
-
-
-
-
-
-#エリ
-ええ、シードル！　行ってきなさい！！
-#シードル
-はっ！
+[show_message]
+レーニングラッド要塞での戦いは長期戦へと突入していた。[p]
+ここになって、両軍の戦力差が表れてきた。[p]
+ライザ軍の猛攻が弱まってきたのだ。[p]
+#ヴェロニカ
+[voice ref="080130"]
+効いてきたわね……。[n]
+[scale id=0 sx=-1 time=200]
+だれかいますか！[p]
+#ヴェロニカ部下
+[voice ref="080131"]
+はっ！[p]
+#ヴェロニカ
+[voice ref="080132"]
+エリに、あと少しで総攻撃を開始すると伝えてちょうだい。[p]
+#ヴェロニカ部下
+[voice ref="080133"]
+はっ！[p]
 [cn]
-二日目の戦い。ここで初めてヴェロニカ側から仕掛けることになった。
-シードルが先陣を切って外で交戦する敵へ突っ込んでいったのだ。
-;自動戦闘
-;シードル勝利
-;領地キープ
+ヴェロニカの森でのゲリラ作戦が効いてきたのだ。[p]
+最初の方はライザ側で戦っていた健康な兵たちがヴェロニカとエリの軍勢に猛攻撃を加えていたが、
+その兵士たちも連日の戦いで疲弊していった。[p]
+残ったニアの兵は森でのゲリラ作戦のおかげでいまだ使い物にならない。[p]
+[filter name="fade" time=500]
+[clearcg id=0]
+[drawcg id=2 pos=3 dir="right"]
+[drawcg id=1 pos=3 dir="right"]
+[drawbg ref="1037e"]
+[wait time=500]
+[filter name="clear" time=500]
+一方のヴェロニカ陣営はエリは比較的早めに撤退し被害は軽微、[p]
+ヴェロニカに至っては森に入ってからというもの被害がほぼなかったため、
+ほとんど万全の状態だったのだ。[p]
+#ライザ
+[voice ref="080134"]
+ちっ！　あれさえ早く届けば……。[n]
+早くしやがれってんだ、あのポンコツども……。[p]
+[cn]
+ライザはそうぼそっとつぶやき、唇をかんだ。[p]
+彼女には秘策があったのだ。[p]
+しかしその秘策も、まだ完成には遠いのだった。[p]
+
+[hide_message]
+[filter name="fade" time="500"]
+[clearbg]
+[clearcg id=1]
+[clearcg id=2]
+[wait time=500]
+[filter name="clear" time="500"]
+[stopbgm]
+
+
+[sys_memset index=820 value="1"]

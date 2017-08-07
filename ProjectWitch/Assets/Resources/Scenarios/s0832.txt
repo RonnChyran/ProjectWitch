@@ -1,10 +1,244 @@
-;s0832
-;script:
-;direction:
-;timing:
+﻿;script 832
+;directer:yuichi
+;script:nikai
+;timing:s0831後
+[field_area_hilight id=104]
+[filter name="fade" time=500]
 
-■場面33
-;場面32後
-;自動戦闘
-;ライザ勝利
-;84:ベルリ城占領
+[loadcg id=0 ref="veronica"]
+[loadcg id=1 ref="raisa"]
+[loadcg id=2 ref="eli"]
+[loadcg id=3 ref="nia"]
+
+[bgm ref="015_raizania"]
+[drawbg ref="1000n"]
+
+[drawcg id=0 posx=0 dir="right"]
+[drawcg id=2 posx=-10 dir="right" layer="front"]
+[drawcg id=1 pos=5 layer="front"]
+[drawcg id=3 dir="right" posx=-35 layer="front"]
+
+[wait time=500]
+[filter name="clear" time=500]
+
+
+;アリスがすべての領地を占領
+[show_message]
+ベルリ城。[p]
+#ライザ
+[voice ref="080308"]
+キヒヒヒヒヒッ！！！[n]
+いい眺めだなぁヴェロニカぁ！！[p]
+[voice ref="080309"]
+ヴェロニカとエリはとらえられ、ライザの前に突き出された。[p]
+#ヴェロニカ
+[voice ref="080310"]
+ライザ……[n]
+あなた、とんでもないことをしているのがわかっているの……！？[p]
+[scale id=1 sx=-1 time=400]
+#ライザ
+;棒読み
+[voice ref="080311"]
+えー、なんのことだろー。[p]
+#ヴェロニカ
+[voice ref="080312"]
+馬鹿にしているの！？[p]
+#ライザ
+[voice ref="080313"]
+……そこのゴスロリのガキだって、ホムンクルスじゃねえか。[p]
+[move id=0 y=-2 time=20]
+[move id=2 y=-2 time=20]
+[move id=0 y=2 time=20]
+[move id=2 y=2 time=20]
+#ヴェロニカ
+[voice ref="080314"]
+！？[n]
+……なぜそれを。[p]
+[scale id=1 sx=-1 time=200]
+#ライザ
+[voice ref="080315"]
+キヒヒッ！！[n]
+お前たちがこの前会話しているのを聞いたんだ。[p]
+[voice ref="080316"]
+「大人の姿に、体を作り直しましょうか」ってな。[p]
+[voice ref="080317"]
+魔法が使えて成長しない魔女[n]
+……そんなのいるわけねえだろ。[p]
+[move id=2 x=2 time=20]
+#エリ
+[voice ref="080318"]
+ヴェロニカ様を……[n]
+ヴェロニカ様をお前と一緒にするな！！！！[p]
+[move id=0 y=-2 time=100]
+[move id=0 y=2 time=100]
+[voice ref="080319"]
+ヴェロニカ様は、私を助けるためだったんだ！！[p]
+[voice ref="080320"]
+戦争の道具としてホムンクルスを生み出したお前とは違う！！[p]
+[move id=2 x=-2 time=20]
+[move id=2 y=-5 time=300]
+[voice ref="080321"]
+……それなのに、それが原因でお師匠様に勘当されて[n]
+私が……。[p]
+#ヴェロニカ
+[voice ref="080323"]
+エリ！　あなたがいたから私はここまで来れたのよ。[n]
+自分を責めてはいけないわ。[p]
+[move id=2 y=5 time=300]
+#エリ
+[voice ref="080324"]
+ヴェロニカ様……。[p]
+#ライザ
+[voice ref="080325"]
+ふん……、下らねえ。[n]
+戦争だろうと人助けだろうと兵器は兵器なんだよ。[p]
+[voice ref="080326"]
+ニア！[n]
+こいつらをマジノラインの牢獄へ幽閉しろ。[p]
+[rotate id=0 angle=2 time=20]
+[rotate id=0 angle=-2 time=20]
+[voice ref="080327"]
+あそこの牢獄なら、そう簡単に逃げ出すことはできないはずだ。[p]
+[move id=3 y=5 time=50]
+[move id=3 y=-5 time=50]
+#ニア
+[voice ref="080328"]
+がってんだい！[p]
+[voice ref="080329"]
+……でも、ライザぁー。[n]
+さっさとヴェロニカぶち殺せばいいじゃん！[p]
+[voice ref="080330"]
+そうすれば絶対に逃げ出さないよー？[p]
+#ライザ
+[voice ref="080331"]
+ばかやろう。 こいつには散々苦労したんだ。[n]
+ちゃんとゆーっくり、いたぶって殺さないとな……。[p]
+#ヴェロニカ
+[voice ref="080332"]
+……ライザ、あなた。[p]
+#ライザ
+[voice ref="080333"]
+キヒヒッ！[n]
+そもそも、お前が悪いんだぜェ？[p]
+[voice ref="080334"]
+こっちに来てからお前、すっかり人が変わっちまったもんなぁ……。[p]
+[voice ref="080335"]
+昔はあんなに輝いてたのによォ。[p]
+[move id=3 y=5 time=50]
+[move id=3 y=-5 time=50]
+#ニア
+[voice ref="080336"]
+そうそう！[n]
+もう今のヴェロニカは見る影もないよねぇー！[p]
+[rotate id=2 angle=2 time=20]
+[rotate id=2 angle=-2 time=20]
+#エリ
+[voice ref="080337"]
+お前ら好き勝手言いやがって！！[p]
+#ライザ
+[voice ref="080338"]
+キヒヒッ！　負け犬が吠えるねえ……。[p]
+[voice ref="080339"]
+そんなこと言われても、[p]
+[rotate id=1 angle=10 time=500]
+[voice ref="080340"]
+ぜーーんぜん、
+[rotate id=1 angle=-20 time=1000]
+まーーーーったく、
+[rotate id=1 angle=20 time=1000]
+ちーーーーっとも、[p]
+[rotate id=1 angle=-10 time=500]
+[voice ref="080341"]
+響いてこねえんだよなぁーーーー！！？[p]
+[move id=3 x=5 time=100]
+[move id=2 x=2 time=20]
+[move id=3 x=-5 time=50]
+[move id=2 x=-2 time=20]
+#エリ
+[voice ref="080342"]
+このっ……！！[p]
+#ヴェロニカ
+[voice ref="080343"]
+エリ……、逃げなさい。[p]
+[rotate id=0 angle=2 time=20]
+[rotate id=0 angle=-2 time=20]
+#エリ
+[voice ref="080344"]
+えっ……。[p]
+[cn]
+その時エリを縛っていた手かせが外された。[p]
+ヴェロニカはこっそりエリの手かせを、ヘアピンで開錠したのだった。[p]
+#エリ
+[voice ref="080345"]
+（でも、ヴェロニカ様が……。）[p]
+#ヴェロニカ
+[voice ref="080346"]
+（アリスに助けを求めなさい。[n]
+あの子ならきっと……。）[p]
+#エリ
+[voice ref="080347"]
+(あの子供ですか！？[n]
+そういえばこのあいだ領主になったと聞きましたが、
+まさか本当に魔女だったとは……。)[p]
+[voice ref="080348"]
+(でも、あの気の弱そうな子がライザにかなうとは…)[p]
+#ヴェロニカ
+[voice ref="080349"]
+(ふふ……[n]
+この前あったけれどそんなことはなかったわよ。)[p]
+[voice ref="080350"]
+(……アリスを支えてあげてちょうだい、エリ。)[p]
+#エリ
+[voice ref="080351"]
+(……はい、わかりました。ヴェロニカ様。)[p]
+[move id=2 y=5 time=500]
+[move id=2 y=-5 time=500]
+[voice ref="080352"]
+……ふう。[p]
+[cn]
+エリは深呼吸をしてライザをにらみつけた。[p]
+#ライザ
+[voice ref="080353"]
+あん……てめえ。[p]
+[scale id=2 sx=-1 time=100]
+[move id=2 x=-60 time=350]
+[scale id=3 sx=-1 time=100]
+[voice ref="080354"]
+あっ！！[p]
+[cn]
+ライザが口を開いた瞬間、エリは素早く立ち上がり、城の出口へ向かって走り始めた。[p]
+#ライザ
+[voice ref="080355"]
+てめえヴェロニカァーーーー！！！！[p]
+[moveto id=1 x=60 time=100]
+[move id=0 x=-5 time=50]
+[move id=0 y=-5 time=50]
+[se ref="151"]
+[cn]
+ドカッ！！[p]
+#ヴェロニカ
+[voice ref="080356"]
+ぐ……っ！！[p]
+[cn]
+ライザのけりがヴェロニカの腹を直撃する。[p]
+#ライザ
+[voice ref="080357"]
+追えッッ！！　そいつは部下だ！！[n]
+構わんからぶち殺せ！！[p]
+[cn]
+エリの逃走劇が始まった……。[p]
+
+[hide_message]
+[filter name="fade" time=500]
+[clearcg id=0]
+[clearcg id=1]
+[clearcg id=2]
+[clearcg id=3]
+[clearbg]
+[stopbgm]
+[wait time=500]
+[filter name="clear" time="500"]
+
+[change_area_owner area=84 owner=8]
+
+[sys_memset index=832 value="1"]

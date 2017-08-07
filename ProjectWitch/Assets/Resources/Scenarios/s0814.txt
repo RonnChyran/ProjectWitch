@@ -1,67 +1,49 @@
-;s0814
-;script:
-;direction:
-;timing:
+﻿;script 814
+;directer:yuichi
+;script:nikai
+;timing:s0811後
 
-■場面15
-;場面14後
-モスクの森南。
+[field_area_hilight id=89]
+[wait time=500]
 
+[loadcg id=0 ref="veronica"]
+[loadcg id=1 ref="nia"]
 
+[filter name="fade" time=500]
+[bgm ref="004_battle1"]
+[drawbg ref="1018e"]
+[drawcg id=1 pos=2 dir="right"]
+[filter name="clear" time=500]
 
-
-080091
-
-
-
-
-
-
-
-080092
-
-
-
-
-
+[show_message]
+モスクの森北。[p]
 #ヴェロニカ
-そろそろ潮時ね……。
-総員撤退よ！！
-[cn]
-多くが民兵で構成されたヴェロニカの軍隊。
-ゲリラ戦をするにはあまりにも経験が足りなかった。
-そのため、ゲリラ戦にもかかわらず数日で切り上げなければならなかった。
+[voice ref="080097"]
+今よッ！　突撃ー！！[p]
+[drawcg id=0 pos=4 mode="slidein"]
+[move id=1 y=5 time=50]
+[move id=1 y=-5 time=50]
 #ニア
-……………。
-……あ？
-[cn]
-しかし、それでも効果は絶大のようで、数日の間昼夜問わず魔法の雨にさらされたニアの軍はすっかり疲弊していた。
+[voice ref="080098"]
+まっ、またあ！？[p]
 
+[hide_message]
+[filter name="fade" time="500"]
+[clearbg]
+[clearcg id=0]
+[clearcg id=1]
+[wait time=500]
+[filter name="clear" time="500"]
+[stopbgm]
 
-080093
-
-
-080094
-
-080095
-
-
-080096
-
-
-
-
-
-#ニア
-あっ……あいつら、撤退していくぞ……。
-お、追えええ……。
-#ヴェロニカ部下
-ヴェロニカ様！　敵勢が追ってまいります。
-#ヴェロニカ
-ええ、わかったわ。
-しんがりを頼めるかしら。
-#ヴェロニカ部下
-はっ！　お任せください！！
 ;自動戦闘
-;ニア勝利（撤退する）
-;モスクの森南　占領
+;ヴェロニカ勝利
+;モスクの森北　キープ
+[unit_heal unit=24]
+[unit_heal unit=32]
+[battle_unit_in p0=24 e0=32]
+[battle_time time=5]
+[battle_area id=89]
+[battle_auto][battle_nonpre]
+
+[sys_memset index=814 value="1"]

@@ -1,44 +1,66 @@
-;s0850
-;script:
-;direction:
-;timing:
+﻿;script 850
+;directer:yuichi
+;script:nikai
+;timing:s0849後
+[field_area_hilight id=104]
+[filter name="fade" time=500]
 
-■場面52
-;場面51後
-ヴェロニカ宮。
+[loadcg id=0 ref="raisa"]
+
+[bgm ref="017_event2"]
+[drawbg ref="1000n"]
+
+[drawcg id=0 pos=3 posy=-10 dir="right"]
+
+[wait time=500]
+[filter name="clear" time=500]
+
+
+[show_message]
+ヴェロニカ宮。[p]
 #ライザ
-ニア！　ニアぁ！！！
-おいっ、しっかりしろぉ！！
+[voice ref="080739"]
+ニア！　
+[move id=0 y=-5 time=50]
+[move id=0 y=5 time=50]
+ニアぁ！！！[n]
+[move id=0 y=-5 time=50]
+[move id=0 y=5 time=50]
+おいっ、
+[move id=0 y=-5 time=50]
+[move id=0 y=5 time=50]
+しっかりしろぉ！！[p]
+[move id=0 y=-5 time=50]
+[move id=0 y=5 time=50]
+[move id=0 y=-5 time=50]
+[move id=0 y=5 time=50]
 [cn]
-何とかヴェロニカ宮まで帰り着いたライザたちだったが、
-ニアはすでに虫の息だった。
-
-
-
-
-080740
-
-
-
-
-
-080741
-080742
-
-
-
-
-
-
+何とかヴェロニカ宮まで帰り着いたライザたちだったが、[n]
+ニアはすでに虫の息だった。[p]
 #ニア
-あ……ぁ……。
+[voice ref="080740"]
+あ……ぁ……。[p]
 [cn]
-びくびくと、弱々しいけいれんを繰り返すニア。
-もう助からないということは、誰の目からも明らかだった。
+びくびくと、弱々しいけいれんを繰り返すニア。[p]
+もう助からないということは、の目からも明らかだった。[p]
 #ライザ
-ニア……畜生ぉ……。
-大丈夫だ！　大丈夫……私がきっと助けてやるからな！
-ニア……ニア！！
+[voice ref="080741"]
+ニア……畜生ぉ……。[p]
+[voice ref="080742"]
+大丈夫だ！　大丈夫……[n]
+私がきっと助けてやるからな！[n]
+ニア……ニア！！[p]
 [cn]
-ニアは、それからすぐに事切れた。
-ライザのニアを呼ぶ声が、いつまでも宮殿の中に響いていた。
+ニアはそれからすぐに事切れた。[p]
+ライザのニアを呼ぶ声がいつまでも宮殿の中に響いていた。[p]
+
+[hide_message]
+[filter name="fade" time=500]
+[clearcg id=0]
+[clearbg]
+[stopbgm]
+[wait time=500]
+[filter name="clear" time="500"]
+
+
+[sys_memset index=850 value="1"]
