@@ -30,10 +30,12 @@
 #オリヴィア
 [voice ref="020089"]
 カートン？ いいわよ、入ってきて。[p]
+[se ref="166"]
 [drawcg id=0 pos=1 dir="right" mode="slidein"]
 #カートン
 [voice ref="020098"]
 ……。[p]
+[move id=1 x=-10 time=300]
 #オリヴィア
 [voice ref="020099"]
 どうしたの？[n]
@@ -47,6 +49,7 @@
 ;おおこれはかたじけない。いただきます。
 ……♪[n]
 ……。[p]
+[move id=1 x=10 time=400]
 #オリヴィア
 [voice ref="020101"]
 相変わらず、あなたの話していることはさっぱりわからないわ。[p]
@@ -54,6 +57,8 @@
 [voice ref="020102"]
 ;申し訳ありません……。
 ……。[p]
+[move id=1 y=-2 time=20]
+[move id=1 y=2 time=20]
 #オリヴィア
 [voice ref="020103"]
 あっ、大丈夫だよ！[n]
@@ -64,14 +69,17 @@
 [voice ref="020105"]
 ;ええ、それが、西に不審な動きありと……。
 …………、……、……！[p]
+[move id=1 y=-5 time=500]
 #オリヴィア
 [voice ref="020106"]
 ……ご、ごめんなさい。[n]
 今のは完全にわからなかったわ。[p]
+[move id=1 y=5 time=200]
 [voice ref="020107"]
 そうだ！　筆談にしましょう。[p]
 [voice ref="020108"]
-そうよ、なんでもっと早く思いつかなかったのかしら。[n]
+そうよ、なんでもっと早く思いつかなかったのかしら[n]
+[move id=1 x=-10 time=300]
 はい！　紙とペンよ。[p]
 #カートン
 [voice ref="020109"]
@@ -104,6 +112,7 @@
 #オリヴィア
 [voice ref="020115"]
 ヘレン？[p]
+[se ref="166"]
 [drawcg id=2 dir="right" pos=1 layer="front" state=4 mode="slidein"]
 #ヘレン
 [voice ref="020116"]
@@ -135,9 +144,10 @@
 ;え、ええ……。
 …………。[p]
 
-[scale id=2 sx=-1 time=0]
+[scale id=2 sx=-1 time=300]
 [move id=2 x=-50 time=250]
 [move id=1 x=-100 time=500]
+[scale id=0 sx=-1 time=200]
 [cn]
 カートンを一人残して、オリヴィアたちはトリアイナ領へ向かった。[p]
 
@@ -195,7 +205,7 @@
 はい、お任せください！[p]
 [cn]
 
-[scale id=4 sx=-1 time=0]
+[scale id=4 sx=-1 time=200]
 [clearcg id=4 mode="slideout"]
 
 [wait time=200]
@@ -241,7 +251,7 @@
 #トリアイナ
 [voice ref="020128"]
 本当に行くのですか？[p]
-[drawcg id=6 pos=2 dir="right"]
+[drawcg id=6 pos=3 dir="right"]
 #マルゲル
 [voice ref="020129"]
 ええ、仲間とはぐれてしまいました。[n]
@@ -254,14 +264,14 @@
 [voice ref="020131"]
 ……お気遣いありがとうございます。[n]
 失礼します。[p]
-
-[scale id=6 sx=-1 time=0]
-
+[move id=6 y=-2 time=20]
+[move id=6 y=2 time=20]
 #ヘレン
 [voice ref="020132"]
 あっ、ちょっとマルゲルさん、どこ行くのよ。[p]
 
-[move id=6 x=40 time=400]
+[scale id=6 sx=-1 time=300]
+[move id=6 x=20 time=400]
 [drawcg id=2 mode="slidein" layer="front" dir="right" pos=2 state=1]
 [drawcg id=1 mode="slidein" layer="front" dir="right" pos=1]
 
@@ -271,27 +281,30 @@
 #オリヴィア
 [voice ref="020134"]
 あっ、その、[n]
-お庭でとれたポテトをおすそ分けに来たんだけど……。[p]
+お庭でとれたポテトをおすそ分けに来たんだけど……[p]
 #マルゲル
 [voice ref="020135"]
 ……オリヴィア殿。[p]
+[move id=1 y=-2 time=20]
+[move id=1 y=2 time=20]
 #オリヴィア
 [voice ref="020136"]
 へっ！？[n]
 あっ、ハイ！[p]
+[move id=1 y=-5 time=50]
+[move id=1 y=5 time=50]
+
 #マルゲル
 [voice ref="020137"]
 氷豆のスープ、おいしかったです。[n]
 ……それでは。[p]
 
-[move id=6 x=-50 time=500]
+[move id=6 x=-50 time=1000]
 
 #オリヴィア
 [voice ref="020138"]
 ……マルゲルさん。[p]
-
-[scale id=2 sx=-1 time=0]
-
+[scale id=2 sx=-1 time=200]
 #ヘレン
 [voice ref="020139"]
 ね、ねえ待ちなよ！[n]
@@ -301,6 +314,8 @@
 ……。[p]
 
 [move id=6 x=-40 time=500]
+[move id=2 x=-5 time=100]
+[scale id=1 sx=-1 time=200]
 
 #ヘレン
 [voice ref="020141"]
@@ -310,15 +325,21 @@
 #ヘレン
 [voice ref="020142"]
 何なのよ、あいつ。[p]
+[scale id=2 sx=-1 time=300]
+
 #トリアイナ
 [voice ref="020143"]
 はぐれた仲間を探しに行くそうよ。[p]
 [voice ref="020144"]
 ごめんなさい、オリヴィア。[n]
+[move id=5 x=-10 time=300]
 ポテト、ありがたくもらうわね。[p]
+[scale id=1 sx=-1 time=300]
 #オリヴィア
 [voice ref="020145"]
 あっ、えっ……うん。[p]
+[move id=1 x=40 time=700]
+[filter name="fade" time=500]
 [cn]
 謎の吟遊詩人マルゲル。[p]
 どこからともなく表れ、立ち去った彼に、[n]
@@ -326,7 +347,6 @@
 
 ;場面転換
 [hide_message]
-[filter name="fade" time=500]
 [clearbg]
 [clearcg id=1]
 [clearcg id=2]
@@ -352,7 +372,7 @@
 [cn]
 コンペイ砦。[n]
 オリヴィア領とベガ領の国境。[p]
-オリヴィア領の兵力の8割はこの国境に集中していた。[p]
+オリヴィア領の兵力の8割はこの国境に集中していた[p]
 いつドラゴンたちが攻めてきてもおかしくない。[p]
 この場所は常にそんな緊張感に包まれていた。[p]
 [drawcg id=0 posx=50]

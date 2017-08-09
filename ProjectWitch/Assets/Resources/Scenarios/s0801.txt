@@ -162,8 +162,5 @@
 [wait time=500]
 [filter name="clear" time="500"]
 
-;戦闘後処理
-[change_area_owner area=94 owner=8]
-
 [stopbgm]
 [sys_memset index=801 value="1"]

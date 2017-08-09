@@ -13,22 +13,24 @@
 [filter name="fade" time=500]
 [drawbg ref="1047n"]
 [bgm ref="005_battle2"]
+[drawcg id=1 pos="center" dir="right"]
 [filter name="clear" time=500]
 
 [show_message]
-[drawcg id=1 pos="center"]
+[scale id=1 sx=-1 time=100]
 #クロ
 [voice ref="010053"]
 引けっ、引けーーー！！！ [p]
-[cn]
+[move id=1 x=-70 time=400]
 
 [filter name="fade" time=500]
 [clearcg id=1]
+[cn]
 …………。[p]
 [drawbg ref="1048n"]
-[filter name="clear" time=500]
 
-[drawcg id=2 pos="2" dir="right"]
+[drawcg id=2 pos=4]
+[filter name="clear" time=500]
 #伝令
 [voice ref="010054"]
 ワーウルフ様、アリス軍が撤退を始めました！[p]
@@ -45,13 +47,13 @@
 まさか伏兵！？[p]
 #伝令
 [voice ref="010058"]
-ただのいぬっコロかと思えば、案外カンがいいんだな。[p]
+ただのいぬっコロかと思えば、案外カンがいいんだな[p]
 #ワーウルフ
 [voice ref="010059"]
 なっ、貴様、何者だ！！[p]
 [moveto id=1 x=20 y=50 time=200]
-[clearcg id=3]
-[drawcg id=0 pos="4" state=1]
+;[clearcg id=3]
+[drawcg id=0 pos="2" dir="right" state=1]
 
 #アリス
 [voice ref="010060"]
@@ -66,7 +68,7 @@
 破壊光線ーーーーーーッ！！！[p]
 
 [hide_message]
-[se ref="051_b_bomb2"]
+[se ref="100_fx_aliceA"]
 [filter name="color" color="FFFFFF" time=800]
 [show_message]
 
@@ -76,13 +78,14 @@
 [cn]
 [clearcg id=2]
 
-[filter name="clear" time=4000]
+[filter name="clear" time=800]
 
+[scale id=0 sx=-1 time=100]
 #アリス
-[changecg id=0 state=2]
 [voice ref="010064"]
 開門だッ！！　魔導砲は制圧した。[n]
 全軍突撃！！　裏切り者を逃がすなッ！！[p]
+[scale id=0 sx=-1 time=100]
 #アリス軍兵士
 [voice ref="010064a"]
  オオオオオオォォォォォーーーーッ！！！[p]
@@ -92,13 +95,13 @@
 …………。[p]
 [clearcg id=0]
 [drawbg ref="1030m"]
-[filter name="clear" time=500]
 
 [bgm ref="021_event6"]
 
-;[drawcg id=2 pos="2" dir="right"]
-[drawcg id=0 pos="5"]
+[drawcg id=2 posx=-15 dir="right"]
+[drawcg id=0 pos="5" layer="front"]
 [drawcg id=1 pos="1" dir="right"]
+[filter name="clear" time=500]
 [show_message]
 #クロ
 [voice ref="010065"]
@@ -132,7 +135,7 @@
 #アリス
 [voice ref="010071"]
 確かにあいつは怒っていたが、[n]
-まさかその程度の理由で反乱を起こすとは考えられん。[p]
+まさかその程度の理由で反乱を起こすとは考えられん[p]
 #ワーウルフ
 [voice ref="010072"]
 くっ……！[n]
@@ -156,7 +159,7 @@
 ;倒れる
 [move id=2 x=0 y=-10 time=400]
 [clearcg id=2]
-
+[scale id=0 sx=-1 time=300]
 #アリス
 [voice ref="010076"]
 クロ、コイツの首をはねて、北の方に向けてさらせ。[n]
@@ -165,9 +168,13 @@
 #クロ
 [voice ref="010077"]
 はっ……。[p]
+[move id=0 x=30 time=800]
 #アリス
 [voice ref="010078"]
 フン、領主はこの私だ。 絶対に譲らんぞ。 [p]
+[move id=0 x=40 time=1000]
+[moveto id=1 x=50 time=800]
+[move id=1 y=-5 time=300]
 
 [hide_message]
 [filter name="fade" time=500]

@@ -1155,22 +1155,17 @@ namespace ProjectWitch
 			get
 			{
 				var game = Game.GetInstance();
+                state = TerritoryState.Prepare;
 
-				if (state == TerritoryState.Prepare)
-				{
-					if (InvationableFlagIndex == -1 || !game.GameData.Memory.IsZero(InvationableFlagIndex))
-						state = TerritoryState.Ready;
-				}
-				if (state == TerritoryState.Ready)
-				{
-					if (ActiveFlagIndex == -1 || !game.GameData.Memory.IsZero(ActiveFlagIndex))
-						state = TerritoryState.Active;
-				}
-				if (state == TerritoryState.Active)
-				{
-					if (DeadFlagIndex == -1 || !game.GameData.Memory.IsZero(DeadFlagIndex))
-						state = TerritoryState.Dead;
-				}
+                if (InvationableFlagIndex == -1 || !game.GameData.Memory.IsZero(InvationableFlagIndex))
+                    state = TerritoryState.Ready;
+
+                if (ActiveFlagIndex == -1 || !game.GameData.Memory.IsZero(ActiveFlagIndex))
+                    state = TerritoryState.Active;
+
+                if (DeadFlagIndex == -1 || !game.GameData.Memory.IsZero(DeadFlagIndex))
+                    state = TerritoryState.Dead;
+
 				return state;
 			}
 			private set { }

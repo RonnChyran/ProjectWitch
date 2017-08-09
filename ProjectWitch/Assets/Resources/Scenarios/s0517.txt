@@ -1,4 +1,5 @@
 ;s0517
+;directer:yuichi
 ;script: nikai
 ;timing:　場面18戦闘後、勝利、敗北にかかわらず
 
@@ -53,13 +54,14 @@
 #アリス
 [voice ref="050528"]
 エミル、薬をかせ。[p]
+[scale id=2 sx=-1 time=100]
 #エミル
 [voice ref="050529"]
 はっ、ハイ！[p]
 [cn]
 
 [move id=0 x=30 time=300]
-[wait time=200]
+[scale id=2 sx=-1 time=200]
 [move id=0 y=5 time=100]
 [move id=0 y=-5 time=100]
 [move id=0 y=5 time=100]
@@ -212,7 +214,7 @@
 [voice ref="050562"]
 あの薬はお前のところの魔女が作ったものだぞ？[p]
 [voice ref="050563"]
-まともな魔女は、[p]
+まともな魔女は[p]
 [voice ref="050564"]
 人間に魔法を使わせようなんて考えたりしない。[p]
 [voice ref="050565"]
@@ -225,7 +227,6 @@
 へっ、兵器って……。[p]
 [scale id=0 sx=-1 time=300]
 [move id=0 x=10 time=500]
-[changecg id=0 state=0]
 #アリス
 [voice ref="050568"]
 ババァの書庫を調べさせた。[n]
@@ -250,7 +251,6 @@
 エミル！[n]
 ああ……、どこに行ったのかと思えば。[p]
 [bgm ref="011_charlotte"]
-[changecg id=0 state=0]
 
 [scale id=2 sx=-1 time=200]
 [move id=2 x=-35 time=200]
@@ -269,6 +269,8 @@
 #クロ
 [voice ref="050575"]
 アリス様、お下がりください。[p]
+
+[changecg id=0 state=6]
 #アリス
 [voice ref="050576"]
 てめえロレーヌの魔女！[p]
@@ -291,6 +293,7 @@
 [voice ref="050583"]
 そうですわ。[n]
 エミル、あの薬ですが、私のお師匠様が８００年前の戦争で生み出した……。[p]
+[changecg id=0 state=2]
 #アリス
 [voice ref="050584"]
 その話はもうした。[p]
@@ -322,9 +325,11 @@
 #アリス
 [voice ref="050593"]
 街で買った、あれ出せ。[p]
+[scale id=1 sx=-1 time=300]
 #クロ
 [voice ref="050594"]
 こちらに。[p]
+[scale id=1 sx=-1 time=300]
 #アリス
 [voice ref="050595"]
 よし、さてと……。[p]
@@ -401,7 +406,7 @@
 #シャルロッテ
 [voice ref="050610"]
 ゴールドシャワー！　
-[se ref="110_fx_charlotteA"]
+[se ref="110_fx_sharlotteA"]
 [filter name="flush" color="FFFF00" time=100]
 [filter name="flush" color="FFFF00" time=100]
 きゃっ！　[p]
@@ -685,6 +690,8 @@
 [voice ref="050662"]
 どうぞっす。[n]
 うちの庭でとれたハーブで淹れたハーブティーっす。[p]
+[move id=5 y=5 time=50]
+[move id=5 y=-5 time=50]
 [voice ref="050663"]
 ……じゃなくて、[n]
 なんでアンタがここにいるんすか！！[p]
@@ -705,7 +712,7 @@
 土地の契約書が２枚、[n]
 政権譲渡書類が３枚、[n]
 債務の譲渡書類１０枚と……。[p]
-[changecg id=0 state=2]
+[changecg id=0 state=6]
 #アリス
 [voice ref="050670"]
 まてまてまて！[n]
@@ -719,6 +726,7 @@
 #アリス
 [voice ref="050673"]
 せいし……けっぱんん？[p]
+[scale id=0 sx=-1 time=300]
 [voice ref="050674"]
 おいクロォ……[n]
 なんとかしてくれよ。[p]
@@ -874,13 +882,13 @@
 #エミル
 [voice ref="050710"]
 （アリスさんって、やっぱりいい人なのかな……。）[p]
+[filter name="fade" time=500]
 [cn]
 ロレーヌ一派。[p]
 魔女の流派の中で最も権威のある名門はこうして滅亡した[p]
 暖炉の上の帽子をついにシャルロッテが被ることはなく、帽子はその役目を終えたのだった。[p]
 
 [hide_message]
-[filter name="fade" time=500]
 [clearbg]
 [clearcg id=0]
 [clearcg id=2]

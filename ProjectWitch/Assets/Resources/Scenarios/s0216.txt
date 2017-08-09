@@ -74,6 +74,7 @@
 #マルゲル
 [voice ref="020540"]
 話はお聞きしました。[p]
+[scale id=1 sx=-1 time=100]
 #ヘレン
 [voice ref="020541"]
 マルゲルさん！[p]
@@ -84,6 +85,8 @@
 [voice ref="020543"]
 お世話になったお礼です。[n]
 私がしんがりを務めましょう。[p]
+[move id=1 y=5 time=50]
+[move id=1 y=-5 time=50]
 #ヘレン
 [voice ref="020543a"]
 でっ、でも！[n]
@@ -102,13 +105,15 @@
 #ヘレン
 [voice ref="020547"]
 気を付けてね、マルゲルさん。[p]
-[cn]
+[scale id=2 sx=-1 time=200]
+[move id=2 x=-50 time=500]
 
 [filter name="fade" time=500]
 [drawbg ref="1019m"]
 [clearcg id=0]
 [clearcg id=1]
 [clearcg id=2]
+[cn]
 こうして、トリアイナとヘレンは湖を脱出し、[n]
 オリヴィアの家へと逃げた。[p]
 マルゲルは500の兵を率い、[n]
@@ -130,6 +135,11 @@
 [clearcg id=2]
 [filter name="clear" time=500]
 [stopbgm]
+
+;ユニットデータをセット
+[unit_data_change id=34 member="MaxSoldierNum" value="500"]
+[unit_heal unit=34]
+[battle_unit_in e0=34]
 
 [battle_bgm ref="005_battle2"]
 [sys_memset index=216 value="1"]

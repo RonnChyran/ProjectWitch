@@ -15,13 +15,14 @@
 ;場面転換
 [filter name="fade" time=500]
 [drawbg ref="1005m"]
-[filter name="clear" time=500]
 [bgm ref="005_battle2"]
 
 [show_message]
 [drawcg id=1 pos=5]
 [drawcg id=2 pos=4]
 [drawcg id=3 pos=3]
+[drawcg id=0 pos=1 dir="right" state=2]
+[filter name="clear" time=500]
 #トリアイナ
 [voice ref="020659"]
 右翼展開急いで！[n]
@@ -44,7 +45,6 @@
 トリアイナの軍から無数の火球が降り注ぐ。[p]
 その火球に混乱したアリス軍の兵士たちは、[n]
 たまらず空いている後方へ逃げ出す。[p]
-[drawcg id=0 pos=1 dir="right" state=2]
 #アリス
 [voice ref="020661"]
 あっ！　こら！！　後ろに逃げるな！！　罠だっ！！[n]

@@ -20,6 +20,8 @@
 ;場面開始
 [drawcg id=0 pos=4 state=2]
 [show_message]
+[move id=0 y=5 time=50]
+[move id=0 y=-5 time=50]
 #アリス
 [voice ref="020269"]
 なにっ！！[n]

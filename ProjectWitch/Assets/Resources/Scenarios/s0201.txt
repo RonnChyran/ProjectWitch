@@ -26,9 +26,11 @@
 [voice ref="020033"]
 そうか……、分かった。[n]
 ……ウェッジ、すまない。行こう、マルコ。[p]
+[scale id=0 sx=-1 time=400]
 #部下
 [voice ref="020034"]
 ……はい。[p]
+[move id=0 x=10 time=500]
 [cn]
 二人は雪に沈んだかつての仲間の亡骸を背に歩き出した。[p]
 #部下
@@ -37,6 +39,11 @@
 マルゲル様、何か音が！[p]
 [cn]
 吹雪の中、風を切る音に交じり、低く、何かが唸るような音が聞こえた。[p]
+[scale id=0 sx=-1 time=400]
+[wait time=300]
+[scale id=0 sx=-1 time=400]
+[wait time=300]
+[scale id=0 sx=-1 time=400]
 #マルゲル
 [voice ref="020036"]
 私にも聞こえた。[n]
@@ -55,19 +62,21 @@
 #部下
 [voice ref="020038"]
 マルゲル様！！[p]
+[scale id=0 sx=-1 time=100]
 #マルゲル
 [voice ref="020039"]
 岩の陰に隠れろ！！[n]
 急げ！！[p]
+[move id=0 x=5 time=50]
+[filter name="color" color="FFFFFF" time=500]
 [cn]
 叫んだのもつかの間だった。[p]
-二人が三歩も歩かないうちに雪が彼らを覆いつくした。[p]
+二人が三歩も歩かないうちに雪が彼らを覆いつくした[p]
 彼らの意識はそこで途切れた。[p]
 
 ;クリア処理
 [stopbgm]
 [hide_message]
-[filter name="fade" time=500]
 [clearbg]
 [clearcg id=0]
 [filter name="clear" time=500]
@@ -86,12 +95,14 @@
 [filter name="fade" time="500"]
 [drawbg ref="1050m"]
 [bgm ref="009_triaina"]
-[filter name="clear" time="500"]
 
 ;場面開始
 [drawcg id=1 pos=2 dir="right"]
 [drawcg id=2 pos=4 state=1]
 [drawcg id=3 pos=5 layer="back"]
+[filter name="clear" time="500"]
+[move id=2 y=5 time=50]
+[move id=2 y=-5 time=50]
 #ヘレン
 [voice ref="020040"]
 それでね、ほんっと死ぬかと思ったんだから！！[p]
@@ -100,6 +111,7 @@
 ふふ……。[p]
 [voice ref="020041a"]
 オリヴィアはわざとやったわけではないのよ、許してあげなさい。[p]
+[move id=2 y=-10 time=500]
 #ヘレン
 [voice ref="020042"]
 わかってるけどぉ……。[p]
@@ -108,6 +120,8 @@
 ご、ごめんねヘレン……。[p]
 [voice ref="020043a"]
 次はちゃんとおいしく作れるように頑張るから。[p]
+[move id=2 y=10 time=500]
+[scale id=2 sx=-1 time=100]
 #ヘレン
 [voice ref="020044"]
 頑張らなくていいの！[n]
@@ -142,18 +156,21 @@
 [voice ref="020050"]
 あら、よかったじゃない。[n]
 あなたのところはいいわね、優秀な部下がいて。[p]
+[scale id=2 sx=-1 time=100]
 #ヘレン
 [voice ref="020051"]
 あっ、ちょっとトリアイナ！[n]
 それ私への当てつけじゃないでしょうね！[p]
 #トリアイナ
 [voice ref="020052"]
-ふふ……、分かっているなら、遊んでばかりいないで、[n]
+ふふ……、分かっているなら、遊んでばかりいないで
 たまには私の仕事を手伝って頂戴。[p]
+[move id=2 x=5 time=50]
 [cn]
 ゆったりとした時間が過ぎていた。[p]
 お茶もお菓子もすっかりなくなり、[n]
-一通り話しつくしたところで、 トリアイナが切り出した。[p]
+一通り話しつくしたところで、トリアイナが切り出した。[p]
+[move id=2 x=-10 time=400]
 #トリアイナ
 [voice ref="020053"]
 さあ、そろそろおしまいにしましょう。[p]
@@ -171,18 +188,20 @@
 #トリアイナ
 [voice ref="020057"]
 ええ。[p]
-[clearcg id=3 mode="slideout"]
-[clearcg id=2 mode="slideout"]
-[clearcg id=1]
+[scale id=2 sx=-1 time=300]
+[move id=2 x=10 time=200]
+[move id=2 y=2 time=20]
+[move id=2 y=-2 time=20]
+[changecg id=2 state=1]
 [cn]
-三人が席を立ち、宮殿を後にしようとした時だった。[p]
-[drawcg id=2 mode="slidein" state=1 pos=5]
+三人が席を立ち、オリヴィアたちが宮殿を後にしようとした時だった。[p]
 #ヘレン
 [voice ref="020058"]
 ねえ、あれ……だれか倒れてるわ！[p]
+[scale id=3 sx=-1 time=200]
+[move id=1 x=30 time=700]
 [cn]
 宮殿の入り口に、ずぶ濡れの男が一人、倒れていた。[p]
-[drawcg id=3 mode="slidein" layer="back" pos=4]
 #オリヴィア
 [voice ref="020059"]
 お、泳いできたのかな……。[p]
@@ -190,20 +209,21 @@
 [voice ref="020060"]
 バカね！ おぼれて沈んできたに決まってるじゃない！[n]
 ちょっとアンタ！　大丈夫！？[p]
-[drawcg id=0 pos=1 dir="right"]
 #？？？
 [voice ref="020061"]
 う……ん。[p]
-[drawcg id=1 layer="back" pos=3 dir="left"]
+[move id=1 x=20 time=300]
+[move id=1 y=-10 time=400]
+[wait time=500]
 #トリアイナ
 [voice ref="020062"]
 息があるわね。[n]
+[scale id=1 sx=-1 time=200]
 医務室に運ぶわよ。[p]
 
 ;画面遷移
 [cn]
 [filter name="fade" time=500]
-[clearcg id=0]
 [clearcg id=1]
 [clearcg id=2]
 [clearcg id=3]
@@ -240,6 +260,8 @@
 #？？？
 [voice ref="020070"]
 そちらは……？[p]
+[move id=3 y=5 time=50]
+[move id=3 y=-5 time=50]
 #オリヴィア
 [voice ref="020071"]
 へっ！？ あっ、き、きがついたんですか……。[n]
@@ -247,10 +269,12 @@
 #？？？
 [voice ref="020072"]
 ええ……、ありがとうございます。[n]
- 介抱していただいたようで。[p]
+介抱していただいたようで。[p]
+[scale id=2 sx=-1 time=300]
 #ヘレン
 [voice ref="020073"]
 この子はオリヴィアよ。[n]
+[scale id=2 sx=-1 time=300]
 ねえあなた、名前はなんていうの？[p]
 #マルゲル
 [voice ref="020074"]
@@ -321,11 +345,14 @@
 [voice ref="020084"]
 えっ、うん……。[n]
 スリープ！[p]
+[se ref="164"]
 [filter name="flush" time=500 color="ffffff"]
 #マルゲル
 [voice ref="020085"]
 一つ聞きたいことが……、ぐう。[p]
 [move id=0 x=10 y=-30 time=500]
+[clearcg id=0 mode="fadeout"]
+[scale id=2 sx=-1 time=300]
 #ヘレン
 [voice ref="020086"]
 さっ、その赤カラシさっさと塗り付けて、家に帰るわよ。[p]
@@ -335,7 +362,7 @@
 [voice ref="020087"]
 うん……。[p]
 [cn]
-ヘレンに見送られ、オリヴィアは氷の宮殿を後にした。[p]
+ヘレンに見送られ、オリヴィアは氷の宮殿を後にした[p]
 
 [hide_message]
 [filter name="fade" time="500"]

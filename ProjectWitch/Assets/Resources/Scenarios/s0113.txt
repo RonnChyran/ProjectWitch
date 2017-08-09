@@ -41,7 +41,7 @@
 #アリス
 [voice ref="010106"]
 クフフッ[n]
-まさかこの前町で買い付けた奴が早速役に立つとはな。[p]
+まさかこの前町で買い付けた奴が早速役に立つとはな[p]
 #チシャ
 [voice ref="010107"]
 触手モンスターとはいったいどういうつもりで買ったのですか。[p]
@@ -79,8 +79,8 @@
 [bgm ref="019_event4"]
 [filter name="clear" time=500]
 
-[drawcg id=1 pos="2" dir="right"]
-[drawcg id=0 pos="5"]
+[drawcg id=1 pos="2"]
+[drawcg id=0 pos="5" state=2]
 [drawcg id=3 pos="3"]
 [show_message]
 [cn]
@@ -103,9 +103,11 @@
 #部下
 [voice ref="010091"]
 はっ。[p]
+[scale id=1 sx=-1 time=300]
 #クロ
 [voice ref="010092"]
 アリス様……。[p]
+[scale id=0 sx=-1 time=300]
 #アリス
 [voice ref="010093"]
 ばかな奴だ。[n]
@@ -119,12 +121,14 @@
 #クロ
 [voice ref="010096"]
 …………はっ、かしこまりました。[p]
-[scale id=1 sx=-1 time=0]
+[scale id=1 sx=-1 time=200]
 [move id=1 x=-70 y=0 time=600]
 [clearcg id=1]
 
+[scale id=0 sx=-1 time=300]
+[moveto id=0 x=60 time=600]
+[move id=0 y=-10 time=600]
 #アリス
-[moveto id=0 x=50 time=600]
 [voice ref="010097"]
 メイジー……。[n]
 私は戦争をするぞ。[n]
@@ -132,6 +136,7 @@
 [voice ref="010098"]
 ヴェロニカもあのライザとかいういけ好かない魔女も北の大地も、[n]
 全部全部私のものにしてやる。[p]
+[move id=0 y=10 time=600]
 [voice ref="010099"]
 だから、せいぜい土の下から見ていろ。 [n]
 この私が世界最強の魔女。 大魔女になるところをな。 [p]

@@ -41,15 +41,15 @@
 [voice ref="020583"]
 ふん！　誰がてめえなんぞに負けるかよ！！[p]
 [drawcg id=3 posx=-30 mode="slidein" dir="right"]
+[drawcg id=4 posx=-40 layer="front" mode="slidein" dir="right"]
+[scale id=1 sx=-1 time=0]
+[move id=1 x=10 time=300]
 #マルゲル
 [voice ref="020584"]
 ええ、一人ならば負けるかもしれない。[p]
-[drawcg id=4 posx=-40 layer="front" mode="slidein" dir="right"]
 #オリヴィア
 [voice ref="020585"]
 み、みんなでやれば強い！　……から。[p]
-[scale id=1 sx=-1 time=0]
-[move id=1 x=10 time=300]
 #クロ
 [voice ref="020586"]
 三方から囲まれた！？[n]

@@ -1,4 +1,5 @@
 ;s0507
+;directer:yuichi
 ;script: nikai
 ;timing:　地点49戦闘敗北
 
@@ -42,9 +43,9 @@
 
 ;場面転換
 [drawcg id=1 pos=2 mode="slidein" dir="right"]
-[scale id=1 sx=-1 time=0]
+[scale id=1 sx=-1 time=100]
 [wait time=300]
-[scale id=1 sx=-1 time=0]
+[scale id=1 sx=-1 time=100]
 [wait time=300]
 
 #エミル
@@ -56,7 +57,7 @@
 #カスミ
 [voice ref="050181"]
 なんすか、朝から騒々しい……。[p]
-[scale id=1 sx=-1 time=0]
+[scale id=1 sx=-1 time=100]
 #エミル
 [voice ref="050182"]
 カスミさん！　姉さんが……！[p]
@@ -66,13 +67,15 @@
 #エミル
 [voice ref="050184"]
 ……そうか、それで。[p]
+[move id=2 y=-2 time=20]
+[move id=2 y=2 time=20]
 #カスミ
 [voice ref="050185"]
 えっ、まじすか。[p]
 #エミル
 [voice ref="050186"]
 ちょっと確認してきます！！[p]
-[scale id=1 sx=-1 time=0]
+[scale id=1 sx=-1 time=100]
 [move id=1 x=50 time=500]
 [wait time=300]
 [move id=2 x=10 time=300]
@@ -108,11 +111,11 @@
 #カスミ
 [voice ref="050193"]
 原液？[p]
-[scale id=1 sx=-1 time=0]
+[scale id=1 sx=-1 time=300]
 #エミル
 [voice ref="050194"]
 最初姉さんが飲んだのは10倍の水で薄めたものなんです。[p]
-[scale id=1 sx=-1 time=0]
+[scale id=1 sx=-1 time=200]
 [move id=1 x=10 time=400]
 [voice ref="050195"]
 それの原液だから……[n]
@@ -121,7 +124,7 @@
 [voice ref="050196"]
 それって、一気にパワーアップしたってことっすか？[n]
 それならそれでいいような気がするんすけど。[p]
-[scale id=1 sx=-1 time=0]
+[scale id=1 sx=-1 time=100]
 #エミル
 [voice ref="050197"]
 人間の体ではとても耐えられません！[p]
@@ -132,7 +135,7 @@
 ……ロッテさんに報告してくるっす。[n]
 エミル、ここで待ってるっすよ。[p]
 [hide_message]
-[scale id=2 sx=-1 time=0]
+[scale id=2 sx=-1 time=100]
 [move id=2 x=-100 time=500]
 
 [filter name="fade" time=500]

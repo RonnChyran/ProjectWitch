@@ -3,7 +3,7 @@
 ;timing:s0207戦闘後
 
 ;マップスクロール
-[field_area_hilight id=30]
+[field_area_hilight id=22]
 [wait time=200]
 
 ;ロード
@@ -15,7 +15,6 @@
 ;場面転換
 [filter name="fade" time=500]
 [drawbg ref="1030e"]
-[filter name="clear" time=500]
 
 [show_message]
 
@@ -24,10 +23,12 @@
 [bgm ref="021_event6"]
 
 [drawcg id=2 pos=4 state=1]
+[drawcg id=0 pos=2 dir="right"]
+[drawcg id=3 pos=5 layer="front" mode="slidein"]
+[filter name="clear" time=500]
 #アリス
 [voice ref="020362"]
 お前が氷の魔女、トリアイナか。[p]
-[drawcg id=0 pos=2 dir="right"]
 #トリアイナ
 [voice ref="020363"]
 くっ……。[p]
@@ -45,12 +46,12 @@
 [voice ref="020367"]
 ほう？[n]
 では、今ならどっちにつく？[p]
-[drawcg id=3 pos=5 layer="front" mode="slidein"]
 #クロ
 [voice ref="020368"]
 アリス様。むやみに勧誘する癖、[n]
 いい加減おやめください。[p]
 [changecg id=2 state=2]
+[scale id=2 sx=-1 time=100]
 #アリス
 [voice ref="020369"]
 いいから、黙って聞いてろ。[p]
@@ -59,6 +60,7 @@
 あなた、[n]
 まさか私を仲間に誘っているんじゃないでしょうね？[p]
 [changecg id=2 state=1]
+[scale id=2 sx=-1 time=100]
 #アリス
 [voice ref="020371"]
 なかま？ んなわけねえだろ。[n]
@@ -76,18 +78,21 @@
 #トリアイナ
 [voice ref="020374"]
 ……ヘレンは。ヘレンはどこにいるの。[p]
+[changecg id=2 state=0]
 #アリス
 [voice ref="020375"]
 ヘレン？[p]
 [voice ref="020376"]
 ……ああ、あの人間のかっこうした人魚か。[n]
 珍しいからとらえてあるぞ。[p]
+[scale id=2 sx=-1 time=100]
 [voice ref="020377"]
 おい、そこのお前、持ってきてやれ。[p]
 #トリアイナ
 [voice ref="020378"]
 あなた……意外と博識なのね。[n]
 人魚と人間の違いが判るなんて。[p]
+[scale id=2 sx=-1 time=300]
 #アリス
 [voice ref="020379"]
 昔ババアに教わっただけだ。[n]
@@ -96,16 +101,16 @@
 [voice ref="020380"]
 ……私は、ずっと一人だったわ。[n]
 氷の世界で生まれて、一人で氷の世界で生きてきた。[p]
-[drawcg id=1 pos=1 dir="right" mode="slidein"]
+[drawcg id=1 pos=1 dir="right" mode="slidein" state=5]
 #ヘレン
 [voice ref="020381"]
 トリアイナ！[p]
-[scale id=0 sx=-1 time=0]
+[scale id=0 sx=-1 time=100]
 #トリアイナ
 [voice ref="020382"]
 ……！[n]
-……でも、ヘレンとオリヴィアが来てから変わったわ。[p]
-[scale id=0 sx=-1 time=0]
+……でも、ヘレンとオリヴィアが来てから変わったわ[p]
+[scale id=0 sx=-1 time=400]
 [wait time=100]
 [move id=0 x=10 time=500]
 [voice ref="020383"]
@@ -132,6 +137,7 @@
 [voice ref="020389b"]
 華の魔女アリス。[n]
 氷の魔女トリアイナ、今より、あなたの部下として、精一杯力を尽くします。[p]
+[changecg id=2 state=1]
 #アリス
 [voice ref="020389c"]
 ふん、よく言った！[p]
@@ -163,6 +169,7 @@
 二人の亡骸が折り重なるようにして横たわっていた。[p]
 トリアイナとヘレンだ。[p]
 [drawcg id=2 pos=4 state=2]
+[filter name="clear" time=500]
 #アリス
 [voice ref="020359"]
 こいつ……、氷の魔女か。[n]
@@ -170,7 +177,7 @@
 [voice ref="020360"]
 山の魔女なんかと組まず、[n]
 私のほうに来ればいいようにしてやったのに。[p]
-[scale id=2 sx=-1 time=0]
+[scale id=2 sx=-1 time=100]
 [voice ref="020361"]
 おい、全員ゆっくり休めよ。[n]
 明日から本格的にドラゴンとの戦いになるぞ。[p]

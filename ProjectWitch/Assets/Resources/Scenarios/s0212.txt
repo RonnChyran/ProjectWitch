@@ -17,20 +17,20 @@
 ;場面転換
 [filter name="fade" time=500]
 [drawbg ref="1002m"]
-[filter name="clear" time=500]
+[drawcg id=1 pos=5]
+[drawcg id=0 pos=3 dir="right"]
+[drawcg id=3 pos=1 dir="right" layer="front"]
 [bgm ref="003_alice2"]
+[filter name="clear" time=500]
 
 [show_message]
 アリスの館。[p]
-[drawcg id=1 pos=5]
-[drawcg id=0 pos=2 dir="right"]
 #ベガ
 [voice ref="020463"]
 ここに血判を押すのだな。[p]
 #アリス
 [voice ref="020464"]
 おう。間違えるなよ？[p]
-[drawcg id=3 pos=1 dir="right" layer="front"]
 #トリアイナ
 [voice ref="020465"]
 …………。[p]
@@ -46,9 +46,12 @@
 そなたも私のことを恨んでいるのだろう。[p]
 [voice ref="020469"]
 私の部下が、すまないことをした。[p]
+[move id=3 y=-2 time=20]
+[move id=3 y=2 time=20]
 #トリアイナ
 [voice ref="020470"]
 あの人間……、ヘレンのこと！？[p]
+[move id=3 x=5 time=50]
 [voice ref="020470a"]
 ヘレンはどこにいるの！[n]
 知っているのね、教えなさい！[p]
@@ -67,10 +70,11 @@
 #トリアイナ
 [voice ref="020473a"]
 ……よかった。[p]
-[scale id=0 sx=-1 time=0]
+[scale id=0 sx=-1 time=300]
 #ベガ
 [voice ref="020474"]
 トリアイナ殿、本当にすまなかった。[p]
+[rotate id=0 angle=10 time=300]
 [cn]
 ベガはトリアイナに向かって深々と頭を下げた。[p]
 #トリアイナ
@@ -86,13 +90,12 @@
 [voice ref="020477a"]
 あなたの気さえすむのなら、[n]
 この場で私を切り捨ててほしい。[p]
-[changecg id=1 state=2]
+[changecg id=1 state=6]
 #アリス
 [voice ref="020477b"]
 あっ、馬鹿野郎！勝手に死ぬなんて許さんぞ！！[p]
 [voice ref="020478"]
 お前は今、私の部下になったんだからな！！[p]
-[scale id=0 sx=-1 time=0]
 #ベガ
 [voice ref="020479"]
 華の魔女よ、どうかこれだけは……。[n]
@@ -109,6 +112,7 @@
 [voice ref="020482"]
 もう私たちの前に現れないでちょうだい。[p]
 それが一番いいと思うわ。[p]
+[rotate id=0 angle=-10 time=300]
 #ベガ
 [voice ref="020483"]
 ……承知した。[p]
@@ -141,13 +145,12 @@
 [bgm ref="019_event4"]
 
 [show_message]
-[cn]
 どんよりと薄暗い戦場に、火山灰の混じった黒い雨が降り注いでいた。[p]
 泥にまみれた、山の魔女の遺体が転がっていた。[p]
 [drawcg id=2 dir="right" pos=2 state=6]
 [drawcg id=3 dir="right" pos=3]
 #ヘレン
-[voice ref="020457"]
+[voice ref="020392"]
 オリヴィア……かたき、討ったよ……。[p]
 #トリアイナ
 [voice ref="020393"]
@@ -161,8 +164,12 @@
 それ以上でも、それ以下でもないわ。[p]
 #トリアイナ
 [voice ref="020396"]
-ええ……でも、本当にこれでよかったのかしら。[p]
+ええ……[n]
+[scale id=3 sx=-1 time=300]
+でも、本当にこれでよかったのかしら。[p]
 [changecg id=2 state=7]
+[move id=2 y=5 time=50]
+[move id=2 y=-5 time=50]
 #ヘレン
 [voice ref="020397"]
 よかったに決まってるじゃない！？[p]
@@ -178,6 +185,7 @@
 [voice ref="020399"]
 そうね……ヘレン。[n]
 これで、よかったのよね……。[p]
+[move id=2 y=-10 time=200]
 #ヘレン
 [voice ref="020399a"]
 トリアイナぁ……うぅ。[n]

@@ -72,6 +72,7 @@
 もっとおとなしい方だと思っていましたので。[p]
 [voice ref="020823"]
 饒舌に話されるのが少し意外で……。[p]
+[move id=3 x=10 time=100]
 #オリヴィア
 [voice ref="020824"]
 あっ……す、すいません。つい……。[p]
@@ -82,21 +83,25 @@
 #オリヴィア
 [voice ref="020826"]
 そっ、そうですか……。[p]
-[drawcg id=1 pos=4 layer="front" state=4 mode="slidein"]
+[drawcg id=1 posx=25 layer="front" state=4 mode="slidein"]
 #ヘレン
 [voice ref="020827"]
 あらー、オリヴィアったら顔赤くしちゃって、[n]
 なにかあったのかなぁー？[p]
+[scale id=3 sx=-1 time=100]
 #オリヴィア
 [voice ref="020828"]
 へ、ヘレン！[p]
 #ヘレン
 [voice ref="020829"]
 ま、ま、続けて続けて。[p]
+[move id=3 y=5 time=50]
+[move id=3 y=-5 time=50]
 #オリヴィア
 [voice ref="020830"]
 もう！　からかわないでよ！[p]
-[drawcg id=0 pos=5 layer="front" mode="slidein"]
+[drawcg id=0 posx=40 layer="front" mode="slidein"]
+[scale id=1 sx=-1 time=100]
 #トリアイナ
 [voice ref="020831"]
 そうよヘレン。[n]

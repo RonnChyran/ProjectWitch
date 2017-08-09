@@ -1,4 +1,5 @@
 ;s0503
+;directer:yuichi
 ;script: nikai
 ;timing: 地点46もしくは51番初戦闘時
 
@@ -15,11 +16,16 @@
 [filter name="fade" time=500]
 [drawbg ref="1043m"]
 [bgm ref="011_charlotte"]
-[filter name="clear" time=500]
 
 [show_message]
 [drawcg id=0 pos=5 state=1]
 [drawcg id=1 pos=3 dir="right"]
+[drawcg id=2 posx=-55 dir="right"]
+[move id=2 y=-20 time=0]
+[rotate id=2 angle=-15 time=0]
+[drawcg id=3 posx=-55 dir="right"]
+[rotate id=3 angle=-15 time=0]
+[filter name="clear" time=500]
 ロレーヌ城。[p]
 アリスの前に不利を悟り、
 一度引いたシャルロッテはカスミと話し合いをしていた[p]
@@ -50,10 +56,8 @@
 [voice ref="050059"]
 あなたたちは人間ですものね……。[p]
 [cn]
-シャルロッテとカスミが話しているのを、[n]
+シャルロッテとカスミが話しているのを[n]
 扉を隔てて聞いている二つの影があった。[p]
-[drawcg id=2 posx=-40 dir="right"]
-[drawcg id=3 posx=-30 dir="right"]
 #エミル
 [voice ref="050061"]
 ねえっ、まずいよ姉さん。[p]
@@ -113,6 +117,9 @@
 [filter name="fade" time=500]
 [clearcg id=0]
 [clearcg id=1]
+[move id=2 y=20 time=0]
+[rotate id=2 angle=15 time=0]
+[rotate id=3 angle=15 time=0]
 [clearcg id=2]
 [clearcg id=3]
 ……………。[p]

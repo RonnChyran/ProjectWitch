@@ -3,7 +3,7 @@
 ;timing:コンペイ砦戦闘前
 
 ;マップスクロール
-[field_area_hilight id=30]
+[field_area_hilight id=22]
 [wait time=200]
 
 ;ロード
@@ -16,8 +16,8 @@
 [bgm ref="018_event3"]
 [filter name="clear" time=500]
 
-[drawcg id=1 pos=5 state=5]
-[drawcg id=0 pos=4]
+[drawcg id=1 pos=2 state=5 dir="right"]
+[drawcg id=0 pos=3 dir="right"]
 [show_message]
 #トリアイナ
 [voice ref="020356"]

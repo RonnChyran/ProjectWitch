@@ -1,6 +1,7 @@
 ;script 000
 ;タイミング　しょっぱな
 
+[filter name="fade" time=0]
 ;リソースロード
 [loadcg id=0 ref="alice"]
 [loadcg id=1 ref="chishire"]
@@ -20,6 +21,7 @@
 ;イベントＣＧ 001 寝起きのアリス
 [drawcg id=6 pos="event"]
 [bgm ref="003_alice2"]
+[filter name="clear" time=500]
 #アリス
 [voice ref="000002"]
 うーん……。[p]
@@ -56,7 +58,7 @@
 [voice ref="000011"]
 よしっ……と。[p]
 [cn]
-最後に帽子をかぶるとアリスは鏡の前でにやりと笑い、[n]
+最後に帽子をかぶるとアリスは鏡の前でにやりと笑い
 鼻歌交じりに部屋を出ていった。[p]
 [filter name="fade" time="500"]
 [clearcg id=6]
@@ -65,7 +67,7 @@
 ……………。[p]
 [filter name="clear" time="500"]
 [drawcg id=1 pos="left" dir="right"]
-[drawcg id=0 pos="5"]
+[drawcg id=0 pos="right"]
 
 #チシャ
 [voice ref="000012"]
@@ -77,6 +79,8 @@
 #アリス
 [voice ref="000014"]
 おう、じゃあ全部キャンセルで。[p]
+[move id=1 y=5 time=50]
+[move id=1 y=-5 time=50]
 #チシャ
 [voice ref="000015"]
 またですかぁ！？[n]
@@ -84,6 +88,7 @@
 [voice ref="000016"]
 領主になってからというものやる仕事といえば会食、
 それももてなされる方で酒が出るという条件付きのものばかり。[p]
+[changecg id=0 state=1]
 #アリス
 [voice ref="000017"]
 いや、酒はうまいから行ってもいいけど会議とかすっげー眠いじゃん。[n]
@@ -92,8 +97,14 @@
 [voice ref="000018"]
 そんなわがまま言ってないで下さいよ、断るの大変なんですから……。[p]
 
-[moveto id=1 x=50 y=50 time=100]
+[changecg id=0 state=0]
 [se ref="046_door"]
+[scale id=1 sx=-1 time=100]
+[move id=1 y=5 time=50]
+[move id=1 y=-5 time=50]
+[scale id=1 sx=-1 time=100]
+[moveto id=1 x=50 time=100]
+[scale id=1 sx=-1 time=100]
 [drawcg id=2 pos="left" mode="slidein" dir="right"]
 #メイジー
 [voice ref="000019"]
@@ -103,7 +114,9 @@
 メイジーか、何の用だ。[p]
 [cn]
 メイジー。[p]
-アリスとは姉弟弟子の関係で、今は内政全般を担当している。[p]
+アリスとは姉妹弟子の関係で、今は内政全般を担当している。[p]
+[move id=2 y=5 time=50]
+[move id=2 y=-5 time=50]
 #メイジー
 [voice ref="000021"]
 とぼけないでよ！　なによこの予算草案！！[n]
@@ -111,22 +124,26 @@
 [voice ref="000022"]
 なんで「その他」が六割もあるのよ！！[n]
 その他って何よ！ 内容書いてよ！！[p]
+[changecg id=0 state=0]
 #アリス
 [voice ref="000023"]
 お菓子とか酒とか、あとヘンな薬かったり……、[n]
 ああそうそう、お前に仕掛けるトラップ道具買ったりとかだな。[p]
+[changecg id=0 state=1]
 [voice ref="000024"]
 クフフフフ！[n]
 そういうの「私費」とか書いたらお前怒るじゃん？[p]
 #メイジー
 [move id=2 x=0 y=5 time=50]
 [move id=2 x=0 y=-5 time=50]
-
 [voice ref="000025"]
 「私費」だろうと「その他」だろうと六割も占めてたら誰だって怒るわよ！！！[p]
 [voice ref="000026"]
 ていうか、どんだけいたずらにお金使うのよ！[n]
 姉さんのバカ！　バカーーーー！！[p]
+[changecg id=0 state=6]
+[move id=0 y=-2 time=20]
+[move id=0 y=2 time=20]
 #アリス
 [voice ref="000027"]
 なっ！　誰が馬鹿だこの野郎！！[n]
@@ -142,6 +159,10 @@
 [move id=2 x=5 y=0 time=100]
 [voice ref="000030"]
 なによーーーーー！！！[p]
+[scale id=1 sx=-1 time=200]
+[wait time=200]
+[scale id=1 sx=-1 time=200]
+[wait time=200]
 #チシャ
 [voice ref="000031"]
 お、お二人ともおさえて、おさえて……。[p]
@@ -149,25 +170,31 @@
 [voice ref="000032"]
 チシャはだまってろ（なさい）！！！[p]
 #チシャ
-[move id=1 x=0 y=5 time=100]
-[move id=1 x=0 y=-5 time=100]
+[move id=1 y=5 time=100]
+[move id=1 y=-5 time=100]
+[move id=1 y=-5 time=400]
 [voice ref="000033"]
 す、すいません……。[p]
 #メイジー
 [voice ref="000034"]
 もう知らないわ！[n]
+[scale id=2 sx=-1 time=100]
 ……姉さん、あなたやっぱり領主向いてないわよ。[p]
+[move id=2 x=-100 y=0 time=400]
+[clearcg id=2]
+[move id=0 x=-20 time=200]
 #アリス
 [voice ref="000035"]
 あっ、待て！　逃げるのかよ！！[p]
-[move id=2 x=-100 y=0 time=400]
-[clearcg id=2]
 
-[cn]メイジーは吐き捨てると、アリスの制止も聞かず、執務室を出て行ってしまった。[p]
+[cn
+]メイジーは吐き捨てると、アリスの制止も聞かず、執務室を出て行ってしまった。[p]
 #アリス
 [voice ref="000036"]
 ちっ……あの野郎、好き放題いいやがって。[p]
-[moveto id=1 x=33 y=50 time=200]
+[move id=1 y=5 time=300]
+[moveto id=1 x=20 time=200]
+[scale id=1 sx=-1 time=300]
 
 #チシャ
 [voice ref="000037"]
@@ -176,6 +203,7 @@
 [voice ref="000038"]
 ちっ……今日は特別だからな。[n]
 町に行くんだったか？[p]
+[scale id=0 sx=-1 time=200]
 [voice ref="000039"]
 ほら、さっさと行くぞ。[n]
 クロにも来るように言っておけ。[p]
@@ -190,7 +218,7 @@
 [filter name="fade" time="500"]
 [bgm ref="014_velonica"]
 [drawbg ref="1000m"]
-[drawcg id=0 pos="right"]
+[drawcg id=0 pos="right" state=0]
 [cn]
 ……………。[p]
 嗅ぎなれない、甘ったるいにおいがした。[p]
@@ -210,9 +238,11 @@
 #アリス
 [voice ref="000043"]
 ベッド……？[n]
+[changecg id=0 state=2]
 う……ん。なんか妙に肩が凝ってるな。[p]
 [cn]
 アリスが寝ていたのは豪奢な天蓋付きベッドだった。[p]
+[changecg id=0 state=0]
 #アリス
 [voice ref="000044"]
 うちの屋敷……じゃないし。
@@ -226,6 +256,7 @@
 #アリス
 [voice ref="000046"]
 ん？[n]
+[changecg id=0 state=2]
 ……誰だオマエ。[p]
 [cn]
 ベッドの横から声がした。[p]
@@ -250,6 +281,7 @@
 #アリス
 [voice ref="000052"]
 あん……？[n]
+[changecg id=0 state=0]
 ああ……、なんかだんだん思い出してきたぞ。[p]
 [filter name="fade" time="500"]
 [stopbgm]
@@ -259,6 +291,8 @@
 [bgm ref ="007_town"]
 [drawbg ref="1029m"]
 [clearcg id=3]
+[clearcg id=0]
+[drawcg id=0 pos=5 dir="right" state=1]
 [filter name="clear" time="500"]
 
 
@@ -268,12 +302,14 @@
 [voice ref="000053"]
 あー、会議なんてやってられないぜ。[n]
 へへっ、トイレなんて嘘だってーの！ このまま町で遊んで帰るかぁ！[p]
-[drawcg id=3 pos="left" dir="right"]
+[drawcg id=3 pos="left" dir="right" layer="front"]
 
 #ヴェロニカ
 [voice ref="000054"]
 アリス！[n]
 ああもう、あなたは領主になってもそうなんですね。[p]
+[scale id=0 sx=-1 time=100]
+[changecg id=0 state=2]
 #アリス
 [voice ref="000055"]
 あん？　……誰だオマエ、偉そうに。[n]
@@ -282,12 +318,13 @@
 [voice ref="000056"]
 ああ、ごめんなさい。[n]
 私はヴェロニカ、あなたの姉弟子にあたる魔女です。[p]
-;[voice ref="000056a"]
-;小さいころに会ったっきりですから……[n]
-;覚えていませんよね。[p]
+[voice ref="000056a"]
+小さいころに会ったっきりですから……[n]
+覚えていませんよね。[p]
 #アリス
 [voice ref="000057"]
 ヴェロニカ？　姉弟子ィ？[n]
+[changecg id=0 state=0]
 おいおい、ババァの弟子は私が最初だぞ！[n]
 嘘つくんじゃねえよ。[p]
 #ヴェロニカ
@@ -302,6 +339,7 @@
 [voice ref="000060"]
 私は北の大地の領主です。[n]
 こことは隔たれた場所にありますから、知らないのも無理はありません。[p]
+[changecg id=0 state=1]
 #アリス
 [voice ref="000061"]
 へえ！　北の大地か！[n]
@@ -312,6 +350,7 @@
 [voice ref="000062"]
 北の大地に興味があるのですか？[n]
 私はワープ魔法で来ましたけど、でもあれは一人用だし……。[p]
+[move id=0 x=-10 time=300]
 #アリス
 [voice ref="000063"]
 なあ、そのワープ魔法で私も連れて行けよ！[n]
@@ -323,17 +362,20 @@
 #アリス
 [voice ref="000065"]
 いいって、いいって！ 死ぬわけじゃないんだろ？[n]
-ちょうど退屈してたんだ。　早く連れてってくれよ！[p]
+今、ちょうど退屈してたんだ。[n]
+早く連れてってくれよ！[p]
 #ヴェロニカ
 [voice ref="000066"]
 ……しょうがないですね。 それじゃあ……。[p]
+[move id=3 x=40 time=500]
 [filter name="fade" time="500"]
+[se ref="117_fx_velonicaB"]
 [cn]
 ……………。[p]
 [clearcg id=0]
 [clearcg id=3]
-[drawcg id=3 pos="left"]
-[drawcg id=0 pos="right"]
+[drawcg id=3 pos="left" dir="right"]
+[drawcg id=0 pos="right" state=1]
 [drawbg ref="1000m"]
 [bgm ref="014_velonica"]
 [filter name="clear" time="500"]
@@ -346,58 +388,73 @@
 #ヴェロニカ
 [voice ref="000068"]
 そうですけどアリス、あなた少し不用心なんじゃないですか？[n]
-魔女とはいえ女の子なんですから、[n]
+魔女とはいえ女の子なんですから、
 初対面の魔女にはもう少し警戒してもいいと思いますよ？[p]
+[changecg id=0 state=0]
+[scale id=0 sx=-1 time=400]
 #アリス
 [voice ref="000069"]
 なーんか、私の周りにいる奴はすぐ私に説教するんだよなぁ……。[p]
+[changecg id=0 state=1]
+[scale id=0 sx=-1 time=200]
+[move id=0 y=5 time=50]
+[move id=0 y=-5 time=50]
 [voice ref="000070"]
-そんなのどうでもいいから、早く外を案内してくれよ！[n]
+そんなのどうでもいいから早く外を案内してくれよ！[n]
 北の大地ってのはどんなところなんだ？[p]
 #ヴェロニカ
 [voice ref="000071"]
 ……わかりました。[n]
 では、ついてきてください。[p]
+[scale id=3 sx=-1 time=300]
+[moveto id=3 x=10 time=300]
+[moveto id=0 x=30 time=400]
+
 [cn]
-ヴェロニカはそういうと、部屋の戸を開けて外に出た。[p]
+ヴェロニカはそういうと、部屋の戸を開けて外に出た[p]
 そのとたんの出来事だった。[p]
 ;効果音
 [stopbgm]
-[filter name="flush" color="ffffff" time=400]
+[filter name="flush" color="ffffff" time=200]
 [se ref="049_b_barrier"]
+[move id=3 x=5 y=5 time=50]
+[move id=3 y=-5 time=50]
+[changecg id=0 state=2]
+[move id=0 x=5 time=50]
 #ヴェロニカ
 [voice ref="000072"]
 なっ！？　これは……！！[p]
 [cn]
 ヴェロニカの足元に突如魔法陣が現れ、光の障壁が彼女を取り囲んだ。[p]
+[drawcg id=4 posx=30]
 #？？？
 [voice ref="000073"]
 キヒヒッ……[n]
 なんだ、夕方まで帰らないんじゃなかったのか？[n]
 なあ、ニア？[p]
+[drawcg id=5 posx=25 layer="front"]
 #？？？
 [voice ref="000074"]
 早めに仕掛けておいてよかったねえ、ライザ？[p]
+[move id=3 y=-2 time=20]
+[move id=0 y=-2 time=20]
+[move id=3 y=2 time=20]
+[move id=0 y=2 time=20]
+[scale id=3 sx=-1 time=100]
+[scale id=0 sx=-1 time=100]
 #ヴェロニカ
 [voice ref="000075"]
 ライザ！　ニア！[n]
 あなたたち！！[p]
-[moveto id=0 x=90 time=100]
-[moveto id=3 x=70 time=200]
-[scale id=3 sx=-1 time=0]
 
 [bgm ref="015_raizania"]
-[drawcg id=4 pos="2" dir="right"]
-[moveto id=4 x=35 y=50 time=200]
 #ライザ
 [voice ref="000076"]
 キヒヒッ！　ざまあないなぁヴェロニカ！[p]
-[drawcg id=5 pos="2" dir="right" layer="front"]
-[moveto id=5 x=10 y=50 time=200]
-#ニア
-[voice ref="000077"]
 [move id=5 x=0 y=5 time=100]
 [move id=5 x=0 y=-5 time=100]
+#ニア
+[voice ref="000077"]
 ざまあないぜヴェロニカー！[p]
 #ライザ
 [voice ref="000078"]
@@ -408,13 +465,19 @@
 [voice ref="000079"]
 あっ、私はねぇ……、ミルクをアイスクリームにする魔法教わったよ！[n]
 あれ結構使えるんだよねぇ……。[p]
+[move id=5 x=4 y=5 time=100]
+[move id=5 x=4 y=-5 time=100]
 #ライザ
 [voice ref="000080"]
 バカ！　使える魔法の話をしてどうするんだ！[p]
+[scale id=5 sx=-1 time=100]
 #ニア
 [voice ref="000081"]
 あっ、そっか……えと、えと。[n]
-あっ！　減らず口が減る魔法！[n]
+あっ！
+[move id=5 y=5 time=50]
+[move id=5 y=-5 time=50]
+　減らず口が減る魔法！[n]
 ライザにかけたけど変わらなかった！[p]
 #ライザ
 [voice ref="000082"]
@@ -426,6 +489,7 @@
 [voice ref="000084"]
 おい……、ヴェロニカ[n]
 こいつら一体……。[p]
+[scale id=5 sx=-1 time=100]
 #ヴェロニカ
 [voice ref="000085"]
 わ、私の部下たちです。[n]
@@ -454,6 +518,7 @@
 [voice ref="000091"]
 なに……？[n]
 オイ、ニア、どうする。[p]
+[scale id=5 sx=-1 time=400]
 #ニア
 [voice ref="000092"]
 そんなの処刑してから考えようよー。[p]
@@ -465,9 +530,10 @@
 ……仕方ありませんね。[n]
 ならば力ずくで結界から抜けるまで！！[n]
 ふっ……！！[p]
+[scale id=5 sx=-1 time=100]
 [filter name="flush" color="ffffff" time=400]
 [filter name="flush" color="ffffff" time=400]
-[se ref="bomb4"]
+[se ref="bomb4" volume=50]
 [cn]
 ヴェロニカが念じると目に見えるほどの強い魔力の波動があたりに衝撃波となって押し寄せた。[p]
 #アリス
@@ -475,8 +541,8 @@
 あいつ……[n]
 この魔力、相当……。[p]
 [filter name="flush" color="ffffff" time=400]
-[move id=4 x=-5 y=0 time=200]
-[move id=5 x=-5 y=0 time=200]
+[move id=4 x=5 y=0 time=200]
+[move id=5 x=5 y=0 time=200]
 
 #ライザ
 [voice ref="000096"]
@@ -486,8 +552,8 @@
 #ニア
 [voice ref="000097"]
 うん！　ええーーーい！！[p]
-[move id=4 x=5 y=0 time=50]
-[move id=5 x=5 y=0 time=50]
+[move id=4 x=-5 y=0 time=50]
+[move id=5 x=-5 y=0 time=50]
 #ヴェロニカ
 [voice ref="000098"]
 …………！！[n]
@@ -511,6 +577,7 @@
 [voice ref="000102"]
 もう500は下げてると思うんだけど、ヴェロニカすごいね。[n]
 まだこんなに余力があるなんて……。[p]
+[move id=3 y=-5 time=50]
 #ヴェロニカ
 [voice ref="000103"]
 もう少し……！ くっ……！[p]
@@ -526,19 +593,19 @@
 #ヴェロニカ
 [voice ref="000106"]
 も、もうダメ……。[p]
-[move id=3 x=0 y=-5 time=100]
+[move id=3 x=0 y=-5 time=500]
 [cn]
 ヴェロニカの抵抗がやんだ。[p]
 同時に結界も消え、それはヴェロニカのレベルが限界まで下がったことを意味した。[p]
 #ヴェロニカ
 [voice ref="000107"]
 はあ……、はあ……[n]
-あなたたち、いつの間にこんな強力な結界呪文を……。[p]
+あなたたち、いつの間にこんな強力な結界呪文を……[p]
 #ライザ
 [voice ref="000108"]
 キヒヒッ……！[n]
-[move id=4 x=0 y=5 time=100]
-[move id=4 x=0 y=-5 time=100]
+[rotate id=4 angle=5 time=100]
+[rotate id=4 angle=-5 time=100]
 それはよぉ、じゃーん！ 賢者の石なのだー！[p]
 #ニア
 [move id=5 x=0 y=5 time=100]
@@ -553,7 +620,7 @@
 #ライザ
 [voice ref="000111"]
 キヒヒッ！　知ってるよ……。[n]
-こいつがホムンクルスの材料だってことくらいな……。[p]
+こいつがホムンクルスの材料だってことくらいな……[p]
 #ヴェロニカ
 [voice ref="000112"]
 ！？[n]
@@ -564,7 +631,7 @@
 #ニア
 [voice ref="000114"]
 あいさー！[p]
-[moveto id=5 x=60 y=50 time=300]
+[moveto id=5 x=30 time=300]
 
 #ヴェロニカ
 [voice ref="000115"]
@@ -574,20 +641,24 @@
 [clearcg id=5]
 [move id=3 x=-100 y=0 time=300]
 [clearcg id=3]
+[scale id=0 sx=-1 time=100]
 [cn]
 ヴェロニカはニアによってどこかへ連れていかれてしまった。[p]
+[moveto id=4 x=75 time=300]
 #ライザ
 [voice ref="000116"]
-[moveto id=4 x=25 time=300]
 さてと、おいそこの。[p]
+[scale id=0 sx=-1 time=300]
+[moveto id=0 x=25 time=300]
 #アリス
-[moveto id=0 x=75 time=300]
 [voice ref="000117"]
 あん？　私のことか？[p]
 #ライザ
 [voice ref="000118"]
 お前以外に誰がいるんだよ。[n]
 泣き虫アリスちゃん……？[p]
+[move id=0 y=-2 time=20]
+[move id=0 y=2 time=20]
 #アリス
 [voice ref="000119"]
 ……！ 泣き虫アリスだと……？[n]

@@ -106,7 +106,8 @@
 [filter name="fade" time=500]
 [bgm ref="018_event3"]
 [drawbg ref="1021m"]
-[drawcg id=6 pos=3 state=1]
+[drawcg id=6 pos=2 dir="right" state=1]
+[drawcg id=7 pos=1 dir="right"]
 [filter name="clear" time=500]
 
 ;場面転換
@@ -130,6 +131,7 @@
 熟練度で勝るアリス軍がパンプキング軍を圧倒していた。[p]
 [filter name="fade" time=500]
 [clearcg id=6]
+[clearcg id=7]
 [drawcg id=2 pos=3 dir="right"]
 [drawcg id=3 pos=3 dir="right"]
 [drawcg id=4 pos=3 dir="right"]
@@ -196,7 +198,7 @@
 [clearcg id=3]
 [clearcg id=4]
 [clearcg id=5]
-[drawcg id=6 pos=3]
+[drawcg id=6 pos=2 dir="right"]
 [drawcg id=7 pos=1 dir="right"]
 [wait time=500]
 [filter name="clear" time=500]

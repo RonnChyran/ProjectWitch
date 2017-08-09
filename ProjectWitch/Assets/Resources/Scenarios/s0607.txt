@@ -210,7 +210,8 @@
 
 [stopbgm]
 
-;パンプキング領占領
+;パンプキング領占領;パンプキング量占領
+[change_area_owner area=61 owner=0]
 [sys_memset index=607 value="1"]
 [sys_memset index=10005 value="1"]
 

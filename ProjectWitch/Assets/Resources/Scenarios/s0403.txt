@@ -35,7 +35,8 @@
 グラマンは洞窟で寝ているようだった。[p]
 大きないびきが、洞窟の外まで漏れてきていた。[p]
 [if_alive unit=2]
-[drawcg id=3 posx=-1 dir="right" mode="slidein"]
+[drawcg id=3 posx=-70 dir="right"]
+[moveto id=3 x=50 time=2000]
 そこへ、一人の少女がグラマンへ声をかけた。[p]
 メイジーだった。[p]
 #メイジー
@@ -48,7 +49,7 @@
 すっ、すいませーーん！[p]
 #グラマン
 グオオオォォオオ……、ウム……、グオオオォォォ……。[p]
-[scale id=3 sx=-1 time=0]
+[scale id=3 sx=-1 time=200]
 #メイジー
 姉さん！　全然目を覚まさないわ！[p]
 [changecg id=0 state=2]
@@ -57,7 +58,7 @@
 せーの、破壊光線ッッ！！[p]
 
 [hide_message]
-[se ref="051_b_bomb2"]
+[se ref="100_fx_aliceA"]
 [filter name="color" color="FFFFFF" time=800]
 [filter name="clear" time=4000]
 [show_message]
@@ -81,8 +82,8 @@
 
 #グラマン（一の頭）
 ウーム……。なんだぁ、[n]
-俺様の睡眠を妨害するとは、不届きな野郎だぜ畜生め。[p]
-[scale id=3 sx=-1 time=0]
+俺様の睡眠を妨害するとは、不届きな野郎だぜ畜生め[p]
+[scale id=3 sx=-1 time=100]
 [wait time=500]
 [move id=3 x=-5 time=500]
 [wait time=500]
@@ -168,16 +169,23 @@
 #アリス
 にらめっこじゃダメなのか……？[p]
 #グラマン（二の頭）
-グヘヘヘヘ……さあ嬢ちゃん。こっちへおいでー……。[p]
+グヘヘヘヘ……[n]
+さあ嬢ちゃん。こっちへおいでー……。[p]
+[move id=3 y=2 time=20]
+[move id=3 y=-2 time=20]
 #メイジー
 えっ、いえ、あの！[n]
 わっ、私はお酌をするようにって言われて、それで……。[p]
 #グラマン（二の頭）
 よいではないか、よいではないかーー！！[p]
-[move id=3 y=10 time=100]
-[move id=3 y=-10 time=100]
-[move id=3 y=10 time=100]
-[move id=3 y=-10 time=100]
+[move id=3 y=2 time=10]
+[move id=3 y=-2 time=10]
+[move id=3 y=2 time=10]
+[move id=3 y=-2 time=10]
+[move id=3 y=2 time=10]
+[move id=3 y=-2 time=10]
+[move id=3 y=2 time=10]
+[move id=3 y=-2 time=10]
 #メイジー
 きゃっ、きゃあああああーーーー！！！！[p]
 #グラマン（二の頭）
@@ -186,17 +194,22 @@
 この間の魔女は食べ損ねてしまったからなァ！[p]
 #グラマン（一の頭）
 魔女……、いや、まさかな……。[p]
+[scale id=3 sx=-1 time=100]
 #メイジー
 いやっ、やめて！　助けて、姉さんーー！！[p]
+[move id=2 x=10 time=200]
+[move id=3 x=10 time=500]
 #アリス
 あー、そろそろ助けてやろうかな。[p]
 いや、もうちょっと見ているか……。[p]
 #クロ
 楽しまれるのも結構ですが、[n]
 そろそろ助けて差し上げないと……。[p]
+[scale id=3 sx=-1 time=100]
 #メイジー
 いやっ、いやっ、[n]
 ホーリーレインッ、ホーリーレインッ！！[p]
+[se ref="101_fx_meiseiA"]
 [filter name="flush" time=300 color="FFFFFF"]
 [wait time=800]
 [filter name="flush" time=300 color="FFFFFF"]
@@ -205,10 +218,12 @@
 畜生、一筋縄ではいかんな。[p]
 グフフフフ、多少の手ごたえがあった方が面白いわ！[n]
 ギャオオオォォォオォ！！！[p]
-[move id=3 y=10 time=100]
-[move id=3 y=-10 time=100]
-[move id=3 y=10 time=100]
-[move id=3 y=-10 time=100]
+[move id=3 y=2 time=10]
+[move id=3 y=-2 time=10]
+[move id=3 y=2 time=10]
+[move id=3 y=-2 time=10]
+[move id=3 y=2 time=10]
+[move id=3 y=-2 time=10]
 #メイジー
 いやあああぁぁーーーーー！！！！！[p]
 [cn]
@@ -239,6 +254,8 @@
 #アリス
 魔女が嫁に行くかっての……。[p]
 悪かったよ、帰ったら私のおごりで飲みに行こうな？[p]
+[move id=3 y=5 time=50]
+[move id=3 y=-5 time=50]
 #メイジー
 もうお酒はこりごりよぉ！！[p]
 [cn]
@@ -322,3 +339,9 @@
 
 ;次のバトルを無効
 [battle_disable]
+
+;領地を占領処理
+[change_area_owner area=37 owner=0]
+
+;グラマンを死亡処理
+[unit_data_change unit=12 member="IsAlive" value="false"]

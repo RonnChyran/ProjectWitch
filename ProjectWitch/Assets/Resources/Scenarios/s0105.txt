@@ -16,10 +16,11 @@
 [bgm ref="018_event3"]
 [filter name="clear" time=500]
 
-[drawcg id=0 pos="right" state="2"]
-[drawcg id=1 pos="left" dir="right"]
+[drawcg id=1 pos="right" dir="right"]
+[drawcg id=0 pos="left" dir="right" state=6]
 [show_message]
 ;拠点に設置された魔導砲にコテンパンにやられる。
+[scale id=1 sx=-1 time=100]
 #クロ
 [voice ref="010029"]
 アリス様！[n]
@@ -28,6 +29,9 @@
 [voice ref="010030"]
 畜生！[n]
 撤退だーーーー！！！ [p]
+[scale id=0 sx=-1 time=100]
+[move id=0 x=-50 time=250]
+[move id=1 x=-100 time=500]
 
 [hide_message]
 [filter name="fade" time=500]

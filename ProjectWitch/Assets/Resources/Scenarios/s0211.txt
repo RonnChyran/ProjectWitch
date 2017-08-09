@@ -16,14 +16,14 @@
 ;場面転換
 [filter name="fade" time=500]
 [drawbg ref="1002m"]
-[filter name="clear" time=500]
 [bgm ref="003_alice2"]
 
 [show_message]
 アリスの館。[p]
 [drawcg id=0 pos=5]
-[drawcg id=1 pos=4]
+[drawcg id=1 pos=3]
 [drawcg id=2 pos=1 dir="right" mode="slidein"]
+[filter name="clear" time=500]
 #チュイリッシュ
 [voice ref="020426"]
 アリスサマ、ソクタツカキトメデース！[p]
@@ -37,6 +37,7 @@
 #チュイリッシュ
 [voice ref="020429"]
 サインオネガイシマース。[p]
+[scale id=1 sx=-1 time=300]
 #クロ
 [voice ref="020430"]
 はっ。[n]
@@ -82,6 +83,8 @@
 「私とお友達になりませんか？」[p]
 [voice ref="020438b"]
 以上でございます。[p]
+[move id=0 y=5 time=50]
+[move id=0 y=-5 time=50]
 #アリス
 [voice ref="020439"]
 端折りすぎだ！[n]
@@ -96,6 +99,7 @@
 #クロ
 [voice ref="020442"]
 アリス様、よくお考えになられたほうが。[p]
+[changecg id=0 state=2]
 #アリス
 [voice ref="020443"]
 こっちは向こうを占領するつもりで[n]
@@ -133,11 +137,11 @@
 意外にもすんなりと受け入れられ、[n]
 トリアイナ領は、実質アリス領の支配下となった。[p]
 同盟の締結が決まり、トリアイナがアリスの館を訪れた。[p]
-[filter name="clear" time=500]
 
 [drawcg id=0 pos=5]
 [drawcg id=1 pos=4]
-[drawcg id=3 pos=1 dir="right"]
+[drawcg id=3 pos=2 dir="right"]
+[filter name="clear" time=500]
 
 #トリアイナ
 [voice ref="020451"]

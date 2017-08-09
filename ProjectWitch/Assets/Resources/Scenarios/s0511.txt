@@ -1,4 +1,5 @@
 ;s0511
+;directer:yuichi
 ;script: nikai
 ;timing:　再戦後翌ターン
 
@@ -92,6 +93,7 @@
 #アリス
 [voice ref="050341"]
 よし、侵入成功っと！[p]
+[scale id=2 sx=-1 time=100]
 #エミル
 [voice ref="050342"]
 だっ、誰！？[p]
@@ -141,7 +143,6 @@
 はっ。[p]
 
 [move id=1 x=-10 time=200]
-[scale id=2 sx=-1 time=0]
 #エミル
 [voice ref="050350"]
 あっ、あの……[n]
@@ -162,17 +163,18 @@
 #アリス
 [voice ref="050355"]
 おいガキ。 時にお前の主人は今どこにいる。[p]
+[move id=2 y=-2 time=20]
 #エミル
 [voice ref="050356"]
 えっ、いや、シャルロッテ様ならたぶん、[n]
 自分の部屋に……。[p]
+[changecg id=0 state=0]
 #アリス
 [voice ref="050357"]
 そうか、邪魔したな。[p]
 #クロ
 [voice ref="050358"]
 アリス様。 これを見てください。[p]
-[changecg id=0 state=0]
 #アリス
 [voice ref="050359"]
 何だ、クロ。[n]
@@ -180,7 +182,7 @@
 #クロ
 [voice ref="050360"]
 これは君のものか？[p]
-[scale id=2 sx=-1 time=0]
+[scale id=2 sx=-1 time=100]
 #エミル
 [voice ref="050361"]
 えっ、ええ……、そうです。[p]
@@ -194,7 +196,7 @@
 [voice ref="050364"]
 オイ、もしかして魔法が使えるようになる薬ってのも[n]
 お前が作ったんじゃないだろうな？[p]
-[scale id=2 sx=-1 time=0]
+[scale id=2 sx=-1 time=300]
 #エミル
 [voice ref="050365"]
 あっ……。[n]
@@ -302,6 +304,8 @@
 [voice ref="050388"]
 ババァが使ってた調合部屋を貸してやる。[n]
 三日だ。 それまでに作って見せろ。[p]
+[move id=2 y=5 time=50]
+[move id=2 y=-5 time=50]
 #エミル
 [voice ref="050389"]
 たった三日！？[n]

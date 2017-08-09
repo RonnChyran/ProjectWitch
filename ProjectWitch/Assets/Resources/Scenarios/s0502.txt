@@ -1,4 +1,5 @@
 ;s0502
+;directer:yuichi
 ;script: nikai
 ;direction yuichi
 ;timing: 地点45番占領時
@@ -24,12 +25,15 @@
 [voice ref="050048"]
 そんな馬鹿な……。[n]
 あの量の魔法を浴びても引かないなんて……。[p]
+[scale id=1 sx=-1 time=100]
 #カスミ
 [voice ref="050049"]
 ロッテさん！　[n]
 悠長に悔しがってる場合じゃないっすよ！[p]
 [voice ref="050050"]
 早いとこ引き上げないと！！[p]
+[move id=0 y=2 time=20]
+[move id=0 y=-2 time=20]
 #シャルロッテ
 [voice ref="050051"]
 ……ッ！[n]

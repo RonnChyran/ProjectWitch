@@ -31,6 +31,7 @@
 #トリアイナ
 [voice ref="020589"]
 引けっ、引けー！！[p]
+[scale id=2 sx=-1 time=100]
 [move id=2 x=100 time=300]
 #アリス
 [voice ref="020590"]
@@ -50,8 +51,10 @@
 #カートン
 [voice ref="020592a"]
 ウオオオォォン！！[p]
-[scale id=1 sx=-1 time=0]
+[scale id=1 sx=-1 time=100]
 [scale id=0 sx=-1 time=0]
+[move id=0 x=5 y=5 time=50]
+[move id=0 y=-5 time=50]
 #アリス
 [voice ref="020592b"]
 何ッ！？[n]
@@ -75,14 +78,14 @@
 [voice ref="020596"]
 四方を囲まれております。[n]
 撤退するならばどこかを突破しませんと。[p]
-[scale id=0 sx=-1 time=0]
+[scale id=0 sx=-1 time=300]
 #アリス
 [voice ref="020597"]
 んー、じゃああっちだ！[n]
 なんか弱そうだからな。[p]
 [cn]
 アリスが指さしたのはオリヴィア軍の方だった。[p]
-[scale id=1 sx=-1 time=0]
+[scale id=1 sx=-1 time=100]
 #クロ
 [voice ref="020598"]
 承知！　では私が先頭で切り込みますので、[n]
@@ -106,7 +109,7 @@
 [voice ref="020600"]
 こっちにきた……どっ、どうしよう。[p]
 [drawcg id=1 posx=-100 dir="right"]
-[move id=1 x=100 time=400]
+[move id=1 x=80 time=400]
 #クロ
 [voice ref="020601"]
 どけ、どけえい！！[p]
@@ -139,14 +142,14 @@
 [filter name="clear" time=500]
 [show_message]
 
+[drawcg id=3 posx=20 mode="slidein"]
+[move id=1 x=-5 time=50]
 [cn]
 クロが放った弾丸はオリヴィアに到達する前に、[n]
 その間に割り込んだものにはじかれた。[p]
 #クロ
 [voice ref="020606"]
 何者ッ！[p]
-[move id=1 x=-20 time=300]
-[drawcg id=3 posx=20 mode="slidein"]
 #マルゲル
 [voice ref="020607"]
 私はマルゲル！[n]
@@ -173,18 +176,20 @@
 [voice ref="020611"]
 クロ、先にいってるぞー！[p]
 
-[scale id=0 sx=-1 time=0]
+[scale id=0 sx=-1 time=100]
 [move id=0 x=-100 time=400]
+[scale id=1 sx=-1 time=100]
 
 #クロ
 [voice ref="020612"]
 アリス様！[p]
 [voice ref="020612a"]
 ……。[p]
+[scale id=1 sx=-1 time=300]
 [voice ref="020612b"]
 ……命拾いしましたな。[p]
 
-[scale id=1 sx=-1 time=0]
+[scale id=1 sx=-1 time=100]
 [move id=1 x=-100 time=400]
 
 [cn]
@@ -196,7 +201,7 @@
 #オリヴィア
 [voice ref="020614"]
 はっ、はひ……。[p]
-[scale id=3 sx=-1 time=0]
+[scale id=3 sx=-1 time=300]
 #マルゲル
 [voice ref="020615"]
 オリヴィア殿？[p]

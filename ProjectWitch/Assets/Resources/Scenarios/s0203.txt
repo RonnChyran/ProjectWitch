@@ -34,6 +34,7 @@
 #カートン
 [voice ref="020163"]
 ……！[p]
+[se ref="166"]
 [drawcg id=0 pos=2 mode="slidein" dir="right"]
 [drawcg id=2 pos=1 mode="slidein" dir="right"]
 #オリヴィア
@@ -54,10 +55,10 @@
 [voice ref="020168"]
 カートンさんの部下からの情報なんですがね、[n]
 華の魔女が動き出したそうでさあ。[p]
-[move id=1 y=10 time=100]
-[move id=1 y=-10 time=100]
-[move id=1 y=10 time=100]
-[move id=1 y=-10 time=100]
+[move id=1 y=5 time=50]
+[move id=1 y=-5 time=50]
+[move id=1 y=5 time=50]
+[move id=1 y=-5 time=50]
 #オリヴィア
 [voice ref="020169"]
 それは、こっちに攻めてくるってこと！？[p]
@@ -227,11 +228,14 @@
 [voice ref="020205"]
 おや、まだ気づかないんで……。[n]
 イッヒッヒッヒ……。[p]
+[move id=2 x=30 time=700]
 [cn]
 ドードが、カートンから離れ、手をすっと上げた。[p]
 すると、周りにいた部下たちが、[n]
 一斉にカートンのほうへ向いて弓を引いた。[p]
-[move id=2 x=30 time=500]
+[se ref="150"]
+[se ref="150"]
+[se ref="150"]
 #カートン
 [voice ref="020206"]
 ……………！[p]
@@ -282,6 +286,7 @@
 #ドード
 [voice ref="020214"]
 ちっ！　さすがにしぶとい。[p]
+[se ref="150"]
 [cn]
 二本目の矢が撃ち込まれ、カートンの体に突き刺さった。[p]
 [move id=2 y=-10 time=100]
@@ -301,12 +306,14 @@
 カートンはその一瞬のすきを逃さなかった。[p]
 あっという間に、[n]
 ドードの部下全員を倒してしまったのだ。[p]
+[move id=0 x=-5 time=100]
 #ドード
 [voice ref="020215a"]
 ぐ、くそ……。[p]
 #カートン
 [voice ref="020216"]
 ………………。[p]
+[move id=0 x=-5 time=600]
 #ドード
 [voice ref="020217"]
 ま、まあ、話し合いましょうや……へへ。[p]
@@ -324,12 +331,13 @@
 #ドード
 [voice ref="020220"]
 …………まさか。[p]
-[move id=0 x=40 time=500]
+[move id=0 x=50 time=500]
 [cn]
 恐る恐る近づいて、確かめる。[p]
 カートンはすでに死んでいた。[p]
-[move id=0 x=-20 time=200]
-[move id=0 x=-20 time=200]
+[move id=0 x=-10 time=200]
+[wait time=300]
+[move id=0 x=-10 time=200]
 #ドード
 [voice ref="020221"]
 ……あはははは。[n]
@@ -338,7 +346,7 @@
 …………。[p]
 [voice ref="020222"]
 さてと、あともう一仕事っと。[p]
-[scale id=0 sx=-1 time=0]
+[scale id=0 sx=-1 time=300]
 [move id=0 x=-50 time=500]
 [cn]
 
@@ -430,15 +438,17 @@
 もうすぐあなたもこうなるんでさあ。 ほらっ！[p]
 [cn]
 ひょいとドードがオリヴィアに向かって投げたそれは、先ほどの部下の首だった。[p]
-[move id=1 x=20 time=100]
+[move id=1 x=10 time=100]
 #オリヴィア
 [voice ref="020239"]
 ……ヒッ！！[n]
 いやあああああああーーー！！！[p]
+[move id=0 x=30 time=500]
 #ドード
 [voice ref="020240"]
 おっと、あまり叫ばないで下さいよ。[n]
 こっちもさっさとことをすましたいんでね。[p]
+[move id=1 x=5 time=200]
 #オリヴィア
 [voice ref="020241"]
 やっ、いやっ！！[n]
@@ -448,8 +458,8 @@
 殺さないでぇっ！！[p]
 #ドード
 [voice ref="020243"]
-騒がないでって言ったでしょう！？[p]
-[move id=0 x=50 time=100]
+騒がないでって言ったでしょう？[p]
+[move id=0 x=20 time=100]
 [cn]
 [se ref="150"]
 [filter name="flush" color="FF0000" time=300]
@@ -485,7 +495,7 @@
 ヘレン！　トリアイナ！！[p]
 #ドード
 [voice ref="020251"]
-知ってますぜ。アンタ、回復魔法が得意なんだってな。[n]
+知ってますぜ。アンタ、回復魔法が得意なんだってな[n]
 ……いいゲームを思いついたぜェ。[p]
 #オリヴィア
 [voice ref="020252"]
@@ -494,8 +504,6 @@
 [move id=0 x=-10 time=50]
 [se ref="151"]
 [filter name="flush" color="FF0000" time=300]
-[move id=1 x=5 time=50]
-[move id=1 x=-5 time=50]
 [move id=1 x=5 time=50]
 [move id=1 x=-5 time=50]
 [cn]
@@ -583,6 +591,7 @@
 ;ロード処理
 [loadcg id=5 ref="helen"]
 
+[se ref="166"]
 [drawcg id=5 mode="slidein" dir="right" state=5 pos=1]
 #ヘレン
 [voice ref="020262"]
@@ -594,19 +603,30 @@
 [cn]
 ヘレンがオリヴィアの家を訪れたのは、それから数時間ののちだった。[p]
 オリヴィアの家の扉は空いており、家の中は大変な荒れようだった。[p]
-床に大きな血だまりがあり、血痕は奥まで続いていた。[p]
+床に大きな血だまりがあり、血痕は奥まで続いていた[p]
 [bgm ref="019_event4"]
+[move id=5 x=40 time=400]
 #ヘレン
 [voice ref="020264"]
 オリヴィア……！[p]
+[scale id=5 sx=-1 time=100]
+[wait time=200]
+[scale id=5 sx=-1 time=100]
+[wait time=200]
+[scale id=5 sx=-1 time=100]
+[wait time=200]
+[scale id=5 sx=-1 time=100]
+[move id=5 y=-2 time=20]
+[move id=5 y=2 time=20]
 [cn]
 オリヴィアは家の浴槽の中に、[n]
 半裸の状態で丸まっていた。[p]
-[move id=5 x=20 time=200]
+[move id=5 x=5 time=100]
 #ヘレン
 [voice ref="020265"]
 オリヴィア！[n]
 ねえ、大丈夫！？[n]
+[changecg id=5 state=6]
 [move id=5 x=-10 time=300]
 [wait time=500]
 [move id=5 x=-10 time=300]
@@ -615,7 +635,7 @@
 オリヴィアの口元から、一筋の血が垂れていた。[p]
 オリヴィアは、舌をかみ切って死んでいた。[p]
 彼女の股の間には、男の達した証がべったりと付着していた。[p]
-[changecg id=5 state=6]
+[move id=5 y=-10 time=400]
 #ヘレン
 [voice ref="020266"]
 …………。[p]
@@ -626,7 +646,6 @@
 #ヘレン
 [voice ref="020267"]
 オリヴィア……ごめん、ごめんね……。[p]
-[move id=5 x=20 time=500]
 [cn]
 ヘレンはオリヴィアの無残な亡骸を抱きしめた。[p]
 [changecg id=5 state=7]
@@ -644,7 +663,7 @@
 しかし、オリヴィアの家で彼女が見たものは、[n]
 血まみれの惨状と、下腹部のモノを切り取られたドードの死体だけだった。[p]
 オリヴィアがどこへ行ったのか。[n]
-ベガたちが彼女を見つけることはついにできなかった。[p]
+ベガたちが彼女を見つけることはついにできなかった[p]
 [hide_message]
 [clearbg]
 [clearcg id=5]

@@ -36,6 +36,7 @@
 まってヘレン。[n]
 それはダメよ。[p]
 [changecg id=1 state=3]
+[move id=1 x=5 time=50]
 #ヘレン
 [voice ref="020279"]
 なんでよ！！[p]
@@ -55,7 +56,9 @@
 #ヘレン
 [voice ref="020284"]
 ……なんでそんなに冷静なのよ。[n]
+[move id=1 x=5 time=50]
 オリヴィアが死んだんだよ！？[p]
+[move id=1 y=-5 time=300]
 [voice ref="020285"]
 もう私……、どうしたらいいかわかんないよ。[p]
 #トリアイナ
@@ -65,12 +68,14 @@
 #ヘレン
 [voice ref="020286"]
 そんな、オリヴィアが馬鹿だって言っているようなものじゃない。[p]
+[move id=1 y=-5 time=500]
 #トリアイナ
 [voice ref="020287"]
 ええ、馬鹿ね。[p]
 [voice ref="020287a"]
 部下に裏切られ、[n]
 むざむざと山の魔女の侵入を許して。[p]
+[move id=1 x=5 time=50]
 #ヘレン
 [voice ref="020288"]
 トリアイナ！！[n]
@@ -87,10 +92,10 @@
 #ヘレン
 [voice ref="020292"]
 ほんとうに冷たい人……！[p]
+[scale id=1 sx=-1 time=200]
 [voice ref="020293"]
 もう勝手にすればいいわ。[n]
 私、一人でも行くから！[p]
-[scale id=1 sx=-1 time=0]
 [move id=1 x=-50 time=300]
 [move id=0 x=-10 time=200]
 #トリアイナ
@@ -155,7 +160,8 @@
 濡れた足で地面をけった。[p]
 [move id=1 x=60 time=300]
 [scale id=1 sx=-1 time=0]
-[drawcg id=3 pos=1 dir="right"]
+[drawcg id=3 pos=2 dir="right"]
+[drawcg id=4 dir="right" pos=1 layer="front"]
 暗がりに紛れて、ヘレンはドラゴンたちの輪の中心に飛び込んだ。[p]
 懐から大ぶりのダガーを抜き、[n]
 ベガに切りかかった。[p]
@@ -165,7 +171,7 @@
 #ベガ
 [voice ref="020299"]
 何者ッ！！[p]
-[move id=1 x=-60 time=200]
+[move id=1 x=-40 time=100]
 [se ref="156"]
 [filter name="flush" color="FFFFFF" time=200]
 [cn]
@@ -234,8 +240,7 @@
 [voice ref="020310"]
 なに……殺した？[n]
 おい、メッサーシュミット。 どうなっている。[p]
-[move id=3 x=20 time=200]
-[drawcg id=4 dir="right" pos=1 layer="front"]
+[scale id=3 sx=-1 time=300]
 #メッサーシュミット
 [voice ref="020311"]
 いえ……、その、僕にもよくわからなくて。[p]
@@ -251,14 +256,20 @@
 #ヘレン
 [voice ref="020315"]
 はずみ……？[n]
+[move id=1 x=-5 y=5 time=50]
+[move id=1 x=5 y=-5 time=50]
 はずみなわけあるか！！[p]
+[move id=1 x=-5 y=5 time=50]
+[move id=1 x=5 y=-5 time=50]
 [voice ref="020316"]
 お前たちははずみで……、[n]
 はずみで女を犯すのか！！！[p]
+[scale id=3 sx=-1 time=300]
 #ベガ
 [voice ref="020317"]
 ……おい、彼女に温かい食事を。[n]
 それと、自殺しないように見張っておけ。[p]
+[scale id=3 sx=-1 time=300]
 [voice ref="020317a"]
 メッサーシュミット、後で話がある。[p]
 #メッサーシュミット

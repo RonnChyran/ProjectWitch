@@ -1,4 +1,5 @@
 ;s0510
+;directer:yuichi
 ;script: nikai
 ;timing:　地点49再戦後
 
@@ -164,6 +165,7 @@
 エマ……。ごめんなさい……[p]
 [voice ref="050291"]
 わたくしにはどうすることもできませんわ。[p]
+[scale id=0 sx=-1 time=300]
 #アリス
 [changecg id=0 state=0]
 [voice ref="050292"]
@@ -191,6 +193,7 @@
 
 [voice ref="050297"]
 もし！　ちょっと！　聞いていらして！？[p]
+[scale id=0 sx=-1 time=300]
 #アリス
 [voice ref="050298"]
 あ？[n]
@@ -209,6 +212,7 @@
 [voice ref="050302"]
 ええ……、重々承知ですわ。[n]
 ですからこうして頭を下げているのではないですか。[p]
+[changecg id=0 state=1]
 #アリス
 [voice ref="050303"]
 頭を下げているようには見えないなァ？[p]
@@ -241,6 +245,7 @@
 #シャルロッテ
 [voice ref="050310"]
 アリス様、どうかわたくしたちに力をお貸しください[p]
+[changecg id=0 state=2]
 #アリス
 [voice ref="050311"]
 ……ちっ、ここまで素直にやられると冷めるぜ。[p]
@@ -261,10 +266,10 @@
 
 [move id=3 y=10 time=500]
 [wait time=200]
-[scale id=3 sx=-1 time=0]
+[scale id=3 sx=-1 time=300]
 [move id=3 x=30 time=800]
 [wait time=200]
-[scale id=3 sx=-1 time=0]
+[scale id=3 sx=-1 time=300]
 
 [changecg id=3 state=1]
 #シャルロッテ
@@ -283,7 +288,7 @@
 [voice ref="050320"]
 わたくしたちも、あなたの部下になります。[p]
 #カスミ
-[scale id=4 sx=-1 time=0]
+[scale id=4 sx=-1 time=100]
 [voice ref="050321"]
 ロッテさんダメです！！[n]
 ロレーヌ一派はどうするんですか！[p]
@@ -301,7 +306,6 @@
 #カスミ
 [voice ref="050325"]
 それは……。[p]
-[scale id=4 sx=-1 time=0]
 #シャルロッテ
 [voice ref="050326"]
 アリスさん。 言ったとおりですわ。[n]

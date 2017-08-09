@@ -28,6 +28,9 @@
 [voice ref="010080"]
 メイジー様。[n]
 アリス率いる軍勢が攻めてまいりました。 [p]
+[scale id=2 sx=-1 time=300]
+[move id=2 x=20 time=600]
+[move id=2 y=-5 time=200]
 #メイジー
 [voice ref="010081"]
 アリス……姉さん。 わたし……、私は……。[p]
@@ -35,7 +38,9 @@
 [voice ref="010082"]
 ……いかがなさいますか。[p]
 #メイジー
+[move id=2 y=5 time=300]
 …………。[p]
+[scale id=2 sx=-1 time=600]
 [voice ref="010083"]
 ……門を開いて。 全員で打って出るわ。[p]
 #部下
@@ -51,14 +56,13 @@
 [drawbg ref="1047m"]
 [filter name="clear" time=500]
 
-[drawcg id=0 pos="right"]
-[drawcg id=1 pos="left" dir="right"]
+[drawcg id=0 pos="right" dir="right"]
+[drawcg id=1 pos="left" dir="right" state=2]
 #クロ
 [voice ref="010085"]
 アリス様。[n]
 敵勢、一斉突撃を開始した模様。[p]
 #アリス
-[changecg id=0 state=2]
 [voice ref="010086"]
 メイジー……。[n]
 フン、まあそうするほかないだろう。[n]

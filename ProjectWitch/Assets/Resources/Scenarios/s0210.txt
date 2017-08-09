@@ -17,20 +17,21 @@
 ;場面転換
 [filter name="fade" time=500]
 [drawbg ref="1002m"]
-[filter name="clear" time=500]
+[drawcg id=0 dir="right" pos=3]
+[drawcg id=1 pos=5]
+[drawcg id=3 pos=2 dir="right" layer="front"]
+[drawcg id=2 posx=-40 dir="right" state=5 layer="front"]
 [bgm ref="003_alice2"]
+[filter name="clear" time=500]
 
 [show_message]
 アリスの館。[p]
-[drawcg id=0 dir="right" pos=3]
 #ベガ
 [voice ref="020400"]
 ここに血判を押すのだな。[p]
-[drawcg id=1 pos=5]
 #アリス
 [voice ref="020401"]
 おう。間違えるなよ？[p]
-[drawcg id=3 pos=2 dir="right" layer="front"]
 #トリアイナ
 [voice ref="020402"]
 …………。[p]
@@ -40,7 +41,6 @@
 #トリアイナ
 [voice ref="020404"]
 …………。[p]
-[drawcg id=2 posx=-40 dir="right" state=5 layer="front"]
 #ヘレン
 [voice ref="020405"]
 ……オリヴィアにあなたたちがしたことを、[n]
@@ -50,9 +50,10 @@
 ああ……そうだな。[p]
 [voice ref="020407"]
 ……。[p]
-[scale id=0 sx=-1 time=0]
+[scale id=0 sx=-1 time=300]
 [voice ref="020407a"]
 トリアイナ殿、すまなかった。[p]
+[rotate id=0 angle=10 time=300]
 [cn]
 ベガはトリアイナに向かって深々と頭を下げた。[p]
 #トリアイナ
@@ -68,7 +69,7 @@
 [voice ref="020411"]
 あなたの気さえすむのなら、[n]
 この場で私を切り捨ててほしい。[p]
-[changecg id=1 state=2]
+[changecg id=1 state=6]
 #アリス
 [voice ref="020412"]
 あっ、馬鹿野郎！[n]
@@ -82,9 +83,11 @@
 #アリス
 [voice ref="020415"]
 なんだと……！[p]
+[scale id=2 sx=-1 time=300]
 #ヘレン
 [voice ref="020416"]
 ……ばっかじゃないの。[p]
+[scale id=3 sx=-1 time=300]
 #トリアイナ
 [voice ref="020417"]
 ヘレン……？[p]
@@ -96,16 +99,21 @@
 [voice ref="020418"]
 ……すまなかった。[n]
 しかし、私はどう償えばいいのか。[p]
+[scale id=2 sx=-1 time=300]
 #ヘレン
 [voice ref="020419"]
-オリヴィアみたいな思いをする子がいなくなるように、[n]
+オリヴィアみたいな思いをする子がいなくなるように[n]
 早く世界を統一するのよ。[p]
 [voice ref="020420"]
 アリスさんなら、それができるのよね。[p]
+[scale id=3 sx=-1 time=300]
 [changecg id=1 state=0]
+[move id=1 y=2 time=20]
+[move id=1 y=-2 time=20]
 #アリス
 [voice ref="020421"]
 お、おう……もちろんだ。[p]
+[rotate id=0 angle=-10 time=300]
 #ベガ
 [voice ref="020422"]
 ヘレン……殿。[p]
@@ -118,6 +126,7 @@
 #ベガ
 [voice ref="020425"]
 ……承知した。[p]
+[changecg id=1 state=2]
 [cn]
 三人は固く握手を交わし、ひとまずの和解となったようだった。[p]
 アリス一人が、置いてけぼりにされたのが不満だったのか、[n]
@@ -143,7 +152,7 @@
 [show_message]
 [cn]
 どんよりと薄暗い戦場に、火山灰の混じった黒い雨が降り注いでいた。[p]
-泥にまみれた、山の魔女の遺体が転がっていた。[p]
+泥にまみれた、山の魔女の遺体が転がっている。[p]
 [drawcg id=2 dir="right" pos=2 state=6]
 [drawcg id=3 dir="right" pos=3]
 #ヘレン
@@ -161,8 +170,12 @@
 それ以上でも、それ以下でもないわ。[p]
 #トリアイナ
 [voice ref="020396"]
-ええ……でも、本当にこれでよかったのかしら。[p]
+ええ……[n]
+[scale id=3 sx=-1 time=300]
+でも、本当にこれでよかったのかしら。[p]
 [changecg id=2 state=7]
+[move id=2 y=5 time=50]
+[move id=2 y=-5 time=50]
 #ヘレン
 [voice ref="020397"]
 よかったに決まってるじゃない！？[p]
@@ -178,6 +191,7 @@
 [voice ref="020399"]
 そうね……ヘレン。[n]
 これで、よかったのよね……。[p]
+[move id=2 y=-10 time=200]
 #ヘレン
 [voice ref="020399a"]
 トリアイナぁ……うぅ。[n]

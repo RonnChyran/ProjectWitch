@@ -37,6 +37,9 @@
 [voice ref="020512"]
 失礼、オリヴィア殿。[p]
 [changecg id=1 state=0]
+[move id=1 y=-2 time=20]
+[move id=1 y=2 time=20]
+[scale id=1 sx=-1 time=200]
 #オリヴィア
 [voice ref="020513"]
 あっ！　……この前の。[n]
@@ -64,6 +67,7 @@
 [voice ref="020518"]
 彼、あれからだいぶ良くなって、[n]
 そろそろここを立つそうよ。[p]
+[scale id=1 sx=-1 time=100]
 #オリヴィア
 [voice ref="020519"]
 で、でも！　外は戦争で危険なんじゃ……。[p]
@@ -76,7 +80,10 @@
 #トリアイナ
 [voice ref="020522"]
 ……？[n]
+[move id=0 x=-20 time=1000]
 あなた、何だか顔が赤いわよ？[p]
+[move id=1 y=5 time=50]
+[move id=1 y=-5 time=50]
 #オリヴィア
 [voice ref="020523"]
 そっ、そんなことないよッ！！[p]
@@ -93,3 +100,4 @@
 [stopbgm]
 
 [sys_memset index=215 value="1"]
+[sys_memset index=4000 value=5]

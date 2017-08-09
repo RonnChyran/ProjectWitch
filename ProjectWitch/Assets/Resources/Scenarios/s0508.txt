@@ -1,4 +1,5 @@
 ;s0508
+;directer:yuichi
 ;script: nikai
 ;timing:　地点49戦闘敗北
 ;タイミング：地点49敗北翌ターンはじめ
@@ -32,9 +33,10 @@
 [voice ref="050203"]
 エミルは部屋で待機させています。[n]
 エマの行方はいま部下に探らせているところで……。[p]
+[se ref="046_door"]
 [cn]
 カスミの言葉を遮るように伝令が飛び込んできた。[p]
-[scale id=0 sx=-1 time=0]
+[scale id=0 sx=-1 time=200]
 #部下
 [voice ref="050204"]
 申し上げます！！[p]
@@ -61,7 +63,7 @@
 [voice ref="050211"]
 はっ……[n]
 遠目からではよくわからなかったのですが、アリス軍は何かと戦って撤退したようです。[p]
-[scale id=0 sx=-1 time=0]
+[scale id=0 sx=-1 time=100]
 #カスミ
 [voice ref="050212"]
 エマだ！　ロッテさん……！[p]
@@ -105,6 +107,8 @@
 [voice ref="050218"]
 うーぬ……[n]
 チシャ！　お茶！！[p]
+[move id=4 y=5 time=50]
+[move id=4 y=-5 time=50]
 #チシャ
 [voice ref="050219"]
 はっ、ハイただいま！[p]
@@ -114,9 +118,9 @@
 
 [drawcg id=3 posx=-100 dir="right"]
 [move id=3 x=70 time=800]
-[scale id=3 sx=-1 time=0]
+[scale id=3 sx=-1 time=200]
 [wait time=1000]
-[scale id=3 sx=-1 time=0]
+[scale id=3 sx=-1 time=300]
 [wait time=300]
 
 #クロ
@@ -159,7 +163,7 @@
 [voice ref="050224"]
 おっ、アリスちゃん！　新しい紅茶が入ったんだ！　[n]
 買っていかないかい。[p]
-[scale id=2 sx=-1 time=0]
+[scale id=2 sx=-1 time=300]
 #アリス
 [voice ref="050225"]
 あー、今はそういう気分じゃねえんだ。[p]
@@ -182,7 +186,7 @@
 #露店主
 [voice ref="050231"]
 毎度あり！！[p]
-[scale id=2 sx=-1 time=0]
+[scale id=2 sx=-1 time=300]
 #アリス
 [voice ref="050232"]
 うーん……[n]
@@ -191,7 +195,7 @@
 [voice ref="050233"]
 びっくり魔法かい？　[n]
 びっくり魔法といえば今有名な手品師が来ていてねぇ[p]
-[scale id=2 sx=-1 time=0]
+[scale id=2 sx=-1 time=300]
 #アリス
 [voice ref="050234"]
 手品師だって？[p]
@@ -213,7 +217,8 @@
 
 ;場面転換
 街の広場。[p]
-[drawcg id=2 pos=2 mode="slidein" dir="right"]
+[drawcg id=2 posx=-80 dir="right"]
+[move id=2 x=50 time=800]
 #アリス
 [voice ref="050238"]
 へえ、結構にぎわってんなぁ……。[p]

@@ -19,10 +19,10 @@
 [filter name="fade" time=500]
 [drawbg ref="1002m"]
 [bgm ref="003_alice2"]
-[filter name="clear" time=500]
 
-[drawcg id=0 pos="right"]
+[drawcg id=0 pos="right" state=1]
 [drawcg id=2 pos="left" dir="right"]
+[filter name="clear" time=500]
 [show_message]
 #アリス
 [voice ref="010125"]
@@ -35,12 +35,13 @@
 [changecg id=0 state=2]
 [voice ref="010127"]
 あん？　しまった、お仕置きが足りなかったか……。[p]
+[move id=2 x=-5 time=50]
 #メイジー
 [voice ref="010128"]
 ま、まって……ごめんなさい！[n]
 そういう意味じゃなくて……。[p]
 #アリス
-[changecg id=0 state=0]
+[changecg id=0 state=2]
 [voice ref="010129"]
 また裏切るなら殺す。[n]
 だが、今は人材が必要なんだ。 だから生かしておいてやる。[p]
@@ -53,8 +54,10 @@
 そういうことじゃない。[n]
 いいか、私はこれからこの世界をすべて私のものにする。[p]
 [voice ref="010132"]
-ヴェロニカも、あのライザとかいういけ好かない魔女も、[n]
- 全部全部私のものにするんだ。[p]
+ヴェロニカも、あのライザとかいういけ好かない魔女も、
+全部全部私のものにするんだ。[p]
+[move id=2 y=5 time=50]
+[move id=2 y=-5 time=50]
 #メイジー
 [voice ref="010133"]
 姉さん！　またそんな子供みたいなことを……。[p]
@@ -65,14 +68,18 @@
 [voice ref="010134a"]
 ほかの魔女を貶(おとし)め、蹂躙(じゅうりん)し、征服することだ。[p]
 [changecg id=0 state=1]
+[scale id=0 sx=-1 time=300]
 [voice ref="010135"]
 クフフフフフッ！[n]
 それに、そっちの方が楽しそうだしな。[p]
+[move id=2 y=5 time=50]
+[move id=2 y=-5 time=50]
 #メイジー
 [voice ref="010136"]
 そんなことのために多くの兵士を死なせることになるのよ！[p]
+[scale id=0 sx=-1 time=300]
+[changecg id=0 state=2]
 #アリス
-[changecg id=0 state=0]
 [voice ref="010137"]
 どっちにしろ北の大地で戦争が始まった。 [n]
 こっちにもその影響があるかもしれない。[p]
@@ -88,8 +95,10 @@
 [voice ref="010139a"]
 それにさっきからヴェロニカとかライザとか、[n]
 一体誰の話を……。[p]
+[filter name="fade" time=500]
 [cn]
 アリスはメイジーにヴェロニカとの一件を話した。[p]
+[filter name="clear" time=500]
 #アリス
 [voice ref="010140"]
 というわけだ。[p]
@@ -97,6 +106,7 @@
 [voice ref="010141"]
 わかったか……っていわれても。[n]
 途方もない話だわ……。[p]
+[move id=2 y=-5 time=400]
 [voice ref="010142"]
 北の大地のことはそこまでよく知らないけど、[n]
 でも、あれは何百年も前に交通の手段を失ったって。 [p]
@@ -112,6 +122,7 @@
 #アリス
 [voice ref="010145"]
 ああ、そうだ。[p]
+[move id=2 y=5 time=200]
 #メイジー
 [voice ref="010146"]
 わかったわ。[n]
@@ -122,10 +133,13 @@
 クフフフッ！ いい返事だ。[n]
 メイジー、期待してるぜ。[p]
 
+[filter name="fade" time=500]
+[hide_message]
 [clearcg id=0]
 [clearcg id=2]
 [drawcg id=3 pos="1" dir="right"]
-
+[filter name="clear" time=500]
+[show_message]
 #クロ
 [voice ref="010148"]
 （アリス様。うまいことメイジー様を説得[n]
@@ -158,7 +172,7 @@
 [show_message]
 #アリス
 [voice ref="010112"]
-さてと、まずどこに攻め込んでやろうかなっと……。[p]
+さてと、まずはどこに攻め込んでやろうかなっと……。[p]
 #チシャ
 [voice ref="010113"]
 攻めるとは……、いったいどういう意味でしょうか。[p]
@@ -172,6 +186,10 @@
 [voice ref="010116"]
 こっちはメイジー様の仕事だったインフラ整備や[n]
 物価統制やマナの収集をやることになって、てんやわんやなのに。[p]
+[changecg id=0 state=2]
+[move id=0 y=-5 time=50]
+[se ref="151"]
+[move id=0 y=5 time=50]
 #アリス
 [voice ref="010117"]
 何を言っている。 今が攻めどきなんだ。[n]
@@ -183,7 +201,7 @@
 [voice ref="010119"]
 しかしではない。 もう決めたことだ。[p]
 [voice ref="010119a"]
-私はヴェロニカもヴェロニカを裏切ったライザも倒して[n]
+私はヴェロニカもヴェロニカを裏切ったライザも倒して
 世界を私だけのものにするんだ！[p]
 #チシャ
 [voice ref="010120"]
@@ -198,6 +216,7 @@
 #アリス
 [voice ref="010123"]
 フン、何でもない。[n]
+[changecg id=0 state=2]
 ともかく戦争の準備だ! これから忙しくなるぞ、[n]
 クフフフフフ……。[p]
 #チシャ

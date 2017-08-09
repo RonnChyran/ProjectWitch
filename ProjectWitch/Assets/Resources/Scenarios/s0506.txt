@@ -1,4 +1,5 @@
 ;s0506
+;directer:yuichi
 ;script: nikai
 ;timing:　地点48初戦闘
 ;direction yuichi
@@ -52,7 +53,7 @@
 [cn]
 ベッドから立ち上がったエマは
 のそりと扉のほうへ歩き出した。[p]
-[scale id=0 sx=-1 time=0]
+[scale id=0 sx=-1 time=500]
 [wait time=500]
 [move id=0 x=-10 time=1000]
 #エマ
@@ -102,7 +103,7 @@
 全員構えろよっ！！　破壊光線ーーーーー！！！！！[p]
 
 [hide_message]
-[se ref="051_b_bomb2"]
+[se ref="100_fx_aliceA"]
 [filter name="color" color="FFFFFF" time=800]
 [filter name="clear" time=4000]
 [show_message]
@@ -156,11 +157,13 @@
 [changecg id=1 state=2]
 [voice ref="050169"]
 おい！　きいてんのか？[p]
+[scale id=1 sx=-1 time=300]
 [voice ref="050170"]
 ……チッ、おいだれか、こいつを近くの街に……。[p]
 #エマ
 [voice ref="050171"]
 …………するな。[p]
+[scale id=1 sx=-1 time=300]
 #アリス
 [voice ref="050172"]
 あん……？[p]
@@ -187,7 +190,8 @@
 うわっ！！！！[p]
 [cn]
 激しい衝撃波がアリスを襲った。[p]
-不意を突かれてアリスは反対側の壁にたたきつけられ、アリスの部下に至っては砦の外まで吹き飛んだ者もいた。[p]
+不意を突かれてアリスは反対側の壁にたたきつけられ[n]
+アリスの部下に至っては砦の外まで吹き飛んだ者もいた。[p]
 [move id=1 x=30 time=1500]
 #アリス
 [voice ref="050175"]
@@ -202,6 +206,12 @@
 [clearcg id=0]
 [clearcg id=1]
 [filter name="clear" time=500]
+
+;ユニット設定
+[battle_unit_in e0=40]
+
+;BGM設定
+[battle_bgm ref="005_battle2"]
 
 [stopbgm]
 [sys_memset index=506 value="1"]

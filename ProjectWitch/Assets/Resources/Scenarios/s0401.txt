@@ -25,9 +25,11 @@
 破壊光線ーーーー！！！！！[p]
 
 [hide_message]
-[se ref="051_b_bomb2"]
+[se ref="100_fx_aliceA"]
+[wait time=500]
 [filter name="color" color="FFFFFF" time=800]
-[filter name="clear" time=4000]
+[wait time=1000]
+[filter name="clear" time=2000]
 [show_message]
 
 [cn]
@@ -47,6 +49,7 @@
 [cn]
 太い声が聞こえたかと思うと、[n]
 洞窟の中から巨大な八股の竜が姿を現した。[p]
+[move id=0 x=-5 time=50]
 #アリス
 げっ！　なんてデカさだこりゃあ……。[p]
 #グラマン（一の頭）
@@ -100,7 +103,7 @@
 #グラマン（一の頭）
 嬢ちゃんには悪いがちょっとこの先には通すわけにゃあいかねェんだ。[p]
 お嬢やジジィにぼこぼこにされるんでな。[p]
-[changecg id=0 state=1]
+[changecg id=0 state=2]
 #アリス
 ふん…………クフフフフッ。[p]
 まあいい、邪魔するってんなら容赦しないぜ。[p]

@@ -280,6 +280,10 @@ namespace ProjectWitch.Talk.WorkSpace
 
             foreach (var unitID in unitIDs)
             {
+                //全領地からユニットを除外
+                foreach (var ter in game.GameData.Territory)
+                    ter.RemoveUnit(unitID);
+
                 //ユニットを自領地に含める
                 territory.AddUnit(unitID);
             }
