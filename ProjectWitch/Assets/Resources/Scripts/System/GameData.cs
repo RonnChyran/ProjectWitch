@@ -16,7 +16,7 @@ namespace ProjectWitch
 	{
         public GameMetaData()
         {
-            Major = 1;
+            Major = 2;
             Minor = 0;
         }
 
@@ -1461,6 +1461,8 @@ namespace ProjectWitch
 			outdata.AddRange(BitConverter.GetBytes(ID));
 			outdata.AddRange(BitConverter.GetBytes(UnitList.Count));
 			outdata.AddRange(UnitList.GetBytes());
+            outdata.AddRange(BitConverter.GetBytes(CardList.Count));
+            outdata.AddRange(CardList.GetBytes());
 			outdata.AddRange(BitConverter.GetBytes((int)State));
 
 			return outdata.ToArray();
@@ -1479,6 +1481,13 @@ namespace ProjectWitch
 			{
 				UnitList.Add(BitConverter.ToInt32(data, offset)); offset += 4;
 			}
+
+            var cardListCount = BitConverter.ToInt32(data, offset); offset += 4;
+            CardList = new List<int>();
+            for(int i=0; i<cardListCount;i++)
+            {
+                CardList.Add(BitConverter.ToInt32(data, offset)); offset += 4;
+            }
 
 			State = EnumConverter.ToEnum<GroupState>(
 						BitConverter.ToInt32(data, offset)); offset += 4;

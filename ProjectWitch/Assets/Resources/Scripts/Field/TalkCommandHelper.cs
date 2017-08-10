@@ -24,7 +24,6 @@ namespace ProjectWitch.Field
 
         //エリアウィンドウのインスタンス
         GameObject mInstAreaWindow = null;
-        GameObject mInstAreaName = null;
 
         //指定エリアの位置にカメラを移動させてハイライトする
         public void HilightArea(int area, EndCallBack callback)
@@ -40,14 +39,6 @@ namespace ProjectWitch.Field
             //描画先のキャンバス
             var canvas = mFieldController.FieldUIController.CameraCanvas;
 
-            //エリア名リボンを生成
-            mInstAreaName = Instantiate(mAreaNameWindow);
-            mInstAreaName.transform.SetParent(canvas.transform, false);
-
-            var cAreaName = mInstAreaName.GetComponent<AreaName>();
-            cAreaName.AreaID = area;
-            cAreaName.Init();
-
             //メニュープレハブを生成
             mInstAreaWindow = Instantiate(mAreaWindow);
             mInstAreaWindow.transform.SetParent(canvas.transform, false);
@@ -56,7 +47,7 @@ namespace ProjectWitch.Field
             cAreaWindow.AreaID = area;
             cAreaWindow.FieldController = mFieldController;
             cAreaWindow.FieldUIController = mFieldController.FieldUIController;
-            cAreaWindow.AreaNamePrefab = mInstAreaName;
+            cAreaWindow.AreaNamePrefab = mAreaNameWindow;
             cAreaWindow.Init();
 
             //seの再生
@@ -66,8 +57,6 @@ namespace ProjectWitch.Field
         //エリアウィンドウを閉じる
         public void CloseAreaWindow()
         {
-            if(mInstAreaName)
-                Destroy(mInstAreaName);
             if (mInstAreaWindow)
             {
                 Destroy(mInstAreaWindow);
