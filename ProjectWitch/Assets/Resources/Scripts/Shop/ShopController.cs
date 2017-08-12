@@ -31,6 +31,10 @@ namespace ProjectWitch.Shop
         //閉じる際の最終処理（アニメーションから呼び出す
         public void Close_End()
         {
+            //BGMを変更
+            var game = Game.GetInstance();
+            game.SoundManager.Play(game.GameData.TownBGM, SoundType.BGM);
+
             mTownMenu.Closable = true;
             SceneManager.UnloadSceneAsync(mSceneName);
         }

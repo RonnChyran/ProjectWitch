@@ -43,6 +43,9 @@ namespace ProjectWitch.Shop
 
         public void Close()
         {
+            //キャンセル音再生
+            Game.GetInstance().SoundManager.PlaySE(SE.Cancel);
+
             mMesBox.SetText("", "");
 
             mInfoWindow.Close();

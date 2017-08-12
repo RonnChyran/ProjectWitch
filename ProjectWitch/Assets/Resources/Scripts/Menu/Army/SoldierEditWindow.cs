@@ -163,7 +163,7 @@ namespace ProjectWitch.Menu
 
         public void Click_Close()
         {
-            StatusWindow.Reset();
+            StatusWindow.Init();
             mSolCur_Slider.value = 0;
 
             mArmyMenu.Closable = true;

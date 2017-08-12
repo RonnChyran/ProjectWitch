@@ -7,7 +7,7 @@ namespace ProjectWitch.Menu
     {
 
         [SerializeField]
-        private GameObject mContentGroup = null;
+        private GameObject mContentParent = null;
 
         [SerializeField]
         private GameObject mUnitPrefab = null;
@@ -18,7 +18,7 @@ namespace ProjectWitch.Menu
         // Use this for initialization
         void Start()
         {
-            UnitSet();
+            Init();
         }
 
         // Update is called once per frame
@@ -28,8 +28,13 @@ namespace ProjectWitch.Menu
         }
 
         //リストにコンテンツをセットする
-        void UnitSet()
+        public void Init()
         {
+            //もとからあるオブジェクトを削除
+            var children = mContentParent.GetComponentsInChildren<Unit>();
+            foreach (var child in children)
+                Destroy(child.gameObject);
+
             var game = Game.GetInstance();
 
             var territory = game.GameData.Territory[0];
@@ -41,14 +46,14 @@ namespace ProjectWitch.Menu
                 var cUnit = inst.GetComponent<Unit>();
                 cUnit.UnitID = unitid;
                 cUnit.StatusWindow = mStatusWindow;
-                inst.transform.SetParent(mContentGroup.transform, false);
+                inst.transform.SetParent(mContentParent.transform, false);
             }
         }
 
         //ユニットリストを取得
         public Unit[] GetUnitList()
         {
-            var unitTranses = mContentGroup.GetComponentsInChildren<Transform>();
+            var unitTranses = mContentParent.GetComponentsInChildren<Transform>();
             var objects =  unitTranses.Select(p => p.GetComponent<Unit>()).ToArray();
             return objects.Where(p => p != null).ToArray();
         }

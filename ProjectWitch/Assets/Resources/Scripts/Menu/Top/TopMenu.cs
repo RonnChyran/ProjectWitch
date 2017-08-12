@@ -13,6 +13,8 @@ namespace ProjectWitch.Menu
         [SerializeField]
         private Animator mArmy = null;
         [SerializeField]
+        private Animator mItem = null;
+        [SerializeField]
         private Animator mTown = null;
         [SerializeField]
         private Animator mInfo = null;
@@ -47,9 +49,20 @@ namespace ProjectWitch.Menu
             mcAnim.SetBool("IsShow", false);
         }
 
+        //アイテムをクリック
+        public void OnClickItem()
+        {
+            mItem.SetBool("IsShow", true);
+            mcAnim.SetBool("IsShow", false);
+        }
+
         //町へ行くをクリック
         public void OnClickTown()
         {
+            //BGM変更
+            var game = Game.GetInstance();
+            game.SoundManager.Play(game.GameData.TownBGM, SoundType.BGM);
+
             mTown.SetBool("IsShow", true);
             mcAnim.SetBool("IsShow", false);
         }

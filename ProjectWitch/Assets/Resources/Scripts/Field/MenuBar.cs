@@ -13,6 +13,9 @@ namespace ProjectWitch.Field
 
         [SerializeField]
         private Button mArmy = null;
+
+        [SerializeField]
+        private Button mItem = null;
         
         [SerializeField]
         private Button mTown = null;
@@ -47,6 +50,7 @@ namespace ProjectWitch.Field
             {
                 mMenu.interactable = true;
                 mArmy.interactable = true;
+                mItem.interactable = true;
                 mTown.interactable = true;
                 mSystem.interactable = true;
                 mTIPS.interactable = true;
@@ -57,6 +61,7 @@ namespace ProjectWitch.Field
             {
                 mMenu.interactable = false;
                 mArmy.interactable = false;
+                mItem.interactable = false;
                 mTown.interactable = false;
                 mSystem.interactable = false;
                 mTIPS.interactable = false;
@@ -70,6 +75,7 @@ namespace ProjectWitch.Field
         public void OnClick_Menu()
         {
             mMenu.OnPointerExit(null);
+            EventSystem.current.SetSelectedGameObject(null);
             Game.GetInstance().MenuDataIn.Top = MenuDataIn.TopMenu.Default;
             mFieldUIController.ShowMenu();
         }
@@ -79,6 +85,14 @@ namespace ProjectWitch.Field
             mArmy.OnPointerExit(null);
             EventSystem.current.SetSelectedGameObject(null);
             Game.GetInstance().MenuDataIn.Top = MenuDataIn.TopMenu.Army;
+            mFieldUIController.ShowMenu();
+        }
+
+        public void OnClick_Item()
+        {
+            mItem.OnPointerExit(null);
+            EventSystem.current.SetSelectedGameObject(null);
+            Game.GetInstance().MenuDataIn.Top = MenuDataIn.TopMenu.Item;
             mFieldUIController.ShowMenu();
         }
 

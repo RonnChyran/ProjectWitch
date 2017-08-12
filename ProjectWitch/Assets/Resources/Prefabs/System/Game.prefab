@@ -49,10 +49,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 069e022178e7ad44db6037705c01e0ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mHPRecoveryRate: 0.2
   mSoundManager: {fileID: 114000013626210668}
   mTalkCommand: {fileID: 114000012904661250}
   mNowLoadingPrefab: {fileID: 1000012777304254}
   mGoTitleWindow: {fileID: 114569423731663682}
+  mGameData:
+    mCurrentTurnID: 4011
+    mFieldBGM: 002_alice1
+    mBattleBGM: 004_battle1
+    mTownBGM: 007_town
+    mShopBGM: 020_event5
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -1644,7 +1651,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}

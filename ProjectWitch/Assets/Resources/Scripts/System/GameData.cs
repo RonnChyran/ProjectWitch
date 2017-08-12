@@ -16,7 +16,7 @@ namespace ProjectWitch
 	{
         public GameMetaData()
         {
-            Major = 2;
+            Major = 3;
             Minor = 0;
         }
 
@@ -150,6 +150,7 @@ namespace ProjectWitch
 	}
 
 	//プレイヤーデータ
+    [Serializable]
 	public class GameData : ISaveableData
 	{
 		//セーブファイルのバージョン
@@ -157,11 +158,7 @@ namespace ProjectWitch
         public GameMetaData Meta { get { return metaData; }}
 
         //コンストラクタ
-        private GameData() { }
-        public GameData(int currentMemID)
-        {
-            mCurrentTurnID = currentMemID;
-        }
+        public GameData() { }
 
 		#region data_member
 
@@ -187,18 +184,36 @@ namespace ProjectWitch
 
 		//所持マナ
 		public int PlayerMana { get; set; }
+
+        //ターン数を同期するメモリのID
+        [SerializeField]
+        private int mCurrentTurnID = 4011;
         //現在のターン数
         private int mCurrentTurn = 0;
-        private int mCurrentTurnID = 0; //仮想メモリとの同期ID
-		public int CurrentTurn { get { return mCurrentTurn; } set { mCurrentTurn = value; Memory[mCurrentTurnID] = value; } }
+        public int CurrentTurn { get { return mCurrentTurn; } set { mCurrentTurn = value; Memory[mCurrentTurnID] = value; } }
+
 		//現在の時間数 0:朝 1:昼 2:夜 3~:敵ターン
 		public int CurrentTime { get; set; }
+ 
         //町イベントのトークフラグ
         public bool TownEventEnable { get; set; }
-		//フィールドのBGM
-		public string FieldBGM { get; set; }
-		//通常バトルのBGM
-		public string BattleBGM { get; set; }
+
+        //フィールドのBGM
+        [SerializeField]
+        private string mFieldBGM = "";
+		public string FieldBGM { get { return mFieldBGM; } set { mFieldBGM = value; } }
+        //通常バトルのBGM
+        [SerializeField]
+        private string mBattleBGM = "";
+		public string BattleBGM { get { return mBattleBGM; } set { mBattleBGM = value; } }
+        //町のBGM
+        [SerializeField]
+        private string mTownBGM = "";
+        public string TownBGM { get { return mTownBGM; } set { mTownBGM = value; } }
+        //ショップのBGM
+        [SerializeField]
+        private string mShopBGM = "";
+        public string ShopBGM { get { return mShopBGM; } set { mShopBGM = value; } }
 
 		//システム変数
 		public VirtualMemory Memory { get; private set; }
@@ -228,9 +243,6 @@ namespace ProjectWitch
                 CurrentTime = 0; //朝から
 				CurrentTurn = 1;
                 TownEventEnable = true;
-				FieldBGM = "002_alice1";
-				BattleBGM = "004_battle1";
-
 
 
 			}
@@ -591,6 +603,9 @@ namespace ProjectWitch
 		//捕獲可能か不可能か
 		public bool Catchable { get; set; }
 
+        //解雇可能か
+        public bool Unemployable { get; set; }
+
 		//生きているか
 		public bool IsAlive { get; set; }
 
@@ -798,6 +813,7 @@ namespace ProjectWitch
             outdata.AddRange(BitConverter.GetBytes(MaxSoldierNum));
 			outdata.AddRange(BitConverter.GetBytes(Deathable));
 			outdata.AddRange(BitConverter.GetBytes(Catchable));
+            outdata.AddRange(BitConverter.GetBytes(Unemployable));
 			outdata.AddRange(BitConverter.GetBytes(IsAlive));
 			outdata.AddRange(BitConverter.GetBytes(Love));
 			outdata.AddRange(BitConverter.GetBytes(Equipment));
@@ -819,6 +835,7 @@ namespace ProjectWitch
             MaxSoldierNum = BitConverter.ToInt32(data, offset); offset += 4;
 			Deathable = BitConverter.ToBoolean(data, offset); offset += 1;
 			Catchable = BitConverter.ToBoolean(data, offset); offset += 1;
+            Unemployable = BitConverter.ToBoolean(data, offset); offset += 1;
 			IsAlive = BitConverter.ToBoolean(data, offset); offset += 1;
 			Love = BitConverter.ToInt32(data, offset); offset += 4;
 			Equipment = BitConverter.ToInt32(data, offset); offset += 4;
@@ -1194,6 +1211,15 @@ namespace ProjectWitch
 			{
 				group.UnitList.Remove(unit);
 			}
+
+            //ユニットが装備しているアイテムを外す
+            var equipmentLists = game.GameData.Territory[0].EquipmentList;
+            foreach(var list in equipmentLists)
+            {
+                var index = list.IndexOf(unit);
+                if (index == -1) continue;
+                list[index] = -1;
+            }
 		}
 
 		//特定のユニットを雇う
@@ -2050,7 +2076,7 @@ namespace ProjectWitch
         public enum TopMenu
         {
             Default,
-            Army, Town, System, Tips
+            Army, Item, Town, System, Tips
         }
         public TopMenu Top { get; set; }
 	}
@@ -2080,18 +2106,18 @@ namespace ProjectWitch
 				//[19]成GATK    [20]成GMAT    [21]成GDEF     [22]成GMDE     [23]指揮力　[24]機動力
 				//[25]成指揮    [26]成機動
 				//[27]回復力　  [28]回復力成長率
-				//[29]兵士数    [30]死ぬか撤退か [31]捕獲可能か
-				//[32]好感度 
-				//[33]リーダー攻撃スキル
-				//[34]リーダー防御スキル
-				//[35]兵士攻撃スキル   [36]兵士サイズ
-				//[37]装備             [38]AI番号
-				//[39]立ち絵画像名     [40]顔アイコン画像    
-				//[41]戦闘リーダープレハブ名
-				//[42]戦闘兵士プレハブ名 [43]キャラ説明
-				//[44]死亡時セリフ
-				//[45]捕獲時セリフ
-				//[46]逃走時セリフ
+				//[29]兵士数    [30]死ぬか撤退か [31]捕獲可能か [32]解雇可能か
+				//[33]好感度 
+				//[34]リーダー攻撃スキル
+				//[35]リーダー防御スキル
+				//[36]兵士攻撃スキル   [37]兵士サイズ
+				//[38]装備             [39]AI番号
+				//[40]立ち絵画像名     [41]顔アイコン画像    
+				//[42]戦闘リーダープレハブ名
+				//[43]戦闘兵士プレハブ名 [44]キャラ説明
+				//[45]死亡時セリフ
+				//[46]捕獲時セリフ
+				//[47]逃走時セリフ
 				var unit = new UnitDataFormat();
 				var data = rowData[i];
 
@@ -2133,23 +2159,24 @@ namespace ProjectWitch
 					unit.MaxSoldierNum = unit.SoldierNum;
 					unit.Deathable = (data[30] == "0") ? false : true;
 					unit.Catchable = (data[31] == "0") ? false : true;
-					unit.Love = int.Parse(data[32]);
-					unit.LAtkSkill = int.Parse(data[33]);
-					unit.LDefSkill = int.Parse(data[34]);
-					unit.GAtkSkill = int.Parse(data[35]);
-					unit.GUnitSize = int.Parse(data[36]);
-					unit.Equipment = int.Parse(data[37]);
-					unit.AIID = int.Parse(data[38]);
+                    unit.Unemployable = (data[32] == "0") ? false : true;
+					unit.Love = int.Parse(data[33]);
+					unit.LAtkSkill = int.Parse(data[34]);
+					unit.LDefSkill = int.Parse(data[35]);
+					unit.GAtkSkill = int.Parse(data[36]);
+					unit.GUnitSize = int.Parse(data[37]);
+					unit.Equipment = int.Parse(data[38]);
+					unit.AIID = int.Parse(data[39]);
 
-					unit.StandImagePath = data[39];
-					unit.FaceIamgePath = data[40];
-					unit.BattleLeaderPrefabPath = data[41];
-					unit.BattleGroupPrefabPath = data[42];
-					unit.Comment = data[43];
+					unit.StandImagePath = data[40];
+					unit.FaceIamgePath = data[41];
+					unit.BattleLeaderPrefabPath = data[42];
+					unit.BattleGroupPrefabPath = data[43];
+					unit.Comment = data[44];
 
-					unit.OnDeadSerif = data[44];
-					unit.OnCapturedSerif = data[45];
-					unit.OnEscapedSerif = data[46];
+					unit.OnDeadSerif = data[45];
+					unit.OnCapturedSerif = data[46];
+					unit.OnEscapedSerif = data[47];
 
 					unit.IsAlive = true;
 					unit.IsBattled = false;

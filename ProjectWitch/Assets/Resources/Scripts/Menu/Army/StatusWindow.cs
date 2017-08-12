@@ -15,6 +15,8 @@ namespace ProjectWitch.Menu
         private SoldierEditWindow mSoldierEditWindow = null;
         [SerializeField]
         private EquipmentEditWindow mEquipmentEditWindow = null;
+        [SerializeField]
+        private UnemployWindow mUnemployWindow = null;
 
         [Space(1)]
         [Header("フォルダパス")]
@@ -79,6 +81,8 @@ namespace ProjectWitch.Menu
         [Header("ボタン")]
         [SerializeField]
         private Button mLvUpButton = null;
+        [SerializeField]
+        private Button mUnemployButton = null;
 
         [Header("兵士ランク境界")]
         [Space(1)]
@@ -96,10 +100,10 @@ namespace ProjectWitch.Menu
         void Start()
         {
             UnitID = -1;
-            Reset();
+            Init();
         }
 
-        public void Reset()
+        public void Init()
         {
             if (UnitID == -1)
             {
@@ -128,6 +132,12 @@ namespace ProjectWitch.Menu
         {
             mEquipmentEditWindow.StatusWindow = this;
             mEquipmentEditWindow.Show(UnitID);
+        }
+
+        public void OnClickUnemploy()
+        {
+            mUnemployWindow.mStatusWindow = this;
+            mUnemployWindow.Show(UnitID);
         }
 
         private void SetState()
@@ -182,6 +192,11 @@ namespace ProjectWitch.Menu
             {
                 mLvUpButton.interactable = false;
             }
+
+            if (unit.Unemployable)
+                mUnemployButton.interactable = true;
+            else
+                mUnemployButton.interactable = false;
         }
 
         private void SetRank(UnitDataFormat unit)

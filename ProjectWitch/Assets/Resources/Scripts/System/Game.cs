@@ -38,9 +38,6 @@ namespace ProjectWitch
         //毎ターンのHP回復率
         [SerializeField]
         private float mHPRecoveryRate = 0.2f; //20%
-        //ターン数を同期するメモリのID
-        [SerializeField]
-        private int mCurrentTurnID = 4011;
 
         #endregion
 
@@ -70,7 +67,9 @@ namespace ProjectWitch
         #region ゲームデータ関連
 
         //実行中のゲーム内データ
-        public GameData GameData { get; set; }
+        [SerializeField]
+        private GameData mGameData = null;
+        public GameData GameData { get { return mGameData; } set { mGameData = value; } }
         
         //アプリケーション全体のシステムデータ
         public SystemData SystemData { get; set; }
@@ -149,7 +148,6 @@ namespace ProjectWitch
             MenuDataIn.Reset();
 
             //ゲームデータ初期化
-            GameData = new GameData(mCurrentTurnID);
             GameData.Reset();
 
             //システムデータ初期化

@@ -91,7 +91,7 @@ namespace ProjectWitch.Menu
             //HP回復
             game.GameData.Unit[UnitID].HP = game.GameData.Unit[UnitID].MaxHP;
 
-            StatusWindow.Reset();
+            StatusWindow.Init();
 
             //閉じる
             Close();

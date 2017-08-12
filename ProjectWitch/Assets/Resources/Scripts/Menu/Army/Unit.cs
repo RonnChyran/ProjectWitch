@@ -88,7 +88,7 @@ namespace ProjectWitch.Menu
         public void OnClicked()
         {
             StatusWindow.UnitID = UnitID;
-            StatusWindow.Reset();
+            StatusWindow.Init();
         }
 
         private void SetRace(UnitDataFormat unit)

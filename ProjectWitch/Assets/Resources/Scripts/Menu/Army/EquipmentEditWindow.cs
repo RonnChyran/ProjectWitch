@@ -196,7 +196,7 @@ namespace ProjectWitch.Menu
             //装備を変更
             unit.ChangeEquipment(ItemID);
 
-            StatusWindow.Reset();
+            StatusWindow.Init();
             mList.ItemUpdate();
 
             Close();

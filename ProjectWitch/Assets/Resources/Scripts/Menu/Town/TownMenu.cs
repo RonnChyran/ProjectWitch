@@ -4,54 +4,22 @@ using System.Collections;
 
 namespace ProjectWitch.Menu
 {
-    public class TownMenu : MonoBehaviour
+    public class TownMenu : BaseMenu
     {
-        //コントローラへの参照
-        [SerializeField]
-        private MenuController mController = null;
-
-        //トップメニューへの参照
-        [SerializeField]
-        private Animator mTopMenu = null;
 
         //トークイベントへの参照
         [SerializeField]
         private TownTalkEvent[] mTalkEvents = null;
 
-        //component 
-        private Animator mcAnim = null;
-
-        //閉じれるかどうか
-        public bool Closable { get; set; }
-
-        // Use this for initialization
-        void Start()
+        protected override IEnumerator _Close()
         {
-            mcAnim = GetComponent<Animator>();
-            Closable = true;
-        }
+            var game = Game.GetInstance();
 
-        // Update is called once per frame
-        void Update()
-        {
-            if (mcAnim.GetBool("IsShow") && Closable && mController.InputEnable)
-            {
-                if (Input.GetButtonDown("Cancel"))
-                {
-                    Close();
-                }
-            }
-        }
-
-        public void Close()
-        {
-            StartCoroutine(_Close());
-        }
-
-        private IEnumerator _Close()
-        {
             //キャンセル音再生
-            Game.GetInstance().SoundManager.PlaySE(SE.Cancel);
+            game.SoundManager.PlaySE(SE.Cancel);
+
+            //BGMを戻す
+            game.SoundManager.Play(game.GameData.FieldBGM, SoundType.BGM);
 
             mcAnim.SetBool("IsShow", false);
             yield return new WaitForSeconds(0.2f);
@@ -62,12 +30,20 @@ namespace ProjectWitch.Menu
 
         public void Click_ToolShop()
         {
+            //BGMを変更
+            var game = Game.GetInstance();
+            game.SoundManager.Play(game.GameData.ShopBGM, SoundType.BGM);
+
             Closable = false;
             SceneManager.LoadScene("ToolShop",LoadSceneMode.Additive);
         }
 
         public void Click_MagicShop()
         {
+            //BGMを変更
+            var game = Game.GetInstance();
+            game.SoundManager.Play(game.GameData.ShopBGM, SoundType.BGM);
+
             Closable = false;
             SceneManager.LoadScene("MagicShop", LoadSceneMode.Additive);
         }
@@ -102,7 +78,7 @@ namespace ProjectWitch.Menu
             yield return new WaitForSeconds(0.1f);
 
             //BGM再生
-            game.SoundManager.Play(game.GameData.FieldBGM, SoundType.BGM);
+            game.SoundManager.Play(game.GameData.TownBGM, SoundType.BGM);
 
             //終了
             Closable = true;

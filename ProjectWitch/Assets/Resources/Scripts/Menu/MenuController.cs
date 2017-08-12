@@ -55,6 +55,9 @@ namespace ProjectWitch.Menu
                 case MenuDataIn.TopMenu.Army:
                     mTopMenu.OnClickArmy();
                     break;
+                case MenuDataIn.TopMenu.Item:
+                    mTopMenu.OnClickItem();
+                    break;
                 case MenuDataIn.TopMenu.Town:
                     mTopMenu.OnClickTown();
                     break;
